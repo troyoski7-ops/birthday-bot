@@ -29,7 +29,7 @@ logging.basicConfig(level=logging.INFO)
 
 surprises_db = {}
 user_created_surprises = {}
-paid_users = set()  # Stars pay ചെയ്ത യൂസർമാരെ ട്രേക്ക് ചെയ്യാൻ
+paid_users = set()
 
 
 class CreateSurprise(StatesGroup):
@@ -67,7 +67,6 @@ async def cmd_start(message: Message, state: FSMContext):
     if surp_id in surprises_db:
       data = surprises_db[surp_id]
 
-      # Allow creator or paid users to open instantly without countdown lock
       is_creator = (
           user_id == ADMIN_USER_ID or user_id in data.get("creators", [])
       )
@@ -270,16 +269,14 @@ async def show_guide(callback: CallbackQuery):
   await callback.answer()
 
 
+# Fixed Gift Box Handler
 @router.callback_query(F.data.startswith("gift_"))
 async def open_gift(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
   if surp_id in surprises_db:
     data = surprises_db[surp_id]
-    await callback.message.edit_text(
-        "📦 *Unwrapping elite milestone package...* ✨\n🎟️ *Preparing secure"
-        " scratch interface...* 💎"
-    )
-    await asyncio.sleep(1.5)
+    await callback.answer("📦 Unwrapping gift box...", show_alert=False)
+    await asyncio.sleep(0.5)
 
     scratch_keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
@@ -291,24 +288,28 @@ async def open_gift(callback: CallbackQuery):
             ]
         ]
     )
-    await callback.message.edit_text(
-        f"🎉 **Package Unwrapped for {data['name']}!** 🎉\n\n👇 *Scratch the card"
-        " below to unveil the magic!*",
-        reply_markup=scratch_keyboard,
-    )
-    await callback.answer()
+    try:
+      await callback.message.edit_text(
+          f"🎉 **Gift Unwrapped successfully for {data['name']}!** 🎉\n\n👇"
+          " *Scratch the card below to proceed!*",
+          reply_markup=scratch_keyboard,
+      )
+    except Exception:
+      await callback.message.answer(
+          f"🎉 **Gift Unwrapped successfully for {data['name']}!** 🎉\n\n👇"
+          " *Scratch the card below to proceed!*",
+          reply_markup=scratch_keyboard,
+      )
 
 
+# Fixed Scratch Card Handler
 @router.callback_query(F.data.startswith("scratch_"))
 async def scratch_card(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
   if surp_id in surprises_db:
     data = surprises_db[surp_id]
-    await callback.message.edit_text(
-        "✨ *Card successfully scratched!* 🎫\n🎂 *Igniting candles & presenting"
-        " gourmet cake...* 🕯️"
-    )
-    await asyncio.sleep(1.5)
+    await callback.answer("✨ Card scratched!", show_alert=False)
+    await asyncio.sleep(0.5)
 
     cake_keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
@@ -320,27 +321,37 @@ async def scratch_card(callback: CallbackQuery):
             ]
         ]
     )
-    await callback.message.edit_text(
-        f"🎈 **Almost there, {data['name']}!** 🎈\n\n👇 *Tap below to extinguish"
-        " candles and slice the cake!*",
-        reply_markup=cake_keyboard,
-    )
-    await callback.answer()
+    try:
+      await callback.message.edit_text(
+          f"🎈 **Almost there, {data['name']}!** 🎈\n\n👇 *Tap below to blow out"
+          " the candles and cut the cake!*",
+          reply_markup=cake_keyboard,
+      )
+    except Exception:
+      await callback.message.answer(
+          f"🎈 **Almost there, {data['name']}!** 🎈\n\n👇 *Tap below to blow out"
+          " the candles and cut the cake!*",
+          reply_markup=cake_keyboard,
+      )
 
 
+# Fixed Cake Cutting & Media Handler
 @router.callback_query(F.data.startswith("cake_"))
 async def cut_cake(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
   if surp_id in surprises_db:
     data = surprises_db[surp_id]
-    await callback.message.edit_text(
-        "🎉 *Make a wish! Blow!* 🌬️🎂\n🎊 *Slicing custom cake...* 🍰✨"
-    )
-    await asyncio.sleep(1.5)
+    await callback.answer("🎂 Cutting cake...", show_alert=False)
+    await asyncio.sleep(0.5)
 
     caption = (
         f"🎊✨ **HAPPY BIRTHDAY {data['name'].upper()}!** ✨🎊\n\n{data['msg']}"
     )
+
+    try:
+      await callback.message.edit_text("🎊✨ **MAKING A WISH & CUTTING CAKE!** ✨🎊")
+    except Exception:
+      pass
 
     if data.get("photo"):
       await callback.message.answer_photo(photo=data["photo"], caption=caption)
@@ -365,13 +376,10 @@ async def cut_cake(callback: CallbackQuery):
     ]):
       await callback.message.answer(caption)
 
-    await callback.answer()
-
 
 @router.callback_query(F.data == "create_surprise")
 async def process_creation(callback: CallbackQuery, state: FSMContext):
   user_id = callback.from_user.id
-  # Admin gets free creation, others need to pay Stars (unless already paid)
   if user_id == ADMIN_USER_ID or user_id in paid_users:
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
@@ -382,7 +390,11 @@ async def process_creation(callback: CallbackQuery, state: FSMContext):
             ]
         ]
     )
-    badge = "👑 [Admin Privilege]" if user_id == ADMIN_USER_ID else "⭐ [Elite Pass Active]"
+    badge = (
+        "👑 [Admin Privilege]"
+        if user_id == ADMIN_USER_ID
+        else "⭐ [Elite Pass Active]"
+    )
     await callback.message.answer(
         f"{badge}\n\n💎 *Step 1/11:* Enter the recipient's full **Name**:",
         reply_markup=keyboard,
@@ -407,9 +419,14 @@ async def process_creation(callback: CallbackQuery, state: FSMContext):
 @router.callback_query(F.data == "cancel_creation")
 async def cancel_creation(callback: CallbackQuery, state: FSMContext):
   await state.clear()
-  await callback.message.edit_text(
-      "🛑 Creation sequence terminated. Send /start to restart."
-  )
+  try:
+    await callback.message.edit_text(
+        "🛑 Creation sequence terminated. Send /start to restart."
+    )
+  except Exception:
+    await callback.message.answer(
+        "🛑 Creation sequence terminated. Send /start to restart."
+    )
   await callback.answer()
 
 
@@ -422,7 +439,7 @@ async def process_pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
 async def successful_payment(message: Message, state: FSMContext):
   if message.successful_payment.invoice_payload == "scratch_surprise_payment":
     user_id = message.from_user.id
-    paid_users.add(user_id)  # Mark user as paid so they can create surprises & preview
+    paid_users.add(user_id)
 
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
@@ -484,9 +501,14 @@ async def callback_change_name(callback: CallbackQuery, state: FSMContext):
           ]
       ]
   )
-  await callback.message.edit_text(
-      "💎 *Step 1/11:* Re-enter recipient's **Name**:", reply_markup=keyboard
-  )
+  try:
+    await callback.message.edit_text(
+        "💎 *Step 1/11:* Re-enter recipient's **Name**:", reply_markup=keyboard
+    )
+  except Exception:
+    await callback.message.answer(
+        "💎 *Step 1/11:* Re-enter recipient's **Name**:", reply_markup=keyboard
+    )
   await state.set_state(CreateSurprise.waiting_for_name)
   await callback.answer()
 
@@ -494,9 +516,14 @@ async def callback_change_name(callback: CallbackQuery, state: FSMContext):
 @router.callback_query(F.data.startswith("year_"))
 async def select_year(callback: CallbackQuery, state: FSMContext):
   if callback.data == "year_manual":
-    await callback.message.edit_text(
-        "✏️ Please type the target **Year** (e.g., 2026):"
-    )
+    try:
+      await callback.message.edit_text(
+          "✏️ Please type the target **Year** (e.g., 2026):"
+      )
+    except Exception:
+      await callback.message.answer(
+          "✏️ Please type the target **Year** (e.g., 2026):"
+      )
     return
 
   year = callback.data.split("_")[1]
@@ -521,11 +548,18 @@ async def select_year(callback: CallbackQuery, state: FSMContext):
           ],
       ]
   )
-  await callback.message.edit_text(
-      f"💎 Year locked: **{year}**\n\n🗓️ *Step 3/11:* Select target"
-      f" **Month**:",
-      reply_markup=keyboard,
-  )
+  try:
+    await callback.message.edit_text(
+        f"💎 Year locked: **{year}**\n\n🗓️ *Step 3/11:* Select target"
+        f" **Month**:",
+        reply_markup=keyboard,
+    )
+  except Exception:
+    await callback.message.answer(
+        f"💎 Year locked: **{year}**\n\n🗓️ *Step 3/11:* Select target"
+        f" **Month**:",
+        reply_markup=keyboard,
+    )
   await state.set_state(CreateSurprise.waiting_for_month)
   await callback.answer()
 
@@ -545,9 +579,14 @@ async def callback_change_year(callback: CallbackQuery, state: FSMContext):
           ],
       ]
   )
-  await callback.message.edit_text(
-      "🗓️ *Step 2/11:* Select or type target **Year**:", reply_markup=keyboard
-  )
+  try:
+    await callback.message.edit_text(
+        "🗓️ *Step 2/11:* Select or type target **Year**:", reply_markup=keyboard
+    )
+  except Exception:
+    await callback.message.answer(
+        "🗓️ *Step 2/11:* Select or type target **Year**:", reply_markup=keyboard
+    )
   await state.set_state(CreateSurprise.waiting_for_year)
   await callback.answer()
 
@@ -590,7 +629,10 @@ async def select_month(callback: CallbackQuery, state: FSMContext):
             ],
         ]
     )
-    await callback.message.edit_text("🗓️ Select Month:", reply_markup=kb)
+    try:
+      await callback.message.edit_text("🗓️ Select Month:", reply_markup=kb)
+    except Exception:
+      await callback.message.answer("🗓️ Select Month:", reply_markup=kb)
     return
   elif callback.data == "m_q2":
     kb = InlineKeyboardMarkup(
@@ -610,7 +652,10 @@ async def select_month(callback: CallbackQuery, state: FSMContext):
             ],
         ]
     )
-    await callback.message.edit_text("🗓️ Select Month:", reply_markup=kb)
+    try:
+      await callback.message.edit_text("🗓️ Select Month:", reply_markup=kb)
+    except Exception:
+      await callback.message.answer("🗓️ Select Month:", reply_markup=kb)
     return
   elif callback.data == "m_q3":
     kb = InlineKeyboardMarkup(
@@ -630,10 +675,16 @@ async def select_month(callback: CallbackQuery, state: FSMContext):
             ],
         ]
     )
-    await callback.message.edit_text("🗓️ Select Month:", reply_markup=kb)
+    try:
+      await callback.message.edit_text("🗓️ Select Month:", reply_markup=kb)
+    except Exception:
+      await callback.message.answer("🗓️ Select Month:", reply_markup=kb)
     return
   elif callback.data == "m_manual":
-    await callback.message.edit_text("✏️ Type Month number (1 to 12):")
+    try:
+      await callback.message.edit_text("✏️ Type Month number (1 to 12):")
+    except Exception:
+      await callback.message.answer("✏️ Type Month number (1 to 12):")
     return
   await callback.answer()
 
@@ -654,9 +705,14 @@ async def callback_change_month(callback: CallbackQuery, state: FSMContext):
           ],
       ]
   )
-  await callback.message.edit_text(
-      "🗓️ *Step 3/11:* Select target **Month**:", reply_markup=keyboard
-  )
+  try:
+    await callback.message.edit_text(
+        "🗓️ *Step 3/11:* Select target **Month**:", reply_markup=keyboard
+    )
+  except Exception:
+    await callback.message.answer(
+        "🗓️ *Step 3/11:* Select target **Month**:", reply_markup=keyboard
+    )
   await state.set_state(CreateSurprise.waiting_for_month)
   await callback.answer()
 
@@ -675,11 +731,18 @@ async def set_month_callback(callback: CallbackQuery, state: FSMContext):
           ]
       ]
   )
-  await callback.message.edit_text(
-      f"💎 Month locked: **{month}**\n\n🗓️ *Step 4/11:* Enter target **Date**"
-      " (1-31):",
-      reply_markup=keyboard,
-  )
+  try:
+    await callback.message.edit_text(
+        f"💎 Month locked: **{month}**\n\n🗓️ *Step 4/11:* Enter target **Date**"
+        " (1-31):",
+        reply_markup=keyboard,
+    )
+  except Exception:
+    await callback.message.answer(
+        f"💎 Month locked: **{month}**\n\n🗓️ *Step 4/11:* Enter target **Date**"
+        " (1-31):",
+        reply_markup=keyboard,
+    )
   await state.set_state(CreateSurprise.waiting_for_date)
   await callback.answer()
 
@@ -733,9 +796,14 @@ async def callback_change_date(callback: CallbackQuery, state: FSMContext):
           ]
       ]
   )
-  await callback.message.edit_text(
-      "🗓️ *Step 4/11:* Enter target **Date** (1 to 31):", reply_markup=keyboard
-  )
+  try:
+    await callback.message.edit_text(
+        "🗓️ *Step 4/11:* Enter target **Date** (1 to 31):", reply_markup=keyboard
+    )
+  except Exception:
+    await callback.message.answer(
+        "🗓️ *Step 4/11:* Enter target **Date** (1 to 31):", reply_markup=keyboard
+    )
   await state.set_state(CreateSurprise.waiting_for_date)
   await callback.answer()
 
@@ -774,10 +842,16 @@ async def callback_change_time(callback: CallbackQuery, state: FSMContext):
           ]
       ]
   )
-  await callback.message.edit_text(
-      "⏰ *Step 5/11:* Enter target **Time** (Format: `HH:MM`):",
-      reply_markup=keyboard,
-  )
+  try:
+    await callback.message.edit_text(
+        "⏰ *Step 5/11:* Enter target **Time** (Format: `HH:MM`):",
+        reply_markup=keyboard,
+    )
+  except Exception:
+    await callback.message.answer(
+        "⏰ *Step 5/11:* Enter target **Time** (Format: `HH:MM`):",
+        reply_markup=keyboard,
+    )
   await state.set_state(CreateSurprise.waiting_for_time)
   await callback.answer()
 
@@ -813,11 +887,18 @@ async def get_ampm(callback: CallbackQuery, state: FSMContext):
           ]
       ]
   )
-  await callback.message.edit_text(
-      f"✅ Schedule locked: `{target_time} ({ampm})`\n\n✍️ *Step 7/11:* Type"
-      " your heartfelt **Birthday Wish / Message**:",
-      reply_markup=keyboard,
-  )
+  try:
+    await callback.message.edit_text(
+        f"✅ Schedule locked: `{target_time} ({ampm})`\n\n✍️ *Step 7/11:* Type"
+        " your heartfelt **Birthday Wish / Message**:",
+        reply_markup=keyboard,
+    )
+  except Exception:
+    await callback.message.answer(
+        f"✅ Schedule locked: `{target_time} ({ampm})`\n\n✍️ *Step 7/11:* Type"
+        " your heartfelt **Birthday Wish / Message**:",
+        reply_markup=keyboard,
+    )
   await state.set_state(CreateSurprise.waiting_for_message)
   await callback.answer()
 
@@ -832,9 +913,14 @@ async def callback_change_ampm(callback: CallbackQuery, state: FSMContext):
           ]
       ]
   )
-  await callback.message.edit_text(
-      "☀️🌙 *Step 6/11:* Select **AM or PM**:", reply_markup=keyboard
-  )
+  try:
+    await callback.message.edit_text(
+        "☀️🌙 *Step 6/11:* Select **AM or PM**:", reply_markup=keyboard
+    )
+  except Exception:
+    await callback.message.answer(
+        "☀️🌙 *Step 6/11:* Select **AM or PM**:", reply_markup=keyboard
+    )
   await state.set_state(CreateSurprise.waiting_for_ampm)
   await callback.answer()
 
@@ -871,10 +957,16 @@ async def callback_change_wish(callback: CallbackQuery, state: FSMContext):
           ]
       ]
   )
-  await callback.message.edit_text(
-      "✍️ *Step 7/11:* Re-type your **Birthday Wish / Message**:",
-      reply_markup=keyboard,
-  )
+  try:
+    await callback.message.edit_text(
+        "✍️ *Step 7/11:* Re-type your **Birthday Wish / Message**:",
+        reply_markup=keyboard,
+    )
+  except Exception:
+    await callback.message.answer(
+        "✍️ *Step 7/11:* Re-type your **Birthday Wish / Message**:",
+        reply_markup=keyboard,
+    )
   await state.set_state(CreateSurprise.waiting_for_message)
   await callback.answer()
 
@@ -912,11 +1004,18 @@ async def callback_change_photo(callback: CallbackQuery, state: FSMContext):
           ]
       ]
   )
-  await callback.message.edit_text(
-      "📸 *Step 8/11:* Send your elite **Photo** attachment (Or type"
-      " `/skip`):",
-      reply_markup=keyboard,
-  )
+  try:
+    await callback.message.edit_text(
+        "📸 *Step 8/11:* Send your elite **Photo** attachment (Or type"
+        " `/skip`):",
+        reply_markup=keyboard,
+    )
+  except Exception:
+    await callback.message.answer(
+        "📸 *Step 8/11:* Send your elite **Photo** attachment (Or type"
+        " `/skip`):",
+        reply_markup=keyboard,
+    )
   await state.set_state(CreateSurprise.waiting_for_photo)
   await callback.answer()
 
@@ -954,11 +1053,18 @@ async def callback_change_video(callback: CallbackQuery, state: FSMContext):
           ]
       ]
   )
-  await callback.message.edit_text(
-      "🎬 *Step 9/11:* Send your cinematic **Video** attachment (Or type"
-      " `/skip`):",
-      reply_markup=keyboard,
-  )
+  try:
+    await callback.message.edit_text(
+        "🎬 *Step 9/11:* Send your cinematic **Video** attachment (Or type"
+        " `/skip`):",
+        reply_markup=keyboard,
+    )
+  except Exception:
+    await callback.message.answer(
+        "🎬 *Step 9/11:* Send your cinematic **Video** attachment (Or type"
+        " `/skip`):",
+        reply_markup=keyboard,
+    )
   await state.set_state(CreateSurprise.waiting_for_video)
   await callback.answer()
 
@@ -996,11 +1102,18 @@ async def callback_change_song(callback: CallbackQuery, state: FSMContext):
           ]
       ]
   )
-  await callback.message.edit_text(
-      "🎵 *Step 10/11:* Send your background **Song / Music file** (Or type"
-      " `/skip`):",
-      reply_markup=keyboard,
-  )
+  try:
+    await callback.message.edit_text(
+        "🎵 *Step 10/11:* Send your background **Song / Music file** (Or type"
+        " `/skip`):",
+        reply_markup=keyboard,
+    )
+  except Exception:
+    await callback.message.answer(
+        "🎵 *Step 10/11:* Send your background **Song / Music file** (Or type"
+        " `/skip`):",
+        reply_markup=keyboard,
+    )
   await state.set_state(CreateSurprise.waiting_for_song)
   await callback.answer()
 
@@ -1032,7 +1145,7 @@ async def get_voice(message: Message, state: FSMContext):
       "song": song,
       "voice": voice_id,
       "target_time": target_time,
-      "creators": [user_id],  # Creator who paid/owns can preview instantly
+      "creators": [user_id],
   }
 
   if user_id not in user_created_surprises:
@@ -1081,7 +1194,6 @@ async def main():
   dp = Dispatcher()
   dp.include_router(router)
 
-  # Set Left-side Menu Commands for Everyone
   await set_bot_commands(bot)
 
   await web_server()
