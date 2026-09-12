@@ -29,6 +29,7 @@ logging.basicConfig(level=logging.INFO)
 
 surprises_db = {}
 user_created_surprises = {}
+paid_users = set()  # Stars pay ചെയ്ത യൂസർമാരെ ട്രേക്ക് ചെയ്യാൻ
 
 
 class CreateSurprise(StatesGroup):
@@ -47,10 +48,10 @@ class CreateSurprise(StatesGroup):
 
 async def set_bot_commands(bot: Bot):
   commands = [
-      BotCommand(command="start", description="🚀 Start / Create Surprise"),
-      BotCommand(command="stats", description="📊 Total Surprises Created"),
-      BotCommand(command="help", description="📖 How to use bot"),
-      BotCommand(command="cancel", description="🛑 Stop / Cancel Process"),
+      BotCommand(command="start", description="🚀 Start / Initialize Hub"),
+      BotCommand(command="stats", description="📊 Vault Statistics"),
+      BotCommand(command="help", description="📖 Elite Help Guide"),
+      BotCommand(command="cancel", description="🛑 Abort Process"),
   ]
   await bot.set_my_commands(commands)
 
@@ -66,8 +67,12 @@ async def cmd_start(message: Message, state: FSMContext):
     if surp_id in surprises_db:
       data = surprises_db[surp_id]
 
-      # Safe Time Parsing for Opening
-      if data.get("target_time"):
+      # Allow creator or paid users to open instantly without countdown lock
+      is_creator = (
+          user_id == ADMIN_USER_ID or user_id in data.get("creators", [])
+      )
+
+      if data.get("target_time") and not is_creator:
         try:
           time_str = data["target_time"].replace(".", ":")
           target_dt = datetime.datetime.strptime(time_str, "%Y-%m-%d %H:%M")
@@ -89,7 +94,6 @@ async def cmd_start(message: Message, state: FSMContext):
         except Exception as e:
           logging.error(f"Time parsing exception bypassed: {e}")
 
-      # Unlocked Gift Box UI
       keyboard = InlineKeyboardMarkup(
           inline_keyboard=[
               [
@@ -121,10 +125,10 @@ async def cmd_start(message: Message, state: FSMContext):
       "🎁 **Unleash Next-Gen Magic:**\n"
       "• 📦 *Milestone Gift Box Unwrapping*\n"
       "• 🎫 *Golden Scratch Card Reveal*\n"
-      "• 🎂 *Virtual Cake Cutting & Candle Blowing*\n"
+      "• 🎂 *Virtual Cake Cutting & Candles*\n"
       "• ⏰ *Precision Countdown & Schedule Locks*\n"
       "• 🎬 *Photos, Videos, Songs & Voice Notes*\n\n"
-      "👇 *Select an option from below to craft your masterpiece:*"
+      "👇 *Select an option from below to explore:*"
   )
 
   keyboard = InlineKeyboardMarkup(
@@ -134,12 +138,12 @@ async def cmd_start(message: Message, state: FSMContext):
                   text="✨ Craft Elite Surprise", callback_data="create_surprise"
               ),
               InlineKeyboardButton(
-                  text="📖 Guide", callback_data="how_it_works"
+                  text="📊 Vault Analytics", callback_data="check_stats"
               ),
           ],
           [
               InlineKeyboardButton(
-                  text="📊 Total Vault Count", callback_data="check_stats"
+                  text="📖 Guide", callback_data="how_it_works"
               ),
               InlineKeyboardButton(
                   text="🛑 Abort Process", callback_data="cancel_creation"
@@ -250,8 +254,7 @@ async def show_guide(callback: CallbackQuery):
       "1️⃣ Tap **Craft Elite Surprise**.\n"
       "2️⃣ Enter Name, Schedule Year, Month, Date, Time & AM/PM.\n"
       "3️⃣ Provide your custom Wish, Photo, Video, Song, and Voice Note.\n"
-      "4️⃣ Utilize built-in **Change / Back** keys if modifications are"
-      " required.\n"
+      "4️⃣ Utilize built-in **Change / Back** keys if modifications are required.\n"
       "5️⃣ Distribute your secure access link!"
   )
   keyboard = InlineKeyboardMarkup(
@@ -368,7 +371,8 @@ async def cut_cake(callback: CallbackQuery):
 @router.callback_query(F.data == "create_surprise")
 async def process_creation(callback: CallbackQuery, state: FSMContext):
   user_id = callback.from_user.id
-  if user_id == ADMIN_USER_ID:
+  # Admin gets free creation, others need to pay Stars (unless already paid)
+  if user_id == ADMIN_USER_ID or user_id in paid_users:
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [
@@ -378,9 +382,9 @@ async def process_creation(callback: CallbackQuery, state: FSMContext):
             ]
         ]
     )
+    badge = "👑 [Admin Privilege]" if user_id == ADMIN_USER_ID else "⭐ [Elite Pass Active]"
     await callback.message.answer(
-        "👑 **[Admin Privilege Active]**\n\n💎 *Step 1/11:* Enter the recipient's"
-        " full **Name**:",
+        f"{badge}\n\n💎 *Step 1/11:* Enter the recipient's full **Name**:",
         reply_markup=keyboard,
     )
     await state.set_state(CreateSurprise.waiting_for_name)
@@ -389,7 +393,10 @@ async def process_creation(callback: CallbackQuery, state: FSMContext):
     prices = [LabeledPrice(label="Elite Surprise Pass", amount=75)]
     await callback.message.answer_invoice(
         title="Elite Birthday Pass",
-        description="Secure 75 Telegram Stars to craft your elite portal.",
+        description=(
+            "Secure 75 Telegram Stars to craft your elite portal and unlock"
+            " instant preview."
+        ),
         prices=prices,
         currency="XTR",
         payload="scratch_surprise_payment",
@@ -414,6 +421,9 @@ async def process_pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
 @router.message(F.successful_payment)
 async def successful_payment(message: Message, state: FSMContext):
   if message.successful_payment.invoice_payload == "scratch_surprise_payment":
+    user_id = message.from_user.id
+    paid_users.add(user_id)  # Mark user as paid so they can create surprises & preview
+
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [
@@ -1013,6 +1023,7 @@ async def get_voice(message: Message, state: FSMContext):
   target_time = data.get("target_time")
 
   surp_id = f"surp_{uuid.uuid4().hex[:6]}"
+
   surprises_db[surp_id] = {
       "name": name,
       "msg": msg,
@@ -1021,6 +1032,7 @@ async def get_voice(message: Message, state: FSMContext):
       "song": song,
       "voice": voice_id,
       "target_time": target_time,
+      "creators": [user_id],  # Creator who paid/owns can preview instantly
   }
 
   if user_id not in user_created_surprises:
@@ -1069,7 +1081,7 @@ async def main():
   dp = Dispatcher()
   dp.include_router(router)
 
-  # Set Left-side Menu Commands
+  # Set Left-side Menu Commands for Everyone
   await set_bot_commands(bot)
 
   await web_server()
