@@ -27,7 +27,7 @@ router = Router()
 logging.basicConfig(level=logging.INFO)
 
 surprises_db = {}
-user_created_surprises = {}  # Track user creations for stats
+user_created_surprises = {}
 
 
 class CreateSurprise(StatesGroup):
@@ -37,7 +37,6 @@ class CreateSurprise(StatesGroup):
   waiting_for_media = State()
 
 
-# 1. Start & Deep Linking Handler
 @router.message(Command("start"))
 async def cmd_start(message: Message, state: FSMContext):
   user_id = message.from_user.id
@@ -48,7 +47,6 @@ async def cmd_start(message: Message, state: FSMContext):
     if surp_id in surprises_db:
       data = surprises_db[surp_id]
 
-      # Advanced Countdown & Date Check
       if data.get("target_time"):
         try:
           target_dt = datetime.datetime.strptime(
@@ -69,7 +67,6 @@ async def cmd_start(message: Message, state: FSMContext):
         except Exception:
           pass
 
-      # Magical Gift Box Opening UI
       keyboard = InlineKeyboardMarkup(
           inline_keyboard=[
               [
@@ -91,7 +88,6 @@ async def cmd_start(message: Message, state: FSMContext):
       await message.answer("This surprise link has expired or is invalid!")
       return
 
-  # Ultimate Highlight Banner with Inline Features
   highlight_banner = (
       "🌟━━━━━━━━━━━━━━━━━━━🌟\n"
       "   🎉 **THE ULTIMATE ALL-IN-ONE BIRTHDAY BOT** 🎉\n"
@@ -123,7 +119,6 @@ async def cmd_start(message: Message, state: FSMContext):
   await message.answer(highlight_banner, reply_markup=keyboard)
 
 
-# 2. Admin Statistics Dashboard Command (/stats)
 @router.message(Command("stats"))
 async def cmd_stats(message: Message):
   if message.from_user.id == ADMIN_USER_ID:
@@ -139,15 +134,13 @@ async def cmd_stats(message: Message):
     await message.answer("❌ You are not authorized to view admin stats.")
 
 
-# 3. Inline Mode Support (Search surprises anywhere on Telegram)
 @router.inline_query()
 async def inline_search(inline_query: InlineQuery):
   results = []
-  query = inline_query.query.lower()
   user_id = inline_query.from_user.id
 
-  # If user has created surprises, show them in inline search
-  if user_id in user_id_surprises := user_created_surprises.get(user_id, []):
+  user_id_surprises = user_created_surprises.get(user_id, [])
+  if user_id_surprises:
     for surp_id in user_id_surprises:
       if surp_id in surprises_db:
         data = surprises_db[surp_id]
@@ -186,7 +179,6 @@ async def inline_search(inline_query: InlineQuery):
   await inline_query.answer(results, cache_time=1)
 
 
-# How it Works Guide
 @router.callback_query(F.data == "how_it_works")
 async def show_guide(callback: CallbackQuery):
   guide_text = (
@@ -212,7 +204,6 @@ async def show_guide(callback: CallbackQuery):
   await callback.answer()
 
 
-# Step 2: Gift Box Opened -> Scratch Card
 @router.callback_query(F.data.startswith("gift_"))
 async def open_gift(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
@@ -244,7 +235,6 @@ async def open_gift(callback: CallbackQuery):
     await callback.answer()
 
 
-# Step 3: Scratch Card -> Virtual Cake & Candles
 @router.callback_query(F.data.startswith("scratch_"))
 async def scratch_card(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
@@ -276,7 +266,6 @@ async def scratch_card(callback: CallbackQuery):
     await callback.answer()
 
 
-# Step 4: Cake Cutting -> Final Confetti, Media Reveal & Rating Feedback
 @router.callback_query(F.data.startswith("cake_"))
 async def cut_cake(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
@@ -296,25 +285,14 @@ async def cut_cake(callback: CallbackQuery):
         " *Brought to life with the Ultimate Telegram Birthday Bot!*"
     )
 
-    # Interactive Feedback / Rating Keyboard at the end
     rating_keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                InlineKeyboardButton(
-                    text="⭐ 1", callback_data="rate_1"
-                ),
-                InlineKeyboardButton(
-                    text="⭐⭐ 2", callback_data="rate_2"
-                ),
-                InlineKeyboardButton(
-                    text="⭐⭐⭐ 3", callback_data="rate_3"
-                ),
-                InlineKeyboardButton(
-                    text="⭐⭐⭐⭐ 4", callback_data="rate_4"
-                ),
-                InlineKeyboardButton(
-                    text="⭐⭐⭐⭐⭐ 5", callback_data="rate_5"
-                ),
+                InlineKeyboardButton(text="⭐ 1", callback_data="rate_1"),
+                InlineKeyboardButton(text="⭐⭐ 2", callback_data="rate_2"),
+                InlineKeyboardButton(text="⭐⭐⭐ 3", callback_data="rate_3"),
+                InlineKeyboardButton(text="⭐⭐⭐⭐ 4", callback_data="rate_4"),
+                InlineKeyboardButton(text="⭐⭐⭐⭐⭐ 5", callback_data="rate_5"),
             ]
         ]
     )
@@ -337,7 +315,6 @@ async def cut_cake(callback: CallbackQuery):
     await callback.answer()
 
 
-# Rating Callback Handler
 @router.callback_query(F.data.startswith("rate_"))
 async def process_rating(callback: CallbackQuery):
   rating = callback.data.split("_")[1]
@@ -462,7 +439,6 @@ async def get_surprise_media(message: Message, state: FSMContext):
       "target_time": target_time,
   }
 
-  # Track user created surprises for inline search
   if user_id not in user_created_surprises:
     user_created_surprises[user_id] = []
   user_created_surprises[user_id].append(surp_id)
