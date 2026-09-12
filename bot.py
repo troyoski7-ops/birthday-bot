@@ -66,33 +66,30 @@ async def cmd_start(message: Message, state: FSMContext):
     if surp_id in surprises_db:
       data = surprises_db[surp_id]
 
-      # Date, Month, Year & Time Check (Schedule Lock with detailed remaining time)
+      # Safe Time Parsing for Opening
       if data.get("target_time"):
         try:
-          target_dt = datetime.datetime.strptime(
-              data["target_time"], "%Y-%m-%d %H:%M"
-          )
+          time_str = data["target_time"].replace(".", ":")
+          target_dt = datetime.datetime.strptime(time_str, "%Y-%m-%d %H:%M")
           current_dt = datetime.datetime.now()
           if current_dt < target_dt:
             time_left = target_dt - current_dt
             days = time_left.days
             hours = time_left.seconds // 3600
             minutes = (time_left.seconds % 3600) // 60
-            
-            # Show unlock time clearly to the user
             await message.answer(
                 f"⏳ **This elite birthday portal is currently locked!**\n\n"
                 f"🎁 **Recipient:** *{data['name']}*\n"
                 f"🔓 **Unlocks On:** *{data['target_time']}*\n"
-                f"⏰ **Time Remaining:** *{days} days, {hours} hours, {minutes} minutes*\n\n"
-                f"*(Please return when the countdown hits zero to unwrap the gift box!)*",
-                parse_mode="Markdown"
+                f"⏰ **Time Remaining:** *{days} days, {hours} hours, {minutes}"
+                f" minutes*",
+                parse_mode="Markdown",
             )
             return
         except Exception as e:
-          logging.error(f"Time parsing error: {e}")
+          logging.error(f"Time parsing exception bypassed: {e}")
 
-      # If unlocked, show Gift Box with unlock details
+      # Unlocked Gift Box UI
       keyboard = InlineKeyboardMarkup(
           inline_keyboard=[
               [
@@ -105,23 +102,22 @@ async def cmd_start(message: Message, state: FSMContext):
       )
       await message.answer(
           f"🌟 **A top-secret milestone birthday package has arrived for"
-          f" {data['name']}!**\n\n"
-          f"📅 Scheduled Opening Time: *{data.get('target_time', 'Immediate')}*\n\n"
-          f"Tap the glowing gift box below to unwrap it 👇",
+          f" {data['name']}!**\n\nTap the glowing gift box below to unwrap it"
+          " 👇",
           reply_markup=keyboard,
-          parse_mode="Markdown"
+          parse_mode="Markdown",
       )
       return
     else:
       await message.answer("This surprise link has expired or is invalid!")
       return
 
-  # Premium Luxury Welcome Banner
   premium_banner = (
       "💎✨━━━━━━━━━━━━━━━━━━━✨💎\n"
       "     🎉 **ELITE BIRTHDAY SURPRISE HUB** 🎉\n"
       "💎✨━━━━━━━━━━━━━━━━━━━✨💎\n\n"
-      "🌟 *Welcome to the world's most advanced interactive Telegram experience!* \n\n"
+      "🌟 *Welcome to the world's most advanced interactive Telegram"
+      " experience!* \n\n"
       "🎁 **Unleash Next-Gen Magic:**\n"
       "• 📦 *Milestone Gift Box Unwrapping*\n"
       "• 🎫 *Golden Scratch Card Reveal*\n"
@@ -254,7 +250,8 @@ async def show_guide(callback: CallbackQuery):
       "1️⃣ Tap **Craft Elite Surprise**.\n"
       "2️⃣ Enter Name, Schedule Year, Month, Date, Time & AM/PM.\n"
       "3️⃣ Provide your custom Wish, Photo, Video, Song, and Voice Note.\n"
-      "4️⃣ Utilize built-in **Change / Back** keys if modifications are required.\n"
+      "4️⃣ Utilize built-in **Change / Back** keys if modifications are"
+      " required.\n"
       "5️⃣ Distribute your secure access link!"
   )
   keyboard = InlineKeyboardMarkup(
@@ -783,7 +780,7 @@ async def get_ampm(callback: CallbackQuery, state: FSMContext):
   year = data.get("year")
   month = data.get("month").zfill(2)
   day = data.get("date").zfill(2)
-  time_str = data.get("time")
+  time_str = data.get("time").replace(".", ":")
 
   try:
     if ampm == "PM" and not time_str.startswith("12"):
