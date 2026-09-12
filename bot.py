@@ -67,6 +67,7 @@ async def cmd_start(message: Message, state: FSMContext):
     if surp_id in surprises_db:
       data = surprises_db[surp_id]
 
+      # Allow Admin or the Creator of this specific surprise to bypass time lock instantly
       is_creator = (
           user_id == ADMIN_USER_ID or user_id in data.get("creators", [])
       )
@@ -269,14 +270,13 @@ async def show_guide(callback: CallbackQuery):
   await callback.answer()
 
 
-# Fixed Gift Box Handler
+# Gift Box Handler (Fixed to always open instantly via new message if edit fails)
 @router.callback_query(F.data.startswith("gift_"))
 async def open_gift(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
   if surp_id in surprises_db:
     data = surprises_db[surp_id]
     await callback.answer("📦 Unwrapping gift box...", show_alert=False)
-    await asyncio.sleep(0.5)
 
     scratch_keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
@@ -302,14 +302,13 @@ async def open_gift(callback: CallbackQuery):
       )
 
 
-# Fixed Scratch Card Handler
+# Scratch Card Handler
 @router.callback_query(F.data.startswith("scratch_"))
 async def scratch_card(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
   if surp_id in surprises_db:
     data = surprises_db[surp_id]
     await callback.answer("✨ Card scratched!", show_alert=False)
-    await asyncio.sleep(0.5)
 
     cake_keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
@@ -335,21 +334,22 @@ async def scratch_card(callback: CallbackQuery):
       )
 
 
-# Fixed Cake Cutting & Media Handler
+# Cake Cutting & Media Delivery Handler
 @router.callback_query(F.data.startswith("cake_"))
 async def cut_cake(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
   if surp_id in surprises_db:
     data = surprises_db[surp_id]
     await callback.answer("🎂 Cutting cake...", show_alert=False)
-    await asyncio.sleep(0.5)
 
     caption = (
         f"🎊✨ **HAPPY BIRTHDAY {data['name'].upper()}!** ✨🎊\n\n{data['msg']}"
     )
 
     try:
-      await callback.message.edit_text("🎊✨ **MAKING A WISH & CUTTING CAKE!** ✨🎊")
+      await callback.message.edit_text(
+          "🎊✨ **MAKING A WISH & CUTTING CAKE!** ✨🎊"
+      )
     except Exception:
       pass
 
@@ -1145,7 +1145,7 @@ async def get_voice(message: Message, state: FSMContext):
       "song": song,
       "voice": voice_id,
       "target_time": target_time,
-      "creators": [user_id],
+      "creators": [user_id],  # This ensures the creator can open it instantly!
   }
 
   if user_id not in user_created_surprises:
