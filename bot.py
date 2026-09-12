@@ -14,8 +14,11 @@ from aiogram.types import (
     PreCheckoutQuery,
 )
 
-TOKEN = "YOUR_BOT_TOKEN_HERE"
-ADMIN_USER_ID = 123456789  # നിങ്ങളുടെ ടെലഗ്രാം ഐഡി
+# നിങ്ങളുടെ ബോട്ട് ടോക്കൺ ഇവിടെ നൽകിയിരിക്കുന്നു
+TOKEN = "8854916574:AAHhpQWzOOH7IKjuitJfS_yspUoWy0z2So4"
+
+# നിങ്ങളുടെ ടെലഗ്രാം യൂസർ ഐഡി ഇവിടെ നൽകിയിരിക്കുന്നു (നിങ്ങൾക്ക് മാത്രം ഫ്രീ ആക്സസ് കിട്ടാൻ)
+ADMIN_USER_ID = 1689374364
 
 router = Router()
 logging.basicConfig(level=logging.INFO)
@@ -83,11 +86,9 @@ async def scratch_card(callback: CallbackQuery):
   if surp_id in surprises_db:
     data = surprises_db[surp_id]
 
-    # സ്ക്രാച്ച് ചെയ്യുന്ന ഒരു ചെറിയ ആനിമേഷൻ ഫീൽ
     await callback.message.edit_text("✨ *Scratched... Revealing surprise!* ⏳")
     await asyncio.sleep(1)
 
-    # ഒറിജിനൽ മെസ്സേജും ഫോട്ടോയും കാണിക്കുന്നു
     if data.get("photo"):
       await callback.message.answer_photo(
           photo=data["photo"],
@@ -131,7 +132,7 @@ async def process_creation(callback: CallbackQuery, state: FSMContext):
 
 @router.pre_checkout_query()
 async def process_pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
-  await pre_checkout_query.answer(ok=Y)
+  await pre_checkout_query.answer(ok=True)
 
 
 @router.message(F.successful_payment)
