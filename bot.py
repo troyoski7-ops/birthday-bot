@@ -93,21 +93,22 @@ async def cmd_start(message: Message, state: FSMContext):
         except Exception as e:
           logging.error(f"Time parsing exception bypassed: {e}")
 
-      keyboard = InlineKeyboardMarkup(
+      # Direct unwrap without waiting for spinning callback if button issues persist
+      scratch_keyboard = InlineKeyboardMarkup(
           inline_keyboard=[
               [
                   InlineKeyboardButton(
-                      text="🎁 📦 Open Magical Gift Box",
-                      callback_data=f"gift_{surp_id}",
+                      text="🎫 🔲🔲🔲🔲🔲 (Scratch Here)",
+                      callback_data=f"scratch_{surp_id}",
                   )
               ]
           ]
       )
       await message.answer(
-          f"🌟 **A top-secret milestone birthday package has arrived for"
-          f" {data['name']}!**\n\nTap the glowing gift box below to unwrap it"
-          " 👇",
-          reply_markup=keyboard,
+          f"🎉 **A top-secret milestone birthday package has arrived for"
+          f" {data['name']}!** 🎉\n\n👇 *Scratch the card below to"
+          " proceed!*",
+          reply_markup=scratch_keyboard,
           parse_mode="Markdown",
       )
       return
@@ -269,38 +270,16 @@ async def show_guide(callback: CallbackQuery):
   await callback.answer()
 
 
-# Next Option Fix: Using message.answer instead of edit_text to prevent loading spinner
-@router.callback_query(F.data.startswith("gift_"))
-async def open_gift(callback: CallbackQuery):
-  surp_id = callback.data.split("_")[1]
-  if surp_id in surprises_db:
-    data = surprises_db[surp_id]
-    await callback.answer("📦 Unwrapping gift box...", show_alert=False)
-
-    scratch_keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(
-                    text="🎫 🔲🔲🔲🔲🔲 (Scratch Here)",
-                    callback_data=f"scratch_{surp_id}",
-                )
-            ]
-        ]
-    )
-    await callback.message.answer(
-        f"🎉 **Gift Unwrapped successfully for {data['name']}!** 🎉\n\n👇"
-        " *Scratch the card below to proceed!*",
-        reply_markup=scratch_keyboard,
-    )
-
-
 @router.callback_query(F.data.startswith("scratch_"))
 async def scratch_card(callback: CallbackQuery):
+  try:
+    await callback.answer("✨ Card scratched!", cache_time=0)
+  except Exception:
+    pass
+
   surp_id = callback.data.split("_")[1]
   if surp_id in surprises_db:
     data = surprises_db[surp_id]
-    await callback.answer("✨ Card scratched!", show_alert=False)
-
     cake_keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
             [
@@ -320,11 +299,14 @@ async def scratch_card(callback: CallbackQuery):
 
 @router.callback_query(F.data.startswith("cake_"))
 async def cut_cake(callback: CallbackQuery):
+  try:
+    await callback.answer("🎂 Cutting cake...", cache_time=0)
+  except Exception:
+    pass
+
   surp_id = callback.data.split("_")[1]
   if surp_id in surprises_db:
     data = surprises_db[surp_id]
-    await callback.answer("🎂 Cutting cake...", show_alert=False)
-
     caption = (
         f"🎊✨ **HAPPY BIRTHDAY {data['name'].upper()}!** ✨🎊\n\n{data['msg']}"
     )
@@ -378,7 +360,10 @@ async def process_creation(callback: CallbackQuery, state: FSMContext):
         reply_markup=keyboard,
     )
     await state.set_state(CreateSurprise.waiting_for_name)
-    await callback.answer()
+    try:
+      await callback.answer()
+    except Exception:
+      pass
   else:
     prices = [LabeledPrice(label="Elite Surprise Pass", amount=75)]
     await callback.message.answer_invoice(
@@ -391,7 +376,10 @@ async def process_creation(callback: CallbackQuery, state: FSMContext):
         currency="XTR",
         payload="scratch_surprise_payment",
     )
-    await callback.answer()
+    try:
+      await callback.answer()
+    except Exception:
+      pass
 
 
 @router.callback_query(F.data == "cancel_creation")
@@ -400,7 +388,10 @@ async def cancel_creation(callback: CallbackQuery, state: FSMContext):
   await callback.message.answer(
       "🛑 Creation sequence terminated. Send /start to restart."
   )
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.pre_checkout_query()
@@ -477,7 +468,10 @@ async def callback_change_name(callback: CallbackQuery, state: FSMContext):
       "💎 *Step 1/11:* Re-enter recipient's **Name**:", reply_markup=keyboard
   )
   await state.set_state(CreateSurprise.waiting_for_name)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.callback_query(F.data.startswith("year_"))
@@ -516,7 +510,10 @@ async def select_year(callback: CallbackQuery, state: FSMContext):
       reply_markup=keyboard,
   )
   await state.set_state(CreateSurprise.waiting_for_month)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.callback_query(F.data == "change_year")
@@ -538,7 +535,10 @@ async def callback_change_year(callback: CallbackQuery, state: FSMContext):
       "🗓️ *Step 2/11:* Select or type target **Year**:", reply_markup=keyboard
   )
   await state.set_state(CreateSurprise.waiting_for_year)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.message(CreateSurprise.waiting_for_year)
@@ -624,7 +624,10 @@ async def select_month(callback: CallbackQuery, state: FSMContext):
   elif callback.data == "m_manual":
     await callback.message.answer("✏️ Type Month number (1 to 12):")
     return
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.callback_query(F.data == "change_month")
@@ -647,7 +650,10 @@ async def callback_change_month(callback: CallbackQuery, state: FSMContext):
       "🗓️ *Step 3/11:* Select target **Month**:", reply_markup=keyboard
   )
   await state.set_state(CreateSurprise.waiting_for_month)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.callback_query(F.data.startswith("mo_"))
@@ -670,7 +676,10 @@ async def set_month_callback(callback: CallbackQuery, state: FSMContext):
       reply_markup=keyboard,
   )
   await state.set_state(CreateSurprise.waiting_for_date)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.message(CreateSurprise.waiting_for_month)
@@ -726,7 +735,10 @@ async def callback_change_date(callback: CallbackQuery, state: FSMContext):
       "🗓️ *Step 4/11:* Enter target **Date** (1 to 31):", reply_markup=keyboard
   )
   await state.set_state(CreateSurprise.waiting_for_date)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.message(CreateSurprise.waiting_for_time)
@@ -768,7 +780,10 @@ async def callback_change_time(callback: CallbackQuery, state: FSMContext):
       reply_markup=keyboard,
   )
   await state.set_state(CreateSurprise.waiting_for_time)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.callback_query(F.data.startswith("ampm_"))
@@ -808,7 +823,10 @@ async def get_ampm(callback: CallbackQuery, state: FSMContext):
       reply_markup=keyboard,
   )
   await state.set_state(CreateSurprise.waiting_for_message)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.callback_query(F.data == "change_ampm")
@@ -825,7 +843,10 @@ async def callback_change_ampm(callback: CallbackQuery, state: FSMContext):
       "☀️🌙 *Step 6/11:* Select **AM or PM**:", reply_markup=keyboard
   )
   await state.set_state(CreateSurprise.waiting_for_ampm)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.message(CreateSurprise.waiting_for_message)
@@ -865,7 +886,10 @@ async def callback_change_wish(callback: CallbackQuery, state: FSMContext):
       reply_markup=keyboard,
   )
   await state.set_state(CreateSurprise.waiting_for_message)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.message(CreateSurprise.waiting_for_photo)
@@ -907,7 +931,10 @@ async def callback_change_photo(callback: CallbackQuery, state: FSMContext):
       reply_markup=keyboard,
   )
   await state.set_state(CreateSurprise.waiting_for_photo)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.message(CreateSurprise.waiting_for_video)
@@ -949,7 +976,10 @@ async def callback_change_video(callback: CallbackQuery, state: FSMContext):
       reply_markup=keyboard,
   )
   await state.set_state(CreateSurprise.waiting_for_video)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.message(CreateSurprise.waiting_for_song)
@@ -991,7 +1021,10 @@ async def callback_change_song(callback: CallbackQuery, state: FSMContext):
       reply_markup=keyboard,
   )
   await state.set_state(CreateSurprise.waiting_for_song)
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.message(CreateSurprise.waiting_for_voice)
