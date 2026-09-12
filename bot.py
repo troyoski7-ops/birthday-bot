@@ -1,6 +1,8 @@
 import asyncio
 import logging
+import os
 import uuid
+from aiohttp import web
 from aiogram import Bot, Dispatcher, F, Router
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
@@ -14,10 +16,7 @@ from aiogram.types import (
     PreCheckoutQuery,
 )
 
-# നിങ്ങളുടെ ബോട്ട് ടോക്കൺ ഇവിടെ നൽകിയിരിക്കുന്നു
 TOKEN = "8854916574:AAHhpQWzOOH7IKjuitJfS_yspUoWy0z2So4"
-
-# നിങ്ങളുടെ ടെലഗ്രാം യൂസർ ഐഡി ഇവിടെ നൽകിയിരിക്കുന്നു (നിങ്ങൾക്ക് മാത്രം ഫ്രീ ആക്സസ് കിട്ടാൻ)
 ADMIN_USER_ID = 1689374364
 
 router = Router()
@@ -41,7 +40,6 @@ async def cmd_start(message: Message, state: FSMContext):
     surp_id = args[1]
     if surp_id in surprises_db:
       data = surprises_db[surp_id]
-      # സ്ക്രാച്ച് കാർഡ് ലുക്കിലുള്ള കവർ മെസ്സേജ്
       keyboard = InlineKeyboardMarkup(
           inline_keyboard=[
               [
@@ -79,7 +77,6 @@ async def cmd_start(message: Message, state: FSMContext):
   )
 
 
-# സ്ക്രാച്ച് കാർഡ് തുറക്കുമ്പോൾ (Scratch Reveal Effect)
 @router.callback_query(F.data.startswith("scratch_"))
 async def scratch_card(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
@@ -136,7 +133,7 @@ async def process_pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
 
 
 @router.message(F.successful_payment)
-async def successful_payment(message: Message, state: FSMContext):
+async def successful_payment(message: Message, state: FsmContext):
   if message.successful_payment.invoice_payload == "scratch_surprise_payment":
     await message.answer(
         "✅ പെയ്‌മെന്റ് വിജയകരമായി പൂർത്തിയായി!\n\nഇനി പിറന്നാൾ ആഘോഷിക്കുന്ന"
@@ -188,10 +185,29 @@ async def get_surprise_photo(message: Message, state: FSMContext):
   await state.clear()
 
 
+# Render-ന് വേണ്ടിയുള്ള ചെറിയ വെബ് സർവർ (Port Handlers)
+async def handle(request):
+  return web.Response(text="Bot is running!")
+
+
+async def web_server():
+  app = web.Application()
+  app.add_routes([web.get("/", handle)])
+  runner = web.AppRunner(app)
+  await runner.setup()
+  port = int(os.environ.get("PORT", 8080))
+  site = web.TCPSite(runner, "0.0.0.0", port)
+  await site.start()
+
+
 async def main():
   bot = Bot(token=TOKEN)
   dp = Dispatcher()
   dp.include_router(router)
+
+  # വെബ് സർവറും ബോട്ടും ഒരേസമയം റൺ ചെയ്യാൻ
+  await web_server()
+
   await bot.delete_webhook(drop_pending_updates=True)
   await dp.start_polling(bot)
 
