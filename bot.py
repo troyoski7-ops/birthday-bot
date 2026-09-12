@@ -93,7 +93,7 @@ async def cmd_start(message: Message, state: FSMContext):
         except Exception as e:
           logging.error(f"Time parsing exception bypassed: {e}")
 
-      # Direct unwrap without waiting for spinning callback if button issues persist
+      # Direct Scratch Card View on Start (No Gift Box Button needed to avoid loading)
       scratch_keyboard = InlineKeyboardMarkup(
           inline_keyboard=[
               [
@@ -180,7 +180,10 @@ async def callback_stats(callback: CallbackQuery):
       f"👑 Core System Status: `Online & Secured 🚀`",
       parse_mode="Markdown",
   )
-  await callback.answer()
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.message(Command("help"))
@@ -266,8 +269,11 @@ async def show_guide(callback: CallbackQuery):
           ]
       ]
   )
-  await callback.message.edit_text(guide_text, reply_markup=keyboard)
-  await callback.answer()
+  await callback.message.answer(guide_text, reply_markup=keyboard)
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.callback_query(F.data.startswith("scratch_"))
@@ -360,10 +366,6 @@ async def process_creation(callback: CallbackQuery, state: FSMContext):
         reply_markup=keyboard,
     )
     await state.set_state(CreateSurprise.waiting_for_name)
-    try:
-      await callback.answer()
-    except Exception:
-      pass
   else:
     prices = [LabeledPrice(label="Elite Surprise Pass", amount=75)]
     await callback.message.answer_invoice(
@@ -376,17 +378,17 @@ async def process_creation(callback: CallbackQuery, state: FSMContext):
         currency="XTR",
         payload="scratch_surprise_payment",
     )
-    try:
-      await callback.answer()
-    except Exception:
-      pass
+  try:
+    await callback.answer()
+  except Exception:
+    pass
 
 
 @router.callback_query(F.data == "cancel_creation")
 async def cancel_creation(callback: CallbackQuery, state: FSMContext):
   await state.clear()
   await callback.message.answer(
-      "🛑 Creation sequence terminated. Send /start to restart."
+      "🛑 Sequence aborted successfully. Send /start to restart."
   )
   try:
     await callback.answer()
