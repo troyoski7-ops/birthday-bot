@@ -32,9 +32,16 @@ user_created_surprises = {}
 
 class CreateSurprise(StatesGroup):
   waiting_for_name = State()
+  waiting_for_year = State()
+  waiting_for_month = State()
   waiting_for_date = State()
+  waiting_for_time = State()
+  waiting_for_ampm = State()
   waiting_for_message = State()
-  waiting_for_media = State()
+  waiting_for_photo = State()
+  waiting_for_video = State()
+  waiting_for_song = State()
+  waiting_for_voice = State()
 
 
 @router.message(Command("start"))
@@ -92,10 +99,9 @@ async def cmd_start(message: Message, state: FSMContext):
       "🌟━━━━━━━━━━━━━━━━━━━🌟\n"
       "   🎉 **THE ULTIMATE ALL-IN-ONE BIRTHDAY BOT** 🎉\n"
       "🌟━━━━━━━━━━━━━━━━━━━🌟\n\n"
-      "✨ *Experience full Telegram capabilities: Inline Search, Gift Boxes,"
-      " Scratch Cards, Cake Cutting, Countdown Locks, Media & Stars Payment!* "
-      "\n\n"
-      "Choose an option below:"
+      "✨ *Create magical birthday surprises with Gift Boxes, Scratch Cards,"
+      " Cake Cutting, Photos, Videos, Songs, Voice Notes & Custom Schedules!* \n\n"
+      "👇 **Click the button below to start:**"
   )
 
   keyboard = InlineKeyboardMarkup(
@@ -126,8 +132,7 @@ async def cmd_stats(message: Message):
     await message.answer(
         "📊 **Admin Statistics Dashboard:**\n\n"
         f"🎁 Total Surprises Created: `{total_surprises}`\n"
-        f"👑 Bot Status: `Online & Fully Operational`\n"
-        f"⚡ Hosting: `Render + UptimeRobot Active`",
+        f"👑 Bot Status: `Online & Fully Operational`",
         parse_mode="Markdown",
     )
   else:
@@ -138,8 +143,8 @@ async def cmd_stats(message: Message):
 async def inline_search(inline_query: InlineQuery):
   results = []
   user_id = inline_query.from_user.id
-
   user_id_surprises = user_created_surprises.get(user_id, [])
+
   if user_id_surprises:
     for surp_id in user_id_surprises:
       if surp_id in surprises_db:
@@ -182,14 +187,12 @@ async def inline_search(inline_query: InlineQuery):
 @router.callback_query(F.data == "how_it_works")
 async def show_guide(callback: CallbackQuery):
   guide_text = (
-      "📖 **How This All-In-One Bot Works:**\n\n"
-      "1️⃣ **Create:** Click 'Create Surprise' and enter the name.\n"
-      "2️⃣ **Schedule:** Set exact date/year/time with live countdown.\n"
-      "3️⃣ **Customize:** Add Photos, Videos, or Audio/Songs!\n"
-      "4️⃣ **Inline Search:** Type `@BotUsername` in any chat to share your"
-      " links instantly.\n"
-      "5️⃣ **Magic Experience:** Gift Box unwrapping, Scratch Cards, and Cake"
-      " cutting with ratings!"
+      "📖 **How This Bot Works:**\n\n"
+      "1️⃣ Click **Create Surprise**.\n"
+      "2️⃣ Enter Name, Date, Year & Time using buttons.\n"
+      "3️⃣ Add Wish, Photo, Video, Song, and Voice Note step-by-step.\n"
+      "4️⃣ Use **Back / Change** buttons if you need to modify anything!\n"
+      "5️⃣ Share the unique link with your friend!"
   )
   keyboard = InlineKeyboardMarkup(
       inline_keyboard=[
@@ -209,9 +212,8 @@ async def open_gift(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
   if surp_id in surprises_db:
     data = surprises_db[surp_id]
-
     await callback.message.edit_text(
-        "📦 *Unwrapping the gift box...* ✨\n🎟️ *Preparing the golden scratch"
+        "📦 *Unwrapping the gift box...* ✨\n🎟️ *Preparing the scratch"
         " card...* 🌟"
     )
     await asyncio.sleep(1.5)
@@ -227,9 +229,8 @@ async def open_gift(callback: CallbackQuery):
         ]
     )
     await callback.message.edit_text(
-        f"🎉 **Gift Unwrapped successfully for {data['name']}!** 🎉\n\nA special"
-        " scratch card is waiting for you.\n\n👇 *Scratch the card below to"
-        " proceed!*",
+        f"🎉 **Gift Unwrapped successfully for {data['name']}!** 🎉\n\n👇"
+        " *Scratch the card below to proceed!*",
         reply_markup=scratch_keyboard,
     )
     await callback.answer()
@@ -240,10 +241,9 @@ async def scratch_card(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
   if surp_id in surprises_db:
     data = surprises_db[surp_id]
-
     await callback.message.edit_text(
-        "✨ *Card scratched successfully!* 🎫\n🎂 *Lighting up birthday candles"
-        " & bringing out the cake...* 🕯️"
+        "✨ *Card scratched!* 🎫\n🎂 *Lighting candles & bringing out the"
+        " cake...* 🕯️"
     )
     await asyncio.sleep(1.5)
 
@@ -258,9 +258,8 @@ async def scratch_card(callback: CallbackQuery):
         ]
     )
     await callback.message.edit_text(
-        f"🎈 **Almost there, {data['name']}!** 🎈\n\nA delicious custom birthday"
-        " cake is right here with burning candles. 🎂🕯️\n\n👇 *Tap below to blow"
-        " out the candles and cut the cake!*",
+        f"🎈 **Almost there, {data['name']}!** 🎈\n\n👇 *Tap below to blow out"
+        " the candles and cut the cake!*",
         reply_markup=cake_keyboard,
     )
     await callback.answer()
@@ -271,78 +270,43 @@ async def cut_cake(callback: CallbackQuery):
   surp_id = callback.data.split("_")[1]
   if surp_id in surprises_db:
     data = surprises_db[surp_id]
-
     await callback.message.edit_text(
-        "🎉 *Make a wish! Blow!* 🌬️🎂\n🎊 *Confetti explosion! Cutting the"
-        " cake...* 🍰✨"
+        "🎉 *Make a wish! Blow!* 🌬️🎂\n🎊 *Cutting the cake...* 🍰✨"
     )
     await asyncio.sleep(1.5)
 
-    media_type = data.get("media_type")
-    media_id = data.get("media_id")
     caption = (
-        f"🎊✨ **HAPPY BIRTHDAY {data['name'].upper()}!** ✨🎊\n\n{data['msg']}\n\n💖"
-        " *Brought to life with the Ultimate Telegram Birthday Bot!*"
+        f"🎊✨ **HAPPY BIRTHDAY {data['name'].upper()}!** ✨🎊\n\n{data['msg']}"
     )
 
-    rating_keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(text="⭐ 1", callback_data="rate_1"),
-                InlineKeyboardButton(text="⭐⭐ 2", callback_data="rate_2"),
-                InlineKeyboardButton(text="⭐⭐⭐ 3", callback_data="rate_3"),
-                InlineKeyboardButton(text="⭐⭐⭐⭐ 4", callback_data="rate_4"),
-                InlineKeyboardButton(text="⭐⭐⭐⭐⭐ 5", callback_data="rate_5"),
-            ]
-        ]
-    )
+    if data.get("photo"):
+      await callback.message.answer_photo(photo=data["photo"], caption=caption)
+    if data.get("video"):
+      await callback.message.answer_video(video=data["video"], caption="🎥 Special Video")
+    if data.get("song"):
+      await callback.message.answer_audio(audio=data["song"], caption="🎵 Special Song")
+    if data.get("voice"):
+      await callback.message.answer_voice(voice=data["voice"], caption="🎤 Special Voice Note")
 
-    if media_type == "photo":
-      await callback.message.answer_photo(
-          photo=media_id, caption=caption, reply_markup=rating_keyboard
-      )
-    elif media_type == "video":
-      await callback.message.answer_video(
-          video=media_id, caption=caption, reply_markup=rating_keyboard
-      )
-    elif media_type == "audio":
-      await callback.message.answer_audio(
-          audio=media_id, caption=caption, reply_markup=rating_keyboard
-      )
-    else:
-      await callback.message.answer(caption, reply_markup=rating_keyboard)
+    if not any([data.get("photo"), data.get("video"), data.get("song"), data.get("voice")]):
+      await callback.message.answer(caption)
 
     await callback.answer()
-
-
-@router.callback_query(F.data.startswith("rate_"))
-async def process_rating(callback: CallbackQuery):
-  rating = callback.data.split("_")[1]
-  await callback.answer(
-      f"🙏 Thank you for rating this surprise {rating} stars! ⭐"
-  )
-  await callback.message.edit_reply_markup(
-      reply_markup=InlineKeyboardMarkup(
-          inline_keyboard=[
-              [
-                  InlineKeyboardButton(
-                      text=f"✅ Rated {rating}/5 Stars ⭐",
-                      callback_data="rated_done",
-                  )
-              ]
-          ]
-      )
-  )
 
 
 @router.callback_query(F.data == "create_surprise")
 async def process_creation(callback: CallbackQuery, state: FSMContext):
   user_id = callback.from_user.id
-
   if user_id == ADMIN_USER_ID:
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="⬅️ Cancel / Back to Start", callback_data="cancel_creation")]
+        ]
+    )
     await callback.message.answer(
-        "👑 [Admin Mode]: You can create ultimate surprises for"
-        " free!\n\nEnter the birthday person's name:"
+        "👑 [Admin Mode]: Free creation enabled!\n\n1️⃣ Enter the birthday"
+        " person's name:",
+        reply_markup=keyboard
     )
     await state.set_state(CreateSurprise.waiting_for_name)
     await callback.answer()
@@ -350,15 +314,19 @@ async def process_creation(callback: CallbackQuery, state: FSMContext):
     prices = [LabeledPrice(label="Ultimate Surprise Pass", amount=75)]
     await callback.message.answer_invoice(
         title="Ultimate Birthday Bot",
-        description=(
-            "Pay 75 Telegram Stars to create your custom next-gen magical"
-            " birthday surprise."
-        ),
+        description="Pay 75 Telegram Stars to create your surprise.",
         prices=prices,
         currency="XTR",
         payload="scratch_surprise_payment",
     )
     await callback.answer()
+
+
+@router.callback_query(F.data == "cancel_creation")
+async def cancel_creation(callback: CallbackQuery, state: FSMContext):
+  await state.clear()
+  await callback.message.edit_text("❌ Creation cancelled. Send /start to begin again.")
+  await callback.answer()
 
 
 @router.pre_checkout_query()
@@ -369,8 +337,14 @@ async def process_pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
 @router.message(F.successful_payment)
 async def successful_payment(message: Message, state: FSMContext):
   if message.successful_payment.invoice_payload == "scratch_surprise_payment":
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="⬅️ Cancel", callback_data="cancel_creation")]
+        ]
+    )
     await message.answer(
-        "✅ Payment successful!\n\nEnter the birthday person's name:"
+        "✅ Payment successful!\n\n1️⃣ Enter the birthday person's name:",
+        reply_markup=keyboard
     )
     await state.set_state(CreateSurprise.waiting_for_name)
 
@@ -378,64 +352,297 @@ async def successful_payment(message: Message, state: FSMContext):
 @router.message(CreateSurprise.waiting_for_name)
 async def get_surprise_name(message: Message, state: FSMContext):
   await state.update_data(name=message.text)
-  await message.answer(
-      "📅 Enter the unlock Date, Year & Time with Countdown Lock (Format:"
-      " `YYYY-MM-DD HH:MM`)\n*(Example: `2026-12-31 00:00`)*\n\n(Or type"
-      " `/skip` to open it immediately anytime):"
+  
+  keyboard = InlineKeyboardMarkup(
+      inline_keyboard=[
+          [
+              InlineKeyboardButton(text="2026", callback_data="year_2026"),
+              InlineKeyboardButton(text="2027", callback_data="year_2027"),
+          ],
+          [InlineKeyboardButton(text="✏️ Type Year Manually", callback_data="year_manual")],
+          [InlineKeyboardButton(text="⬅️ Change Name", callback_data="change_name")]
+      ]
   )
+  await message.answer(f"Name saved: **{message.text}**\n\n2️⃣ Select or type the **Year**:", reply_markup=keyboard, parse_mode="Markdown")
+  await state.set_state(CreateSurprise.waiting_for_year)
+
+
+@router.callback_query(F.data == "change_name")
+async def callback_change_name(callback: CallbackQuery, state: FSMContext):
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Cancel", callback_data="cancel_creation")]])
+  await callback.message.edit_text("1️⃣ Please re-enter the birthday person's name:", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_name)
+  await callback.answer()
+
+
+@router.callback_query(F.data.startswith("year_"))
+async def select_year(callback: CallbackQuery, state: FSMContext):
+  if callback.data == "year_manual":
+    await callback.message.edit_text("Please type the Year (e.g., 2026):")
+    return
+  
+  year = callback.data.split("_")[1]
+  await state.update_data(year=year)
+  
+  keyboard = InlineKeyboardMarkup(
+      inline_keyboard=[
+          [InlineKeyboardButton(text="Jan-Apr", callback_data="m_q1"), InlineKeyboardButton(text="May-Aug", callback_data="m_q2")],
+          [InlineKeyboardButton(text="Sep-Dec", callback_data="m_q3"), InlineKeyboardButton(text="✏️ Type Month (1-12)", callback_data="m_manual")],
+          [InlineKeyboardButton(text="⬅️ Change Year", callback_data="change_year")]
+      ]
+  )
+  await callback.message.edit_text(f"Year selected: {year}\n\n3️⃣ Select **Month**:", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_month)
+  await callback.answer()
+
+
+@router.callback_query(F.data == "change_year")
+async def callback_change_year(callback: CallbackQuery, state: FSMContext):
+  keyboard = InlineKeyboardMarkup(
+      inline_keyboard=[
+          [InlineKeyboardButton(text="2026", callback_data="year_2026"), InlineKeyboardButton(text="2027", callback_data="year_2027")],
+          [InlineKeyboardButton(text="✏️ Type Manual", callback_data="year_manual")]
+      ]
+  )
+  await callback.message.edit_text("2️⃣ Select or type the **Year**:", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_year)
+  await callback.answer()
+
+
+@router.message(CreateSurprise.waiting_for_year)
+async def manual_year(message: Message, state: FSMContext):
+  await state.update_data(year=message.text)
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Change Year", callback_data="change_year")]])
+  await message.answer("3️⃣ Enter **Month** (1 to 12):", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_month)
+
+
+@router.callback_query(F.data.startswith("m_"))
+async def select_month(callback: CallbackQuery, state: FSMContext):
+  if callback.data == "m_q1":
+    kb = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="1 (Jan)", callback_data="mo_1"), InlineKeyboardButton(text="2 (Feb)", callback_data="mo_2")], [InlineKeyboardButton(text="3 (Mar)", callback_data="mo_3"), InlineKeyboardButton(text="4 (Apr)", callback_data="mo_4")], [InlineKeyboardButton(text="⬅️ Change Month", callback_data="change_month")]])
+    await callback.message.edit_text("Select Month:", reply_markup=kb)
+    return
+  elif callback.data == "m_q2":
+    kb = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="5 (May)", callback_data="mo_5"), InlineKeyboardButton(text="6 (Jun)", callback_data="mo_6")], [InlineKeyboardButton(text="7 (Jul)", callback_data="mo_7"), InlineKeyboardButton(text="8 (Aug)", callback_data="mo_8")], [InlineKeyboardButton(text="⬅️ Change Month", callback_data="change_month")]])
+    await callback.message.edit_text("Select Month:", reply_markup=kb)
+    return
+  elif callback.data == "m_q3":
+    kb = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="9 (Sep)", callback_data="mo_9"), InlineKeyboardButton(text="10 (Oct)", callback_data="mo_10")], [InlineKeyboardButton(text="11 (Nov)", callback_data="mo_11"), InlineKeyboardButton(text="12 (Dec)", callback_data="mo_12")], [InlineKeyboardButton(text="⬅️ Change Month", callback_data="change_month")]])
+    await callback.message.edit_text("Select Month:", reply_markup=kb)
+    return
+  elif callback.data == "m_manual":
+    await callback.message.edit_text("Type Month number (1-12):")
+    return
+  await callback.answer()
+
+
+@router.callback_query(F.data == "change_month")
+async def callback_change_month(callback: CallbackQuery, state: FSMContext):
+  keyboard = InlineKeyboardMarkup(
+      inline_keyboard=[
+          [InlineKeyboardButton(text="Jan-Apr", callback_data="m_q1"), InlineKeyboardButton(text="May-Aug", callback_data="m_q2")],
+          [InlineKeyboardButton(text="Sep-Dec", callback_data="m_q3"), InlineKeyboardButton(text="✏️ Type Manual", callback_data="m_manual")]
+      ]
+  )
+  await callback.message.edit_text("3️⃣ Select **Month**:", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_month)
+  await callback.answer()
+
+
+@router.callback_query(F.data.startswith("mo_"))
+async def set_month_callback(callback: CallbackQuery, state: FSMContext):
+  month = callback.data.split("_")[1]
+  await state.update_data(month=month)
+  
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Change Month", callback_data="change_month")]])
+  await callback.message.edit_text(f"Month selected: {month}\n\n4️⃣ Enter **Date** (1-31):", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_date)
+  await callback.answer()
+
+
+@router.message(CreateSurprise.waiting_for_month)
+async def manual_month(message: Message, state: FSMContext):
+  await state.update_data(month=message.text)
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Change Month", callback_data="change_month")]])
+  await message.answer("4️⃣ Enter **Date** (1 to 31):", reply_markup=keyboard)
   await state.set_state(CreateSurprise.waiting_for_date)
 
 
 @router.message(CreateSurprise.waiting_for_date)
-async def get_surprise_date(message: Message, state: FSMContext):
-  target_time = None
-  if message.text != "/skip":
-    target_time = message.text
+async def get_date(message: Message, state: FSMContext):
+  await state.update_data(date=message.text)
+  
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Change Date", callback_data="change_date")]])
+  await message.answer("5️⃣ Enter **Time** (Format: `HH:MM`, e.g., `12:00`):", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_time)
 
+
+@router.callback_query(F.data == "change_date")
+async def callback_change_date(callback: CallbackQuery, state: FSMContext):
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Cancel", callback_data="cancel_creation")]])
+  await callback.message.edit_text("4️⃣ Enter **Date** (1 to 31):", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_date)
+  await callback.answer()
+
+
+@router.message(CreateSurprise.waiting_for_time)
+async def get_time(message: Message, state: FSMContext):
+  await state.update_data(time=message.text)
+  
+  keyboard = InlineKeyboardMarkup(
+      inline_keyboard=[
+          [
+              InlineKeyboardButton(text="☀️ AM", callback_data="ampm_AM"),
+              InlineKeyboardButton(text="🌙 PM", callback_data="ampm_PM"),
+          ],
+          [InlineKeyboardButton(text="⬅️ Change Time", callback_data="change_time")]
+      ]
+  )
+  await message.answer("6️⃣ Select **AM or PM**:", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_ampm)
+
+
+@router.callback_query(F.data == "change_time")
+async def callback_change_time(callback: CallbackQuery, state: FSMContext):
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Cancel", callback_data="cancel_creation")]])
+  await callback.message.edit_text("5️⃣ Enter **Time** (Format: `HH:MM`):", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_time)
+  await callback.answer()
+
+
+@router.callback_query(F.data.startswith("ampm_"))
+async def get_ampm(callback: CallbackQuery, state: FSMContext):
+  ampm = callback.data.split("_")[1]
+  data = await state.get_data()
+  
+  year = data.get("year")
+  month = data.get("month").zfill(2)
+  day = data.get("date").zfill(2)
+  time_str = data.get("time")
+  
+  try:
+    if ampm == "PM" and not time_str.startswith("12"):
+      hours, mins = map(int, time_str.split(":"))
+      time_str = f"{hours + 12}:{mins:02d}"
+    elif ampm == "AM" and time_str.startswith("12"):
+      time_str = f"00:{time_str.split(':')[1]}"
+  except Exception:
+    pass
+
+  target_time = f"{year}-{month}-{day} {time_str}"
   await state.update_data(target_time=target_time)
-  await message.answer("✍️ Now, type your heartfelt birthday wishes/message:")
+
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Change AM/PM", callback_data="change_ampm")]])
+  await callback.message.edit_text(f"✅ Schedule set to: {target_time} ({ampm})\n\n7️⃣ Now, type your heartfelt **Birthday Wish / Message**:", reply_markup=keyboard)
   await state.set_state(CreateSurprise.waiting_for_message)
+  await callback.answer()
+
+
+@router.callback_query(F.data == "change_ampm")
+async def callback_change_ampm(callback: CallbackQuery, state: FSMContext):
+  keyboard = InlineKeyboardMarkup(
+      inline_keyboard=[
+          [InlineKeyboardButton(text="☀️ AM", callback_data="ampm_AM"), InlineKeyboardButton(text="🌙 PM", callback_data="ampm_PM")]
+      ]
+  )
+  await callback.message.edit_text("6️⃣ Select **AM or PM**:", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_ampm)
+  await callback.answer()
 
 
 @router.message(CreateSurprise.waiting_for_message)
-async def get_surprise_message(message: Message, state: FSMContext):
+async def get_message(message: Message, state: FSMContext):
   await state.update_data(msg=message.text)
-  await message.answer(
-      "📁 Send a media file: You can send a **Photo**, **Video**, or"
-      " **Audio/Song** to show after the cake cutting (Or type `/skip`):"
-  )
-  await state.set_state(CreateSurprise.waiting_for_media)
+  
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Change Wish", callback_data="change_wish")]])
+  await message.answer("8️⃣ Send a **Photo** for the surprise (Or type `/skip`):", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_photo)
 
 
-@router.message(CreateSurprise.waiting_for_media)
-async def get_surprise_media(message: Message, state: FSMContext):
+@router.callback_query(F.data == "change_wish")
+async def callback_change_wish(callback: CallbackQuery, state: FSMContext):
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Cancel", callback_data="cancel_creation")]])
+  await callback.message.edit_text("7️⃣ Now, type your heartfelt **Birthday Wish / Message**:", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_message)
+  await callback.answer()
+
+
+@router.message(CreateSurprise.waiting_for_photo)
+async def get_photo(message: Message, state: FSMContext):
+  photo_id = message.photo[-1].file_id if message.photo else None
+  await state.update_data(photo=photo_id)
+  
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Change Photo", callback_data="change_photo")]])
+  await message.answer("9️⃣ Send a **Video** (Or type `/skip`):", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_video)
+
+
+@router.callback_query(F.data == "change_photo")
+async def callback_change_photo(callback: CallbackQuery, state: FSMContext):
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Cancel", callback_data="cancel_creation")]])
+  await callback.message.edit_text("8️⃣ Send a **Photo** for the surprise (Or type `/skip`):", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_photo)
+  await callback.answer()
+
+
+@router.message(CreateSurprise.waiting_for_video)
+async def get_video(message: Message, state: FSMContext):
+  video_id = message.video.file_id if message.video else None
+  await state.update_data(video=video_id)
+  
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Change Video", callback_data="change_video")]])
+  await message.answer("🔟 Send a **Song / Music file** (Or type `/skip`):", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_song)
+
+
+@router.callback_query(F.data == "change_video")
+async def callback_change_video(callback: CallbackQuery, state: FSMContext):
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Cancel", callback_data="cancel_creation")]])
+  await callback.message.edit_text("9️⃣ Send a **Video** (Or type `/skip`):", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_video)
+  await callback.answer()
+
+
+@router.message(CreateSurprise.waiting_for_song)
+async def get_song(message: Message, state: FSMContext):
+  song_id = message.audio.file_id if message.audio else None
+  await state.update_data(song=song_id)
+  
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Change Song", callback_data="change_song")]])
+  await message.answer("1️⃣1️⃣ Send a **Voice Note / Audio message** (Or type `/skip`):", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_voice)
+
+
+@router.callback_query(F.data == "change_song")
+async def callback_change_song(callback: CallbackQuery, state: FSMContext):
+  keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Cancel", callback_data="cancel_creation")]])
+  await callback.message.edit_text("🔟 Send a **Song / Music file** (Or type `/skip`):", reply_markup=keyboard)
+  await state.set_state(CreateSurprise.waiting_for_song)
+  await callback.answer()
+
+
+@router.message(CreateSurprise.waiting_for_voice)
+async def get_voice(message: Message, state: FSMContext):
   user_id = message.from_user.id
-  user_data = await state.get_data()
-  name = user_data.get("name")
-  msg = user_data.get("msg")
-  target_time = user_data.get("target_time")
-
-  media_type = None
-  media_id = None
-
-  if message.photo:
-    media_type = "photo"
-    media_id = message.photo[-1].file_id
-  elif message.video:
-    media_type = "video"
-    media_id = message.video.file_id
-  elif message.audio or message.voice:
-    media_type = "audio"
-    media_id = (
-        message.audio.file_id if message.audio else message.voice.file_id
-    )
+  voice_id = message.voice.file_id if message.voice else (message.audio.file_id if message.audio else None)
+  
+  data = await state.get_data()
+  name = data.get("name")
+  msg = data.get("msg")
+  photo = data.get("photo")
+  video = data.get("video")
+  song = data.get("song")
+  target_time = data.get("target_time")
 
   surp_id = f"surp_{uuid.uuid4().hex[:6]}"
   surprises_db[surp_id] = {
       "name": name,
       "msg": msg,
-      "media_type": media_type,
-      "media_id": media_id,
+      "photo": photo,
+      "video": video,
+      "song": song,
+      "voice": voice_id,
       "target_time": target_time,
   }
 
@@ -446,11 +653,17 @@ async def get_surprise_media(message: Message, state: FSMContext):
   bot_info = await message.bot.get_me()
   share_link = f"https://t.me/{bot_info.username}?start={surp_id}"
 
+  preview_keyboard = InlineKeyboardMarkup(
+      inline_keyboard=[
+          [InlineKeyboardButton(text="🔍 Preview My Surprise Now", url=share_link)]
+      ]
+  )
+
   await message.answer(
-      f"🌟 **Your Magical All-in-One Birthday Surprise is Ready!**\n\nShare this"
-      f" link with the birthday person:\n`{share_link}`\n\n🔍 *Pro Tip:* You can"
-      f" also type `@{bot_info.username}` in any chat to share your surprise"
-      " instantly via Inline Search!",
+      f"🌟 **Your Amazing Birthday Surprise is Ready!**\n\n"
+      f"Share link: `{share_link}`\n\n"
+      f"👉 Click below to test/preview your own surprise instantly!",
+      reply_markup=preview_keyboard,
       parse_mode="Markdown",
   )
   await state.clear()
