@@ -1,12 +1,14 @@
 import asyncio
+import os
 from aiogram import Bot, Dispatcher, F, types
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
+from aiohttp import web
 
 # Telegram Bot Token
-API_TOKEN = "8854916574:AAHhpQWzOOH7IKjuitJfS_yspUoWy0z2So4"
+API_TOKEN = "8854916574:AAEgxWmPyP4OPNSsLfsBbXXFu5W6LiFcq0o"
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
@@ -206,8 +208,24 @@ async def process_audio(message: types.Message, state: FSMContext):
   await state.clear()
 
 
+# Render Web Service-ന് വേണ്ടിയുള്ള ചെറിയ Dummy Web Server
+async def handle(request):
+  return web.Response(text="Bot is running!")
+
+
+async def web_server():
+  app = web.Application()
+  app.router.add_get("/", handle)
+  runner = web.AppRunner(app)
+  await runner.setup()
+  port = int(os.environ.get("PORT", 8080))
+  site = web.TCPSite(runner, "0.0.0.0", port)
+  await site.start()
+
+
 async def main():
-  await dp.start_polling(bot)
+  # Web server ഒപ്പം Telegram Polling ഒന്നിച്ചു Run ചെയ്യുന്നു
+  await asyncio.gather(web_server(), dp.start_polling(bot))
 
 
 if __name__ == "__main__":
