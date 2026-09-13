@@ -1,5 +1,6 @@
 import asyncio
 import os
+import sqlite3
 import urllib.parse
 from aiogram import Bot, Dispatcher, F, types
 from aiogram.filters import Command
@@ -16,7 +17,7 @@ from aiohttp import web
 # Telegram Bot Token
 API_TOKEN = "8854916574:AAEgxWmPyP4OPNSsLfsBbXXFu5W6LiFcq0o"
 
-# Owner ID (നിങ്ങൾക്ക് ഫ്രീ ആയി ഉപയോഗിക്കാൻ)
+# Owner ID (നിങ്ങൾക്ക് ഫ്രീ ആയി ഉപയോഗിക്കാനും /stats കാണാനും)
 OWNER_ID = 1689374364
 
 bot = Bot(token=API_TOKEN)
@@ -24,6 +25,56 @@ dp = Dispatcher()
 
 # Netlify Web App Link
 NETLIFY_URL = "https://earnest-jelly-986463.netlify.app"
+
+
+# Database Setup (SQLite)
+def init_db():
+  conn = sqlite3.connect("bot_stats.db")
+  cursor = conn.cursor()
+  cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            user_id INTEGER PRIMARY KEY,
+            started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            completed INTEGER DEFAULT 0
+        )
+    """)
+  conn.commit()
+  conn.close()
+
+
+init_db()
+
+
+def record_start(user_id):
+  conn = sqlite3.connect("bot_stats.db")
+  cursor = conn.cursor()
+  cursor.execute(
+      "INSERT OR IGNORE INTO users (user_id, completed) VALUES (?, 0)",
+      (user_id,),
+  )
+  conn.commit()
+  conn.close()
+
+
+def record_completion(user_id):
+  conn = sqlite3.connect("bot_stats.db")
+  cursor = conn.cursor()
+  cursor.execute(
+      "UPDATE users SET completed = 1 WHERE user_id = ?", (user_id,)
+  )
+  conn.commit()
+  conn.close()
+
+
+def get_stats():
+  conn = sqlite3.connect("bot_stats.db")
+  cursor = conn.cursor()
+  cursor.execute("SELECT COUNT(*) FROM users")
+  total_started = cursor.fetchone()[0]
+  cursor.execute("SELECT COUNT(*) FROM users WHERE completed = 1")
+  total_completed = cursor.fetchone()[0]
+  conn.close()
+  return total_started, total_completed
 
 
 # Define states
@@ -54,10 +105,26 @@ def get_action_keyboard():
   )
 
 
+# /stats command (Only for Owner)
+@dp.message(Command("stats"))
+async def cmd_stats(message: types.Message):
+  if message.from_user.id == OWNER_ID:
+    started, completed = get_stats()
+    await message.answer(
+        f"📊 **Bot Usage Statistics:**\n\n"
+        f"👤 Total users who started the bot: **{started}**\n"
+        f"🎉 Total birthday websites created: **{completed}**",
+        parse_mode="Markdown",
+    )
+  else:
+    await message.answer("⚠️ You are not authorized to use this command.")
+
+
 # /start command with Welcome & Explanation
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message, state: FSMContext):
   user_id = message.from_user.id
+  record_start(user_id)
 
   welcome_text = (
       "👋 **Welcome to Birthday Surprise Bot!** 🎉\n\n"
@@ -103,6 +170,8 @@ async def process_pre_checkout_query(pre_checkout_query: types.PreCheckoutQuery)
 # Successful payment handler -> Start form for normal users
 @dp.message(F.successful_payment)
 async def process_successful_payment(message: types.Message, state: FSMContext):
+  user_id = message.from_user.id
+  record_start(user_id)
   await message.answer(
       "✅ **Payment Successful!** Thank you.\n"
       "Now let's build your birthday surprise step by step.\n\n"
@@ -198,6 +267,9 @@ async def get_telegram_file_url(bot: Bot, file_id: str) -> str:
 
 
 async def finish_form(message: types.Message, state: FSMContext):
+  user_id = message.from_user.id
+  record_completion(user_id)
+
   data = await state.get_data()
 
   params = {}
