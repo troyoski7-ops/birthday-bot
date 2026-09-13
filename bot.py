@@ -16,6 +16,9 @@ from aiohttp import web
 # Telegram Bot Token
 API_TOKEN = "8854916574:AAEgxWmPyP4OPNSsLfsBbXXFu5W6LiFcq0o"
 
+# Owner ID (നിങ്ങൾക്ക് ഫ്രീ ആയി ഉപയോഗിക്കാൻ)
+OWNER_ID = 1689374364
+
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
@@ -51,29 +54,44 @@ def get_action_keyboard():
   )
 
 
-# /start command with Welcome & Explanation & Telegram Stars Invoice
+# /start command with Welcome & Explanation
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message, state: FSMContext):
+  user_id = message.from_user.id
+
   welcome_text = (
       "👋 **Welcome to Birthday Surprise Bot!** 🎉\n\n"
-      "ഈ ബോട്ട് വഴി നിങ്ങൾക്ക് പ്രിയപ്പെട്ടവർക്കായി സ്പെഷ്യൽ ബർത്ത്ഡേ വെബ് ആപ്പ് ഉണ്ടാക്കാം.\n"
-      "🔸 **എങ്ങനെ ഉപയോഗിക്കാം:**\n"
-      "1. താഴെയുള്ള ബട്ടൺ വഴി **Telegram Stars** കൊടുത്ത് ആക്സസ് നേടുക.\n"
-      "2. പേര്, ആശംസകൾ, തീയതി, സമയം, ഫോട്ടോ, വീഡിയോ, പാട്ട് എന്നിവ നൽകുക.\n"
-      "3. ആവശ്യമില്ലാത്തവ **Skip** ചെയ്യാം, തെറ്റിയാൽ **Change** ചെയ്യാം.\n"
-      "4. സെറ്റിംഗ്സ് പൂർത്തിയായാൽ പ്രിവ്യൂ & ഷെയർ ഓപ്ഷൻ ലഭിക്കും!\n\n"
-      "⭐ സബ്‌സ്‌ക്രിപ്‌ഷൻ / സ്റ്റാർസ് പേയ്‌മെന്റിനായി താഴെ ക്ലിക്ക് ചെയ്യുക:"
+      "Create a special, luxury birthday surprise web app for your loved ones.\n\n"
+      "🔸 **How to use:**\n"
+      "1. Provide Name, Wish, Date, Time, Photo, Video, Song, and Voice message.\n"
+      "2. Use **Skip** for optional steps or **Change / Back** to fix mistakes.\n"
+      "3. Once finished, get instant preview and direct sharing options!\n"
   )
   await message.answer(welcome_text, parse_mode="Markdown")
 
-  # Telegram Stars Invoice send ചെയ്യുന്നു (ഉദാഹരണത്തിന് 10 Stars)
-  await message.answer_invoice(
-      title="Birthday Surprise Bot Access",
-      description="Unlock full access to create custom birthday surprise web apps.",
-      payload="birthday_bot_stars_access",
-      currency="XTR",  # Telegram Stars currency code
-      prices=[LabeledPrice(label="Access Fee", amount=10)],  # 10 Stars
-  )
+  # Owner ആണെങ്കിൽ payment ഇല്ലാതെ നേരിട്ട് തുടങ്ങാം
+  if user_id == OWNER_ID:
+    await message.answer(
+        "👑 **Owner Mode Active:** Free unlimited access granted!\n\n"
+        "1. Please provide the **Name**:",
+        reply_markup=get_action_keyboard(),
+    )
+    await state.set_state(BirthdayForm.name)
+  else:
+    # സാധാരണ യൂസർമാർക്ക് Telegram Stars invoice കാണിക്കുന്നു (1 Star)
+    await message.answer(
+        "⭐ Please unlock full access by paying with Telegram Stars (1 Star)"
+        " below:"
+    )
+    await message.answer_invoice(
+        title="Birthday Surprise Bot Access",
+        description=(
+            "Unlock full access to create custom birthday surprise web apps."
+        ),
+        payload="birthday_bot_stars_access",
+        currency="XTR",  # Telegram Stars currency code
+        prices=[LabeledPrice(label="Access Fee", amount=1)],  # 1 Star
+    )
 
 
 # Pre-checkout query handler for Telegram Stars
@@ -82,12 +100,12 @@ async def process_pre_checkout_query(pre_checkout_query: types.PreCheckoutQuery)
   await bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
 
 
-# Successful payment handler -> Start form
+# Successful payment handler -> Start form for normal users
 @dp.message(F.successful_payment)
 async def process_successful_payment(message: types.Message, state: FSMContext):
   await message.answer(
-      "✅ **Payment Successful!** നന്ദി.\n"
-      "ഇനി നമുക്ക് വിവരങ്ങൾ ചേർക്കാം.\n\n"
+      "✅ **Payment Successful!** Thank you.\n"
+      "Now let's build your birthday surprise step by step.\n\n"
       "1. Please provide the **Name**:",
       reply_markup=get_action_keyboard(),
   )
@@ -113,10 +131,10 @@ STATE_SEQUENCE = [
 STATE_PROMPTS = {
     BirthdayForm.name: "1. Please provide the **Name**:",
     BirthdayForm.wish: "2. Please provide the **Birthday Wish / Message**:",
-    BirthdayForm.year: "3. Please provide the **Year** (ഉദാഹരണത്തിന്: 2026):",
-    BirthdayForm.month: "4. Please provide the **Month** (ഉദാഹരണത്തിന്: May അല്ലെങ്കിൽ 05):",
-    BirthdayForm.date: "5. Please provide the **Date** (ഉദാഹരണത്തിന്: 20):",
-    BirthdayForm.time: "6. Please provide the **Time** (ഉദാഹരണത്തിന്: 12:00):",
+    BirthdayForm.year: "3. Please provide the **Year** (e.g., 2026):",
+    BirthdayForm.month: "4. Please provide the **Month** (e.g., May or 05):",
+    BirthdayForm.date: "5. Please provide the **Date** (e.g., 20):",
+    BirthdayForm.time: "6. Please provide the **Time** (e.g., 12:00):",
     BirthdayForm.am_pm: "7. Please provide **AM or PM**:",
     BirthdayForm.photo: "8. Please send a **Photo**:",
     BirthdayForm.video: "9. Please send a **Video**:",
@@ -160,12 +178,12 @@ async def process_change(callback: types.CallbackQuery, state: FSMContext):
     prev_state = STATE_SEQUENCE[current_idx - 1]
     await state.set_state(prev_state)
     await callback.message.answer(
-        f"മുൻപത്തെ സ്റ്റെപ്പിലേക്ക് തിരിച്ചുപോയി:\n{STATE_PROMPTS[prev_state]}",
+        f"Go back to previous step:\n{STATE_PROMPTS[prev_state]}",
         reply_markup=get_action_keyboard(),
     )
   else:
     await callback.message.answer(
-        "ഇത് ആദ്യത്തെ സ്റ്റെപ്പ് ആണ്!", reply_markup=get_action_keyboard()
+        "This is the first step!", reply_markup=get_action_keyboard()
     )
 
   await callback.answer("Go back!")
