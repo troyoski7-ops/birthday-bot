@@ -98,9 +98,64 @@ def get_action_keyboard():
   return InlineKeyboardMarkup(
       inline_keyboard=[
           [
-              InlineKeyboardButton(text="⏭️ Skip", callback_data="skip_step"),
+              InlineKeyboardButton(text="⏭️ Skip Step", callback_data="skip_step"),
               InlineKeyboardButton(text="✏️ Change / Back", callback_data="change_step"),
           ]
+      ]
+  )
+
+
+# Year Selection Keyboard
+def get_year_keyboard():
+  return InlineKeyboardMarkup(
+      inline_keyboard=[
+          [
+              InlineKeyboardButton(text="2026", callback_data="set_year_2026"),
+              InlineKeyboardButton(text="2027", callback_data="set_year_2027"),
+          ],
+          [InlineKeyboardButton(text="⏭️ Skip", callback_data="skip_step")],
+      ]
+  )
+
+
+# Month Selection Keyboard
+def get_month_keyboard():
+  return InlineKeyboardMarkup(
+      inline_keyboard=[
+          [
+              InlineKeyboardButton(text="Jan", callback_data="set_month_Jan"),
+              InlineKeyboardButton(text="Feb", callback_data="set_month_Feb"),
+              InlineKeyboardButton(text="Mar", callback_data="set_month_Mar"),
+          ],
+          [
+              InlineKeyboardButton(text="Apr", callback_data="set_month_Apr"),
+              InlineKeyboardButton(text="May", callback_data="set_month_May"),
+              InlineKeyboardButton(text="Jun", callback_data="set_month_Jun"),
+          ],
+          [
+              InlineKeyboardButton(text="Jul", callback_data="set_month_Jul"),
+              InlineKeyboardButton(text="Aug", callback_data="set_month_Aug"),
+              InlineKeyboardButton(text="Sep", callback_data="set_month_Sep"),
+          ],
+          [
+              InlineKeyboardButton(text="Oct", callback_data="set_month_Oct"),
+              InlineKeyboardButton(text="Nov", callback_data="set_month_Nov"),
+              InlineKeyboardButton(text="Dec", callback_data="set_month_Dec"),
+          ],
+          [InlineKeyboardButton(text="⏭️ Skip", callback_data="skip_step")],
+      ]
+  )
+
+
+# AM / PM Keyboard
+def get_ampm_keyboard():
+  return InlineKeyboardMarkup(
+      inline_keyboard=[
+          [
+              InlineKeyboardButton(text="☀️ AM", callback_data="set_ampm_AM"),
+              InlineKeyboardButton(text="🌙 PM", callback_data="set_ampm_PM"),
+          ],
+          [InlineKeyboardButton(text="⏭️ Skip", callback_data="skip_step")],
       ]
   )
 
@@ -120,38 +175,40 @@ async def cmd_stats(message: types.Message):
     await message.answer("⚠️ You are not authorized to use this command.")
 
 
-# /start command with Welcome & Explanation
+# /start command with Welcome & Explanation (Luxury Theme)
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message, state: FSMContext):
   user_id = message.from_user.id
   record_start(user_id)
 
   welcome_text = (
-      "👋 **Welcome to Birthday Surprise Bot!** 🎉\n\n"
-      "Create a special, luxury birthday surprise web app for your loved ones.\n\n"
-      "🔸 **How to use:**\n"
-      "1. Provide Name, Wish, Date, Time, Photo, Video, Song, and Voice message.\n"
-      "2. Use **Skip** for optional steps or **Change / Back** to fix mistakes.\n"
-      "3. Once finished, get instant preview and direct sharing options!\n"
+      "✨ **WELCOME TO LUXURY BIRTHDAY SURPRISE BOT** ✨\n"
+      "═══════════════════════════════\n"
+      "🎂 Craft an unforgettable, time-locked & interactive digital birthday experience for your special someone.\n\n"
+      "🌟 **Exclusive Features:**\n"
+      " • Interactive Scratch Card & Cake Cutting 🕯️\n"
+      " • Custom Photos, Videos, Songs & Voice Notes 🎶\n"
+      " • Smart Time-Locked Countdown Portal ⏳\n"
+      " • Instant Creator Preview & Universal Sharing 🚀\n"
+      "═══════════════════════════════"
   )
   await message.answer(welcome_text, parse_mode="Markdown")
 
   # Owner ആണെങ്കിൽ payment ഇല്ലാതെ നേരിട്ട് തുടങ്ങാം
   if user_id == OWNER_ID:
     await message.answer(
-        "👑 **Owner Mode Active:** Free unlimited access granted!\n\n"
-        "1. Please provide the **Name**:",
+        "👑 **Owner Privilege Activated:** Unlimited Free Access Granted!\n\n"
+        "1️⃣ Please enter or send the **Recipient's Name**:",
         reply_markup=get_action_keyboard(),
     )
     await state.set_state(BirthdayForm.name)
   else:
     # സാധാരണ യൂസർമാർക്ക് Telegram Stars invoice കാണിക്കുന്നു (1 Star)
     await message.answer(
-        "⭐ Please unlock full access by paying with Telegram Stars (1 Star)"
-        " below:"
+        "⭐ Unlock full access to create your luxury birthday surprise web app for just **1 Telegram Star**:"
     )
     await message.answer_invoice(
-        title="Birthday Surprise Bot Access",
+        title="Luxury Birthday Surprise Access",
         description=(
             "Unlock full access to create custom birthday surprise web apps."
         ),
@@ -173,9 +230,8 @@ async def process_successful_payment(message: types.Message, state: FSMContext):
   user_id = message.from_user.id
   record_start(user_id)
   await message.answer(
-      "✅ **Payment Successful!** Thank you.\n"
-      "Now let's build your birthday surprise step by step.\n\n"
-      "1. Please provide the **Name**:",
+      "✅ **Payment Verified!** Welcome to your VIP creator studio.\n\n"
+      "1️⃣ Please enter or send the **Recipient's Name**:",
       reply_markup=get_action_keyboard(),
   )
   await state.set_state(BirthdayForm.name)
@@ -198,18 +254,22 @@ STATE_SEQUENCE = [
 ]
 
 STATE_PROMPTS = {
-    BirthdayForm.name: "1. Please provide the **Name**:",
-    BirthdayForm.wish: "2. Please provide the **Birthday Wish / Message**:",
-    BirthdayForm.year: "3. Please provide the **Year** (e.g., 2026):",
-    BirthdayForm.month: "4. Please provide the **Month** (e.g., May or 05):",
-    BirthdayForm.date: "5. Please provide the **Date** (e.g., 20):",
-    BirthdayForm.time: "6. Please provide the **Time** (e.g., 12:00):",
-    BirthdayForm.am_pm: "7. Please provide **AM or PM**:",
-    BirthdayForm.photo: "8. Please send a **Photo**:",
-    BirthdayForm.video: "9. Please send a **Video**:",
-    BirthdayForm.song: "10. Please send a **Song**:",
-    BirthdayForm.voice: "11. Please send a **Voice message**:",
-    BirthdayForm.audio: "12. Please send an **Audio**:",
+    BirthdayForm.name: "1️⃣ Please enter the **Recipient's Name**:",
+    BirthdayForm.wish: "2️⃣ Please write a heartfelt **Birthday Wish / Message**:",
+    BirthdayForm.year: "3️⃣ Please select the **Year**:",
+    BirthdayForm.month: "4️⃣ Please select the **Month**:",
+    BirthdayForm.date: "5️⃣ Please enter the **Date** (e.g., 20):",
+    BirthdayForm.time: (
+        "6️⃣ Please enter the **Time** in format HH:MM (e.g., 06:30):"
+    ),
+    BirthdayForm.am_pm: "7️⃣ Please select **AM or PM**:",
+    BirthdayForm.photo: "8️⃣ Please send a **Photo** (or Skip):",
+    BirthdayForm.video: "9️⃣ Please send a **Video** (or Skip):",
+    BirthdayForm.song: (
+        "🔟 Please send a **Song / Audio file or link** (or Skip):"
+    ),
+    BirthdayForm.voice: "1️⃣1️⃣ Please send a **Voice Message** (or Skip):",
+    BirthdayForm.audio: "1️⃣2️⃣ Please send an extra **Audio file** (or Skip):",
 }
 
 
@@ -225,9 +285,32 @@ async def process_skip(callback: types.CallbackQuery, state: FSMContext):
   if current_idx != -1 and current_idx + 1 < len(STATE_SEQUENCE):
     next_state = STATE_SEQUENCE[current_idx + 1]
     await state.set_state(next_state)
-    await callback.message.answer(
-        STATE_PROMPTS[next_state], reply_markup=get_action_keyboard()
-    )
+
+    # სპეციალური Inline Keyboards ഉള്ള സ്റ്റെപ്പുകൾ
+    if next_state == BirthdayForm.year:
+      await callback.message.answer(
+          STATE_PROMPTS[next_state],
+          reply_markup=get_year_keyboard(),
+          parse_mode="Markdown",
+      )
+    elif next_state == BirthdayForm.month:
+      await callback.message.answer(
+          STATE_PROMPTS[next_state],
+          reply_markup=get_month_keyboard(),
+          parse_mode="Markdown",
+      )
+    elif next_state == BirthdayForm.am_pm:
+      await callback.message.answer(
+          STATE_PROMPTS[next_state],
+          reply_markup=get_ampm_keyboard(),
+          parse_mode="Markdown",
+      )
+    else:
+      await callback.message.answer(
+          STATE_PROMPTS[next_state],
+          reply_markup=get_action_keyboard(),
+          parse_mode="Markdown",
+      )
   else:
     await finish_form(callback.message, state)
 
@@ -247,8 +330,9 @@ async def process_change(callback: types.CallbackQuery, state: FSMContext):
     prev_state = STATE_SEQUENCE[current_idx - 1]
     await state.set_state(prev_state)
     await callback.message.answer(
-        f"Go back to previous step:\n{STATE_PROMPTS[prev_state]}",
+        f"↩️ Back to previous step:\n{STATE_PROMPTS[prev_state]}",
         reply_markup=get_action_keyboard(),
+        parse_mode="Markdown",
     )
   else:
     await callback.message.answer(
@@ -256,6 +340,46 @@ async def process_change(callback: types.CallbackQuery, state: FSMContext):
     )
 
   await callback.answer("Go back!")
+
+
+# Inline Button Handlers for Year, Month, AM/PM
+@dp.callback_query(F.data.startswith("set_year_"))
+async def cb_set_year(callback: types.CallbackQuery, state: FSMContext):
+  year_val = callback.data.split("_")[2]
+  await state.update_data(year=year_val)
+  await state.set_state(BirthdayForm.month)
+  await callback.message.answer(
+      f"Selected Year: **{year_val}**\n\n{STATE_PROMPTS[BirthdayForm.month]}",
+      reply_markup=get_month_keyboard(),
+      parse_mode="Markdown",
+  )
+  await callback.answer(f"Year {year_val} selected!")
+
+
+@dp.callback_query(F.data.startswith("set_month_"))
+async def cb_set_month(callback: types.CallbackQuery, state: FSMContext):
+  month_val = callback.data.split("_")[2]
+  await state.update_data(month=month_val)
+  await state.set_state(BirthdayForm.date)
+  await callback.message.answer(
+      f"Selected Month: **{month_val}**\n\n{STATE_PROMPTS[BirthdayForm.date]}",
+      reply_markup=get_action_keyboard(),
+      parse_mode="Markdown",
+  )
+  await callback.answer(f"Month {month_val} selected!")
+
+
+@dp.callback_query(F.data.startswith("set_ampm_"))
+async def cb_set_ampm(callback: types.CallbackQuery, state: FSMContext):
+  ampm_val = callback.data.split("_")[2]
+  await state.update_data(am_pm=ampm_val)
+  await state.set_state(BirthdayForm.photo)
+  await callback.message.answer(
+      f"Selected AM/PM: **{ampm_val}**\n\n{STATE_PROMPTS[BirthdayForm.photo]}",
+      reply_markup=get_action_keyboard(),
+      parse_mode="Markdown",
+  )
+  await callback.answer(f"{ampm_val} selected!")
 
 
 async def get_telegram_file_url(bot: Bot, file_id: str) -> str:
@@ -288,13 +412,22 @@ async def finish_form(message: types.Message, state: FSMContext):
   if data.get("am_pm"):
     params["am_pm"] = data.get("am_pm")
 
-  # Target Time സെറ്റപ്പ്
+  # Target Time സെറ്റപ്പ് (24-hour conversion support or ISO format)
   if data.get("year") and data.get("date") and data.get("time"):
     year_val = data.get("year")
-    date_val = data.get("date").zfill(2)
-    time_val = str(data.get("time")).replace(".", ":")
-    if ":" not in time_val:
-      time_val += ":00"
+    date_val = str(data.get("date")).zfill(2)
+    time_raw = str(data.get("time")).replace(".", ":")
+    parts = time_raw.split(":")
+    hour = int(parts[0]) if len(parts) > 0 else 12
+    minute = parts[1] if len(parts) > 1 else "00"
+    am_pm = str(data.get("am_pm", "")).upper()
+
+    if am_pm == "PM" and hour < 12:
+      hour += 12
+    elif am_pm == "AM" and hour == 12:
+      hour = 0
+
+    time_val = f"{str(hour).zfill(2)}:{minute}"
 
     month_map = {
         "Jan": "01",
@@ -350,11 +483,12 @@ async def finish_form(message: types.Message, state: FSMContext):
       f"{NETLIFY_URL}/?{query_string_final}" if query_string_final else NETLIFY_URL
   )
 
-  # Telegram Share URL ഉണ്ടാക്കുന്നു
+  # Universal Share URLs (Telegram, WhatsApp, General Share Text)
   share_text = urllib.parse.quote(
-      f"🎉 Happy Birthday {data.get('name', 'Friend')}! Here is your special surprise:"
+      f"🎉 Happy Birthday {data.get('name', 'Friend')}! Here is your special luxury surprise:"
   )
-  share_url = f"https://t.me/share/url?url={urllib.parse.quote(final_url)}&text={share_text}"
+  telegram_share_url = f"https://t.me/share/url?url={urllib.parse.quote(final_url)}&text={share_text}"
+  whatsapp_share_url = f"https://api.whatsapp.com/send?text={share_text}%20{urllib.parse.quote(final_url)}"
 
   preview_kb = InlineKeyboardMarkup(
       inline_keyboard=[
@@ -362,18 +496,26 @@ async def finish_form(message: types.Message, state: FSMContext):
               InlineKeyboardButton(
                   text="👀 Preview Your Web App",
                   web_app=WebAppInfo(url=preview_url),
-              )
+              ),
+              InlineKeyboardButton(
+                  text="🎂 My Birthday Surprise",
+                  web_app=WebAppInfo(url=preview_url),
+              ),
           ],
           [
               InlineKeyboardButton(
-                  text="🎉 Open Birthday Surprise",
-                  web_app=WebAppInfo(url=final_url),
-              )
+                  text="💬 Share via Telegram",
+                  url=telegram_share_url,
+              ),
+              InlineKeyboardButton(
+                  text="🟢 Share via WhatsApp",
+                  url=whatsapp_share_url,
+              ),
           ],
           [
               InlineKeyboardButton(
-                  text="📤 Share with Birthday Person",
-                  url=share_url,
+                  text="🔗 Copy & Share Link (All Social Media)",
+                  url=final_url,
               )
           ],
       ]
@@ -381,8 +523,10 @@ async def finish_form(message: types.Message, state: FSMContext):
 
   recipient_name = data.get("name", "Friend")
   await message.answer(
-      f"✨ All information has been saved for **{recipient_name}**!\n"
-      "Use the buttons below to preview, open, or directly share the surprise link:",
+      f"✨ **LUXURY SURPRISE READY FOR {recipient_name.upper()}!** ✨\n\n"
+      "👇 Choose an option below:\n"
+      "• **Preview / My Birthday Surprise**: Opens immediately without countdown.\n"
+      "• **Share Options**: Scheduled countdown enabled for the birthday person!",
       reply_markup=preview_kb,
       parse_mode="Markdown",
   )
@@ -404,7 +548,9 @@ async def process_name(message: types.Message, state: FSMContext):
 async def process_wish(message: types.Message, state: FSMContext):
   await state.update_data(wish=message.text)
   await message.answer(
-      STATE_PROMPTS[BirthdayForm.year], reply_markup=get_action_keyboard()
+      STATE_PROMPTS[BirthdayForm.year],
+      reply_markup=get_year_keyboard(),
+      parse_mode="Markdown",
   )
   await state.set_state(BirthdayForm.year)
 
@@ -413,7 +559,9 @@ async def process_wish(message: types.Message, state: FSMContext):
 async def process_year(message: types.Message, state: FSMContext):
   await state.update_data(year=message.text)
   await message.answer(
-      STATE_PROMPTS[BirthdayForm.month], reply_markup=get_action_keyboard()
+      STATE_PROMPTS[BirthdayForm.month],
+      reply_markup=get_month_keyboard(),
+      parse_mode="Markdown",
   )
   await state.set_state(BirthdayForm.month)
 
@@ -440,7 +588,9 @@ async def process_date(message: types.Message, state: FSMContext):
 async def process_time(message: types.Message, state: FSMContext):
   await state.update_data(time=message.text)
   await message.answer(
-      STATE_PROMPTS[BirthdayForm.am_pm], reply_markup=get_action_keyboard()
+      STATE_PROMPTS[BirthdayForm.am_pm],
+      reply_markup=get_ampm_keyboard(),
+      parse_mode="Markdown",
   )
   await state.set_state(BirthdayForm.am_pm)
 
