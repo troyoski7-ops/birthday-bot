@@ -5,8 +5,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 
-# Replace with your actual Telegram Bot Token
-API_TOKEN = "YOUR_BOT_TOKEN_HERE"
+# Telegram Bot Token
+API_TOKEN = "8854916574:AAHhpQWzOOH7IKjuitJfS_yspUoWy0z2So4"
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
