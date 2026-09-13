@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Elite Birthday Surprise</title>
+    <title>✨ Luxury Birthday Surprise ✨</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            background: radial-gradient(circle at center, #1b1b2f 0%, #0f0c1b 100%);
             color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -22,86 +22,114 @@
         }
         .container {
             width: 100%;
-            max-width: 340px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin-bottom: 15px;
+            max-width: 360px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+            margin-bottom: 18px;
         }
-        h1 { font-size: 1.5rem; color: #ffd700; margin-bottom: 5px; }
-        #recipientName { color: #ff416c; }
+        h1 { font-size: 1.6rem; color: #ffd700; margin-bottom: 8px; letter-spacing: 0.5px; }
+        #recipientName { color: #ff3366; text-shadow: 0 0 10px rgba(255, 51, 102, 0.5); }
+        .details-box {
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px dashed rgba(255, 215, 0, 0.4);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+            color: #f8fafc;
+            line-height: 1.7;
+        }
+        .details-box span { color: #ffd700; font-weight: 600; }
         .scratch-container {
             position: relative;
-            width: 300px;
-            height: 220px;
-            border-radius: 15px;
+            width: 310px;
+            height: 230px;
+            border-radius: 16px;
             overflow: hidden;
-            background: #fff;
-            color: #333;
-            margin: 10px auto;
+            background: linear-gradient(135deg, #2a2a40, #1a1a2e);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            color: #fff;
+            margin: 12px auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
         canvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; }
-        .hidden-content h3 { color: #e94560; margin-bottom: 8px; }
-        .media-box img, .media-box video { width: 100%; border-radius: 10px; margin-top: 10px; }
+        .hidden-content h3 { color: #ffd700; margin-bottom: 10px; font-size: 1.2rem; }
+        .hidden-content p { color: #e2e8f0; font-size: 0.95rem; line-height: 1.5; }
+        .media-box img, .media-box video { width: 100%; border-radius: 14px; margin-top: 12px; border: 1px solid rgba(255,255,255,0.1); }
+        .media-box audio { width: 100%; margin-top: 12px; border-radius: 10px; }
         .btn {
-            background: linear-gradient(45deg, #ff416c, #ff4b2b);
-            color: white;
+            background: linear-gradient(45deg, #ffd700, #ffaa00);
+            color: #1a1a2e;
             border: none;
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            border-radius: 25px;
+            padding: 12px 24px;
+            font-size: 0.95rem;
+            border-radius: 30px;
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
-            margin-top: 10px;
+            font-weight: 700;
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+            margin-top: 12px;
+            transition: transform 0.2s ease;
         }
-        .locked-screen { display: none; padding: 30px 20px; }
-        .timer-digits { font-size: 1.5rem; color: #ffd700; font-weight: bold; margin: 15px 0; }
+        .btn:active { transform: scale(0.96); }
+        .locked-screen { display: none; padding: 35px 20px; }
+        .timer-digits { font-size: 1.6rem; color: #ffd700; font-weight: bold; margin: 15px 0; text-shadow: 0 0 10px rgba(255,215,0,0.4); }
     </style>
 </head>
 <body>
 
     <div id="lockSection" class="container locked-screen">
         <h2>⏳ Portal Locked!</h2>
-        <p>This surprise opens on:</p>
-        <p id="targetTimeDisplay" style="color: #ffd700; font-weight: bold; margin: 5px 0;"></p>
+        <p style="color: #cbd5e1; margin-top: 5px;">This exclusive surprise opens on:</p>
+        <p id="targetTimeDisplay" style="color: #ffd700; font-weight: bold; margin: 8px 0; font-size: 1.1rem;"></p>
         <div class="timer-digits" id="countdownTimer">Loading...</div>
     </div>
 
-    <div id="mainContent" style="display: none; width: 100%; max-width: 340px;">
+    <div id="mainContent" style="display: none; width: 100%; max-width: 360px;">
         <h1>✨ Happy Birthday, <span id="recipientName">Friend</span>! ✨</h1>
-        <p style="margin-bottom: 15px;">👇 Scratch the card below!</p>
+        
+        <div class="details-box" id="infoBox">
+            <div>📅 Date: <span id="displayDate">-</span></div>
+            <div>⏰ Time: <span id="displayTime">-</span></div>
+        </div>
+
+        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 12px;">👇 Scratch the card below to reveal your surprise!</p>
 
         <div class="container">
             <div class="scratch-container">
                 <div class="hidden-content">
-                    <h3>🎉 SURPRISE! 🎁</h3>
-                    <p id="wishMessage">Wishing you an amazing day!</p>
+                    <h3>🎉 SPECIAL SURPRISE 🎁</h3>
+                    <p id="wishMessage">Wishing you an extraordinary day filled with joy and success!</p>
                 </div>
-                <canvas id="scratchCanvas" width="300" height="220"></canvas>
+                <canvas id="scratchCanvas" width="310" height="230"></canvas>
             </div>
         </div>
 
         <div class="container" id="mediaSection">
             <h3>🎂 Birthday Celebration</h3>
             <div id="mediaContainer" class="media-box"></div>
-            <div style="font-size: 3rem; margin: 10px 0;" id="cakeEmoji">🎂🔥</div>
+            <div style="font-size: 3.2rem; margin: 12px 0;" id="cakeEmoji">🎂🔥</div>
             <button class="btn" onclick="cutCake()">🕯️ Blow Candles & Cut Cake</button>
-            <div id="audioPlayerContainer" style="margin-top: 15px;"></div>
         </div>
     </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const name = urlParams.get('name') || 'Friend';
-        const msg = urlParams.get('msg') || 'Happy Birthday!';
+        const msg = urlParams.get('msg') || 'Wishing you an extraordinary day!';
+        const year = urlParams.get('year') || '';
+        const month = urlParams.get('month') || '';
+        const date = urlParams.get('date') || '';
+        const time = urlParams.get('time') || '';
+        const am_pm = urlParams.get('am_pm') || '';
         const photo = urlParams.get('photo');
         const video = urlParams.get('video');
         const song = urlParams.get('song');
@@ -111,15 +139,20 @@
         document.getElementById('recipientName').innerText = name;
         document.getElementById('wishMessage').innerText = msg;
 
+        const fullDateStr = [date, month, year].filter(Boolean).join(' ');
+        const fullTimeStr = [time, am_pm].filter(Boolean).join(' ');
+        if (fullDateStr) document.getElementById('displayDate').innerText = fullDateStr;
+        if (fullTimeStr) document.getElementById('displayTime').innerText = fullTimeStr;
+
         const mediaContainer = document.getElementById('mediaContainer');
-        if (photo) mediaContainer.innerHTML += `<img src="${photo}" alt="Birthday Photo">`;
-        if (video) mediaContainer.innerHTML += `<video controls src="${video}"></video>`;
-        if (song) mediaContainer.innerHTML += `<audio controls autoplay loop src="${song}" style="width:100%; margin-top:10px;"></audio>`;
-        if (voice) mediaContainer.innerHTML += `<audio controls src="${voice}" style="width:100%; margin-top:10px;"></audio>`;
+        if (photo) mediaContainer.innerHTML += `<div style="margin-top:10px;"><img src="${photo}" alt="Birthday Photo"></div>`;
+        if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls src="${video}"></video></div>`;
+        if (song) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎶 Song / Audio</p><audio controls src="${song}"></audio></div>`;
+        if (voice) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎙️ Voice Message</p><audio controls src="${voice}"></audio></div>`;
 
         function checkTimeLock() {
             if (!targetTimeStr) { showContent(); return; }
-            const targetTime = new Date(targetTimeStr.replace(' ', 'T')).getTime();
+            const targetTime = new Date(targetTimeStr).getTime();
             const now = new Date().getTime();
             const distance = targetTime - now;
 
@@ -127,7 +160,7 @@
                 showContent();
             } else {
                 document.getElementById('lockSection').style.display = 'block';
-                document.getElementById('targetTimeDisplay').innerText = targetTimeStr;
+                document.getElementById('targetTimeDisplay').innerText = targetTimeStr.replace('T', ' ');
                 setInterval(() => {
                     const now = new Date().getTime();
                     const dist = targetTime - now;
@@ -150,18 +183,21 @@
 
         const canvas = document.getElementById('scratchCanvas');
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#c0c0c0';
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        gradient.addColorStop(0, '#bdc3c7');
+        gradient.addColorStop(1, '#2c3e50');
+        ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#333333';
+        ctx.fillStyle = '#ffd700';
         ctx.font = 'bold 16px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('🎫 SCRATCH HERE 🎫', canvas.width / 2, canvas.height / 2);
+        ctx.fillText('✨ SCRATCH HERE ✨', canvas.width / 2, canvas.height / 2);
 
         let isDrawing = false;
         function scratch(x, y) {
             ctx.globalCompositeOperation = 'destination-out';
             ctx.beginPath();
-            ctx.arc(x, y, 22, 0, Math.PI * 2);
+            ctx.arc(x, y, 24, 0, Math.PI * 2);
             ctx.fill();
         }
 
@@ -181,7 +217,7 @@
 
         function cutCake() {
             document.getElementById('cakeEmoji').innerHTML = '🍰 🔪 ✨';
-            confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+            confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
         }
 
         if (window.Telegram && window.Telegram.WebApp) {
