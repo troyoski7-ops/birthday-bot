@@ -67,6 +67,7 @@ async def cmd_start(message: Message, state: FSMContext):
     if surp_id in surprises_db:
       data = surprises_db[surp_id]
 
+      # Admin or Creator can bypass the time lock and preview anytime!
       is_creator = (
           user_id == ADMIN_USER_ID or user_id in data.get("creators", [])
       )
@@ -93,8 +94,7 @@ async def cmd_start(message: Message, state: FSMContext):
         except Exception as e:
           logging.error(f"Time parsing exception bypassed: {e}")
 
-      # --- DIRECT FLOW (NO BUTTONS, NO LOADING ISSUES) ---
-      # 1. Unwrapping Gift Message
+      # Direct smooth delivery (No loading spinner issues)
       await message.answer(
           f"🎉 **A top-secret milestone birthday package has arrived for"
           f" {data['name']}!** 🎉\n\n📦 *Unwrapping gift box...*",
@@ -102,14 +102,12 @@ async def cmd_start(message: Message, state: FSMContext):
       )
       await asyncio.sleep(1)
 
-      # 2. Scratch Card Reveal
       await message.answer(
           f"✨ **Golden Scratch Card Revealed for {data['name']}!** ✨",
           parse_mode="Markdown",
       )
       await asyncio.sleep(1)
 
-      # 3. Cake Cutting & Media Delivery
       caption = (
           f"🎊✨ **HAPPY BIRTHDAY {data['name'].upper()}!** ✨🎊\n\n{data['msg']}"
       )
