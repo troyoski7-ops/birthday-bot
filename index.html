@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Elite Birthday Surprise</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 340px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 15px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+        #recipientName {
+            color: #ff416c;
+        }
+        .scratch-container {
+            position: relative;
+            width: 300px;
+            height: 220px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #fff;
+            color: #333;
+            margin: 10px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+            touch-action: none;
+        }
+        .hidden-content h3 {
+            color: #e94560;
+            margin-bottom: 8px;
+        }
+        .media-box img, .media-box video {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .btn {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+            margin-top: 10px;
+        }
+        .locked-screen {
+            display: none;
+            padding: 30px 20px;
+        }
+        .timer-digits {
+            font-size: 1.5rem;
+            color: #ffd700;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Countdown / Time Lock Screen -->
+    <div id="lockSection" class="container locked-screen">
+        <h2>⏳ Portal Locked!</h2>
+        <p>This surprise opens on:</p>
+        <p id="targetTimeDisplay" style="color: #ffd700; font-weight: bold; margin: 5px 0;"></p>
+        <div class="timer-digits" id="countdownTimer">Loading...</div>
+    </div>
+
+    <!-- Main Surprise Content -->
+    <div id="mainContent" style="display: none; width: 100%; max-width: 340px;">
+        <h1>✨ Happy Birthday, <span id="recipientName">Friend</span>! ✨</h1>
+        <p style="margin-bottom: 15px;">👇 Scratch the card below!</p>
+
+        <div class="container">
+            <div class="scratch-container">
+                <div class="hidden-content">
+                    <h3>🎉 SURPRISE! 🎁</h3>
+                    <p id="wishMessage">Wishing you an amazing day!</p>
+                </div>
+                <canvas id="scratchCanvas" width="300" height="220"></canvas>
+            </div>
+        </div>
+
+        <div class="container" id="mediaSection">
+            <h3>🎂 Birthday Celebration</h3>
+            <div id="mediaContainer" class="media-box"></div>
+            <div style="font-size: 3rem; margin: 10px 0;" id="cakeEmoji">🎂🔥</div>
+            <button class="btn" onclick="cutCake()">🕯️ Blow Candles & Cut Cake</button>
+            <div id="audioPlayerContainer" style="margin-top: 15px;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Parse URL Parameters passed from Python Bot
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name') || 'Felix';
+        const msg = urlParams.get('msg') || 'Happy Birthday!';
+        const photo = urlParams.get('photo');
+        const video = urlParams.get('video');
+        const song = urlParams.get('song');
+        const voice = urlParams.get('voice');
+        const targetTimeStr = urlParams.get('target_time'); // Format: YYYY-MM-DD HH:MM
+
+        document.getElementById('recipientName').innerText = name;
+        document.getElementById('wishMessage').innerText = msg;
+
+        // Render Media if available
+        const mediaContainer = document.getElementById('mediaContainer');
+        if (photo) {
+            mediaContainer.innerHTML += `<img src="${photo}" alt="Birthday Photo">`;
+        }
+        if (video) {
+            mediaContainer.innerHTML += `<video controls src="${video}"></video>`;
+        }
+        if (song) {
+            mediaContainer.innerHTML += `<audio controls autoplay loop src="${song}" style="width:100%; margin-top:10px;"></audio>`;
+        }
+        if (voice) {
+            mediaContainer.innerHTML += `<audio controls src="${voice}" style="width:100%; margin-top:10px;"></audio>`;
+        }
+
+        // Time Lock & Countdown Logic
+        function checkTimeLock() {
+            if (!targetTimeStr) {
+                showContent();
+                return;
+            }
+
+            const targetTime = new Date(targetTimeStr.replace(' ', 'T')).getTime();
+            const now = new Date().getTime();
+            const distance = targetTime - now;
+
+            if (distance <= 0) {
+                showContent();
+            } else {
+                document.getElementById('lockSection').style.display = 'block';
+                document.getElementById('targetTimeDisplay').innerText = targetTimeStr;
+
+                setInterval(() => {
+                    const now = new Date().getTime();
+                    const dist = targetTime - now;
+                    if (dist <= 0) {
+                        location.reload();
+                    } else {
+                        const days = Math.floor(dist / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const mins = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+                        const secs = Math.floor((dist % (1000 * 60)) / 1000);
+                        document.getElementById('countdownTimer').innerText = `${days}d ${hours}h ${mins}m ${secs}s`;
+                    }
+                }, 1000);
+            }
+        }
+
+        function showContent() {
+            document.getElementById('lockSection').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+
+        // Scratch Canvas Setup
+        const canvas = document.getElementById('scratchCanvas');
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#c0c0c0';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#333333';
+        ctx.font = 'bold 16px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('🎫 SCRATCH HERE 🎫', canvas.width / 2, canvas.height / 2);
+
+        let isDrawing = false;
+        function scratch(x, y) {
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(x, y, 22, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function getPosition(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        canvas.addEventListener('mousedown', (e) => { isDrawing = true; const pos = getPosition(e); scratch(pos.x, pos.y); });
+        canvas.addEventListener('mousemove', (e) => { if (!isDrawing) return; const pos = getPosition(e); scratch(pos.x, pos.y); });
+        window.addEventListener('mouseup', () => { isDrawing = false; });
+        canvas.addEventListener('touchstart', (e) => { isDrawing = true; const pos = getPosition(e); scratch(pos.x, pos.y); e.preventDefault(); });
+        canvas.addEventListener('touchmove', (e) => { if (!isDrawing) return; const pos = getPosition(e); scratch(pos.x, pos.y); e.preventDefault(); });
+        canvas.addEventListener('touchend', () => { isDrawing = false; });
+
+        function cutCake() {
+            document.getElementById('cakeEmoji').innerHTML = '🍰 🔪 ✨';
+            confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+        }
+
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.ready();
+            window.Telegram.WebApp.expand();
+        }
+
+        checkTimeLock();
+    </script>
+</body>
+</html>
