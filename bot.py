@@ -292,7 +292,10 @@ async def finish_form(message: types.Message, state: FSMContext):
   if data.get("year") and data.get("date") and data.get("time"):
     year_val = data.get("year")
     date_val = data.get("date").zfill(2)
-    time_val = data.get("time")
+    time_val = str(data.get("time")).replace(".", ":")
+    if ":" not in time_val:
+      time_val += ":00"
+
     month_map = {
         "Jan": "01",
         "Feb": "02",
@@ -331,9 +334,20 @@ async def finish_form(message: types.Message, state: FSMContext):
   elif data.get("song"):
     params["song"] = data.get("song")
 
-  query_string = urllib.parse.urlencode(params)
+  # 1. Preview URL (target_time ഒഴിവാക്കിയത് - അപ്പോൾ തന്നെ തുറക്കും)
+  params_preview = params.copy()
+  params_preview.pop("target_time", None)
+  query_string_preview = urllib.parse.urlencode(params_preview)
+  preview_url = (
+      f"{NETLIFY_URL}/?{query_string_preview}"
+      if query_string_preview
+      else NETLIFY_URL
+  )
+
+  # 2. Final / Share URL (target_time ഉൾപ്പെടെ - കൗണ്ട്ഡൗൺ വർക്ക് ചെയ്യും)
+  query_string_final = urllib.parse.urlencode(params)
   final_url = (
-      f"{NETLIFY_URL}/?{query_string}" if query_string else NETLIFY_URL
+      f"{NETLIFY_URL}/?{query_string_final}" if query_string_final else NETLIFY_URL
   )
 
   # Telegram Share URL ഉണ്ടാക്കുന്നു
@@ -347,7 +361,7 @@ async def finish_form(message: types.Message, state: FSMContext):
           [
               InlineKeyboardButton(
                   text="👀 Preview Your Web App",
-                  web_app=WebAppInfo(url=final_url),
+                  web_app=WebAppInfo(url=preview_url),
               )
           ],
           [
