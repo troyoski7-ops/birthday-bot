@@ -93,24 +93,50 @@ async def cmd_start(message: Message, state: FSMContext):
         except Exception as e:
           logging.error(f"Time parsing exception bypassed: {e}")
 
-      # Direct Scratch Card View on Start (No Gift Box Button needed to avoid loading)
-      scratch_keyboard = InlineKeyboardMarkup(
-          inline_keyboard=[
-              [
-                  InlineKeyboardButton(
-                      text="🎫 🔲🔲🔲🔲🔲 (Scratch Here)",
-                      callback_data=f"scratch_{surp_id}",
-                  )
-              ]
-          ]
-      )
+      # --- DIRECT FLOW (NO BUTTONS, NO LOADING ISSUES) ---
+      # 1. Unwrapping Gift Message
       await message.answer(
           f"🎉 **A top-secret milestone birthday package has arrived for"
-          f" {data['name']}!** 🎉\n\n👇 *Scratch the card below to"
-          " proceed!*",
-          reply_markup=scratch_keyboard,
+          f" {data['name']}!** 🎉\n\n📦 *Unwrapping gift box...*",
           parse_mode="Markdown",
       )
+      await asyncio.sleep(1)
+
+      # 2. Scratch Card Reveal
+      await message.answer(
+          f"✨ **Golden Scratch Card Revealed for {data['name']}!** ✨",
+          parse_mode="Markdown",
+      )
+      await asyncio.sleep(1)
+
+      # 3. Cake Cutting & Media Delivery
+      caption = (
+          f"🎊✨ **HAPPY BIRTHDAY {data['name'].upper()}!** ✨🎊\n\n{data['msg']}"
+      )
+      await message.answer("🎂🔥 **MAKING A WISH & CUTTING CAKE!** 🎂🔥")
+
+      if data.get("photo"):
+        await message.answer_photo(photo=data["photo"], caption=caption)
+      if data.get("video"):
+        await message.answer_video(
+            video=data["video"], caption="🎥 Elite Video Feature"
+        )
+      if data.get("song"):
+        await message.answer_audio(
+            audio=data["song"], caption="🎵 Premium Sound Track"
+        )
+      if data.get("voice"):
+        await message.answer_voice(
+            voice=data["voice"], caption="🎤 Exclusive Voice Note"
+        )
+
+      if not any([
+          data.get("photo"),
+          data.get("video"),
+          data.get("song"),
+          data.get("voice"),
+      ]):
+        await message.answer(caption)
       return
     else:
       await message.answer("This surprise link has expired or is invalid!")
@@ -274,73 +300,6 @@ async def show_guide(callback: CallbackQuery):
     await callback.answer()
   except Exception:
     pass
-
-
-@router.callback_query(F.data.startswith("scratch_"))
-async def scratch_card(callback: CallbackQuery):
-  try:
-    await callback.answer("✨ Card scratched!", cache_time=0)
-  except Exception:
-    pass
-
-  surp_id = callback.data.split("_")[1]
-  if surp_id in surprises_db:
-    data = surprises_db[surp_id]
-    cake_keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(
-                    text="🎂🔥 Blow Candles & Cut Cake",
-                    callback_data=f"cake_{surp_id}",
-                )
-            ]
-        ]
-    )
-    await callback.message.answer(
-        f"🎈 **Almost there, {data['name']}!** 🎈\n\n👇 *Tap below to blow out"
-        " the candles and cut the cake!*",
-        reply_markup=cake_keyboard,
-    )
-
-
-@router.callback_query(F.data.startswith("cake_"))
-async def cut_cake(callback: CallbackQuery):
-  try:
-    await callback.answer("🎂 Cutting cake...", cache_time=0)
-  except Exception:
-    pass
-
-  surp_id = callback.data.split("_")[1]
-  if surp_id in surprises_db:
-    data = surprises_db[surp_id]
-    caption = (
-        f"🎊✨ **HAPPY BIRTHDAY {data['name'].upper()}!** ✨🎊\n\n{data['msg']}"
-    )
-
-    await callback.message.answer("🎊✨ **MAKING A WISH & CUTTING CAKE!** ✨🎊")
-
-    if data.get("photo"):
-      await callback.message.answer_photo(photo=data["photo"], caption=caption)
-    if data.get("video"):
-      await callback.message.answer_video(
-          video=data["video"], caption="🎥 Elite Video Feature"
-      )
-    if data.get("song"):
-      await callback.message.answer_audio(
-          audio=data["song"], caption="🎵 Premium Sound Track"
-      )
-    if data.get("voice"):
-      await callback.message.answer_voice(
-          voice=data["voice"], caption="🎤 Exclusive Voice Note"
-      )
-
-    if not any([
-        data.get("photo"),
-        data.get("video"),
-        data.get("song"),
-        data.get("voice"),
-    ]):
-      await callback.message.answer(caption)
 
 
 @router.callback_query(F.data == "create_surprise")
