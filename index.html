@@ -96,7 +96,7 @@
         .scratch-container {
             position: relative;
             width: 310px;
-            min-height: 220px;
+            height: 240px;
             border-radius: 16px;
             overflow: hidden;
             background: linear-gradient(135deg, #2a2a40, #1a1a2e);
@@ -107,22 +107,24 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 18px;
+            padding: 14px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
-        canvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; }
+        canvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; z-index: 2; }
         
         .hidden-content {
-            max-height: 200px;
-            overflow-y: auto;
             width: 100%;
-            padding: 5px;
+            height: 100%;
+            max-height: 200px;
+            overflow-y: auto; /* സ്ക്രാച്ച് കാർഡിനുള്ളിൽ താഴേക്ക് scroll ചെയ്യാൻ */
+            padding: 4px 6px;
+            z-index: 1;
         }
-        .hidden-content h3 { color: #ffd700; margin-bottom: 8px; font-size: 1.1rem; }
+        .hidden-content h3 { color: #ffd700; margin-bottom: 6px; font-size: 1.05rem; }
         .hidden-content p { 
             color: #e2e8f0; 
-            font-size: 0.90rem; 
-            line-height: 1.5; 
+            font-size: 0.85rem; 
+            line-height: 1.45; 
             word-wrap: break-word; 
             overflow-wrap: break-word; 
             text-align: left; 
@@ -220,7 +222,7 @@
                     <h3>🎉 SPECIAL SURPRISE 🎁</h3>
                     <p id="wishMessage">Wishing you an extraordinary day filled with joy and success!</p>
                 </div>
-                <canvas id="scratchCanvas" width="310" height="220"></canvas>
+                <canvas id="scratchCanvas" width="310" height="240"></canvas>
             </div>
         </div>
 
