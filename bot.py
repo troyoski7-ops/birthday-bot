@@ -100,15 +100,15 @@ def get_stats():
   return total_started, total_completed
 
 
-# Define states (24-hour format, AM/PM removed)
+# Define states
 class BirthdayForm(StatesGroup):
   name = State()
   wish = State()
   year = State()
   month = State()
   date = State()
-  hour = State()  # 00 - 23
-  minute = State()  # 00 - 59 (Button or text)
+  hour = State()
+  minute = State()
   photo = State()
   video = State()
   song = State()
@@ -300,7 +300,16 @@ async def cmd_start(message: types.Message, state: FSMContext):
   )
   await message.answer(welcome_text)
 
-  if user_id == OWNER_ID or creations < FREE_LIMIT:
+  # Owner ആണെങ്കിൽ Unlimited Free Access
+  if user_id == OWNER_ID:
+    await message.answer(
+        "🤍 **Owner Mode Active!** You have unlimited free creations.\n\nWhose"
+        " birthday are we celebrating today? Send me their name:",
+        reply_markup=get_action_keyboard(),
+        parse_mode="Markdown",
+    )
+    await state.set_state(BirthdayForm.name)
+  elif creations < FREE_LIMIT:
     remaining_free = FREE_LIMIT - creations
     if creations > 0:
       await message.answer(
@@ -561,7 +570,8 @@ async def get_telegram_file_url(bot: Bot, file_id: str) -> str:
 
 async def finish_form(message: types.Message, state: FSMContext):
   user_id = message.from_user.id
-  increment_user_creation(user_id)
+  if user_id != OWNER_ID:
+    increment_user_creation(user_id)
 
   data = await state.get_data()
 
@@ -613,20 +623,29 @@ async def finish_form(message: types.Message, state: FSMContext):
     url = await get_telegram_file_url(bot, data.get("photo"))
     if url:
       params["photo"] = url
+
   if data.get("video"):
     url = await get_telegram_file_url(bot, data.get("video"))
     if url:
       params["video"] = url
+
   if data.get("voice"):
     url = await get_telegram_file_url(bot, data.get("voice"))
     if url:
       params["voice"] = url
+
   if data.get("audio"):
     url = await get_telegram_file_url(bot, data.get("audio"))
     if url:
       params["song"] = url
   elif data.get("song"):
-    params["song"] = data.get("song")
+    song_val = data.get("song")
+    if not str(song_val).startswith("http"):
+      url = await get_telegram_file_url(bot, str(song_val))
+      if url:
+        params["song"] = url
+    else:
+      params["song"] = song_val
 
   params_preview = params.copy()
   params_preview.pop("target_time", None)
