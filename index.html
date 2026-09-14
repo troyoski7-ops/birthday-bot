@@ -23,7 +23,6 @@
             position: relative;
         }
 
-        /* Floating background particles */
         .floating-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -75,7 +74,6 @@
         }
         .details-box span { color: #ffd700; font-weight: 600; }
 
-        /* Gift Box Unwrap Section */
         #giftSection {
             display: flex;
             flex-direction: column;
@@ -95,7 +93,6 @@
             50% { transform: translateY(-15px); }
         }
 
-        /* Scratch Card */
         .scratch-container {
             position: relative;
             width: 310px;
@@ -116,7 +113,7 @@
         canvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; }
         
         .hidden-content {
-            max-height: 160px;
+            max-height: 200px;
             overflow-y: auto;
             width: 100%;
             padding: 5px;
@@ -165,7 +162,6 @@
         .locked-screen { display: none; padding: 35px 20px; }
         .timer-digits { font-size: 1.5rem; color: #ffd700; font-weight: bold; margin: 15px 0; text-shadow: 0 0 10px rgba(255,215,0,0.4); }
 
-        /* Sparkle effect on click */
         .sparkle {
             position: fixed;
             pointer-events: none;
@@ -178,7 +174,6 @@
             100% { transform: translateY(-40px) scale(1.5); opacity: 0; }
         }
 
-        /* Floating Heart animation */
         .floating-heart {
             position: fixed;
             bottom: 20px;
@@ -195,10 +190,8 @@
 </head>
 <body>
 
-    <!-- Floating Background Elements -->
     <div class="floating-bg" id="floatingBg"></div>
 
-    <!-- Time Locked Screen -->
     <div id="lockSection" class="container locked-screen">
         <h2>⏳ Portal Locked!</h2>
         <p style="color: #cbd5e1; margin-top: 5px;">This exclusive surprise opens on:</p>
@@ -206,14 +199,12 @@
         <div class="timer-digits" id="countdownTimer">Loading...</div>
     </div>
 
-    <!-- Gift Box Tap to Open Screen -->
     <div id="giftSection" class="container">
         <h2>🎁 Tap the Gift Box to Unwrap!</h2>
         <div class="gift-box" onclick="openGift()">🎁</div>
         <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 10px;">Tap to unlock your special surprise...</p>
     </div>
 
-    <!-- Main Content -->
     <div id="mainContent" style="display: none; width: 100%; max-width: 360px;">
         <h1>✨ Happy Birthday, <span id="recipientName">Friend</span>! ✨</h1>
         
@@ -253,7 +244,8 @@
     </div>
 
     <script>
-        // Floating balloons & pop on click
+        const BOT_API_URL = "https://birthday-bot-hmkb.onrender.com";
+
         const icons = ['🎈', '✨', '💖', '🎉', '🌟', '🎂'];
         const floatBg = document.getElementById('floatingBg');
         for (let i = 0; i < 16; i++) {
@@ -270,7 +262,6 @@
             floatBg.appendChild(div);
         }
 
-        // Touch sparkle effect
         window.addEventListener('click', (e) => {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
@@ -284,23 +275,51 @@
         const urlParams = new URLSearchParams(window.location.search);
         const surpriseId = urlParams.get('id');
 
-        let name = urlParams.get('name') || 'Friend';
-        let msg = urlParams.get('msg') || 'Wishing you an extraordinary day!';
-        let targetTimeStr = urlParams.get('target_time') || '';
-        let photo = urlParams.get('photo');
-        let video = urlParams.get('video');
-        let song = urlParams.get('song');
-        let voice = urlParams.get('voice');
+        let targetTimeStr = '';
 
-        document.getElementById('recipientName').innerText = name;
-        document.getElementById('wishMessage').innerText = msg;
-        if (targetTimeStr) document.getElementById('displayDate').innerText = targetTimeStr.replace('T', ' ');
+        async function loadSurpriseData() {
+            let name = 'Friend';
+            let msg = 'Wishing you an extraordinary day!';
+            let photo, video, song, voice;
 
-        const mediaContainer = document.getElementById('mediaContainer');
-        if (photo) mediaContainer.innerHTML += `<div style="margin-top:10px;"><img src="${photo}" alt="Birthday Photo"></div>`;
-        if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls src="${video}"></video></div>`;
-        if (song) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎶 Song / Audio</p><audio controls src="${song}"></audio></div>`;
-        if (voice) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎙️ Voice Message</p><audio controls src="${voice}"></audio></div>`;
+            if (surpriseId) {
+                try {
+                    const response = await fetch(`${BOT_API_URL}/api/surprise?id=${surpriseId}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        name = data.name || name;
+                        msg = data.msg || msg;
+                        targetTimeStr = data.target_time || '';
+                        photo = data.photo;
+                        video = data.video;
+                        song = data.song;
+                        voice = data.voice;
+                    }
+                } catch (e) {
+                    console.error("Failed to load surprise from API:", e);
+                }
+            } else {
+                name = urlParams.get('name') || 'Friend';
+                msg = urlParams.get('msg') || 'Wishing you an extraordinary day!';
+                targetTimeStr = urlParams.get('target_time') || '';
+                photo = urlParams.get('photo');
+                video = urlParams.get('video');
+                song = urlParams.get('song');
+                voice = urlParams.get('voice');
+            }
+
+            document.getElementById('recipientName').innerText = name;
+            document.getElementById('wishMessage').innerText = msg;
+            if (targetTimeStr) document.getElementById('displayDate').innerText = targetTimeStr.replace('T', ' ');
+
+            const mediaContainer = document.getElementById('mediaContainer');
+            if (photo) mediaContainer.innerHTML += `<div style="margin-top:10px;"><img src="${photo}" alt="Birthday Photo"></div>`;
+            if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls src="${video}"></video></div>`;
+            if (song) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎶 Song / Audio</p><audio controls src="${song}"></audio></div>`;
+            if (voice) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎙️ Voice Message</p><audio controls src="${voice}"></audio></div>`;
+
+            checkTimeLock();
+        }
 
         function openGift() {
             confetti({ particleCount: 200, spread: 110, origin: { y: 0.5 } });
@@ -464,7 +483,7 @@
             window.Telegram.WebApp.expand();
         }
 
-        checkTimeLock();
+        loadSurpriseData();
     </script>
 </body>
 </html>
