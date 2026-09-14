@@ -343,7 +343,8 @@
         }
 
         function checkTimeLock() {
-            if (!targetTimeStr) { 
+            const isPreview = urlParams.get('preview') === 'true';
+            if (!targetTimeStr || isPreview) { 
                 document.getElementById('lockSection').style.display = 'none';
                 return; 
             }
