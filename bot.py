@@ -1,4 +1,5 @@
 import asyncio
+import json
 import os
 import sqlite3
 import urllib.parse
@@ -40,6 +41,17 @@ def init_db():
             started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             completed INTEGER DEFAULT 0,
             creations_count INTEGER DEFAULT 0
+        )
+    """)
+  # Long wish ഉം ഡിലീറ്റ് ഓപ്ഷനും സപ്പോർട്ട് ചെയ്യാൻ surprises table
+  cursor.execute("""
+        CREATE TABLE IF NOT EXISTS surprises (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
+            recipient_name TEXT,
+            wish_text TEXT,
+            params_json TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
   conn.commit()
@@ -86,6 +98,22 @@ def increment_user_creation(user_id):
   )
   conn.commit()
   conn.close()
+
+
+def save_surprise_to_db(user_id, recipient_name, wish_text, params_dict):
+  conn = sqlite3.connect("bot_stats.db")
+  cursor = conn.cursor()
+  cursor.execute(
+      """
+        INSERT INTO surprises (user_id, recipient_name, wish_text, params_json)
+        VALUES (?, ?, ?, ?)
+    """,
+      (user_id, recipient_name, wish_text, json.dumps(params_dict)),
+  )
+  conn.commit()
+  surprise_id = cursor.lastrowid
+  conn.close()
+  return surprise_id
 
 
 def get_stats():
@@ -381,7 +409,7 @@ STATE_PROMPTS = {
         "Whose birthday are we celebrating today? Send me their name:"
     ),
     BirthdayForm.wish: (
-        "Write a sweet, heartfelt birthday wish or message for them:"
+        "Write a sweet, heartfelt birthday wish or message for them (Long paragraphs supported!):"
     ),
     BirthdayForm.year: "Choose the year for the surprise:",
     BirthdayForm.month: "Choose the month:",
@@ -647,8 +675,18 @@ async def finish_form(message: types.Message, state: FSMContext):
     else:
       params["song"] = song_val
 
+  # സർപ്രൈസ് SQLite-ൽ സേവ് ചെയ്യുന്നു (Long wish-നുള്ള ഐഡി ജനറേറ്റ് ചെയ്യാൻ)
+  surprise_id = save_surprise_to_db(
+      user_id=user_id,
+      recipient_name=data.get("name", "Friend"),
+      wish_text=data.get("wish", ""),
+      params_dict=params,
+  )
+
   params_preview = params.copy()
   params_preview.pop("target_time", None)
+  # ID കൂടി പാസ് ചെയ്യുന്നു જેથી ലോങ്ങ് wish ആണെങ്കിലും query + id സപ്പോർട്ട് ചെയ്യും
+  params_preview["id"] = surprise_id
   query_string_preview = urllib.parse.urlencode(params_preview)
   preview_url = (
       f"{NETLIFY_URL}/?{query_string_preview}"
@@ -656,6 +694,7 @@ async def finish_form(message: types.Message, state: FSMContext):
       else NETLIFY_URL
   )
 
+  params["id"] = surprise_id
   query_string_final = urllib.parse.urlencode(params)
   final_url = (
       f"{NETLIFY_URL}/?{query_string_final}" if query_string_final else NETLIFY_URL
@@ -695,6 +734,13 @@ async def finish_form(message: types.Message, state: FSMContext):
                   url=final_url,
               )
           ],
+          [
+              # ക്രിയേറ്റർക്കോ ഓണർക്കോ മാത്രം ഡിലീറ്റ് ചെയ്യാൻ ഉള്ള ബട്ടൺ
+              InlineKeyboardButton(
+                  text="🗑️ Delete this Surprise",
+                  callback_data=f"del_surprise_{surprise_id}",
+              )
+          ],
       ]
   )
 
@@ -706,6 +752,49 @@ async def finish_form(message: types.Message, state: FSMContext):
   )
 
   await state.clear()
+
+
+# Delete Surprise Callback Handler (Owner or Creator only)
+@dp.callback_query(F.data.startswith("del_surprise_"))
+async def delete_surprise_callback(callback: types.CallbackQuery):
+  try:
+    surprise_id = int(callback.data.split("_")[2])
+  except Exception:
+    await callback.answer("❌ Invalid ID", show_alert=True)
+    return
+
+  conn = sqlite3.connect("bot_stats.db")
+  cursor = conn.cursor()
+  cursor.execute(
+      "SELECT user_id FROM surprises WHERE id = ?", (surprise_id,)
+  )
+  row = cursor.fetchone()
+
+  if not row:
+    conn.close()
+    await callback.answer(
+        "❌ Surprise not found or already deleted!", show_alert=True
+    )
+    return
+
+  creator_id = row[0]
+  user_id = callback.from_user.id
+
+  # ഓണർ (OWNER_ID: 1689374364) അല്ലെങ്കിൽ ഒറിജിനൽ ക്രിയേറ്റർ ആണെങ്കിൽ മാത്രം ഡിലീറ്റ് ചെയ്യാം
+  if user_id == OWNER_ID or user_id == creator_id:
+    cursor.execute("DELETE FROM surprises WHERE id = ?", (surprise_id,))
+    conn.commit()
+    conn.close()
+    await callback.message.edit_text(
+        "🗑️ This birthday surprise has been permanently deleted."
+    )
+    await callback.answer("Deleted successfully!", show_alert=True)
+  else:
+    conn.close()
+    await callback.answer(
+        "⛔ You do not have permission to delete this surprise!",
+        show_alert=True,
+    )
 
 
 @dp.message(BirthdayForm.name)
