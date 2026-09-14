@@ -669,6 +669,8 @@ async def finish_form(message: types.Message, state: FSMContext):
       params_dict=params,
   )
 
+  # preview=true ഉള്ള ലിങ്ക് (ക്രിയേറ്റ് ചെയ്യുന്നയാൾക്ക് ഉടൻ കാണാൻ)
+  preview_url = f"{NETLIFY_URL}/?id={surprise_id}&preview=true"
   final_url = f"{NETLIFY_URL}/?id={surprise_id}"
 
   share_text = urllib.parse.quote(
@@ -682,11 +684,11 @@ async def finish_form(message: types.Message, state: FSMContext):
           [
               InlineKeyboardButton(
                   text="🤍 Preview Surprise",
-                  web_app=WebAppInfo(url=final_url),
+                  web_app=WebAppInfo(url=preview_url),
               ),
               InlineKeyboardButton(
                   text="🎂 My Birthday View",
-                  web_app=WebAppInfo(url=final_url),
+                  web_app=WebAppInfo(url=preview_url),
               ),
           ],
           [
@@ -835,7 +837,6 @@ async def process_audio(message: types.Message, state: FSMContext):
   await finish_form(message, state)
 
 
-# API endpoint to fetch surprise by ID
 async def get_surprise_api(request):
   surprise_id = request.query.get("id")
   if not surprise_id:
