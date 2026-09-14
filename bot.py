@@ -100,16 +100,15 @@ def get_stats():
   return total_started, total_completed
 
 
-# Define states
+# Define states (24-hour format, AM/PM removed)
 class BirthdayForm(StatesGroup):
   name = State()
   wish = State()
   year = State()
   month = State()
   date = State()
-  hour = State()
-  minute = State()
-  am_pm = State()
+  hour = State()  # 00 - 23
+  minute = State()  # 00 - 59 (Button or text)
   photo = State()
   video = State()
   song = State()
@@ -199,27 +198,41 @@ def get_date_keyboard():
   return InlineKeyboardMarkup(inline_keyboard=buttons)
 
 
-# Hour Selection Keyboard (1 to 12) with Skip and Change
+# 24-Hour Selection Keyboard (00 to 23) with Skip and Change
 def get_hour_keyboard():
   return InlineKeyboardMarkup(
       inline_keyboard=[
           [
+              InlineKeyboardButton(text="00", callback_data="set_hour_00"),
               InlineKeyboardButton(text="01", callback_data="set_hour_01"),
               InlineKeyboardButton(text="02", callback_data="set_hour_02"),
               InlineKeyboardButton(text="03", callback_data="set_hour_03"),
               InlineKeyboardButton(text="04", callback_data="set_hour_04"),
+              InlineKeyboardButton(text="05", callback_data="set_hour_05"),
           ],
           [
-              InlineKeyboardButton(text="05", callback_data="set_hour_05"),
               InlineKeyboardButton(text="06", callback_data="set_hour_06"),
               InlineKeyboardButton(text="07", callback_data="set_hour_07"),
               InlineKeyboardButton(text="08", callback_data="set_hour_08"),
-          ],
-          [
               InlineKeyboardButton(text="09", callback_data="set_hour_09"),
               InlineKeyboardButton(text="10", callback_data="set_hour_10"),
               InlineKeyboardButton(text="11", callback_data="set_hour_11"),
+          ],
+          [
               InlineKeyboardButton(text="12", callback_data="set_hour_12"),
+              InlineKeyboardButton(text="13", callback_data="set_hour_13"),
+              InlineKeyboardButton(text="14", callback_data="set_hour_14"),
+              InlineKeyboardButton(text="15", callback_data="set_hour_15"),
+              InlineKeyboardButton(text="16", callback_data="set_hour_16"),
+              InlineKeyboardButton(text="17", callback_data="set_hour_17"),
+          ],
+          [
+              InlineKeyboardButton(text="18", callback_data="set_hour_18"),
+              InlineKeyboardButton(text="19", callback_data="set_hour_19"),
+              InlineKeyboardButton(text="20", callback_data="set_hour_20"),
+              InlineKeyboardButton(text="21", callback_data="set_hour_21"),
+              InlineKeyboardButton(text="22", callback_data="set_hour_22"),
+              InlineKeyboardButton(text="23", callback_data="set_hour_23"),
           ],
           [
               InlineKeyboardButton(text="✨ Skip", callback_data="skip_step"),
@@ -229,43 +242,27 @@ def get_hour_keyboard():
   )
 
 
-# Minute Selection Keyboard with Skip and Change
+# Minute Selection Keyboard (Quick buttons + Skip/Change)
 def get_minute_keyboard():
   return InlineKeyboardMarkup(
       inline_keyboard=[
           [
               InlineKeyboardButton(text="00", callback_data="set_min_00"),
+              InlineKeyboardButton(text="10", callback_data="set_min_10"),
+              InlineKeyboardButton(text="14", callback_data="set_min_14"),
               InlineKeyboardButton(text="15", callback_data="set_min_15"),
+              InlineKeyboardButton(text="20", callback_data="set_min_20"),
+          ],
+          [
+              InlineKeyboardButton(text="25", callback_data="set_min_25"),
               InlineKeyboardButton(text="30", callback_data="set_min_30"),
+              InlineKeyboardButton(text="35", callback_data="set_min_35"),
+              InlineKeyboardButton(text="40", callback_data="set_min_40"),
               InlineKeyboardButton(text="45", callback_data="set_min_45"),
           ],
           [
-              InlineKeyboardButton(text="05", callback_data="set_min_05"),
-              InlineKeyboardButton(text="10", callback_data="set_min_10"),
-              InlineKeyboardButton(text="20", callback_data="set_min_20"),
-              InlineKeyboardButton(text="25", callback_data="set_min_25"),
-          ],
-          [
-              InlineKeyboardButton(text="35", callback_data="set_min_35"),
-              InlineKeyboardButton(text="40", callback_data="set_min_40"),
               InlineKeyboardButton(text="50", callback_data="set_min_50"),
               InlineKeyboardButton(text="55", callback_data="set_min_55"),
-          ],
-          [
-              InlineKeyboardButton(text="✨ Skip", callback_data="skip_step"),
-              InlineKeyboardButton(text="↩️ Change", callback_data="change_step"),
-          ],
-      ]
-  )
-
-
-# AM / PM Keyboard with Skip and Change
-def get_ampm_keyboard():
-  return InlineKeyboardMarkup(
-      inline_keyboard=[
-          [
-              InlineKeyboardButton(text="☀️ AM", callback_data="set_ampm_AM"),
-              InlineKeyboardButton(text="🌙 PM", callback_data="set_ampm_PM"),
           ],
           [
               InlineKeyboardButton(text="✨ Skip", callback_data="skip_step"),
@@ -289,7 +286,7 @@ async def cmd_stats(message: types.Message):
     await message.answer("⚠️ You are not authorized to use this command.")
 
 
-# /start command without flower in welcome
+# /start command
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message, state: FSMContext):
   user_id = message.from_user.id
@@ -363,7 +360,6 @@ STATE_SEQUENCE = [
     BirthdayForm.date,
     BirthdayForm.hour,
     BirthdayForm.minute,
-    BirthdayForm.am_pm,
     BirthdayForm.photo,
     BirthdayForm.video,
     BirthdayForm.song,
@@ -381,9 +377,11 @@ STATE_PROMPTS = {
     BirthdayForm.year: "Choose the year for the surprise:",
     BirthdayForm.month: "Choose the month:",
     BirthdayForm.date: "Pick the date:",
-    BirthdayForm.hour: "Select the hour (1-12):",
-    BirthdayForm.minute: "Select the minute:",
-    BirthdayForm.am_pm: "Is it AM or PM?",
+    BirthdayForm.hour: "Select the Hour (24-Hour format, 00 to 23):",
+    BirthdayForm.minute: (
+        "Select the Minute (tap button below OR type any number from 00 to"
+        " 59):"
+    ),
     BirthdayForm.photo: "Share a lovely photo to cherish (or skip):",
     BirthdayForm.video: "Share a special video moment (or skip):",
     BirthdayForm.song: "Send a favorite song or audio file (or skip):",
@@ -432,11 +430,6 @@ async def process_skip(callback: types.CallbackQuery, state: FSMContext):
           STATE_PROMPTS[next_state],
           reply_markup=get_minute_keyboard(),
       )
-    elif next_state == BirthdayForm.am_pm:
-      await callback.message.answer(
-          STATE_PROMPTS[next_state],
-          reply_markup=get_ampm_keyboard(),
-      )
     else:
       await callback.message.answer(
           STATE_PROMPTS[next_state],
@@ -471,8 +464,6 @@ async def process_change(callback: types.CallbackQuery, state: FSMContext):
       kb = get_hour_keyboard()
     elif prev_state == BirthdayForm.minute:
       kb = get_minute_keyboard()
-    elif prev_state == BirthdayForm.am_pm:
-      kb = get_ampm_keyboard()
     else:
       kb = get_action_keyboard()
 
@@ -540,24 +531,24 @@ async def cb_set_hour(callback: types.CallbackQuery, state: FSMContext):
 async def cb_set_min(callback: types.CallbackQuery, state: FSMContext):
   min_val = callback.data.split("_")[2]
   await state.update_data(minute=min_val)
-  await state.set_state(BirthdayForm.am_pm)
+  await state.set_state(BirthdayForm.photo)
   await callback.message.answer(
-      f"Minute: {min_val}\n\n{STATE_PROMPTS[BirthdayForm.am_pm]}",
-      reply_markup=get_ampm_keyboard(),
+      f"Minute: {min_val}\n\n{STATE_PROMPTS[BirthdayForm.photo]}",
+      reply_markup=get_action_keyboard(),
   )
   await callback.answer(f"Minute {min_val} chosen")
 
 
-@dp.callback_query(F.data.startswith("set_ampm_"))
-async def cb_set_ampm(callback: types.CallbackQuery, state: FSMContext):
-  ampm_val = callback.data.split("_")[2]
-  await state.update_data(am_pm=ampm_val)
+# Direct text input handler for custom minute (e.g. typing "14" or "42")
+@dp.message(BirthdayForm.minute)
+async def process_custom_minute(message: types.Message, state: FSMContext):
+  min_text = message.text.strip().zfill(2)
+  await state.update_data(minute=min_text)
   await state.set_state(BirthdayForm.photo)
-  await callback.message.answer(
-      f"Time: {ampm_val}\n\n{STATE_PROMPTS[BirthdayForm.photo]}",
+  await message.answer(
+      f"Minute: {min_text}\n\n{STATE_PROMPTS[BirthdayForm.photo]}",
       reply_markup=get_action_keyboard(),
   )
-  await callback.answer(f"{ampm_val} chosen")
 
 
 async def get_telegram_file_url(bot: Bot, file_id: str) -> str:
@@ -588,8 +579,6 @@ async def finish_form(message: types.Message, state: FSMContext):
   if data.get("hour") and data.get("minute"):
     time_str = f"{data.get('hour')}:{data.get('minute')}"
     params["time"] = time_str
-  if data.get("am_pm"):
-    params["am_pm"] = data.get("am_pm")
 
   if (
       data.get("year")
@@ -599,16 +588,8 @@ async def finish_form(message: types.Message, state: FSMContext):
   ):
     year_val = data.get("year")
     date_val = str(data.get("date")).zfill(2)
-    hour = int(data.get("hour"))
-    minute = data.get("minute")
-    am_pm = str(data.get("am_pm", "")).upper()
-
-    if am_pm == "PM" and hour < 12:
-      hour += 12
-    elif am_pm == "AM" and hour == 12:
-      hour = 0
-
-    time_val = f"{str(hour).zfill(2)}:{minute}"
+    hour_val = str(data.get("hour")).zfill(2)
+    min_val = str(data.get("minute")).zfill(2)
 
     month_map = {
         "Jan": "01",
@@ -626,7 +607,7 @@ async def finish_form(message: types.Message, state: FSMContext):
     }
     m_raw = str(data.get("month", "01"))
     month_val = month_map.get(m_raw[:3].capitalize(), m_raw.zfill(2))
-    params["target_time"] = f"{year_val}-{month_val}-{date_val}T{time_val}:00"
+    params["target_time"] = f"{year_val}-{month_val}-{date_val}T{hour_val}:{min_val}:00"
 
   if data.get("photo"):
     url = await get_telegram_file_url(bot, data.get("photo"))
