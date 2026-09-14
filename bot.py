@@ -43,7 +43,6 @@ def init_db():
             creations_count INTEGER DEFAULT 0
         )
     """)
-  # Long wish ഉം ഡിലീറ്റ് ഓപ്ഷനും സപ്പോർട്ട് ചെയ്യാൻ surprises table
   cursor.execute("""
         CREATE TABLE IF NOT EXISTS surprises (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -128,7 +127,6 @@ def get_stats():
   return total_started, total_completed
 
 
-# Define states
 class BirthdayForm(StatesGroup):
   name = State()
   wish = State()
@@ -144,7 +142,6 @@ class BirthdayForm(StatesGroup):
   audio = State()
 
 
-# Helper keyboard with Skip and Change options
 def get_action_keyboard():
   return InlineKeyboardMarkup(
       inline_keyboard=[
@@ -156,7 +153,6 @@ def get_action_keyboard():
   )
 
 
-# Year Selection Keyboard with Skip and Change
 def get_year_keyboard():
   return InlineKeyboardMarkup(
       inline_keyboard=[
@@ -172,7 +168,6 @@ def get_year_keyboard():
   )
 
 
-# Month Selection Keyboard with Skip and Change
 def get_month_keyboard():
   return InlineKeyboardMarkup(
       inline_keyboard=[
@@ -204,7 +199,6 @@ def get_month_keyboard():
   )
 
 
-# Date Selection Keyboard (1 to 31) with Skip and Change
 def get_date_keyboard():
   buttons = []
   row = []
@@ -226,7 +220,6 @@ def get_date_keyboard():
   return InlineKeyboardMarkup(inline_keyboard=buttons)
 
 
-# 24-Hour Selection Keyboard (00 to 23) with Skip and Change
 def get_hour_keyboard():
   return InlineKeyboardMarkup(
       inline_keyboard=[
@@ -270,7 +263,6 @@ def get_hour_keyboard():
   )
 
 
-# Minute Selection Keyboard (Quick buttons + Skip/Change)
 def get_minute_keyboard():
   return InlineKeyboardMarkup(
       inline_keyboard=[
@@ -300,7 +292,6 @@ def get_minute_keyboard():
   )
 
 
-# /stats command (Only for Owner)
 @dp.message(Command("stats"))
 async def cmd_stats(message: types.Message):
   if message.from_user.id == OWNER_ID:
@@ -314,12 +305,10 @@ async def cmd_stats(message: types.Message):
     await message.answer("⚠️ You are not authorized to use this command.")
 
 
-# /start command
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message, state: FSMContext):
   user_id = message.from_user.id
   record_start(user_id)
-
   creations = get_user_creations(user_id)
 
   welcome_text = (
@@ -328,7 +317,6 @@ async def cmd_start(message: types.Message, state: FSMContext):
   )
   await message.answer(welcome_text)
 
-  # Owner ആണെങ്കിൽ Unlimited Free Access
   if user_id == OWNER_ID:
     await message.answer(
         "🤍 **Owner Mode Active!** You have unlimited free creations.\n\nWhose"
@@ -576,7 +564,6 @@ async def cb_set_min(callback: types.CallbackQuery, state: FSMContext):
   await callback.answer(f"Minute {min_val} chosen")
 
 
-# Direct text input handler for custom minute (e.g. typing "14" or "42")
 @dp.message(BirthdayForm.minute)
 async def process_custom_minute(message: types.Message, state: FSMContext):
   min_text = message.text.strip().zfill(2)
@@ -675,7 +662,6 @@ async def finish_form(message: types.Message, state: FSMContext):
     else:
       params["song"] = song_val
 
-  # സർപ്രൈസ് SQLite-ൽ സേവ് ചെയ്യുന്നു (Long wish-നുള്ള ഐഡി ജനറേറ്റ് ചെയ്യാൻ)
   surprise_id = save_surprise_to_db(
       user_id=user_id,
       recipient_name=data.get("name", "Friend"),
@@ -683,22 +669,7 @@ async def finish_form(message: types.Message, state: FSMContext):
       params_dict=params,
   )
 
-  params_preview = params.copy()
-  params_preview.pop("target_time", None)
-  # ID കൂടി പാസ് ചെയ്യുന്നു જેથી ലോങ്ങ് wish ആണെങ്കിലും query + id സപ്പോർട്ട് ചെയ്യും
-  params_preview["id"] = surprise_id
-  query_string_preview = urllib.parse.urlencode(params_preview)
-  preview_url = (
-      f"{NETLIFY_URL}/?{query_string_preview}"
-      if query_string_preview
-      else NETLIFY_URL
-  )
-
-  params["id"] = surprise_id
-  query_string_final = urllib.parse.urlencode(params)
-  final_url = (
-      f"{NETLIFY_URL}/?{query_string_final}" if query_string_final else NETLIFY_URL
-  )
+  final_url = f"{NETLIFY_URL}/?id={surprise_id}"
 
   share_text = urllib.parse.quote(
       f"✨ Happy Birthday {data.get('name', 'Dear')}! I made a little surprise just for you:"
@@ -711,11 +682,11 @@ async def finish_form(message: types.Message, state: FSMContext):
           [
               InlineKeyboardButton(
                   text="🤍 Preview Surprise",
-                  web_app=WebAppInfo(url=preview_url),
+                  web_app=WebAppInfo(url=final_url),
               ),
               InlineKeyboardButton(
                   text="🎂 My Birthday View",
-                  web_app=WebAppInfo(url=preview_url),
+                  web_app=WebAppInfo(url=final_url),
               ),
           ],
           [
@@ -735,7 +706,6 @@ async def finish_form(message: types.Message, state: FSMContext):
               )
           ],
           [
-              # ക്രിയേറ്റർക്കോ ഓണർക്കോ മാത്രം ഡിലീറ്റ് ചെയ്യാൻ ഉള്ള ബട്ടൺ
               InlineKeyboardButton(
                   text="🗑️ Delete this Surprise",
                   callback_data=f"del_surprise_{surprise_id}",
@@ -754,7 +724,6 @@ async def finish_form(message: types.Message, state: FSMContext):
   await state.clear()
 
 
-# Delete Surprise Callback Handler (Owner or Creator only)
 @dp.callback_query(F.data.startswith("del_surprise_"))
 async def delete_surprise_callback(callback: types.CallbackQuery):
   try:
@@ -780,7 +749,6 @@ async def delete_surprise_callback(callback: types.CallbackQuery):
   creator_id = row[0]
   user_id = callback.from_user.id
 
-  # ഓണർ (OWNER_ID: 1689374364) അല്ലെങ്കിൽ ഒറിജിനൽ ക്രിയേറ്റർ ആണെങ്കിൽ മാത്രം ഡിലീറ്റ് ചെയ്യാം
   if user_id == OWNER_ID or user_id == creator_id:
     cursor.execute("DELETE FROM surprises WHERE id = ?", (surprise_id,))
     conn.commit()
@@ -867,7 +835,27 @@ async def process_audio(message: types.Message, state: FSMContext):
   await finish_form(message, state)
 
 
-# Render Web Service-ന് വേണ്ടിയുള്ള ചെറിയ Dummy Web Server
+# API endpoint to fetch surprise by ID
+async def get_surprise_api(request):
+  surprise_id = request.query.get("id")
+  if not surprise_id:
+    return web.json_response({"error": "No ID"}, status=400)
+  conn = sqlite3.connect("bot_stats.db")
+  cursor = conn.cursor()
+  cursor.execute(
+      "SELECT recipient_name, wish_text, params_json FROM surprises WHERE id = ?",
+      (surprise_id,),
+  )
+  row = cursor.fetchone()
+  conn.close()
+  if row:
+    data = json.loads(row[2]) if row[2] else {}
+    data["name"] = row[0]
+    data["msg"] = row[1]
+    return web.json_response(data, headers={"Access-Control-Allow-Origin": "*"})
+  return web.json_response({"error": "Not found"}, status=404)
+
+
 async def handle(request):
   return web.Response(text="Bot is running!")
 
@@ -875,6 +863,7 @@ async def handle(request):
 async def web_server():
   app = web.Application()
   app.router.add_get("/", handle)
+  app.router.add_get("/api/surprise", get_surprise_api)
   runner = web.AppRunner(app)
   await runner.setup()
   port = int(os.environ.get("PORT", 8080))
