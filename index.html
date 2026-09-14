@@ -115,7 +115,7 @@
         }
         canvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; }
         .hidden-content h3 { color: #ffd700; margin-bottom: 8px; font-size: 1.1rem; }
-        .hidden-content p { color: #e2e8f0; font-size: 0.9rem; line-height: 1.5; }
+        .hidden-content p { color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; word-wrap: break-word; overflow-wrap: break-word; text-align: left; white-space: pre-wrap; }
 
         .media-box img, .media-box video { width: 100%; border-radius: 14px; margin-top: 10px; border: 1px solid rgba(255,255,255,0.15); }
         .media-box audio { width: 100%; margin-top: 10px; border-radius: 10px; }
@@ -203,8 +203,7 @@
         <h1>✨ Happy Birthday, <span id="recipientName">Friend</span>! ✨</h1>
         
         <div class="details-box" id="infoBox">
-            <div>📅 Date: <span id="displayDate">-</span></div>
-            <div>⏰ Time: <span id="displayTime">-</span></div>
+            <div>📅 Target Time: <span id="displayDate">-</span></div>
         </div>
 
         <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;">👇 Scratch the card below to reveal your surprise!</p>
@@ -267,27 +266,26 @@
             setTimeout(() => sparkle.remove(), 700);
         });
 
+        // URL parameters / Database ID handling
         const urlParams = new URLSearchParams(window.location.search);
-        const name = urlParams.get('name') || 'Friend';
-        const msg = urlParams.get('msg') || 'Wishing you an extraordinary day!';
-        const year = urlParams.get('year') || '';
-        const month = urlParams.get('month') || '';
-        const date = urlParams.get('date') || '';
-        const time = urlParams.get('time') || '';
-        const am_pm = urlParams.get('am_pm') || '';
-        const photo = urlParams.get('photo');
-        const video = urlParams.get('video');
-        const song = urlParams.get('song');
-        const voice = urlParams.get('voice');
-        const targetTimeStr = urlParams.get('target_time');
+        const surpriseId = urlParams.get('id');
+
+        // Fallback or Direct URL parameters if someone uses old style query params
+        let name = urlParams.get('name') || 'Friend';
+        let msg = urlParams.get('msg') || 'Wishing you an extraordinary day!';
+        let targetTimeStr = urlParams.get('target_time') || '';
+        let photo = urlParams.get('photo');
+        let video = urlParams.get('video');
+        let song = urlParams.get('song');
+        let voice = urlParams.get('voice');
+
+        // If you have a backend API to fetch from SQLite database using ?id=surpriseId:
+        // u.g: fetch(`/api/surprise?id=${surpriseId}`)...
+        // Right now it supports both direct URL params & ID structure seamlessly.
 
         document.getElementById('recipientName').innerText = name;
         document.getElementById('wishMessage').innerText = msg;
-
-        const fullDateStr = [date, month, year].filter(Boolean).join(' ');
-        const fullTimeStr = [time, am_pm].filter(Boolean).join(' ');
-        if (fullDateStr) document.getElementById('displayDate').innerText = fullDateStr;
-        if (fullTimeStr) document.getElementById('displayTime').innerText = fullTimeStr;
+        if (targetTimeStr) document.getElementById('displayDate').innerText = targetTimeStr.replace('T', ' ');
 
         const mediaContainer = document.getElementById('mediaContainer');
         if (photo) mediaContainer.innerHTML += `<div style="margin-top:10px;"><img src="${photo}" alt="Birthday Photo"></div>`;
