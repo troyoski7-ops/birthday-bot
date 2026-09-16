@@ -27,8 +27,8 @@ FREE_LIMIT = 5
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
-# Netlify Web App Link
-NETLIFY_URL = "https://earnest-jelly-986463.netlify.app"
+# Vercel Web App Link (Updated)
+VERCEL_URL = "https://birthday-surprise-app-two.vercel.app"
 
 # --- മുഴുവൻ രാജ്യങ്ങളും ഭാഷകളും ---
 COUNTRY_LANGUAGES = {
@@ -1241,7 +1241,7 @@ BOT_TEXTS = {
             " tähistame? Saatke nimi:"
         ),
         "free_remaining": "🎁 Teil on jäänud **{remaining}** tasuta üllatust!",
-        "free_first": "🎁 Teie esimesed **{limit}** üllatust on **TASUTA**!",
+        "free_first": "🎁 Teie esimese **{limit}** üllatust on **TASUTA**!",
         "ask_name": "Kelle sünnipäeva me täna tähistame? Saatke nimi:",
         "ask_wish": "Kirjutage südamlik sünnipäevasoov:",
         "ask_year": "Valige aasta:",
@@ -1263,7 +1263,6 @@ def get_bot_text(user_id, text_key, **kwargs):
   lang = get_user_lang(user_id)
   lang_dict = BOT_TEXTS.get(lang)
   if not lang_dict:
-    # 100% സേഫ് ഫാൾബാക്ക് (ഡിക്ഷണറിയിൽ ഇല്ലെങ്കിൽ മാത്രം)
     return BOT_TEXTS["en"].get(text_key, "").format(**kwargs)
 
   raw_text = lang_dict.get(text_key, BOT_TEXTS["en"].get(text_key, ""))
@@ -2041,8 +2040,9 @@ async def finish_form(message: types.Message, state: FSMContext):
       params_dict=params,
   )
 
-  preview_url = f"{NETLIFY_URL}/?id={surprise_id}&preview=true"
-  final_url = f"{NETLIFY_URL}/?id={surprise_id}"
+  # Updated to use VERCEL_URL
+  preview_url = f"{VERCEL_URL}/?id={surprise_id}&preview=true"
+  final_url = f"{VERCEL_URL}/?id={surprise_id}"
 
   share_text = urllib.parse.quote(
       f"✨ Happy Birthday {data.get('name', 'Dear')}! I made a little surprise just for you:"
