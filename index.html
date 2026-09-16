@@ -94,6 +94,30 @@
         }
         .details-box span { color: #ffd700; font-weight: 600; }
 
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .stat-card {
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+        }
+        .stat-card .num {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        .stat-card .label {
+            font-size: 0.75rem;
+            color: #cbd5e1;
+            margin-top: 2px;
+        }
+
         .signal-box {
             background: rgba(0, 255, 204, 0.08);
             border: 1px solid rgba(0, 255, 204, 0.3);
@@ -199,7 +223,6 @@
             white-space: pre-wrap; 
         }
 
-        /* Single Photo Styling */
         .single-photo-box {
             width: 100%;
             max-height: 240px;
@@ -221,13 +244,15 @@
             border-radius: 12px;
         }
 
+        /* Improved Video Styling with Fullscreen Support */
         .media-box video {
             width: 100%;
-            max-height: 260px;
+            max-height: 280px;
             object-fit: contain;
             border-radius: 12px;
             background: #000;
             margin-top: 10px;
+            outline: none;
         }
         .media-box audio { width: 100%; margin-top: 10px; border-radius: 10px; }
 
@@ -358,7 +383,7 @@
             <option value="hr">Croatian</option>
             <option value="sk">Slovak</option>
             <option value="bg">Bulgarian</option>
-            <option value="sr">Serbian</option>
+            <option value="sr">Srpski</option>
             <option value="sl">Slovenian</option>
             <option value="lt">Lithuanian</option>
             <option value="lv">Latvian</option>
@@ -394,6 +419,21 @@
             <div>📅 <span id="targetTimeText">Target Time</span>: <span id="displayDate">-</span></div>
         </div>
 
+        <!-- Life Statistics Section -->
+        <div class="container" style="padding: 15px;" id="statsContainer">
+            <h4 id="statsTitle" style="color: #ffd700; font-size: 0.95rem; margin-bottom: 8px;">⏳ Life Journey Statistics</h4>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="num" id="statDays">-</div>
+                    <div class="label" id="labelDays">Days Lived</div>
+                </div>
+                <div class="stat-card">
+                    <div class="num" id="statHours">-</div>
+                    <div class="label" id="labelHours">Hours Lived</div>
+                </div>
+            </div>
+        </div>
+
         <div class="container" style="padding: 15px;">
             <h4 id="openWhenTitle" style="color: #ffd700; font-size: 0.95rem; margin-bottom: 8px;">💌 Open When...</h4>
             <div class="open-when-grid">
@@ -419,7 +459,6 @@
         <div class="container" id="mediaSection">
             <h3 id="celebrationHeader">🎂 Celebration Time</h3>
             
-            <!-- Single Photo Box -->
             <div id="singlePhotoWrapper" class="single-photo-box" style="display:none;">
                 <img id="singlePhotoImg" src="" alt="Surprise Photo">
             </div>
@@ -461,6 +500,7 @@
                 mainTitle: "Happy Birthday", targetTimeText: "Target Time", scratchInstruction: "👇 Scratch the card below to reveal your surprise!",
                 surpriseHeader: "🎉 SPECIAL SURPRISE 🎁", celebrationHeader: "🎂 Birthday Celebration",
                 signalText: "Live Signal: Connected securely 🌍",
+                statsTitle: "⏳ Life Journey Statistics", labelDays: "Days Lived", labelHours: "Hours Lived",
                 openWhenTitle: "💌 Open When...",
                 btnBlow: "💨 Blow Candles", btnCut: "🕯️ Cut Cake", btnPopper: "🎊 Party Popper", btnLove: "❤️ Send Love", btnFireworks: "🎆 Grand Fireworks",
                 guestbookTitle: "💌 Guestbook Wishes", guestNamePlaceholder: "Your Name...", guestWishPlaceholder: "Write a short wish...", btnPostWish: "Post Wish ✨"
@@ -471,6 +511,7 @@
                 mainTitle: "பிறന്നാൾ ആശംസകൾ", targetTimeText: "ലഭ്യമാകുന്ന സമയം", scratchInstruction: "👇 നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ താഴെ സ്ക്രാച്ച് ചെയ്യുക!",
                 surpriseHeader: "🎉 പ്രത്യേക സർപ്രൈസ് 🎁", celebrationHeader: "🎂 പിറന്നാൾ ആഘോഷം",
                 signalText: "ലൈവ് സിഗ്നൽ: സുരക്ഷിതമായി കണക്ട് ചെയ്തിരിക്കുന്നു 🌍",
+                statsTitle: "⏳ ജീവിത യാത്രയുടെ കണക്കുകൾ", labelDays: "ജീവിച്ച ദിവസങ്ങൾ", labelHours: "ജീവിച്ച മണിക്കൂറുകൾ",
                 openWhenTitle: "💌 ഈ സമയങ്ങളിൽ തുറക്കൂ...",
                 btnBlow: "💨 മെഴുകുതിരി അണയ്ക്കുക", btnCut: "🕯️ കേക്ക് മുറിക്കുക", btnPopper: "🎊 പാർട്ടി പോപ്പർ", btnLove: "❤️ സ്നേഹം അയക്കുക", btnFireworks: "🎆 കരിമരുന്ന് പ്രയോഗം",
                 guestbookTitle: "💌 ആശംസാ പുസ്തകം", guestNamePlaceholder: "നിങ്ങളുടെ പേര്...", guestWishPlaceholder: "ചെറിയൊരു ആശംസ എഴുതൂ...", btnPostWish: "പോസ്റ്റ് ചെയ്യൂ ✨"
@@ -481,99 +522,10 @@
                 mainTitle: "जन्मदिन की शुभकामनाएँ", targetTimeText: "लक्ष्य समय", scratchInstruction: "👇 अपना सरप्राइज देखने के लिए नीचे खरोंचें!",
                 surpriseHeader: "🎉 विशेष सरप्राइज 🎁", celebrationHeader: "🎂 जन्मदिन का जश्न",
                 signalText: "लाइव सिग्नल: सुरक्षित रूप से जुड़ा हुआ 🌍",
+                statsTitle: "⏳ जीवन यात्रा के आंकड़े", labelDays: "जीए गए दिन", labelHours: "जीए गए घंटे",
                 openWhenTitle: "💌 जब आप चाहें तब खोलें...",
                 btnBlow: "💨 मोमबत्ती बुझाएं", btnCut: "🕯️ केक काटें", btnPopper: "🎊 पार्टी पॉपर", btnLove: "❤️ प्यार भेजें", btnFireworks: "🎆 आतिशबाजी",
                 guestbookTitle: "💌 शुभकामनाएं दीवार", guestNamePlaceholder: "आपका नाम...", guestWishPlaceholder: "एक छोटी शुभकामना लिखें...", btnPostWish: "शुभकामना पोस्ट करें ✨"
-            },
-            'fa': {
-                lockTitle: "⏳ پورتال قفل است!", lockSubtitle: "این سورپرایز اختصاصی باز می شود در:",
-                giftPrompt: "🎁 برای باز کردن روی جعبه هدیه ضربه بزنید!", giftSubPrompt: "برای باز کردن سورپرایز خود ضربه بزنید...",
-                mainTitle: "تولدت مبارک", targetTimeText: "زمان هدف", scratchInstruction: "👇 کارت زیر را بخراشید تا سورپرایز خود را آشکار کنید!",
-                surpriseHeader: "🎉 سورپرایز ویژه 🎁", celebrationHeader: "🎂 جشن تولد",
-                signalText: "سیگنال زنده: اتصال امن برقرار شد 🌍",
-                openWhenTitle: "💌 باز کن وقتی که...",
-                btnBlow: "💨 فوت کردن شمع", btnCut: "🕯️ بریدن کیک", btnPopper: "🎊 توپ شادی", btnLove: "❤️ ارسال عشق", btnFireworks: "🎆 آتش بازی بزرگ",
-                guestbookTitle: "💌 کتاب مهمان", guestNamePlaceholder: "نام شما...", guestWishPlaceholder: "یک آرزوی کوتاه بنویسید...", btnPostWish: "ارسال آرزو ✨"
-            },
-            'ar': {
-                lockTitle: "⏳ البوابة مقفلة!", lockSubtitle: "تفتح هذه المفاجأة الحصرية في:",
-                giftPrompt: "🎁 اضغط على صندوق الهدايا!", giftSubPrompt: "انقر لفتح مفاجأتك الخاصة...",
-                mainTitle: "عيد ميلاد سعيد", targetTimeText: "الوقت المستهدف", scratchInstruction: "👇 اخدش البطاقة أدناه للكشف عن مفاجأتك!",
-                surpriseHeader: "🎉 مفاجأة خاصة 🎁", celebrationHeader: "🎂 احتفال عيد الميلاد",
-                signalText: "إشارة حية: اتصال آمن 🌍",
-                openWhenTitle: "💌 افتح عندما...",
-                btnBlow: "💨 إطفاء الشموع", btnCut: "🕯️ تقطيع الكعكة", btnPopper: "🎊 ألعاب نارية", btnLove: "❤️ إرسال الحب", btnFireworks: "🎆 الألعاب الكبرى",
-                guestbookTitle: "💌 سجل الزوار", guestNamePlaceholder: "اسمك...", guestWishPlaceholder: "اكتب امنية...", btnPostWish: "نشر الأمنية ✨"
-            },
-            'de': {
-                lockTitle: "⏳ Portal Gesperrt!", lockSubtitle: "Diese exklusive Überraschung öffnet sich am:",
-                giftPrompt: "🎁 Tippe auf die Geschenkschachtel!", giftSubPrompt: "Tippe, um deine Überraschung zu entsperren...",
-                mainTitle: "Alles Gute zum Geburtstag", targetTimeText: "Zielzeit", scratchInstruction: "👇 Kratze die Karte unten frei, um deine Überraschung zu sehen!",
-                surpriseHeader: "🎉 SPEZIELLE ÜBERRASCHUNG 🎁", celebrationHeader: "🎂 Geburtstag Feier",
-                signalText: "Live-Signal: Sicher verbunden 🌍",
-                openWhenTitle: "💌 Öffnen wenn...",
-                btnBlow: "💨 Kerzen ausblasen", btnCut: "🕯️ Kuchen schneiden", btnPopper: "🎊 Konfetti", btnLove: "❤️ Liebe senden", btnFireworks: "🎆 Feuerwerk",
-                guestbookTitle: "💌 Gästebuch", guestNamePlaceholder: "Dein Name...", guestWishPlaceholder: "Schreibe einen Wunsch...", btnPostWish: "Wunsch posten ✨"
-            },
-            'fr': {
-                lockTitle: "⏳ Portail Verrouillé !", lockSubtitle: "Cette surprise exclusive s'ouvre le :",
-                giftPrompt: "🎁 Appuyez sur la boîte cadeau !", giftSubPrompt: "Appuyez pour débloquer votre surprise...",
-                mainTitle: "Joyeux Anniversaire", targetTimeText: "Heure cible", scratchInstruction: "👇 Grattez la carte ci-dessous pour révéler votre surprise !",
-                surpriseHeader: "🎉 SURPRISE SPÉCIALE 🎁", celebrationHeader: "🎂 Célébration d'Anniversaire",
-                signalText: "Signal en direct : Connecté en toute sécurité 🌍",
-                openWhenTitle: "💌 Ouvrir quand...",
-                btnBlow: "💨 Souffler les bougies", btnCut: "🕯️ Couper le gâteau", btnPopper: "🎊 Pistolet à confettis", btnLove: "❤️ Envoyer de l'amour", btnFireworks: "🎆 Feux d'artifice",
-                guestbookTitle: "💌 Livre d'Or", guestNamePlaceholder: "Votre nom...", guestWishPlaceholder: "Écrivez un vœu...", btnPostWish: "Publier le vœu ✨"
-            },
-            'es': {
-                lockTitle: "⏳ ¡Portal Bloqueado!", lockSubtitle: "Esta sorpresa exclusiva se abre el:",
-                giftPrompt: "🎁 ¡Toca la caja de regalo para abrir!", giftSubPrompt: "Toca para desbloquear tu sorpresa...",
-                mainTitle: "¡Feliz Cumpleaños", targetTimeText: "Hora objetivo", scratchInstruction: "👇 ¡Raspa la tarjeta de abajo para revelar tu sorpresa!",
-                surpriseHeader: "🎉 SORPRESA ESPECIAL 🎁", celebrationHeader: "🎂 Celebración de Cumpleaños",
-                signalText: "Señal en vivo: Conectado de forma segura 🌍",
-                openWhenTitle: "💌 Abrir cuando...",
-                btnBlow: "💨 Apagar velas", btnCut: "🕯️ Cortar pastel", btnPopper: "🎊 Serpentinas", btnLove: "❤️ Enviar amor", btnFireworks: "🎆 Fuegos artificiales",
-                guestbookTitle: "💌 Libro de Visitas", guestNamePlaceholder: "Tu nombre...", guestWishPlaceholder: "Escribe un deseo...", btnPostWish: "Publicar deseo ✨"
-            },
-            'ru': {
-                lockTitle: "⏳ Портал заблокирован!", lockSubtitle: "Этот эксклюзивный сюрприз откроется:",
-                giftPrompt: "🎁 Нажмите на подарочную коробку!", giftSubPrompt: "Нажмите, чтобы разблокировать сюрприз...",
-                mainTitle: "С днем рождения", targetTimeText: "Целевое время", scratchInstruction: "👇 Сотрите карточку ниже, чтобы узнать сюрприз!",
-                surpriseHeader: "🎉 ОСОБЫЙ СЮРПРИЗ 🎁", celebrationHeader: "🎂 Празднование дня рождения",
-                signalText: "Живой сигнал: Безопасное подключение 🌍",
-                openWhenTitle: "💌 Открыть, когда...",
-                btnBlow: "💨 Задуть свечи", btnCut: "🕯️ Разрезать торт", btnPopper: "🎊 Хлопушка", btnLove: "❤️ Отправить любовь", btnFireworks: "🎆 Грандиозный фейерверк",
-                guestbookTitle: "💌 Гостевая книга", guestNamePlaceholder: "Ваше имя...", guestWishPlaceholder: "Напишите пожелание...", btnPostWish: "Оставить пожелание ✨"
-            },
-            'zh': {
-                lockTitle: "⏳ 传送门已锁定！", lockSubtitle: "此独家惊喜将于以下时间开启：",
-                giftPrompt: "🎁 点击礼盒打开！", giftSubPrompt: "点击解锁您的特别惊喜...",
-                mainTitle: "生日快乐", targetTimeText: "目标时间", scratchInstruction: "👇 刮开下面的卡片揭晓您的惊喜！",
-                surpriseHeader: "🎉 特别惊喜 🎁", celebrationHeader: "🎂 生日庆典",
-                signalText: "实时信号：安全连接 🌍",
-                openWhenTitle: "💌 在以下情况下打开...",
-                btnBlow: "💨 吹蜡烛", btnCut: "🕯️ 切蛋糕", btnPopper: "🎊 礼炮", btnLove: "❤️ 发送爱意", btnFireworks: "🎆 盛大焰火",
-                guestbookTitle: "💌 留言板祝福", guestNamePlaceholder: "您的名字...", guestWishPlaceholder: "写下祝福...", btnPostWish: "发布祝福 ✨"
-            },
-            'ja': {
-                lockTitle: "⏳ ポータルロック中！", lockSubtitle: "この特別なサプライズの公開日時:",
-                giftPrompt: "🎁 ギフトボックスをタップして開ける！", giftSubPrompt: "タップして特別なサプライズを解除...",
-                mainTitle: "お誕生日おめでとう", targetTimeText: "目標時間", scratchInstruction: "👇 下のカードをスクラッチしてサプライズを表示！",
-                surpriseHeader: "🎉 スペシャルサプライズ 🎁", celebrationHeader: "🎂 お誕生日のお祝い",
-                signalText: "ライブシグナル: 安全に接続されました 🌍",
-                openWhenTitle: "💌 〜の時に開ける...",
-                btnBlow: "💨 キャンドルを消す", btnCut: "🕯️ ケーキを切る", btnPopper: "🎊 パーティーポッパー", btnLove: "❤️ 愛を送る", btnFireworks: "🎆 打ち上げ花火",
-                guestbookTitle: "💌 ゲストブック", guestNamePlaceholder: "あなたの名前...", guestWishPlaceholder: "短い願い事を書く...", btnPostWish: "願い事を投稿 ✨"
-            },
-            'ko': {
-                lockTitle: "⏳ 포털 잠김!", lockSubtitle: "이 특별한 서프라이즈가 열리는 시간:",
-                giftPrompt: "🎁 선물 상자를 눌러 열어보세요!", giftSubPrompt: "특별한 서프라이즈를 해제하려면 누르세요...",
-                mainTitle: "생일 축하해요", targetTimeText: "목표 시간", scratchInstruction: "👇 아래 카드를 긁어서 서프라이즈를 확인하세요!",
-                surpriseHeader: "🎉 특별 서프라이즈 🎁", celebrationHeader: "🎂 생일 축하 파티",
-                signalText: "라이브 신호: 안전하게 연결됨 🌍",
-                openWhenTitle: "💌 열어보세요 언제...",
-                btnBlow: "💨 촛불 끄기", btnCut: "🕯️ 케이크 자르기", btnPopper: "🎊 파티 포퍼", btnLove: "❤️ 사랑 보내기", btnFireworks: "🎆 대형 불꽃놀이",
-                guestbookTitle: "💌 방명록 소원", guestNamePlaceholder: "이름...", guestWishPlaceholder: "간단한 축하를 남겨주세요...", btnPostWish: "소원 남기기 ✨"
             }
         };
 
@@ -617,10 +569,33 @@
         let surpriseId = urlParams.get('id');
         let targetTimeStr = '';
 
+        function calculateLifeStats(dobOrAge) {
+            let diffDays = 0;
+            let diffHours = 0;
+
+            if (dobOrAge && dobOrAge.includes('-')) {
+                let birthDate = new Date(dobOrAge);
+                let now = new Date();
+                let diffTime = Math.abs(now - birthDate);
+                diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+            } else if (dobOrAge && !isNaN(dobOrAge)) {
+                let age = parseInt(dobOrAge);
+                diffDays = age * 365;
+                diffHours = age * 365 * 24;
+            } else {
+                diffDays = 20 * 365;
+                diffHours = 20 * 365 * 24;
+            }
+
+            document.getElementById('statDays').innerText = diffDays.toLocaleString();
+            document.getElementById('statHours').innerText = diffHours.toLocaleString();
+        }
+
         async function loadSurpriseData() {
             let name = 'Friend';
             let msg = 'Wishing you an extraordinary day filled with joy and success!';
-            let photoUrl = '', video, song, voice, lang = 'en';
+            let photoUrl = '', video, song, voice, lang = 'en', dobOrAge = '20';
 
             if (surpriseId) {
                 try {
@@ -635,6 +610,7 @@
                         song = data.song;
                         voice = data.voice;
                         lang = data.lang || 'en';
+                        dobOrAge = data.dob || data.age || '20';
                     }
                 } catch (e) {
                     console.error("Failed to load surprise from API:", e);
@@ -648,6 +624,7 @@
                 song = urlParams.get('song');
                 voice = urlParams.get('voice');
                 lang = urlParams.get('lang') || 'en';
+                dobOrAge = urlParams.get('dob') || urlParams.get('age') || '20';
             }
 
             document.getElementById('langSwitcher').value = lang;
@@ -657,14 +634,15 @@
             document.getElementById('wishMessage').innerText = msg;
             if (targetTimeStr) document.getElementById('displayDate').innerText = targetTimeStr.replace('T', ' ');
 
-            // Single Photo Display Setup
+            calculateLifeStats(dobOrAge);
+
             if (photoUrl) {
                 document.getElementById('singlePhotoWrapper').style.display = 'flex';
                 document.getElementById('singlePhotoImg').src = photoUrl;
             }
 
             let mediaContainer = document.getElementById('mediaContainer');
-            if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls playsinline preload="metadata" src="${video}"></video></div>`;
+            if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls playsinline controlslist="nodownload" preload="metadata" src="${video}"></video></div>`;
             if (song) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎶 Song / Audio</p><audio controls src="${song}"></audio></div>`;
             if (voice) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎙️ Voice Message</p><audio controls src="${voice}"></audio></div>`;
 
@@ -686,6 +664,9 @@
             document.getElementById('surpriseHeader').innerText = getTranslation(lang, 'surpriseHeader');
             document.getElementById('celebrationHeader').innerText = getTranslation(lang, 'celebrationHeader');
             document.getElementById('signalText').innerText = getTranslation(lang, 'signalText');
+            document.getElementById('statsTitle').innerText = getTranslation(lang, 'statsTitle');
+            document.getElementById('labelDays').innerText = getTranslation(lang, 'labelDays');
+            document.getElementById('labelHours').innerText = getTranslation(lang, 'labelHours');
             document.getElementById('openWhenTitle').innerText = getTranslation(lang, 'openWhenTitle');
             document.getElementById('btnBlow').innerText = getTranslation(lang, 'btnBlow');
             document.getElementById('btnCut').innerText = getTranslation(lang, 'btnCut');
