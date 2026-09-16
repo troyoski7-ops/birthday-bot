@@ -118,33 +118,6 @@
             margin-top: 2px;
         }
 
-        .signal-box {
-            background: rgba(0, 255, 204, 0.08);
-            border: 1px solid rgba(0, 255, 204, 0.3);
-            border-radius: 12px;
-            padding: 10px;
-            margin-bottom: 14px;
-            font-size: 0.8rem;
-            color: #00ffcc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .signal-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #00ffcc;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #00ffcc;
-            animation: pulseSignal 1.5s infinite;
-        }
-        @keyframes pulseSignal {
-            0% { transform: scale(0.95); opacity: 0.8; }
-            50% { transform: scale(1.4); opacity: 1; box-shadow: 0 0 14px #00ffcc; }
-            100% { transform: scale(0.95); opacity: 0.8; }
-        }
-
         .open-when-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -244,7 +217,6 @@
             border-radius: 12px;
         }
 
-        /* Improved Video Styling with Fullscreen Support */
         .media-box video {
             width: 100%;
             max-height: 280px;
@@ -407,11 +379,6 @@
     </div>
 
     <div id="mainContent" style="display: none; width: 100%; max-width: 360px;">
-        
-        <div class="signal-box">
-            <div class="signal-dot"></div>
-            <span id="signalText">Live Signal: Connected 🌍</span>
-        </div>
 
         <h1><span id="mainTitle">Special Surprise</span>, <span id="recipientName">Friend</span>! ✨</h1>
         
@@ -499,7 +466,6 @@
                 giftPrompt: "🎁 Tap the Gift Box to Unwrap!", giftSubPrompt: "Tap to unlock your special surprise...",
                 mainTitle: "Happy Birthday", targetTimeText: "Target Time", scratchInstruction: "👇 Scratch the card below to reveal your surprise!",
                 surpriseHeader: "🎉 SPECIAL SURPRISE 🎁", celebrationHeader: "🎂 Birthday Celebration",
-                signalText: "Live Signal: Connected securely 🌍",
                 statsTitle: "⏳ Life Journey Statistics", labelDays: "Days Lived", labelHours: "Hours Lived",
                 openWhenTitle: "💌 Open When...",
                 btnBlow: "💨 Blow Candles", btnCut: "🕯️ Cut Cake", btnPopper: "🎊 Party Popper", btnLove: "❤️ Send Love", btnFireworks: "🎆 Grand Fireworks",
@@ -510,7 +476,6 @@
                 giftPrompt: "🎁 തുറക്കാൻ ഗിഫ്റ്റ് ബോക്സിൽ അമർത്തൂ!", giftSubPrompt: "നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ ടാപ്പ് ചെയ്യൂ...",
                 mainTitle: "பிறന്നാൾ ആശംസകൾ", targetTimeText: "ലഭ്യമാകുന്ന സമയം", scratchInstruction: "👇 നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ താഴെ സ്ക്രാച്ച് ചെയ്യുക!",
                 surpriseHeader: "🎉 പ്രത്യേക സർപ്രൈസ് 🎁", celebrationHeader: "🎂 പിറന്നാൾ ആഘോഷം",
-                signalText: "ലൈവ് സിഗ്നൽ: സുരക്ഷിതമായി കണക്ട് ചെയ്തിരിക്കുന്നു 🌍",
                 statsTitle: "⏳ ജീവിത യാത്രയുടെ കണക്കുകൾ", labelDays: "ജീവിച്ച ദിവസങ്ങൾ", labelHours: "ജീവിച്ച മണിക്കൂറുകൾ",
                 openWhenTitle: "💌 ഈ സമയങ്ങളിൽ തുറക്കൂ...",
                 btnBlow: "💨 മെഴുകുതിരി അണയ്ക്കുക", btnCut: "🕯️ കേക്ക് മുറിക്കുക", btnPopper: "🎊 പാർട്ടി പോപ്പർ", btnLove: "❤️ സ്നേഹം അയക്കുക", btnFireworks: "🎆 കരിമരുന്ന് പ്രയോഗം",
@@ -521,11 +486,20 @@
                 giftPrompt: "🎁 खोलने के लिए गिफ्ट बॉक्स पर टैप करें!", giftSubPrompt: "अपना विशेष सरप्राइज अनलॉक करने के लिए टैप करें...",
                 mainTitle: "जन्मदिन की शुभकामनाएँ", targetTimeText: "लक्ष्य समय", scratchInstruction: "👇 अपना सरप्राइज देखने के लिए नीचे खरोंचें!",
                 surpriseHeader: "🎉 विशेष सरप्राइज 🎁", celebrationHeader: "🎂 जन्मदिन का जश्न",
-                signalText: "लाइव सिग्नल: सुरक्षित रूप से जुड़ा हुआ 🌍",
                 statsTitle: "⏳ जीवन यात्रा के आंकड़े", labelDays: "जीए गए दिन", labelHours: "जीए गए घंटे",
                 openWhenTitle: "💌 जब आप चाहें तब खोलें...",
                 btnBlow: "💨 मोमबत्ती बुझाएं", btnCut: "🕯️ केक काटें", btnPopper: "🎊 पार्टी पॉपर", btnLove: "❤️ प्यार भेजें", btnFireworks: "🎆 आतिशबाजी",
                 guestbookTitle: "💌 शुभकामनाएं दीवार", guestNamePlaceholder: "आपका नाम...", guestWishPlaceholder: "एक छोटी शुभकामना लिखें...", btnPostWish: "शुभकामना पोस्ट करें ✨"
+            },
+            'ru': {
+                lockTitle: "⏳ Портал заблокирован!", lockSubtitle: "Этот сюрприз откроется:",
+                giftPrompt: "🎁 Нажмите на коробку!", giftSubPrompt: "Нажмите, чтобы открыть...",
+                mainTitle: "С днем рождения", targetTimeText: "Целевое время", scratchInstruction: "👇 Сотрите карточку ниже!",
+                surpriseHeader: "🎉 ОСОБЫЙ СЮРПРИЗ 🎁", celebrationHeader: "🎂 Празднование",
+                statsTitle: "⏳ Статистика жизни", labelDays: "Прожито дней", labelHours: "Прожито часов",
+                openWhenTitle: "💌 Открыть, когда...",
+                btnBlow: "💨 Задуть свечи", btnCut: "🕯️ Разрезать торт", btnPopper: "🎊 Хлопушка", btnLove: "❤️ Любовь", btnFireworks: "🎆 Фейерверк",
+                guestbookTitle: "💌 Гостевая книга", guestNamePlaceholder: "Ваше имя...", guestWishPlaceholder: "Напишите пожелание...", btnPostWish: "Оставить пожелание ✨"
             }
         };
 
@@ -584,18 +558,22 @@
                 diffDays = age * 365;
                 diffHours = age * 365 * 24;
             } else {
-                diffDays = 20 * 365;
-                diffHours = 20 * 365 * 24;
+                // 🔥 നിങ്ങളുടെ വ്യക്തിപരമായ തീയതി പൂർണ്ണമായി ഒഴിവാക്കി, ഡീഫോൾട്ട് ആയി പ്രായം 20 (Age 20) ആയി സെറ്റ് ചെയ്തിരിക്കുന്നു
+                let defaultAge = 20;
+                diffDays = defaultAge * 365;
+                diffHours = defaultAge * 365 * 24;
             }
 
             document.getElementById('statDays').innerText = diffDays.toLocaleString();
             document.getElementById('statHours').innerText = diffHours.toLocaleString();
         }
 
+        let currentLang = 'en';
+
         async function loadSurpriseData() {
             let name = 'Friend';
             let msg = 'Wishing you an extraordinary day filled with joy and success!';
-            let photoUrl = '', video, song, voice, lang = 'en', dobOrAge = '20';
+            let photoUrl = '', video, song, voice, dobOrAge = '';
 
             if (surpriseId) {
                 try {
@@ -609,8 +587,8 @@
                         video = data.video;
                         song = data.song;
                         voice = data.voice;
-                        lang = data.lang || 'en';
-                        dobOrAge = data.dob || data.age || '20';
+                        currentLang = data.lang || 'en';
+                        dobOrAge = data.dob || data.age || '';
                     }
                 } catch (e) {
                     console.error("Failed to load surprise from API:", e);
@@ -623,12 +601,12 @@
                 video = urlParams.get('video');
                 song = urlParams.get('song');
                 voice = urlParams.get('voice');
-                lang = urlParams.get('lang') || 'en';
-                dobOrAge = urlParams.get('dob') || urlParams.get('age') || '20';
+                currentLang = urlParams.get('lang') || 'en';
+                dobOrAge = urlParams.get('dob') || urlParams.get('age') || '';
             }
 
-            document.getElementById('langSwitcher').value = lang;
-            applyTranslations(lang);
+            document.getElementById('langSwitcher').value = currentLang;
+            applyTranslations(currentLang);
 
             document.getElementById('recipientName').innerText = name;
             document.getElementById('wishMessage').innerText = msg;
@@ -642,7 +620,7 @@
             }
 
             let mediaContainer = document.getElementById('mediaContainer');
-            if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls playsinline controlslist="nodownload" preload="metadata" src="${video}"></video></div>`;
+            if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls playsinline preload="metadata" src="${video}"></video></div>`;
             if (song) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎶 Song / Audio</p><audio controls src="${song}"></audio></div>`;
             if (voice) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎙️ Voice Message</p><audio controls src="${voice}"></audio></div>`;
 
@@ -650,6 +628,7 @@
         }
 
         function changeLanguage(selectedLang) {
+            currentLang = selectedLang;
             applyTranslations(selectedLang);
         }
 
@@ -663,7 +642,6 @@
             document.getElementById('scratchInstruction').innerText = getTranslation(lang, 'scratchInstruction');
             document.getElementById('surpriseHeader').innerText = getTranslation(lang, 'surpriseHeader');
             document.getElementById('celebrationHeader').innerText = getTranslation(lang, 'celebrationHeader');
-            document.getElementById('signalText').innerText = getTranslation(lang, 'signalText');
             document.getElementById('statsTitle').innerText = getTranslation(lang, 'statsTitle');
             document.getElementById('labelDays').innerText = getTranslation(lang, 'labelDays');
             document.getElementById('labelHours').innerText = getTranslation(lang, 'labelHours');
