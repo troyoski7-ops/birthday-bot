@@ -15,11 +15,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
             min-height: 100vh;
             padding: 20px;
             text-align: center;
-            overflow-x: hidden;
+            overflow-y: auto;
             position: relative;
         }
 
@@ -64,20 +63,6 @@
         @keyframes floatUp {
             0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
             100% { transform: translateY(-110vh) rotate(360deg); opacity: 0.1; }
-        }
-
-        .wish-star {
-            position: absolute;
-            font-size: 2rem;
-            cursor: pointer;
-            animation: twinkle 2s infinite alternate ease-in-out;
-            z-index: 5;
-            transition: transform 0.2s;
-        }
-        .wish-star:hover { transform: scale(1.4); }
-        @keyframes twinkle {
-            0% { opacity: 0.4; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1.1); }
         }
 
         .container {
@@ -214,42 +199,27 @@
             white-space: pre-wrap; 
         }
 
-        .gallery-container {
-            position: relative;
+        /* Single Photo Styling */
+        .single-photo-box {
             width: 100%;
+            max-height: 240px;
             border-radius: 14px;
             overflow: hidden;
             margin-top: 10px;
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,215,255,0.15);
             background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .gallery-slide {
-            display: none;
+        .single-photo-box img {
             width: 100%;
-            height: 220px;
-        }
-        .gallery-slide.active { display: flex; align-items: center; justify-content: center; }
-        .gallery-slide img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; 
+            height: 100%;
+            max-height: 230px;
+            object-fit: contain;
             background: #000;
+            border-radius: 12px;
         }
-        .gallery-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.6);
-            color: #ffd700;
-            border: none;
-            padding: 8px 12px;
-            cursor: pointer;
-            border-radius: 50%;
-            font-weight: bold;
-            z-index: 5;
-        }
-        .prev-btn { left: 8px; }
-        .next-btn { right: 8px; }
 
         .media-box video {
             width: 100%;
@@ -341,8 +311,6 @@
     </style>
 </head>
 <body>
-
-    <div id="starContainer"></div>
 
     <div class="top-bar">
         <select id="langSwitcher" class="lang-select" onchange="changeLanguage(this.value)">
@@ -451,10 +419,9 @@
         <div class="container" id="mediaSection">
             <h3 id="celebrationHeader">🎂 Celebration Time</h3>
             
-            <div id="galleryWrapper" class="gallery-container" style="display:none;">
-                <div id="slidesContainer"></div>
-                <button class="gallery-btn prev-btn" onclick="moveSlide(-1)">❮</button>
-                <button class="gallery-btn next-btn" onclick="moveSlide(1)">❯</button>
+            <!-- Single Photo Box -->
+            <div id="singlePhotoWrapper" class="single-photo-box" style="display:none;">
+                <img id="singlePhotoImg" src="" alt="Surprise Photo">
             </div>
 
             <div id="mediaContainer" class="media-box"></div>
@@ -473,9 +440,9 @@
             </div>
 
             <div style="margin-top: 20px; border-top: 1px solid rgba(255,215,0,0.2); padding-top: 12px;">
-                <h4 id="guestbookTitle" style="color: #ffd700; font-size: 0.95rem; margin-bottom: 6px;">💌 Guestbook & Hidden Stars</h4>
+                <h4 id="guestbookTitle" style="color: #ffd700; font-size: 0.95rem; margin-bottom: 6px;">💌 Guestbook Wishes</h4>
                 <div class="guestbook-box" id="guestbookList">
-                    <div class="guestbook-item"><strong>System:</strong> Tap floating stars around the screen for hidden wishes! ✨</div>
+                    <div class="guestbook-item"><strong>System:</strong> Welcome to the celebration! Leave a wish below.</div>
                 </div>
                 <input type="text" id="guestName" class="guestbook-input" placeholder="Your Name...">
                 <input type="text" id="guestWish" class="guestbook-input" placeholder="Write a short wish...">
@@ -495,29 +462,26 @@
                 surpriseHeader: "🎉 SPECIAL SURPRISE 🎁", celebrationHeader: "🎂 Birthday Celebration",
                 signalText: "Live Signal: Connected securely 🌍",
                 openWhenTitle: "💌 Open When...",
-                starWish: "🌟 Special hidden wish discovered for you!",
                 btnBlow: "💨 Blow Candles", btnCut: "🕯️ Cut Cake", btnPopper: "🎊 Party Popper", btnLove: "❤️ Send Love", btnFireworks: "🎆 Grand Fireworks",
-                guestbookTitle: "💌 Guestbook & Hidden Stars", guestNamePlaceholder: "Your Name...", guestWishPlaceholder: "Write a short wish...", btnPostWish: "Post Wish ✨"
+                guestbookTitle: "💌 Guestbook Wishes", guestNamePlaceholder: "Your Name...", guestWishPlaceholder: "Write a short wish...", btnPostWish: "Post Wish ✨"
             },
             'ml': {
                 lockTitle: "⏳ പോർട്ടൽ ലോക്ക് ചെയ്തിരിക്കുന്നു!", lockSubtitle: "ഈ പ്രത്യേക സർപ്രൈസ് തുറക്കുന്ന സമയം:",
                 giftPrompt: "🎁 തുറക്കാൻ ഗിഫ്റ്റ് ബോക്സിൽ അമർത്തൂ!", giftSubPrompt: "നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ ടാപ്പ് ചെയ്യൂ...",
-                mainTitle: "ഹാപ്പി ബർത്ഡേ", targetTimeText: "ലഭ്യമാകുന്ന സമയം", scratchInstruction: "👇 നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ താഴെ സ്ക്രാച്ച് ചെയ്യുക!",
+                mainTitle: "பிறന്നാൾ ആശംസകൾ", targetTimeText: "ലഭ്യമാകുന്ന സമയം", scratchInstruction: "👇 നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ താഴെ സ്ക്രാച്ച് ചെയ്യുക!",
                 surpriseHeader: "🎉 പ്രത്യേക സർപ്രൈസ് 🎁", celebrationHeader: "🎂 പിറന്നാൾ ആഘോഷം",
                 signalText: "ലൈവ് സിഗ്നൽ: സുരക്ഷിതമായി കണക്ട് ചെയ്തിരിക്കുന്നു 🌍",
                 openWhenTitle: "💌 ഈ സമയങ്ങളിൽ തുറക്കൂ...",
-                starWish: "🌟 നിങ്ങൾക്കായി ഒരു പ്രത്യേക നക്ഷത്ര ആശംസ കണ്ടെത്തിയിരിക്കുന്നു!",
                 btnBlow: "💨 മെഴുകുതിരി അണയ്ക്കുക", btnCut: "🕯️ കേക്ക് മുറിക്കുക", btnPopper: "🎊 പാർട്ടി പോപ്പർ", btnLove: "❤️ സ്നേഹം അയക്കുക", btnFireworks: "🎆 കരിമരുന്ന് പ്രയോഗം",
                 guestbookTitle: "💌 ആശംസാ പുസ്തകം", guestNamePlaceholder: "നിങ്ങളുടെ പേര്...", guestWishPlaceholder: "ചെറിയൊരു ആശംസ എഴുതൂ...", btnPostWish: "പോസ്റ്റ് ചെയ്യൂ ✨"
             },
             'hi': {
                 lockTitle: "⏳ पोर्टल लॉक है!", lockSubtitle: "यह विशेष सरप्राइज खुलेगा:",
                 giftPrompt: "🎁 खोलने के लिए गिफ्ट बॉक्स पर टैप करें!", giftSubPrompt: "अपना विशेष सरप्राइज अनलॉक करने के लिए टैप करें...",
-                mainTitle: "जन्मदिन मुबारक", targetTimeText: "लक्ष्य समय", scratchInstruction: "👇 अपना सरप्राइज देखने के लिए नीचे खरोंचें!",
+                mainTitle: "जन्मदिन की शुभकामनाएँ", targetTimeText: "लक्ष्य समय", scratchInstruction: "👇 अपना सरप्राइज देखने के लिए नीचे खरोंचें!",
                 surpriseHeader: "🎉 विशेष सरप्राइज 🎁", celebrationHeader: "🎂 जन्मदिन का जश्न",
                 signalText: "लाइव सिग्नल: सुरक्षित रूप से जुड़ा हुआ 🌍",
                 openWhenTitle: "💌 जब आप चाहें तब खोलें...",
-                starWish: "🌟 आपके लिए एक विशेष तारा शुभकामना मिली!",
                 btnBlow: "💨 मोमबत्ती बुझाएं", btnCut: "🕯️ केक काटें", btnPopper: "🎊 पार्टी पॉपर", btnLove: "❤️ प्यार भेजें", btnFireworks: "🎆 आतिशबाजी",
                 guestbookTitle: "💌 शुभकामनाएं दीवार", guestNamePlaceholder: "आपका नाम...", guestWishPlaceholder: "एक छोटी शुभकामना लिखें...", btnPostWish: "शुभकामना पोस्ट करें ✨"
             },
@@ -528,7 +492,6 @@
                 surpriseHeader: "🎉 سورپرایز ویژه 🎁", celebrationHeader: "🎂 جشن تولد",
                 signalText: "سیگنال زنده: اتصال امن برقرار شد 🌍",
                 openWhenTitle: "💌 باز کن وقتی که...",
-                starWish: "🌟 یک آرزوی ستاره‌ای ویژه برای شما پیدا شد!",
                 btnBlow: "💨 فوت کردن شمع", btnCut: "🕯️ بریدن کیک", btnPopper: "🎊 توپ شادی", btnLove: "❤️ ارسال عشق", btnFireworks: "🎆 آتش بازی بزرگ",
                 guestbookTitle: "💌 کتاب مهمان", guestNamePlaceholder: "نام شما...", guestWishPlaceholder: "یک آرزوی کوتاه بنویسید...", btnPostWish: "ارسال آرزو ✨"
             },
@@ -539,7 +502,6 @@
                 surpriseHeader: "🎉 مفاجأة خاصة 🎁", celebrationHeader: "🎂 احتفال عيد الميلاد",
                 signalText: "إشارة حية: اتصال آمن 🌍",
                 openWhenTitle: "💌 افتح عندما...",
-                starWish: "🌟 تم العثور على امنية خاصة لك!",
                 btnBlow: "💨 إطفاء الشموع", btnCut: "🕯️ تقطيع الكعكة", btnPopper: "🎊 ألعاب نارية", btnLove: "❤️ إرسال الحب", btnFireworks: "🎆 الألعاب الكبرى",
                 guestbookTitle: "💌 سجل الزوار", guestNamePlaceholder: "اسمك...", guestWishPlaceholder: "اكتب امنية...", btnPostWish: "نشر الأمنية ✨"
             },
@@ -550,7 +512,6 @@
                 surpriseHeader: "🎉 SPEZIELLE ÜBERRASCHUNG 🎁", celebrationHeader: "🎂 Geburtstag Feier",
                 signalText: "Live-Signal: Sicher verbunden 🌍",
                 openWhenTitle: "💌 Öffnen wenn...",
-                starWish: "🌟 Ein besonderer versteckter Wunsch für dich!",
                 btnBlow: "💨 Kerzen ausblasen", btnCut: "🕯️ Kuchen schneiden", btnPopper: "🎊 Konfetti", btnLove: "❤️ Liebe senden", btnFireworks: "🎆 Feuerwerk",
                 guestbookTitle: "💌 Gästebuch", guestNamePlaceholder: "Dein Name...", guestWishPlaceholder: "Schreibe einen Wunsch...", btnPostWish: "Wunsch posten ✨"
             },
@@ -561,7 +522,6 @@
                 surpriseHeader: "🎉 SURPRISE SPÉCIALE 🎁", celebrationHeader: "🎂 Célébration d'Anniversaire",
                 signalText: "Signal en direct : Connecté en toute sécurité 🌍",
                 openWhenTitle: "💌 Ouvrir quand...",
-                starWish: "🌟 Un vœu secret spécial découvert pour vous !",
                 btnBlow: "💨 Souffler les bougies", btnCut: "🕯️ Couper le gâteau", btnPopper: "🎊 Pistolet à confettis", btnLove: "❤️ Envoyer de l'amour", btnFireworks: "🎆 Feux d'artifice",
                 guestbookTitle: "💌 Livre d'Or", guestNamePlaceholder: "Votre nom...", guestWishPlaceholder: "Écrivez un vœu...", btnPostWish: "Publier le vœu ✨"
             },
@@ -572,7 +532,6 @@
                 surpriseHeader: "🎉 SORPRESA ESPECIAL 🎁", celebrationHeader: "🎂 Celebración de Cumpleaños",
                 signalText: "Señal en vivo: Conectado de forma segura 🌍",
                 openWhenTitle: "💌 Abrir cuando...",
-                starWish: "🌟 ¡Se ha descubierto un deseo oculto especial para ti!",
                 btnBlow: "💨 Apagar velas", btnCut: "🕯️ Cortar pastel", btnPopper: "🎊 Serpentinas", btnLove: "❤️ Enviar amor", btnFireworks: "🎆 Fuegos artificiales",
                 guestbookTitle: "💌 Libro de Visitas", guestNamePlaceholder: "Tu nombre...", guestWishPlaceholder: "Escribe un deseo...", btnPostWish: "Publicar deseo ✨"
             },
@@ -583,7 +542,6 @@
                 surpriseHeader: "🎉 ОСОБЫЙ СЮРПРИЗ 🎁", celebrationHeader: "🎂 Празднование дня рождения",
                 signalText: "Живой сигнал: Безопасное подключение 🌍",
                 openWhenTitle: "💌 Открыть, когда...",
-                starWish: "🌟 Особое скрытое пожелание найдено для вас!",
                 btnBlow: "💨 Задуть свечи", btnCut: "🕯️ Разрезать торт", btnPopper: "🎊 Хлопушка", btnLove: "❤️ Отправить любовь", btnFireworks: "🎆 Грандиозный фейерверк",
                 guestbookTitle: "💌 Гостевая книга", guestNamePlaceholder: "Ваше имя...", guestWishPlaceholder: "Напишите пожелание...", btnPostWish: "Оставить пожелание ✨"
             },
@@ -594,7 +552,6 @@
                 surpriseHeader: "🎉 特别惊喜 🎁", celebrationHeader: "🎂 生日庆典",
                 signalText: "实时信号：安全连接 🌍",
                 openWhenTitle: "💌 在以下情况下打开...",
-                starWish: "🌟 为您发现了一个特殊的隐藏祝福！",
                 btnBlow: "💨 吹蜡烛", btnCut: "🕯️ 切蛋糕", btnPopper: "🎊 礼炮", btnLove: "❤️ 发送爱意", btnFireworks: "🎆 盛大焰火",
                 guestbookTitle: "💌 留言板祝福", guestNamePlaceholder: "您的名字...", guestWishPlaceholder: "写下祝福...", btnPostWish: "发布祝福 ✨"
             },
@@ -605,7 +562,6 @@
                 surpriseHeader: "🎉 スペシャルサプライズ 🎁", celebrationHeader: "🎂 お誕生日のお祝い",
                 signalText: "ライブシグナル: 安全に接続されました 🌍",
                 openWhenTitle: "💌 〜の時に開ける...",
-                starWish: "🌟 あなたのために特別な隠された願いが見つかりました！",
                 btnBlow: "💨 キャンドルを消す", btnCut: "🕯️ ケーキを切る", btnPopper: "🎊 パーティーポッパー", btnLove: "❤️ 愛を送る", btnFireworks: "🎆 打ち上げ花火",
                 guestbookTitle: "💌 ゲストブック", guestNamePlaceholder: "あなたの名前...", guestWishPlaceholder: "短い願い事を書く...", btnPostWish: "願い事を投稿 ✨"
             },
@@ -616,7 +572,6 @@
                 surpriseHeader: "🎉 특별 서프라이즈 🎁", celebrationHeader: "🎂 생일 축하 파티",
                 signalText: "라이브 신호: 안전하게 연결됨 🌍",
                 openWhenTitle: "💌 열어보세요 언제...",
-                starWish: "🌟 당신을 위한 특별한 숨겨진 소원이 발견되었습니다!",
                 btnBlow: "💨 촛불 끄기", btnCut: "🕯️ 케이크 자르기", btnPopper: "🎊 파티 포퍼", btnLove: "❤️ 사랑 보내기", btnFireworks: "🎆 대형 불꽃놀이",
                 guestbookTitle: "💌 방명록 소원", guestNamePlaceholder: "이름...", guestWishPlaceholder: "간단한 축하를 남겨주세요...", btnPostWish: "소원 남기기 ✨"
             }
@@ -642,35 +597,10 @@
             alert(`💌 Message:\n\n${msg}`);
         }
 
-        function spawnFloatingStars() {
-            const starContainer = document.getElementById('starContainer');
-            starContainer.innerHTML = '';
-            const currentLang = document.getElementById('langSwitcher').value;
-            const wishText = getTranslation(currentLang, 'starWish');
-
-            for (let i = 0; i < 5; i++) {
-                const star = document.createElement('div');
-                star.className = 'wish-star';
-                star.innerText = '⭐';
-                star.style.top = `${15 + Math.random() * 70}%`;
-                star.style.left = `${5 + Math.random() * 85}%`;
-                
-                star.onclick = () => {
-                    confetti({ particleCount: 40, spread: 60 });
-                    alert(`✨ ${wishText}`);
-                    star.remove();
-                };
-                starContainer.appendChild(star);
-            }
-        }
-
-        let currentSlide = 0;
-        let slides = [];
-
-        const icons = ['🎈', '✨', '💖', '🎉', '🌟', '🎂'];
-        const floatBg = document.getElementById('floatingBg');
+        let icons = ['🎈', '✨', '💖', '🎉', '🌟', '🎂'];
+        let floatBg = document.getElementById('floatingBg');
         for (let i = 0; i < 16; i++) {
-            const div = document.createElement('div');
+            let div = document.createElement('div');
             div.className = 'float-item';
             div.innerText = icons[Math.floor(Math.random() * icons.length)];
             div.style.left = `${Math.random() * 92}%`;
@@ -683,25 +613,24 @@
             floatBg.appendChild(div);
         }
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const surpriseId = urlParams.get('id');
+        let urlParams = new URLSearchParams(window.location.search);
+        let surpriseId = urlParams.get('id');
         let targetTimeStr = '';
 
         async function loadSurpriseData() {
             let name = 'Friend';
             let msg = 'Wishing you an extraordinary day filled with joy and success!';
-            let photos = [], video, song, voice, lang = 'en';
+            let photoUrl = '', video, song, voice, lang = 'en';
 
             if (surpriseId) {
                 try {
-                    const response = await fetch(`${BOT_API_URL}/api/surprise?id=${surpriseId}`);
+                    let response = await fetch(`${BOT_API_URL}/api/surprise?id=${surpriseId}`);
                     if (response.ok) {
-                        const data = await response.json();
+                        let data = await response.json();
                         name = data.name || name;
                         msg = data.msg || msg;
                         targetTimeStr = data.target_time || '';
-                        if (data.photo) photos.push(data.photo);
-                        if (data.photos) photos = photos.concat(data.photos);
+                        photoUrl = data.photo || '';
                         video = data.video;
                         song = data.song;
                         voice = data.voice;
@@ -714,7 +643,7 @@
                 name = urlParams.get('name') || 'Friend';
                 msg = urlParams.get('msg') || 'Wishing you an extraordinary day!';
                 targetTimeStr = urlParams.get('target_time') || '';
-                if (urlParams.get('photo')) photos.push(urlParams.get('photo'));
+                photoUrl = urlParams.get('photo') || '';
                 video = urlParams.get('video');
                 song = urlParams.get('song');
                 voice = urlParams.get('voice');
@@ -728,28 +657,22 @@
             document.getElementById('wishMessage').innerText = msg;
             if (targetTimeStr) document.getElementById('displayDate').innerText = targetTimeStr.replace('T', ' ');
 
-            const wrapper = document.getElementById('galleryWrapper');
-            const container = document.getElementById('slidesContainer');
-            if (photos.length > 0) {
-                wrapper.style.display = 'block';
-                photos.forEach((p, idx) => {
-                    container.innerHTML += `<div class="gallery-slide ${idx === 0 ? 'active' : ''}"><img src="${p}" alt="Photo"></div>`;
-                });
-                slides = document.querySelectorAll('.gallery-slide');
+            // Single Photo Display Setup
+            if (photoUrl) {
+                document.getElementById('singlePhotoWrapper').style.display = 'flex';
+                document.getElementById('singlePhotoImg').src = photoUrl;
             }
 
-            const mediaContainer = document.getElementById('mediaContainer');
-            if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls src="${video}"></video></div>`;
+            let mediaContainer = document.getElementById('mediaContainer');
+            if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls playsinline preload="metadata" src="${video}"></video></div>`;
             if (song) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎶 Song / Audio</p><audio controls src="${song}"></audio></div>`;
             if (voice) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎙️ Voice Message</p><audio controls src="${voice}"></audio></div>`;
 
             checkTimeLock();
-            spawnFloatingStars();
         }
 
         function changeLanguage(selectedLang) {
             applyTranslations(selectedLang);
-            spawnFloatingStars();
         }
 
         function applyTranslations(lang) {
@@ -775,18 +698,11 @@
             document.getElementById('btnPostWish').innerText = getTranslation(lang, 'btnPostWish');
         }
 
-        function moveSlide(n) {
-            if (slides.length === 0) return;
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + n + slides.length) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
-
         function addGuestWish() {
-            const name = document.getElementById('guestName').value.trim();
-            const wish = document.getElementById('guestWish').value.trim();
+            let name = document.getElementById('guestName').value.trim();
+            let wish = document.getElementById('guestWish').value.trim();
             if (!name || !wish) return;
-            const list = document.getElementById('guestbookList');
+            let list = document.getElementById('guestbookList');
             list.innerHTML += `<div class="guestbook-item"><strong>${escapeHtml(name)}:</strong> ${escapeHtml(wish)}</div>`;
             document.getElementById('guestName').value = '';
             document.getElementById('guestWish').value = '';
@@ -802,13 +718,14 @@
             confetti({ particleCount: 200, spread: 110, origin: { y: 0.5 } });
             document.getElementById('giftSection').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
+            setTimeout(initCanvas, 100);
         }
 
         function parseTargetDate(str) {
             if (!str) return 0;
-            const parts = str.split(/t|\s+/i);
-            const dateParts = parts[0].split('-');
-            const timeParts = (parts[1] || '00:00:00').split(':');
+            let parts = str.split(/t|\s+/i);
+            let dateParts = parts[0].split('-');
+            let timeParts = (parts[1] || '00:00:00').split(':');
             return new Date(
                 parseInt(dateParts[0]),
                 parseInt(dateParts[1]) - 1,
@@ -820,14 +737,14 @@
         }
 
         function checkTimeLock() {
-            const isPreview = urlParams.get('preview') === 'true';
+            let isPreview = urlParams.get('preview') === 'true';
             if (!targetTimeStr || isPreview) { 
                 document.getElementById('lockSection').style.display = 'none';
                 return; 
             }
-            const targetTime = parseTargetDate(targetTimeStr);
-            const now = new Date().getTime();
-            const distance = targetTime - now;
+            let targetTime = parseTargetDate(targetTimeStr);
+            let now = new Date().getTime();
+            let distance = targetTime - now;
 
             if (distance <= 0) {
                 document.getElementById('lockSection').style.display = 'none';
@@ -836,27 +753,29 @@
                 document.getElementById('giftSection').style.display = 'none';
                 document.getElementById('targetTimeDisplay').innerText = targetTimeStr.replace('T', ' ');
                 setInterval(() => {
-                    const now = new Date().getTime();
-                    const dist = targetTime - now;
+                    let now = new Date().getTime();
+                    let dist = targetTime - now;
                     if (dist <= 0) { location.reload(); }
                     else {
-                        const days = Math.floor(dist / (1000 * 60 * 60 * 24));
-                        const hours = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                        const mins = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
-                        const secs = Math.floor((dist % (1000 * 60)) / 1000);
+                        let days = Math.floor(dist / (1000 * 60 * 60 * 24));
+                        let hours = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        let mins = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+                        let secs = Math.floor((dist % (1000 * 60)) / 1000);
                         document.getElementById('countdownTimer').innerText = `${days}d ${hours}h ${mins}m ${secs}s`;
                     }
                 }, 1000);
             }
         }
 
-        const canvas = document.getElementById('scratchCanvas');
-        const ctx = canvas.getContext('2d');
+        let canvas = document.getElementById('scratchCanvas');
+        let ctx = canvas.getContext('2d');
 
         function initCanvas() {
+            if (!canvas) return;
             canvas.width = canvas.parentElement.clientWidth;
             canvas.height = canvas.parentElement.clientHeight;
-            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            ctx.globalCompositeOperation = 'source-over';
+            let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
             gradient.addColorStop(0, '#bdc3c7');
             gradient.addColorStop(1, '#2c3e50');
             ctx.fillStyle = gradient;
@@ -867,7 +786,6 @@
             ctx.textBaseline = 'middle';
             ctx.fillText('✨ SCRATCH HERE ✨', canvas.width / 2, canvas.height / 2);
         }
-        window.addEventListener('load', initCanvas);
 
         let isDrawing = false;
         function scratch(x, y) {
@@ -878,17 +796,17 @@
         }
 
         function getPosition(e) {
-            const rect = canvas.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            let rect = canvas.getBoundingClientRect();
+            let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            let clientY = e.touches ? e.touches[0].clientY : e.clientY;
             return { x: clientX - rect.left, y: clientY - rect.top };
         }
 
-        canvas.addEventListener('mousedown', (e) => { isDrawing = true; const pos = getPosition(e); scratch(pos.x, pos.y); });
-        canvas.addEventListener('mousemove', (e) => { if (!isDrawing) return; const pos = getPosition(e); scratch(pos.x, pos.y); });
+        canvas.addEventListener('mousedown', (e) => { isDrawing = true; let pos = getPosition(e); scratch(pos.x, pos.y); });
+        canvas.addEventListener('mousemove', (e) => { if (!isDrawing) return; let pos = getPosition(e); scratch(pos.x, pos.y); });
         window.addEventListener('mouseup', () => { isDrawing = false; });
-        canvas.addEventListener('touchstart', (e) => { isDrawing = true; const pos = getPosition(e); scratch(pos.x, pos.y); e.preventDefault(); });
-        canvas.addEventListener('touchmove', (e) => { if (!isDrawing) return; const pos = getPosition(e); scratch(pos.x, pos.y); e.preventDefault(); });
+        canvas.addEventListener('touchstart', (e) => { isDrawing = true; let pos = getPosition(e); scratch(pos.x, pos.y); e.preventDefault(); });
+        canvas.addEventListener('touchmove', (e) => { if (!isDrawing) return; let pos = getPosition(e); scratch(pos.x, pos.y); e.preventDefault(); });
         canvas.addEventListener('touchend', () => { isDrawing = false; });
 
         function blowCandles() {
@@ -907,8 +825,8 @@
         }
 
         function firePartyPopper() {
-            const duration = 2 * 1000;
-            const end = Date.now() + duration;
+            let duration = 2 * 1000;
+            let end = Date.now() + duration;
 
             (function frame() {
                 confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 } });
@@ -918,9 +836,9 @@
         }
 
         function sendLoveHearts() {
-            const hearts = ['❤️', '💖', '💝', '💗', '💓', '✨'];
+            let hearts = ['❤️', '💖', '💝', '💗', '💓', '✨'];
             for (let i = 0; i < 12; i++) {
-                const heart = document.createElement('div');
+                let heart = document.createElement('div');
                 heart.className = 'floating-heart';
                 heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
                 heart.style.left = `${20 + Math.random() * 60}%`;
@@ -932,8 +850,8 @@
         }
 
         function launchGrandFireworks() {
-            var count = 250;
-            var defaults = { origin: { y: 0.7 } };
+            let count = 250;
+            let defaults = { origin: { y: 0.7 } };
 
             function fire(particleRatio, opts) {
               confetti(Object.assign({}, defaults, opts, {
