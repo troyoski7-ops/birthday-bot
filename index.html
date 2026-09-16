@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>✨ Luxury Birthday Surprise ✨</title>
+    <title>✨ Ultimate Luxury Birthday Surprise ✨</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
@@ -22,6 +22,28 @@
             overflow-x: hidden;
             position: relative;
         }
+
+        /* Top Bar for Language Switcher */
+        .top-bar {
+            width: 100%;
+            max-width: 360px;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+            z-index: 10;
+        }
+        .lang-select {
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            color: #ffd700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            outline: none;
+            backdrop-filter: blur(5px);
+        }
+        .lang-select option { background: #1b1b2f; color: #fff; }
 
         .floating-bg {
             position: fixed;
@@ -131,7 +153,66 @@
             white-space: pre-wrap; 
         }
 
-        .media-box img, .media-box video { width: 100%; border-radius: 14px; margin-top: 10px; border: 1px solid rgba(255,255,255,0.15); }
+        /* Gallery / Carousel Styles */
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            max-height: 220px;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-top: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .gallery-slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .gallery-slide.active { display: block; }
+        .gallery-slide img, .gallery-slide video { width: 100%; border-radius: 14px; max-height: 200px; object-fit: cover; }
+        .gallery-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: #ffd700;
+            border: none;
+            padding: 6px 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        .prev-btn { left: 5px; }
+        .next-btn { right: 5px; }
+
+        /* Guestbook Styles */
+        .guestbook-box {
+            background: rgba(0,0,0,0.25);
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 12px;
+            text-align: left;
+            max-height: 140px;
+            overflow-y: auto;
+        }
+        .guestbook-item {
+            font-size: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 0;
+        }
+        .guestbook-item strong { color: #ffd700; }
+        .guestbook-input {
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 8px;
+            padding: 8px;
+            color: #fff;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            outline: none;
+        }
+
         .media-box audio { width: 100%; margin-top: 10px; border-radius: 10px; }
 
         .btn-group {
@@ -188,6 +269,22 @@
 </head>
 <body>
 
+    <div class="top-bar">
+        <select id="langSwitcher" class="lang-select" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="ml">മലയാളം</option>
+            <option value="hi">हिन्दी</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="ar">العربية</option>
+            <option value="zh">中文</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="ru">Русский</option>
+        </select>
+    </div>
+
     <div class="floating-bg" id="floatingBg"></div>
 
     <div id="lockSection" class="container locked-screen">
@@ -224,6 +321,14 @@
 
         <div class="container" id="mediaSection">
             <h3 id="celebrationHeader">🎂 Birthday Celebration</h3>
+            
+            <!-- Multiple Photos Gallery Carousel -->
+            <div id="galleryWrapper" class="gallery-container" style="display:none;">
+                <div id="slidesContainer"></div>
+                <button class="gallery-btn prev-btn" onclick="moveSlide(-1)">❮</button>
+                <button class="gallery-btn next-btn" onclick="moveSlide(1)">❯</button>
+            </div>
+
             <div id="mediaContainer" class="media-box"></div>
             <div style="font-size: 3rem; margin: 14px 0;" id="cakeEmoji">🎂🔥</div>
             
@@ -238,71 +343,116 @@
             <div class="btn-group">
                 <button class="btn" style="background: linear-gradient(45deg, #00ffcc, #00b894);" onclick="launchGrandFireworks()" id="btnFireworks">🎆 Grand Fireworks</button>
             </div>
+
+            <!-- Guestbook / Virtual Wishes Wall -->
+            <div style="margin-top: 20px; border-top: 1px solid rgba(255,215,0,0.2); padding-top: 12px;">
+                <h4 id="guestbookTitle" style="color: #ffd700; font-size: 0.95rem; margin-bottom: 6px;">💌 Guestbook Wishes</h4>
+                <div class="guestbook-box" id="guestbookList">
+                    <div class="guestbook-item"><strong>System:</strong> Welcome to the celebration! Leave a wish below.</div>
+                </div>
+                <input type="text" id="guestName" class="guestbook-input" placeholder="Your Name...">
+                <input type="text" id="guestWish" class="guestbook-input" placeholder="Write a short wish...">
+                <button class="btn" style="width: 100%; margin-top: 8px; padding: 7px;" onclick="addGuestWish()" id="btnPostWish">Post Wish ✨</button>
+            </div>
         </div>
     </div>
 
     <script>
         const BOT_API_URL = "https://birthday-bot-hmkb.onrender.com";
 
-        // വിവിധ ഭാഷകൾക്കായുള്ള ട്രാൻസ്ലേഷൻ ഡിക്ഷണറി
         const translations = {
             'en': {
                 lockTitle: "⏳ Portal Locked!", lockSubtitle: "This exclusive surprise opens on:",
                 giftPrompt: "🎁 Tap the Gift Box to Unwrap!", giftSubPrompt: "Tap to unlock your special surprise...",
                 mainTitle: "Happy Birthday", targetTimeText: "Target Time", scratchInstruction: "👇 Scratch the card below to reveal your surprise!",
                 surpriseHeader: "🎉 SPECIAL SURPRISE 🎁", celebrationHeader: "🎂 Birthday Celebration",
-                btnBlow: "💨 Blow Candles", btnCut: "🕯️ Cut Cake", btnPopper: "🎊 Party Popper", btnLove: "❤️ Send Love", btnFireworks: "🎆 Grand Fireworks"
+                btnBlow: "💨 Blow Candles", btnCut: "🕯️ Cut Cake", btnPopper: "🎊 Party Popper", btnLove: "❤️ Send Love", btnFireworks: "🎆 Grand Fireworks",
+                guestbookTitle: "💌 Guestbook Wishes", guestNamePlaceholder: "Your Name...", guestWishPlaceholder: "Write a short wish...", btnPostWish: "Post Wish ✨"
             },
             'ml': {
                 lockTitle: "⏳ പോർട്ടൽ ലോക്ക് ചെയ്തിരിക്കുന്നു!", lockSubtitle: "ഈ പ്രത്യേക സർപ്രൈസ് തുറക്കുന്ന സമയം:",
                 giftPrompt: "🎁 തുറക്കാൻ ഗിഫ്റ്റ് ബോക്സിൽ അമർത്തൂ!", giftSubPrompt: "നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ ടാപ്പ് ചെയ്യൂ...",
                 mainTitle: "பிறന്നാൾ ആശംസകൾ", targetTimeText: "ലഭ്യമാകുന്ന സമയം", scratchInstruction: "👇 നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ താഴെ സ്ക്രാച്ച് ചെയ്യുക!",
                 surpriseHeader: "🎉 പ്രത്യേക സർപ്രൈസ് 🎁", celebrationHeader: "🎂 പിറന്നാൾ ആഘോഷം",
-                btnBlow: "💨 മെഴുകുതിരി അണയ്ക്കുക", btnCut: "🕯️ കേക്ക് മുറിക്കുക", btnPopper: "🎊 പാർട്ടി പോപ്പർ", btnLove: "❤️ സ്നേഹം അയക്കുക", btnFireworks: "🎆 കരിમരുന്ന് പ്രയോഗം"
+                btnBlow: "💨 മെഴുകുതിരി അണയ്ക്കുക", btnCut: "🕯️ കേക്ക് മുറിക്കുക", btnPopper: "🎊 പാർട്ടി പോപ്പർ", btnLove: "❤️ സ്നേഹം അയക്കുക", btnFireworks: "🎆 കരിമരുന്ന് പ്രയോഗം",
+                guestbookTitle: "💌 ആശംസാ പുസ്തകം (Guestbook)", guestNamePlaceholder: "നിങ്ങളുടെ പേര്...", guestWishPlaceholder: "ചെറിയൊരു ആശംസ എഴുതൂ...", btnPostWish: "പോസ്റ്റ് ചെയ്യൂ ✨"
             },
             'hi': {
                 lockTitle: "⏳ पोर्टल लॉक है!", lockSubtitle: "यह विशेष सरप्राइज खुलेगा:",
                 giftPrompt: "🎁 खोलने के लिए गिफ्ट बॉक्स पर टैप करें!", giftSubPrompt: "अपना विशेष सरप्राइज अनलॉक करने के लिए टैप करें...",
                 mainTitle: "जन्मदिन की शुभकामनाएँ", targetTimeText: "लक्ष्य समय", scratchInstruction: "👇 अपना सरप्राइज देखने के लिए नीचे खरोंचें!",
                 surpriseHeader: "🎉 विशेष सरप्राइज 🎁", celebrationHeader: "🎂 जन्मदिन का जश्न",
-                btnBlow: "💨 मोमबत्ती बुझाएं", btnCut: "🕯️ केक काटें", btnPopper: "🎊 पार्टी पॉपर", btnLove: "❤️ प्यार भेजें", btnFireworks: "🎆 आतिशबाजी"
+                btnBlow: "💨 मोमबत्ती बुझाएं", btnCut: "🕯️ केक काटें", btnPopper: "🎊 पार्टी पॉपर", btnLove: "❤️ प्यार भेजें", btnFireworks: "🎆 आतिशबाजी",
+                guestbookTitle: "💌 शुभकामनाएं दीवार", guestNamePlaceholder: "आपका नाम...", guestWishPlaceholder: "एक छोटी शुभकामना लिखें...", btnPostWish: "शुभकामना पोस्ट करें ✨"
             },
             'es': {
                 lockTitle: "⏳ ¡Portal Bloqueado!", lockSubtitle: "Esta sorpresa exclusiva se abre el:",
                 giftPrompt: "🎁 ¡Toca la caja de regalo para abrir!", giftSubPrompt: "Toca para desbloquear tu sorpresa...",
                 mainTitle: "¡Feliz Cumpleaños", targetTimeText: "Hora objetivo", scratchInstruction: "👇 ¡Raspa la tarjeta de abajo para revelar tu sorpresa!",
                 surpriseHeader: "🎉 SORPRESA ESPECIAL 🎁", celebrationHeader: "🎂 Celebración de Cumpleaños",
-                btnBlow: "💨 Apagar velas", btnCut: "🕯️ Cortar pastel", btnPopper: "🎊 Serpentinas", btnLove: "❤️ Enviar amor", btnFireworks: "🎆 Fuegos artificiales"
+                btnBlow: "💨 Apagar velas", btnCut: "🕯️ Cortar pastel", btnPopper: "🎊 Serpentinas", btnLove: "❤️ Enviar amor", btnFireworks: "🎆 Fuegos artificiales",
+                guestbookTitle: "💌 Libro de Visitas", guestNamePlaceholder: "Tu nombre...", guestWishPlaceholder: "Escribe un deseo...", btnPostWish: "Publicar deseo ✨"
             },
             'fr': {
                 lockTitle: "⏳ Portail Verrouillé !", lockSubtitle: "Cette surprise exclusive s'ouvre le :",
                 giftPrompt: "🎁 Appuyez sur la boîte cadeau !", giftSubPrompt: "Appuyez pour débloquer votre surprise...",
                 mainTitle: "Joyeux Anniversaire", targetTimeText: "Heure cible", scratchInstruction: "👇 Grattez la carte ci-dessous pour révéler votre surprise !",
                 surpriseHeader: "🎉 SURPRISE SPÉCIALE 🎁", celebrationHeader: "🎂 Célébration d'Anniversaire",
-                btnBlow: "💨 Souffler les bougies", btnCut: "🕯️ Couper le gâteau", btnPopper: "🎊 Pistolet à confettis", btnLove: "❤️ Envoyer de l'amour", btnFireworks: "🎆 Feux d'artifice"
+                btnBlow: "💨 Souffler les bougies", btnCut: "🕯️ Couper le gâteau", btnPopper: "🎊 Pistolet à confettis", btnLove: "❤️ Envoyer de l'amour", btnFireworks: "🎆 Feux d'artifice",
+                guestbookTitle: "💌 Livre d'Or", guestNamePlaceholder: "Votre nom...", guestWishPlaceholder: "Écrivez un vœu...", btnPostWish: "Publier le vœu ✨"
             },
             'de': {
                 lockTitle: "⏳ Portal Gesperrt!", lockSubtitle: "Diese exklusive Überraschung öffnet sich am:",
                 giftPrompt: "🎁 Tippe auf die Geschenkschachtel!", giftSubPrompt: "Tippe, um deine Überraschung zu entsperren...",
                 mainTitle: "Alles Gute zum Geburtstag", targetTimeText: "Zielzeit", scratchInstruction: "👇 Kratze die Karte unten frei, um deine Überraschung zu sehen!",
                 surpriseHeader: "🎉 SPEZIELLE ÜBERRASCHUNG 🎁", celebrationHeader: "🎂 Geburtstag Feier",
-                btnBlow: "💨 Kerzen ausblasen", btnCut: "🕯️ Kuchen schneiden", btnPopper: "🎊 Konfetti", btnLove: "❤️ Liebe senden", btnFireworks: "🎆 Feuerwerk"
+                btnBlow: "💨 Kerzen ausblasen", btnCut: "🕯️ Kuchen schneiden", btnPopper: "🎊 Konfetti", btnLove: "❤️ Liebe senden", btnFireworks: "🎆 Feuerwerk",
+                guestbookTitle: "💌 Gästebuch Wünsche", guestNamePlaceholder: "Dein Name...", guestWishPlaceholder: "Schreibe einen Wunsch...", btnPostWish: "Wunsch posten ✨"
             },
             'ar': {
                 lockTitle: "⏳ البوابة مقفلة!", lockSubtitle: "تفتح هذه المفاجأة الحصرية في:",
                 giftPrompt: "🎁 اضغط على صندوق الهدايا!", giftSubPrompt: "انقر لفتح مفاجأتك الخاصة...",
                 mainTitle: "عيد ميلاد سعيد", targetTimeText: "الوقت المستهدف", scratchInstruction: "👇 اخدش البطاقة أدناه للكشف عن مفاجأتك!",
                 surpriseHeader: "🎉 مفاجأة خاصة 🎁", celebrationHeader: "🎂 احتفال عيد الميلاد",
-                btnBlow: "💨 إطفاء الشموع", btnCut: "🕯️ تقطيع الكعكة", btnPopper: "🎊 ألعاب نارية", btnLove: "❤️ إرسال الحب", btnFireworks: "🎆 الألعاب الكبرى"
+                btnBlow: "💨 إطفاء الشموع", btnCut: "🕯️ تقطيع الكعكة", btnPopper: "🎊 ألعاب نارية", btnLove: "❤️ إرسال الحب", btnFireworks: "🎆 الألعاب الكبرى",
+                guestbookTitle: "💌 سجل الزوار", guestNamePlaceholder: "اسمك...", guestWishPlaceholder: "اكتب امنية...", btnPostWish: "نشر الأمنية ✨"
             },
             'zh': {
                 lockTitle: "⏳ 传送门已锁定！", lockSubtitle: "此独家惊喜将于以下时间开启：",
                 giftPrompt: "🎁 点击礼盒打开！", giftSubPrompt: "点击解锁您的特别惊喜...",
                 mainTitle: "生日快乐", targetTimeText: "目标时间", scratchInstruction: "👇 刮开下面的卡片揭晓您的惊喜！",
                 surpriseHeader: "🎉 特别惊喜 🎁", celebrationHeader: "🎂 生日庆典",
-                btnBlow: "💨 吹蜡烛", btnCut: "🕯️ 切蛋糕", btnPopper: "🎊 礼炮", btnLove: "❤️ 发送爱意", btnFireworks: "🎆 盛大焰火"
+                btnBlow: "💨 吹蜡烛", btnCut: "🕯️ 切蛋糕", btnPopper: "🎊 礼炮", btnLove: "❤️ 发送爱意", btnFireworks: "🎆 盛大焰火",
+                guestbookTitle: "💌 留言板祝福", guestNamePlaceholder: "您的名字...", guestWishPlaceholder: "写下祝福...", btnPostWish: "发布祝福 ✨"
+            },
+            'ja': {
+                lockTitle: "⏳ ポータルロック中！", lockSubtitle: "この特別なサプライズの公開日時:",
+                giftPrompt: "🎁 ギフトボックスをタップして開ける！", giftSubPrompt: "タップして特別なサプライズを解除...",
+                mainTitle: "お誕生日おめでとう", targetTimeText: "目標時間", scratchInstruction: "👇 下のカードをスクラッチしてサプライズを表示！",
+                surpriseHeader: "🎉 スペシャルサプライズ 🎁", celebrationHeader: "🎂 お誕生日のお祝い",
+                btnBlow: "💨 キャンドルを消す", btnCut: "🕯️ ケーキを切る", btnPopper: "🎊 パーティーポッパー", btnLove: "❤️ 愛を送る", btnFireworks: "🎆 打ち上げ花火",
+                guestbookTitle: "💌 ゲストブック", guestNamePlaceholder: "あなたの名前...", guestWishPlaceholder: "短い願い事を書く...", btnPostWish: "願い事を投稿 ✨"
+            },
+            'ko': {
+                lockTitle: "⏳ 포털 잠김!", lockSubtitle: "이 특별한 서프라이즈가 열리는 시간:",
+                giftPrompt: "🎁 선물 상자를 눌러 열어보세요!", giftSubPrompt: "특별한 서프라이즈를 해제하려면 누르세요...",
+                mainTitle: "생일 축하해요", targetTimeText: "목표 시간", scratchInstruction: "👇 아래 카드를 긁어서 서프라이즈를 확인하세요!",
+                surpriseHeader: "🎉 특별 서프라이즈 🎁", celebrationHeader: "🎂 생일 축하 파티",
+                btnBlow: "💨 촛불 끄기", btnCut: "🕯️ 케이크 자르기", btnPopper: "🎊 파티 포퍼", btnLove: "❤️ 사랑 보내기", btnFireworks: "🎆 대형 불꽃놀이",
+                guestbookTitle: "💌 방명록 소원", guestNamePlaceholder: "이름...", guestWishPlaceholder: "간단한 축하를 남겨주세요...", btnPostWish: "소원 남기기 ✨"
+            },
+            'ru': {
+                lockTitle: "⏳ Портал заблокирован!", lockSubtitle: "Этот эксклюзивный сюрприз откроется:",
+                giftPrompt: "🎁 Нажмите на подарочную коробку!", giftSubPrompt: "Нажмите, чтобы разблокировать сюрприз...",
+                mainTitle: "С днем рождения", targetTimeText: "Целевое время", scratchInstruction: "👇 Сотрите карточку ниже, чтобы узнать сюрприз!",
+                surpriseHeader: "🎉 ОСОБЫЙ СЮРПРИЗ 🎁", celebrationHeader: "🎂 Празднование дня рождения",
+                btnBlow: "💨 Задуть свечи", btnCut: "🕯️ Разрезать торт", btnPopper: "🎊 Хлопушка", btnLove: "❤️ Отправить любовь", btnFireworks: "🎆 Грандиозный фейерверк",
+                guestbookTitle: "💌 Гостевая книга", guestNamePlaceholder: "Ваше имя...", guestWishPlaceholder: "Напишите пожелание...", btnPostWish: "Оставить пожелание ✨"
             }
         };
+
+        let currentSlide = 0;
+        let slides = [];
 
         const icons = ['🎈', '✨', '💖', '🎉', '🌟', '🎂'];
         const floatBg = document.getElementById('floatingBg');
@@ -332,13 +482,12 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const surpriseId = urlParams.get('id');
-
         let targetTimeStr = '';
 
         async function loadSurpriseData() {
             let name = 'Friend';
             let msg = 'Wishing you an extraordinary day filled with joy and success!';
-            let photo, video, song, voice, lang = 'en';
+            let photos = [], video, song, voice, lang = 'en';
 
             if (surpriseId) {
                 try {
@@ -348,7 +497,8 @@
                         name = data.name || name;
                         msg = data.msg || msg;
                         targetTimeStr = data.target_time || '';
-                        photo = data.photo;
+                        if (data.photo) photos.push(data.photo);
+                        if (data.photos) photos = photos.concat(data.photos);
                         video = data.video;
                         song = data.song;
                         voice = data.voice;
@@ -361,27 +511,41 @@
                 name = urlParams.get('name') || 'Friend';
                 msg = urlParams.get('msg') || 'Wishing you an extraordinary day!';
                 targetTimeStr = urlParams.get('target_time') || '';
-                photo = urlParams.get('photo');
+                if (urlParams.get('photo')) photos.push(urlParams.get('photo'));
                 video = urlParams.get('video');
                 song = urlParams.get('song');
                 voice = urlParams.get('voice');
                 lang = urlParams.get('lang') || 'en';
             }
 
-            // അപ്ഡേറ്റ് ലാംഗ്വേജ് ടെക്സ്റ്റുകൾ
+            document.getElementById('langSwitcher').value = lang;
             applyTranslations(lang);
 
             document.getElementById('recipientName').innerText = name;
             document.getElementById('wishMessage').innerText = msg;
             if (targetTimeStr) document.getElementById('displayDate').innerText = targetTimeStr.replace('T', ' ');
 
+            // Setup Gallery Carousel if photos exist
+            const wrapper = document.getElementById('galleryWrapper');
+            const container = document.getElementById('slidesContainer');
+            if (photos.length > 0) {
+                wrapper.style.display = 'block';
+                photos.forEach((p, idx) => {
+                    container.innerHTML += `<div class="gallery-slide ${idx === 0 ? 'active' : ''}"><img src="${p}" alt="Photo"></div>`;
+                });
+                slides = document.querySelectorAll('.gallery-slide');
+            }
+
             const mediaContainer = document.getElementById('mediaContainer');
-            if (photo) mediaContainer.innerHTML += `<div style="margin-top:10px;"><img src="${photo}" alt="Birthday Photo"></div>`;
             if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls src="${video}"></video></div>`;
             if (song) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎶 Song / Audio</p><audio controls src="${song}"></audio></div>`;
             if (voice) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎙️ Voice Message</p><audio controls src="${voice}"></audio></div>`;
 
             checkTimeLock();
+        }
+
+        function changeLanguage(selectedLang) {
+            applyTranslations(selectedLang);
         }
 
         function applyTranslations(lang) {
@@ -400,6 +564,33 @@
             document.getElementById('btnPopper').innerText = t.btnPopper;
             document.getElementById('btnLove').innerText = t.btnLove;
             document.getElementById('btnFireworks').innerText = t.btnFireworks;
+            document.getElementById('guestbookTitle').innerText = t.guestbookTitle;
+            document.getElementById('guestName').placeholder = t.guestNamePlaceholder;
+            document.getElementById('guestWish').placeholder = t.guestWishPlaceholder;
+            document.getElementById('btnPostWish').innerText = t.btnPostWish;
+        }
+
+        function moveSlide(n) {
+            if (slides.length === 0) return;
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function addGuestWish() {
+            const name = document.getElementById('guestName').value.trim();
+            const wish = document.getElementById('guestWish').value.trim();
+            if (!name || !wish) return;
+            const list = document.getElementById('guestbookList');
+            list.innerHTML += `<div class="guestbook-item"><strong>${escapeHtml(name)}:</strong> ${escapeHtml(wish)}</div>`;
+            document.getElementById('guestName').value = '';
+            document.getElementById('guestWish').value = '';
+            list.scrollTop = list.scrollHeight;
+            confetti({ particleCount: 30, spread: 50, origin: { y: 0.9 } });
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
         function openGift() {
