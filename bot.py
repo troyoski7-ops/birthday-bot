@@ -14,14 +14,15 @@ from aiogram.types import (
     WebAppInfo,
 )
 from aiohttp import web
+from countries import COUNTRY_LANGUAGES
 
 # Telegram Bot Token
 API_TOKEN = "8854916574:AAEgxWmPyP4OPNSsLfsBbXXFu5W6LiFcq0o"
 
-# Owner ID (നിങ്ങൾക്ക് ഫ്രീ ആയി ഉപയോഗിക്കാനും /stats കാണാനും)
+# Owner ID
 OWNER_ID = 1689374364
 
-# എത്ര എണ്ണം ഫ്രീ ആയി വേണം എന്ന് ഇവിടെ സെറ്റ് ചെയ്യാം (5 എണ്ണം)
+# ഫ്രീ ലിമിറ്റ്
 FREE_LIMIT = 5
 
 bot = Bot(token=API_TOKEN)
@@ -40,7 +41,8 @@ def init_db():
             user_id INTEGER PRIMARY KEY,
             started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             completed INTEGER DEFAULT 0,
-            creations_count INTEGER DEFAULT 0
+            creations_count INTEGER DEFAULT 0,
+            lang TEXT DEFAULT 'en'
         )
     """)
   cursor.execute("""
@@ -50,6 +52,7 @@ def init_db():
             recipient_name TEXT,
             wish_text TEXT,
             params_json TEXT,
+            lang TEXT DEFAULT 'en',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
@@ -64,8 +67,8 @@ def record_start(user_id):
   conn = sqlite3.connect("bot_stats.db")
   cursor = conn.cursor()
   cursor.execute(
-      "INSERT OR IGNORE INTO users (user_id, completed, creations_count)"
-      " VALUES (?, 0, 0)",
+      "INSERT OR IGNORE INTO users (user_id, completed, creations_count, lang)"
+      " VALUES (?, 0, 0, 'en')",
       (user_id,),
   )
   conn.commit()
@@ -99,15 +102,45 @@ def increment_user_creation(user_id):
   conn.close()
 
 
-def save_surprise_to_db(user_id, recipient_name, wish_text, params_dict):
+def save_user_lang(user_id, lang_code):
   conn = sqlite3.connect("bot_stats.db")
   cursor = conn.cursor()
   cursor.execute(
       """
-        INSERT INTO surprises (user_id, recipient_name, wish_text, params_json)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO users (user_id, lang) VALUES (?, ?)
+        ON CONFLICT(user_id) DO UPDATE SET lang = ?
     """,
-      (user_id, recipient_name, wish_text, json.dumps(params_dict)),
+      (user_id, lang_code, lang_code),
+  )
+  conn.commit()
+  conn.close()
+
+
+def get_user_lang(user_id):
+  conn = sqlite3.connect("bot_stats.db")
+  cursor = conn.cursor()
+  cursor.execute("SELECT lang FROM users WHERE user_id = ?", (user_id,))
+  row = cursor.fetchone()
+  conn.close()
+  return row[0] if row and row[0] else "en"
+
+
+def save_surprise_to_db(user_id, recipient_name, wish_text, params_dict):
+  lang_code = get_user_lang(user_id)
+  conn = sqlite3.connect("bot_stats.db")
+  cursor = conn.cursor()
+  cursor.execute(
+      """
+        INSERT INTO surprises (user_id, recipient_name, wish_text, params_json, lang)
+        VALUES (?, ?, ?, ?, ?)
+    """,
+      (
+          user_id,
+          recipient_name,
+          wish_text,
+          json.dumps(params_dict),
+          lang_code,
+      ),
   )
   conn.commit()
   surprise_id = cursor.lastrowid
@@ -140,6 +173,74 @@ class BirthdayForm(StatesGroup):
   song = State()
   voice = State()
   audio = State()
+
+
+# --- Region & Country Keyboards ---
+def get_region_keyboard():
+  return InlineKeyboardMarkup(
+      inline_keyboard=[
+          [
+              InlineKeyboardButton(text="🌏 Asia", callback_data="reg_Asia"),
+              InlineKeyboardButton(text="🌍 Europe", callback_data="reg_Europe"),
+          ],
+          [
+              InlineKeyboardButton(text="🌍 Africa", callback_data="reg_Africa"),
+              InlineKeyboardButton(
+                  text="🌎 Americas", callback_data="reg_Americas"
+              ),
+          ],
+          [
+              InlineKeyboardButton(
+                  text="🌏 Oceania", callback_data="reg_Oceania"
+              )
+          ],
+          [
+              InlineKeyboardButton(
+                  text="🇬🇧 Keep English (Skip)", callback_data="setlang_en"
+              )
+          ],
+      ]
+  )
+
+
+def get_countries_keyboard(region, page=0, items_per_page=6):
+  countries = list(COUNTRY_LANGUAGES.get(region, {}).keys())
+  start_idx = page * items_per_page
+  end_idx = start_idx + items_per_page
+  page_countries = countries[start_idx:end_idx]
+
+  keyboard = []
+  row = []
+  for c in page_countries:
+    row.append(
+        InlineKeyboardButton(text=c, callback_data=f"country_{region}_{c}")
+    )
+    if len(row) == 2:
+      keyboard.append(row)
+      row = []
+  if row:
+    keyboard.append(row)
+
+  nav = []
+  if page > 0:
+    nav.append(
+        InlineKeyboardButton(
+            text="⬅️ Prev", callback_data=f"cpage_{region}_{page-1}"
+        )
+    )
+  if end_idx < len(countries):
+    nav.append(
+        InlineKeyboardButton(
+            text="Next ➡️", callback_data=f"cpage_{region}_{page+1}"
+        )
+    )
+  if nav:
+    keyboard.append(nav)
+
+  keyboard.append(
+      [InlineKeyboardButton(text="🔙 Back", callback_data="back_to_regions")]
+  )
+  return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
 
 def get_action_keyboard():
@@ -309,13 +410,85 @@ async def cmd_stats(message: types.Message):
 async def cmd_start(message: types.Message, state: FSMContext):
   user_id = message.from_user.id
   record_start(user_id)
-  creations = get_user_creations(user_id)
+  save_user_lang(user_id, "en")  # Default to English
 
   welcome_text = (
       "✨ Welcome to your little corner of surprises...\n\n"
-      "Let's craft a timeless, heartfelt digital birthday wish filled with sweet memories, music, and love. 🤍"
+      "Your language is currently set to **English**. Want to change your"
+      " region/language? Choose below or keep English:"
   )
-  await message.answer(welcome_text)
+  await message.answer(
+      welcome_text, reply_markup=get_region_keyboard(), parse_mode="Markdown"
+  )
+
+
+# --- Language / Region Callbacks ---
+@dp.callback_query(F.data.startswith("reg_"))
+async def process_region(callback: types.CallbackQuery):
+  region = callback.data.split("_")[1]
+  await callback.message.edit_text(
+      f"🌍 Region: **{region}**. Select your country:",
+      reply_markup=get_countries_keyboard(region, page=0),
+      parse_mode="Markdown",
+  )
+  await callback.answer()
+
+
+@dp.callback_query(F.data.startswith("cpage_"))
+async def process_cpage(callback: types.CallbackQuery):
+  _, region, page = callback.data.split("_")
+  await callback.message.edit_reply_markup(
+      reply_markup=get_countries_keyboard(region, page=int(page))
+  )
+  await callback.answer()
+
+
+@dp.callback_query(F.data.startswith("country_"))
+async def process_country(callback: types.CallbackQuery):
+  parts = callback.data.split("_")
+  region = parts[1]
+  country = "_".join(parts[2:])
+
+  langs = COUNTRY_LANGUAGES.get(region, {}).get(country, [("English", "en")])
+
+  if len(langs) == 1:
+    lang_name, lang_code = langs[0]
+    save_user_lang(callback.from_user.id, lang_code)
+    await proceed_after_language(callback.message, callback.from_user.id)
+  else:
+    kb = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text=l[0], callback_data=f"setlang_{l[1]}")]
+            for l in langs
+        ]
+    )
+    await callback.message.edit_text(
+        f"🗣️ Choose your language for **{country}**:",
+        reply_markup=kb,
+        parse_mode="Markdown",
+    )
+  await callback.answer()
+
+
+@dp.callback_query(F.data.startswith("setlang_"))
+async def set_final_lang(callback: types.CallbackQuery, state: FSMContext):
+  lang_code = callback.data.split("_")[1]
+  save_user_lang(callback.from_user.id, lang_code)
+  await proceed_after_language(callback.message, callback.from_user.id)
+  await callback.answer()
+
+
+@dp.callback_query(F.data == "back_to_regions")
+async def back_regions(callback: types.CallbackQuery):
+  await callback.message.edit_text(
+      "🌐 Please choose a region / നിങ്ങളുടെ പ്രദേശം തിരഞ്ഞെടുക്കൂ:",
+      reply_markup=get_region_keyboard(),
+  )
+  await callback.answer()
+
+
+async def proceed_after_language(message: types.Message, user_id: int):
+  creations = get_user_creations(user_id)
 
   if user_id == OWNER_ID:
     await message.answer(
@@ -324,7 +497,6 @@ async def cmd_start(message: types.Message, state: FSMContext):
         reply_markup=get_action_keyboard(),
         parse_mode="Markdown",
     )
-    await state.set_state(BirthdayForm.name)
   elif creations < FREE_LIMIT:
     remaining_free = FREE_LIMIT - creations
     if creations > 0:
@@ -343,7 +515,6 @@ async def cmd_start(message: types.Message, state: FSMContext):
           reply_markup=get_action_keyboard(),
           parse_mode="Markdown",
       )
-    await state.set_state(BirthdayForm.name)
   else:
     await message.answer(
         "⭐ You have used all your 5 free birthday surprises!\n"
@@ -397,7 +568,8 @@ STATE_PROMPTS = {
         "Whose birthday are we celebrating today? Send me their name:"
     ),
     BirthdayForm.wish: (
-        "Write a sweet, heartfelt birthday wish or message for them (Long paragraphs supported!):"
+        "Write a sweet, heartfelt birthday wish or message for them (Long"
+        " paragraphs supported!):"
     ),
     BirthdayForm.year: "Choose the year for the surprise:",
     BirthdayForm.month: "Choose the month:",
@@ -669,7 +841,6 @@ async def finish_form(message: types.Message, state: FSMContext):
       params_dict=params,
   )
 
-  # preview=true ഉള്ള ലിങ്ക് (ക്രിയേറ്റ് ചെയ്യുന്നയാൾക്ക് ഉടൻ കാണാൻ)
   preview_url = f"{NETLIFY_URL}/?id={surprise_id}&preview=true"
   final_url = f"{NETLIFY_URL}/?id={surprise_id}"
 
@@ -837,6 +1008,7 @@ async def process_audio(message: types.Message, state: FSMContext):
   await finish_form(message, state)
 
 
+# --- API Endpoint with Lang Support ---
 async def get_surprise_api(request):
   surprise_id = request.query.get("id")
   if not surprise_id:
@@ -844,7 +1016,8 @@ async def get_surprise_api(request):
   conn = sqlite3.connect("bot_stats.db")
   cursor = conn.cursor()
   cursor.execute(
-      "SELECT recipient_name, wish_text, params_json FROM surprises WHERE id = ?",
+      "SELECT recipient_name, wish_text, params_json, lang FROM surprises WHERE"
+      " id = ?",
       (surprise_id,),
   )
   row = cursor.fetchone()
@@ -853,6 +1026,7 @@ async def get_surprise_api(request):
     data = json.loads(row[2]) if row[2] else {}
     data["name"] = row[0]
     data["msg"] = row[1]
+    data["lang"] = row[3] or "en"
     return web.json_response(data, headers={"Access-Control-Allow-Origin": "*"})
   return web.json_response({"error": "Not found"}, status=404)
 
