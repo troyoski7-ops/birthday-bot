@@ -460,6 +460,7 @@
     <script>
         const BOT_API_URL = "https://birthday-bot-hmkb.onrender.com";
 
+        // 🔥 പ്രധാനപ്പെട്ട എല്ലാ ഭാഷകളിലേക്കുമുള്ള ട്രാൻസ്ലേഷൻ ഡിക്ഷണറി
         const translations = {
             'en': {
                 lockTitle: "⏳ Portal Locked!", lockSubtitle: "This exclusive surprise opens on:",
@@ -500,6 +501,26 @@
                 openWhenTitle: "💌 Открыть, когда...",
                 btnBlow: "💨 Задуть свечи", btnCut: "🕯️ Разрезать торт", btnPopper: "🎊 Хлопушка", btnLove: "❤️ Любовь", btnFireworks: "🎆 Фейерверк",
                 guestbookTitle: "💌 Гостевая книга", guestNamePlaceholder: "Ваше имя...", guestWishPlaceholder: "Напишите пожелание...", btnPostWish: "Оставить пожелание ✨"
+            },
+            'de': {
+                lockTitle: "⏳ Portal gesperrt!", lockSubtitle: "Diese Überraschung öffnet sich am:",
+                giftPrompt: "🎁 Geschenkbox antippen!", giftSubPrompt: "Antippen zum Freischalten...",
+                mainTitle: "Alles Gute zum Geburtstag", targetTimeText: "Zielzeit", scratchInstruction: "👇 Karte freirubbeln!",
+                surpriseHeader: "🎉 SPEZIELLE ÜBERRASCHUNG 🎁", celebrationHeader: "🎂 Geburtstagsfeier",
+                statsTitle: "⏳ Lebensstatistik", labelDays: "Gelebte Tage", labelHours: "Gelebte Stunden",
+                openWhenTitle: "💌 Öffnen, wenn...",
+                btnBlow: "💨 Kerzen ausblasen", btnCut: "🕯️ Torte schneiden", btnPopper: "🎊 Konfetti", btnLove: "❤️ Liebe senden", btnFireworks: "🎆 Feuerwerk",
+                guestbookTitle: "💌 Gästebuch", guestNamePlaceholder: "Dein Name...", guestWishPlaceholder: "Wunsch schreiben...", btnPostWish: "Wunsch posten ✨"
+            },
+            'es': {
+                lockTitle: "⏳ ¡Portal bloqueado!", lockSubtitle: "Esta sorpresa se abre en:",
+                giftPrompt: "🎁 ¡Toca la caja de regalo!", giftSubPrompt: "Toca para desbloquear...",
+                mainTitle: "Feliz Cumpleaños", targetTimeText: "Hora objetivo", scratchInstruction: "👇 ¡Raspa la tarjeta!",
+                surpriseHeader: "🎉 ¡SORPRESA ESPECIAL! 🎁", celebrationHeader: "🎂 Celebración",
+                statsTitle: "⏳ Estadísticas de vida", labelDays: "Días vividos", labelHours: "Horas vividas",
+                openWhenTitle: "💌 Abrir cuando...",
+                btnBlow: "💨 Soplar velas", btnCut: "🕯️ Cortar pastel", btnPopper: "🎊 Confeti", btnLove: "❤️ Enviar amor", btnFireworks: "🎆 Fuego artificial",
+                guestbookTitle: "💌 Libro de visitas", guestNamePlaceholder: "Tu nombre...", guestWishPlaceholder: "Escribe un deseo...", btnPostWish: "Publicar deseo ✨"
             }
         };
 
@@ -558,7 +579,6 @@
                 diffDays = age * 365;
                 diffHours = age * 365 * 24;
             } else {
-                // 🔥 നിങ്ങളുടെ വ്യക്തിപരമായ തീയതി പൂർണ്ണമായി ഒഴിവാക്കി, ഡീഫോൾട്ട് ആയി പ്രായം 20 (Age 20) ആയി സെറ്റ് ചെയ്തിരിക്കുന്നു
                 let defaultAge = 20;
                 diffDays = defaultAge * 365;
                 diffHours = defaultAge * 365 * 24;
@@ -620,13 +640,14 @@
             }
 
             let mediaContainer = document.getElementById('mediaContainer');
-            if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls playsinline preload="metadata" src="${video}"></video></div>`;
+            if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls playsinline controlslist="nodownload" preload="metadata" src="${video}"></video></div>`;
             if (song) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎶 Song / Audio</p><audio controls src="${song}"></audio></div>`;
             if (voice) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎙️ Voice Message</p><audio controls src="${voice}"></audio></div>`;
 
             checkTimeLock();
         }
 
+        // 🔥 ലാംഗ്വേജ് മാറുമ്പോൾ വെബ്‌സൈറ്റിലെ എല്ലാ ടെക്സ്റ്റുകളും ഉടനടി അപ്ഡേറ്റ് ആകുന്ന ഫങ്ഷൻ
         function changeLanguage(selectedLang) {
             currentLang = selectedLang;
             applyTranslations(selectedLang);
