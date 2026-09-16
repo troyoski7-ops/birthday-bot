@@ -116,7 +116,7 @@
             width: 100%;
             height: 100%;
             max-height: 200px;
-            overflow-y: auto; /* സ്ക്രാച്ച് കാർഡിനുള്ളിൽ താഴേക്ക് scroll ചെയ്യാൻ */
+            overflow-y: auto;
             padding: 4px 6px;
             z-index: 1;
         }
@@ -155,11 +155,7 @@
             transition: transform 0.2s ease;
         }
         .btn:active { transform: scale(0.95); }
-
-        .btn-heart {
-            background: linear-gradient(45deg, #ff3366, #ff6b81);
-            color: #fff;
-        }
+        .btn-heart { background: linear-gradient(45deg, #ff3366, #ff6b81); color: #fff; }
 
         .locked-screen { display: none; padding: 35px 20px; }
         .timer-digits { font-size: 1.5rem; color: #ffd700; font-weight: bold; margin: 15px 0; text-shadow: 0 0 10px rgba(255,215,0,0.4); }
@@ -195,31 +191,31 @@
     <div class="floating-bg" id="floatingBg"></div>
 
     <div id="lockSection" class="container locked-screen">
-        <h2>⏳ Portal Locked!</h2>
-        <p style="color: #cbd5e1; margin-top: 5px;">This exclusive surprise opens on:</p>
+        <h2 id="lockTitle">⏳ Portal Locked!</h2>
+        <p id="lockSubtitle" style="color: #cbd5e1; margin-top: 5px;">This exclusive surprise opens on:</p>
         <p id="targetTimeDisplay" style="color: #ffd700; font-weight: bold; margin: 8px 0; font-size: 1.1rem;"></p>
         <div class="timer-digits" id="countdownTimer">Loading...</div>
     </div>
 
     <div id="giftSection" class="container">
-        <h2>🎁 Tap the Gift Box to Unwrap!</h2>
+        <h2 id="giftPrompt">🎁 Tap the Gift Box to Unwrap!</h2>
         <div class="gift-box" onclick="openGift()">🎁</div>
-        <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 10px;">Tap to unlock your special surprise...</p>
+        <p id="giftSubPrompt" style="font-size: 0.85rem; color: #cbd5e1; margin-top: 10px;">Tap to unlock your special surprise...</p>
     </div>
 
     <div id="mainContent" style="display: none; width: 100%; max-width: 360px;">
-        <h1>✨ Happy Birthday, <span id="recipientName">Friend</span>! ✨</h1>
+        <h1><span id="mainTitle">Happy Birthday</span>, <span id="recipientName">Friend</span>! ✨</h1>
         
         <div class="details-box" id="infoBox">
-            <div>📅 Target Time: <span id="displayDate">-</span></div>
+            <div>📅 <span id="targetTimeText">Target Time</span>: <span id="displayDate">-</span></div>
         </div>
 
-        <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;">👇 Scratch the card below to reveal your surprise!</p>
+        <p id="scratchInstruction" style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;">👇 Scratch the card below to reveal your surprise!</p>
 
         <div class="container">
             <div class="scratch-container">
                 <div class="hidden-content">
-                    <h3>🎉 SPECIAL SURPRISE 🎁</h3>
+                    <h3 id="surpriseHeader">🎉 SPECIAL SURPRISE 🎁</h3>
                     <p id="wishMessage">Wishing you an extraordinary day filled with joy and success!</p>
                 </div>
                 <canvas id="scratchCanvas" width="310" height="240"></canvas>
@@ -227,26 +223,86 @@
         </div>
 
         <div class="container" id="mediaSection">
-            <h3>🎂 Birthday Celebration</h3>
+            <h3 id="celebrationHeader">🎂 Birthday Celebration</h3>
             <div id="mediaContainer" class="media-box"></div>
             <div style="font-size: 3rem; margin: 14px 0;" id="cakeEmoji">🎂🔥</div>
             
             <div class="btn-group">
-                <button class="btn" onclick="blowCandles()">💨 Blow Candles</button>
-                <button class="btn" onclick="cutCake()">🕯️ Cut Cake</button>
+                <button class="btn" onclick="blowCandles()" id="btnBlow">💨 Blow Candles</button>
+                <button class="btn" onclick="cutCake()" id="btnCut">🕯️ Cut Cake</button>
             </div>
             <div class="btn-group">
-                <button class="btn" onclick="firePartyPopper()">🎊 Party Popper</button>
-                <button class="btn btn-heart" onclick="sendLoveHearts()">❤️ Send Love</button>
+                <button class="btn" onclick="firePartyPopper()" id="btnPopper">🎊 Party Popper</button>
+                <button class="btn btn-heart" onclick="sendLoveHearts()" id="btnLove">❤️ Send Love</button>
             </div>
             <div class="btn-group">
-                <button class="btn" style="background: linear-gradient(45deg, #00ffcc, #00b894);" onclick="launchGrandFireworks()">🎆 Grand Fireworks</button>
+                <button class="btn" style="background: linear-gradient(45deg, #00ffcc, #00b894);" onclick="launchGrandFireworks()" id="btnFireworks">🎆 Grand Fireworks</button>
             </div>
         </div>
     </div>
 
     <script>
         const BOT_API_URL = "https://birthday-bot-hmkb.onrender.com";
+
+        // വിവിധ ഭാഷകൾക്കായുള്ള ട്രാൻസ്ലേഷൻ ഡിക്ഷണറി
+        const translations = {
+            'en': {
+                lockTitle: "⏳ Portal Locked!", lockSubtitle: "This exclusive surprise opens on:",
+                giftPrompt: "🎁 Tap the Gift Box to Unwrap!", giftSubPrompt: "Tap to unlock your special surprise...",
+                mainTitle: "Happy Birthday", targetTimeText: "Target Time", scratchInstruction: "👇 Scratch the card below to reveal your surprise!",
+                surpriseHeader: "🎉 SPECIAL SURPRISE 🎁", celebrationHeader: "🎂 Birthday Celebration",
+                btnBlow: "💨 Blow Candles", btnCut: "🕯️ Cut Cake", btnPopper: "🎊 Party Popper", btnLove: "❤️ Send Love", btnFireworks: "🎆 Grand Fireworks"
+            },
+            'ml': {
+                lockTitle: "⏳ പോർട്ടൽ ലോക്ക് ചെയ്തിരിക്കുന്നു!", lockSubtitle: "ഈ പ്രത്യേക സർപ്രൈസ് തുറക്കുന്ന സമയം:",
+                giftPrompt: "🎁 തുറക്കാൻ ഗിഫ്റ്റ് ബോക്സിൽ അമർത്തൂ!", giftSubPrompt: "നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ ടാപ്പ് ചെയ്യൂ...",
+                mainTitle: "பிறന്നാൾ ആശംസകൾ", targetTimeText: "ലഭ്യമാകുന്ന സമയം", scratchInstruction: "👇 നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ താഴെ സ്ക്രാച്ച് ചെയ്യുക!",
+                surpriseHeader: "🎉 പ്രത്യേക സർപ്രൈസ് 🎁", celebrationHeader: "🎂 പിറന്നാൾ ആഘോഷം",
+                btnBlow: "💨 മെഴുകുതിരി അണയ്ക്കുക", btnCut: "🕯️ കേക്ക് മുറിക്കുക", btnPopper: "🎊 പാർട്ടി പോപ്പർ", btnLove: "❤️ സ്നേഹം അയക്കുക", btnFireworks: "🎆 കരിમരുന്ന് പ്രയോഗം"
+            },
+            'hi': {
+                lockTitle: "⏳ पोर्टल लॉक है!", lockSubtitle: "यह विशेष सरप्राइज खुलेगा:",
+                giftPrompt: "🎁 खोलने के लिए गिफ्ट बॉक्स पर टैप करें!", giftSubPrompt: "अपना विशेष सरप्राइज अनलॉक करने के लिए टैप करें...",
+                mainTitle: "जन्मदिन की शुभकामनाएँ", targetTimeText: "लक्ष्य समय", scratchInstruction: "👇 अपना सरप्राइज देखने के लिए नीचे खरोंचें!",
+                surpriseHeader: "🎉 विशेष सरप्राइज 🎁", celebrationHeader: "🎂 जन्मदिन का जश्न",
+                btnBlow: "💨 मोमबत्ती बुझाएं", btnCut: "🕯️ केक काटें", btnPopper: "🎊 पार्टी पॉपर", btnLove: "❤️ प्यार भेजें", btnFireworks: "🎆 आतिशबाजी"
+            },
+            'es': {
+                lockTitle: "⏳ ¡Portal Bloqueado!", lockSubtitle: "Esta sorpresa exclusiva se abre el:",
+                giftPrompt: "🎁 ¡Toca la caja de regalo para abrir!", giftSubPrompt: "Toca para desbloquear tu sorpresa...",
+                mainTitle: "¡Feliz Cumpleaños", targetTimeText: "Hora objetivo", scratchInstruction: "👇 ¡Raspa la tarjeta de abajo para revelar tu sorpresa!",
+                surpriseHeader: "🎉 SORPRESA ESPECIAL 🎁", celebrationHeader: "🎂 Celebración de Cumpleaños",
+                btnBlow: "💨 Apagar velas", btnCut: "🕯️ Cortar pastel", btnPopper: "🎊 Serpentinas", btnLove: "❤️ Enviar amor", btnFireworks: "🎆 Fuegos artificiales"
+            },
+            'fr': {
+                lockTitle: "⏳ Portail Verrouillé !", lockSubtitle: "Cette surprise exclusive s'ouvre le :",
+                giftPrompt: "🎁 Appuyez sur la boîte cadeau !", giftSubPrompt: "Appuyez pour débloquer votre surprise...",
+                mainTitle: "Joyeux Anniversaire", targetTimeText: "Heure cible", scratchInstruction: "👇 Grattez la carte ci-dessous pour révéler votre surprise !",
+                surpriseHeader: "🎉 SURPRISE SPÉCIALE 🎁", celebrationHeader: "🎂 Célébration d'Anniversaire",
+                btnBlow: "💨 Souffler les bougies", btnCut: "🕯️ Couper le gâteau", btnPopper: "🎊 Pistolet à confettis", btnLove: "❤️ Envoyer de l'amour", btnFireworks: "🎆 Feux d'artifice"
+            },
+            'de': {
+                lockTitle: "⏳ Portal Gesperrt!", lockSubtitle: "Diese exklusive Überraschung öffnet sich am:",
+                giftPrompt: "🎁 Tippe auf die Geschenkschachtel!", giftSubPrompt: "Tippe, um deine Überraschung zu entsperren...",
+                mainTitle: "Alles Gute zum Geburtstag", targetTimeText: "Zielzeit", scratchInstruction: "👇 Kratze die Karte unten frei, um deine Überraschung zu sehen!",
+                surpriseHeader: "🎉 SPEZIELLE ÜBERRASCHUNG 🎁", celebrationHeader: "🎂 Geburtstag Feier",
+                btnBlow: "💨 Kerzen ausblasen", btnCut: "🕯️ Kuchen schneiden", btnPopper: "🎊 Konfetti", btnLove: "❤️ Liebe senden", btnFireworks: "🎆 Feuerwerk"
+            },
+            'ar': {
+                lockTitle: "⏳ البوابة مقفلة!", lockSubtitle: "تفتح هذه المفاجأة الحصرية في:",
+                giftPrompt: "🎁 اضغط على صندوق الهدايا!", giftSubPrompt: "انقر لفتح مفاجأتك الخاصة...",
+                mainTitle: "عيد ميلاد سعيد", targetTimeText: "الوقت المستهدف", scratchInstruction: "👇 اخدش البطاقة أدناه للكشف عن مفاجأتك!",
+                surpriseHeader: "🎉 مفاجأة خاصة 🎁", celebrationHeader: "🎂 احتفال عيد الميلاد",
+                btnBlow: "💨 إطفاء الشموع", btnCut: "🕯️ تقطيع الكعكة", btnPopper: "🎊 ألعاب نارية", btnLove: "❤️ إرسال الحب", btnFireworks: "🎆 الألعاب الكبرى"
+            },
+            'zh': {
+                lockTitle: "⏳ 传送门已锁定！", lockSubtitle: "此独家惊喜将于以下时间开启：",
+                giftPrompt: "🎁 点击礼盒打开！", giftSubPrompt: "点击解锁您的特别惊喜...",
+                mainTitle: "生日快乐", targetTimeText: "目标时间", scratchInstruction: "👇 刮开下面的卡片揭晓您的惊喜！",
+                surpriseHeader: "🎉 特别惊喜 🎁", celebrationHeader: "🎂 生日庆典",
+                btnBlow: "💨 吹蜡烛", btnCut: "🕯️ 切蛋糕", btnPopper: "🎊 礼炮", btnLove: "❤️ 发送爱意", btnFireworks: "🎆 盛大焰火"
+            }
+        };
 
         const icons = ['🎈', '✨', '💖', '🎉', '🌟', '🎂'];
         const floatBg = document.getElementById('floatingBg');
@@ -281,8 +337,8 @@
 
         async function loadSurpriseData() {
             let name = 'Friend';
-            let msg = 'Wishing you an extraordinary day!';
-            let photo, video, song, voice;
+            let msg = 'Wishing you an extraordinary day filled with joy and success!';
+            let photo, video, song, voice, lang = 'en';
 
             if (surpriseId) {
                 try {
@@ -296,6 +352,7 @@
                         video = data.video;
                         song = data.song;
                         voice = data.voice;
+                        lang = data.lang || 'en';
                     }
                 } catch (e) {
                     console.error("Failed to load surprise from API:", e);
@@ -308,7 +365,11 @@
                 video = urlParams.get('video');
                 song = urlParams.get('song');
                 voice = urlParams.get('voice');
+                lang = urlParams.get('lang') || 'en';
             }
+
+            // അപ്ഡേറ്റ് ലാംഗ്വേജ് ടെക്സ്റ്റുകൾ
+            applyTranslations(lang);
 
             document.getElementById('recipientName').innerText = name;
             document.getElementById('wishMessage').innerText = msg;
@@ -321,6 +382,24 @@
             if (voice) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎙️ Voice Message</p><audio controls src="${voice}"></audio></div>`;
 
             checkTimeLock();
+        }
+
+        function applyTranslations(lang) {
+            const t = translations[lang] || translations['en'];
+            document.getElementById('lockTitle').innerText = t.lockTitle;
+            document.getElementById('lockSubtitle').innerText = t.lockSubtitle;
+            document.getElementById('giftPrompt').innerText = t.giftPrompt;
+            document.getElementById('giftSubPrompt').innerText = t.giftSubPrompt;
+            document.getElementById('mainTitle').innerText = t.mainTitle;
+            document.getElementById('targetTimeText').innerText = t.targetTimeText;
+            document.getElementById('scratchInstruction').innerText = t.scratchInstruction;
+            document.getElementById('surpriseHeader').innerText = t.surpriseHeader;
+            document.getElementById('celebrationHeader').innerText = t.celebrationHeader;
+            document.getElementById('btnBlow').innerText = t.btnBlow;
+            document.getElementById('btnCut').innerText = t.btnCut;
+            document.getElementById('btnPopper').innerText = t.btnPopper;
+            document.getElementById('btnLove').innerText = t.btnLove;
+            document.getElementById('btnFireworks').innerText = t.btnFireworks;
         }
 
         function openGift() {
@@ -429,22 +508,9 @@
             const end = Date.now() + duration;
 
             (function frame() {
-                confetti({
-                    particleCount: 6,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 }
-                });
-                confetti({
-                    particleCount: 6,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 }
-                });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
+                confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 } });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
             })();
         }
 
@@ -464,9 +530,7 @@
 
         function launchGrandFireworks() {
             var count = 250;
-            var defaults = {
-              origin: { y: 0.7 }
-            };
+            var defaults = { origin: { y: 0.7 } };
 
             function fire(particleRatio, opts) {
               confetti(Object.assign({}, defaults, opts, {
