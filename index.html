@@ -198,10 +198,10 @@
 
         .single-photo-box {
             width: 100%;
-            max-height: 240px;
+            max-height: 260px;
             border-radius: 14px;
             overflow: hidden;
-            margin-top: 10px;
+            margin-bottom: 12px;
             border: 1px solid rgba(255,215,255,0.15);
             background: #000;
             display: flex;
@@ -211,7 +211,7 @@
         .single-photo-box img {
             width: 100%;
             height: 100%;
-            max-height: 230px;
+            max-height: 250px;
             object-fit: contain;
             background: #000;
             border-radius: 12px;
@@ -219,14 +219,14 @@
 
         .media-box video {
             width: 100%;
-            max-height: 280px;
+            max-height: 320px;
             object-fit: contain;
             border-radius: 12px;
             background: #000;
-            margin-top: 10px;
+            margin-bottom: 12px;
             outline: none;
         }
-        .media-box audio { width: 100%; margin-top: 10px; border-radius: 10px; }
+        .media-box audio { width: 100%; margin-top: 8px; border-radius: 10px; }
 
         .guestbook-box {
             background: rgba(0,0,0,0.25);
@@ -431,6 +431,7 @@
             </div>
 
             <div id="mediaContainer" class="media-box"></div>
+            
             <div style="font-size: 3rem; margin: 14px 0;" id="cakeEmoji">🎂🔥</div>
             
             <div class="btn-group">
@@ -460,7 +461,7 @@
     <script>
         const BOT_API_URL = "https://birthday-bot-hmkb.onrender.com";
 
-        // 🔥 പ്രധാനപ്പെട്ട എല്ലാ ഭാഷകളിലേക്കുമുള്ള ട്രാൻസ്ലേഷൻ ഡിക്ഷണറി
+        // 🔥 Azerbaijani, Uzbek, Tajik, Indonesian, Persian ഉൾപ്പെടെയുള്ള സമ്പൂർണ്ണ ഭാഷാ ഡിക്ഷണറി
         const translations = {
             'en': {
                 lockTitle: "⏳ Portal Locked!", lockSubtitle: "This exclusive surprise opens on:",
@@ -491,6 +492,56 @@
                 openWhenTitle: "💌 जब आप चाहें तब खोलें...",
                 btnBlow: "💨 मोमबत्ती बुझाएं", btnCut: "🕯️ केक काटें", btnPopper: "🎊 पार्टी पॉपर", btnLove: "❤️ प्यार भेजें", btnFireworks: "🎆 आतिशबाजी",
                 guestbookTitle: "💌 शुभकामनाएं दीवार", guestNamePlaceholder: "आपका नाम...", guestWishPlaceholder: "एक छोटी शुभकामना लिखें...", btnPostWish: "शुभकामना पोस्ट करें ✨"
+            },
+            'az': {
+                lockTitle: "⏳ Portal Kilidləndi!", lockSubtitle: "Bu eksklüziv sürpriz açılır:",
+                giftPrompt: "🎁 Bağlamanı açmaq üçün toxun!", giftSubPrompt: "Öزل sürprizinizi açmaq üçün toxun...",
+                mainTitle: "Ad Gününüz Mübarək", targetTimeText: "Hədəf Vaxt", scratchInstruction: "👇 Sürprizinizi görmək üçün aşağıyı qazıyın!",
+                surpriseHeader: "🎉 XÜSUSİ SÜRPРİZ 🎁", celebrationHeader: "🎂 Ad Günü Qeydetməsi",
+                statsTitle: "⏳ Həyat Yolu Statistikası", labelDays: "Yaşanan Günlər", labelHours: "Yaşanan Saatlar",
+                openWhenTitle: "💌 Açın nə vaxt ki...",
+                btnBlow: "💨 Şamı Söndür", btnCut: "🕯️ Tortu Kəs", btnPopper: "🎊 Partiya Poperi", btnLove: "❤️ Sevgi Göndər", btnFireworks: "🎆 Möhtəşəm Atəşfəşanlıq",
+                guestbookTitle: "💌 Qonaq Kitabçası", guestNamePlaceholder: "Adınız...", guestWishPlaceholder: "Qısa arzu yazın...", btnPostWish: "Arzu Paylaş ✨"
+            },
+            'uz': {
+                lockTitle: "⏳ Portal qulflangan!", lockSubtitle: "Maxsus sovg'a ochilish vaqti:",
+                giftPrompt: "🎁 Sovg'ani ochish uchun bosing!", giftSubPrompt: "Maxsus sovg'angizni ko'rish uchun bosing...",
+                mainTitle: "Tug'ilgan kuningiz muborak", targetTimeText: "Maqsad vaqt", scratchInstruction: "👇 Sovg'ani ko'rish uchun pastni qirilang!",
+                surpriseHeader: "🎉 MAXSUS SOVG'A 🎁", celebrationHeader: "🎂 Tug'ilgan kunni nishonlash",
+                statsTitle: "⏳ Hayot yo'li statistikasi", labelDays: "Yashagan kunlar", labelHours: "Yashagan soatlar",
+                openWhenTitle: "💌 Qachon ochish kerak...",
+                btnBlow: "💨 Shamni o'chirish", btnCut: "🕯️ Tortni kesish", btnPopper: "🎊 Party Popper", btnLove: "❤️ Sevgi yuborish", btnFireworks: "🎆 Mushakbozlik",
+                guestbookTitle: "💌 Tilaklar kitobi", guestNamePlaceholder: "Ismingiz...", guestWishPlaceholder: "Qisqa tilak yozing...", btnPostWish: "Tilak qoldirish ✨"
+            },
+            'tg': {
+                lockTitle: "⏳ Портал маҳкам аст!", lockSubtitle: "Ин сюрпризи махсус кушода мешавад дар:",
+                giftPrompt: "🎁 Ба қуттии тӯҳфа зер кунед!", giftSubPrompt: "Барои кушодан зер кунед...",
+                mainTitle: "Рӯзи таваллуд муборак", targetTimeText: "Вақти таъиншуда", scratchInstruction: "👇 Барои дидани сюрприз поёнро харошед!",
+                surpriseHeader: "🎉 СЮРПРИЗИ МАХСУС 🎁", celebrationHeader: "🎂 Таҷлили зодрӯз",
+                statsTitle: "⏳ Омори роҳи ҳаёт", labelDays: "Рӯзҳои зиндагӣ", labelHours: "Соатҳои зиндагӣ",
+                openWhenTitle: "💌 Кушоед вақте ки...",
+                btnBlow: "💨 Хомӯш кардани шамъ", btnCut: "🕯️ Буридани торт", btnPopper: "🎊 Хлопушка", btnLove: "❤️ Муҳаббат фиристед", btnFireworks: "🎆 Оташбозӣ",
+                guestbookTitle: "💌 Китоби меҳмонон", guestNamePlaceholder: "Номи шумо...", guestWishPlaceholder: "Табрики кӯтоҳ нависед...", btnPostWish: "Ирсоли табрик ✨"
+            },
+            'id': {
+                lockTitle: "⏳ Portal Dikunci!", lockSubtitle: "Kejutan eksklusif ini terbuka pada:",
+                giftPrompt: "🎁 Ketuk Kotak Hadiah!", giftSubPrompt: "Ketuk untuk membuka kejutan...",
+                mainTitle: "Selamat Ulang Tahun", targetTimeText: "Waktu Target", scratchInstruction: "👇 Gosok kartu di bawah untuk melihat kejutan!",
+                surpriseHeader: "🎉 KEJUTAN SPESIAL 🎁", celebrationHeader: "🎂 Perayaan Ulang Tahun",
+                statsTitle: "⏳ Statistik Perjalanan Hidup", labelDays: "Hari Dilalui", labelHours: "Jam Dilalui",
+                openWhenTitle: "💌 Buka Ketika...",
+                btnBlow: "💨 Tiup Lilin", btnCut: "🕯️ Potong Kue", btnPopper: "🎊 Party Popper", btnLove: "❤️ Kirim Cinta", btnFireworks: "🎆 Kembang Api",
+                guestbookTitle: "💌 Buku Tamu", guestNamePlaceholder: "Nama Anda...", guestWishPlaceholder: "Tulis ucapan singkat...", btnPostWish: "Kirim Ucapan ✨"
+            },
+            'fa': {
+                lockTitle: "⏳ پورتال قفل است!", lockSubtitle: "این سورپرایز ویژه باز می‌شود در:",
+                giftPrompt: "🎁 روی جعبه هدیه ضربه بزنید!", giftSubPrompt: "برای باز کردن ضربه بزنید...",
+                mainTitle: "تولدت مبارک", targetTimeText: "زمان هدف", scratchInstruction: "👇 کارت زیر را بکشید تا سورپرایز آشکار شود!",
+                surpriseHeader: "🎉 سورپرایز ویژه 🎁", celebrationHeader: "🎂 جشن تولد",
+                statsTitle: "⏳ آمار سفر زندگی", labelDays: "روزهای سپری شده", labelHours: "ساعت‌های سپری شده",
+                openWhenTitle: "💌 باز کن وقتی...",
+                btnBlow: "💨 فوت کردن شمع", btnCut: "🕯️ بریدن کیک", btnPopper: "🎊 بمب شادی", btnLove: "❤️ ارسال عشق", btnFireworks: "🎆 آتش‌بازی",
+                guestbookTitle: "💌 کتاب یادگاری", guestNamePlaceholder: "نام شما...", guestWishPlaceholder: "نوشتن آرزو...", btnPostWish: "ثبت آرزو ✨"
             },
             'ru': {
                 lockTitle: "⏳ Портал заблокирован!", lockSubtitle: "Этот сюрприз откроется:",
@@ -640,14 +691,13 @@
             }
 
             let mediaContainer = document.getElementById('mediaContainer');
-            if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls playsinline controlslist="nodownload" preload="metadata" src="${video}"></video></div>`;
+            if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls playsinline preload="metadata" src="${video}"></video></div>`;
             if (song) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎶 Song / Audio</p><audio controls src="${song}"></audio></div>`;
             if (voice) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎙️ Voice Message</p><audio controls src="${voice}"></audio></div>`;
 
             checkTimeLock();
         }
 
-        // 🔥 ലാംഗ്വേജ് മാറുമ്പോൾ വെബ്‌സൈറ്റിലെ എല്ലാ ടെക്സ്റ്റുകളും ഉടനടി അപ്ഡേറ്റ് ആകുന്ന ഫങ്ഷൻ
         function changeLanguage(selectedLang) {
             currentLang = selectedLang;
             applyTranslations(selectedLang);
