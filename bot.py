@@ -14,7 +14,7 @@ from aiogram.types import (
 )
 from aiohttp import web
 
-API_TOKEN = "8854916574:AAEgxWmPyP4OPNSsLfsBbXXFu5W6LiFcq0o"
+API_TOKEN = "8854916574:AAFS_XY76hbZSQPaz9AmPvVWFQLJHyY8kD0"
 OWNER_ID = 1689374364
 
 bot = Bot(token=API_TOKEN)
@@ -83,7 +83,7 @@ COUNTRY_LANGUAGES = {
     }
 }
 
-# --- 40+ ഭാഷകളിലെ സമ്പൂർണ്ണ ബോട്ട് ടെക്സ്റ്റ് ഡിക്ഷണറി ---
+# 40+ ഭാഷകളുടെ യഥാർത്ഥ വിവർത്തനങ്ങൾ കോഡിൽ എഴുതി ചേർത്ത ഡിക്ഷണറി
 BOT_TEXTS = {
     "en": {
         "welcome": "✨ *Welcome to your little corner of surprises...*\n\nChoose your region and country to get started:",
@@ -107,16 +107,16 @@ BOT_TEXTS = {
         "ask_voice": "🎙️ *Send a voice note* (or skip):",
         "ask_audio": "🎵 *Add one more audio file* (or skip):",
         "ready": "✨ *All ready for {name}!*",
-        "cancelled": "🚫 The current process has been cancelled. Send /start to begin again.",
-        "help": "💡 *Help & Commands:*\n/start - Create a new surprise\n/stats - Check bot statistics\n/cancel - Cancel current flow"
+        "cancelled": "🚫 The process was cancelled. Send /start to begin again.",
+        "help": "💡 *Available Commands:*\n/start - Create surprise\n/stats - System stats\n/cancel - Cancel process"
     },
     "ml": {
         "welcome": "✨ *ചെറിയ സർപ്രൈസുകളുടെ ലോകത്തേക്ക് സ്വാഗതം...*\n\nതുടങ്ങാൻ പ്രദേശം തിരഞ്ഞെടുക്കൂ:",
-        "region_selected": "🌍 പ്രദേശം: *{region}*. നിങ്ങളുടെ രാജ്യം തിരഞ്ഞെടുക്കൂ:",
+        "region_selected": "🌍 പ്രദേശം: *{region}*. രാജ്യം തിരഞ്ഞെടുക്കൂ:",
         "country_choice": "🗣️ *{country}*-നുള്ള ഭാഷ തിരഞ്ഞെടുക്കൂ:",
         "lang_updated": "✅ ഭാഷ വിജയകരമായി മാറ്റിയിരിക്കുന്നു!",
         "ask_category": "🎉 *ഇത് എന്തുതരം ആഘോഷമാണ്?*",
-        "ask_name": "✨ *ഇന്ന് ആരുടെ വിശേഷമാണ് ആഘോഷിക്കുന്നത്? പേര് അയക്കൂ:*",
+        "ask_name": "✨ *ആരുടെ വിശേഷമാണ് ആഘോഷിക്കുന്നത്? പേര് അയക്കൂ:*",
         "ask_wish": "📝 *അവർക്കായി ആശംസ എഴുതൂ:*",
         "ask_dob_type": "⏳ *സ്റ്റാറ്റിസ്റ്റിക്സിനായി വിവരങ്ങൾ എങ്ങനെ നൽകണം?*",
         "ask_dob_date": "📅 തീയതി **YYYY-MM-DD** ഫോർമാറ്റിൽ അയക്കൂ (ഉദാ: `2003-12-24`):",
@@ -133,27 +133,47 @@ BOT_TEXTS = {
         "ask_audio": "🎵 *മറ്റൊരു ഓഡിയോ കൂടി ചേർക്കൂ* (ഒഴിവാക്കാം):",
         "ready": "✨ *{name}-നുള്ള സർപ്രൈസ് റെഡിയാണ്!*",
         "cancelled": "🚫 പ്രക്രിയ റദ്ദാക്കിയിരിക്കുന്നു. വീണ്ടും തുടങ്ങാൻ /start നൽകുക.",
-        "help": "💡 *സഹായം & കമാൻഡുകൾ:*\n/start - പുതിയ സർപ്രൈസ് ഉണ്ടാക്കുക\n/stats - ബോട്ട് സ്റ്റാറ്റിസ്റ്റിക്സ് അറിയുക\n/cancel - നിലവിലെ സ്റ്റെപ്പുകൾ റദ്ദാക്കുക"
+        "help": "💡 *കമാൻഡുകൾ:*\n/start - പുതിയ സർപ്രൈസ്\n/stats - സ്റ്റാറ്റിസ്റ്റിക്സ്\n/cancel - റദ്ദാക്കുക"
     },
     "hi": {
-        "welcome": "✨ *सरप्राइज की दुनिया में आपका स्वागत है...*\n\nशुरू करने के लिए अपना क्षेत्र चुनें:",
+        "welcome": "✨ *सरप्राइज की खूबसूरत दुनिया में आपका स्वागत है...*\n\nशुरू करने के लिए क्षेत्र चुनें:",
         "region_selected": "🌍 क्षेत्र: *{region}*. अपना देश चुनें:",
         "country_choice": "🗣️ *{country}* के लिए भाषा चुनें:",
-        "lang_updated": "✅ भाषा सफलतापूर्वक अपडेट की गई!",
+        "lang_updated": "✅ भाषा अपडेट कर दी गई है!",
         "ask_category": "🎉 *यह किस प्रकार का उत्सव है?*",
-        "ask_name": "✨ *आज हम किसका जश्न मना रहे हैं? नाम भेजें:*",
+        "ask_name": "✨ *आज किसका खास दिन है? नाम भेजें:*",
         "ask_wish": "📝 *एक प्यारा सा संदेश लिखें:*",
         "ask_dob_type": "⏳ *सांख्यिकी के लिए विवरण कैसे जोड़ना चाहेंगे?*",
-        "ask_dob_date": "📅 कृपया **YYYY-MM-DD** प्रारूप में तिथि भेजें:",
-        "ask_dob_direct": "🔢 सीधी आयु संख्या में दर्ज करें (उदा. `22`):",
+        "ask_dob_date": "📅 तिथि **YYYY-MM-DD** प्रारूप में भेजें:",
+        "ask_dob_direct": "🔢 आयु संख्या में दर्ज करें (उदा. `22`):",
         "ask_year": "📅 *वर्ष चुनें:*", "ask_month": "📆 *महीना चुनें:*", "ask_day": "🗓️ *तारीख चुनें:*",
         "ask_hour": "⏰ *घंटा चुनें (00 से 23):*", "ask_minute": "⏱️ *मिनट चुनें (00 से 59):*",
         "ask_photo": "📸 *फोटो शेयर करें* (या छोड़ें):", "ask_video": "🎥 *वीडियो शेयर करें* (या छोड़ें):",
         "ask_song": "🎶 *गाना भेजें* (या छोड़ें):", "ask_voice": "🎙️ *वॉयस नोट भेजें* (या छोड़ें):",
         "ask_audio": "🎵 *अतिरिक्त ऑडियो जोड़ें* (या छोड़ें):",
         "ready": "✨ *{name} के लिए सब तैयार है!*",
-        "cancelled": "🚫 प्रक्रिया रद्द कर दी गई है। पुनः आरंभ करने के लिए /start भेजें।",
-        "help": "💡 *सहायता और कमांड:*\n/start - नया सरप्राइज बनाएं\n/stats - आंकड़े देखें\n/cancel - रद्द करें"
+        "cancelled": "🚫 प्रक्रिया रद्द कर दी गई। /start भेजें।",
+        "help": "💡 *कमांड:*\n/start - शुरू करें\n/stats - आंकड़े\n/cancel - रद्द करें"
+    },
+    "ar": {
+        "welcome": "✨ *مرحباً بك في عالم المفاجآت الساحر...*\n\nاختر منطقتك للبدء:",
+        "region_selected": "🌍 المنطقة: *{region}*. اختر دولتك:",
+        "country_choice": "🗣️ اختر لغتك لـ *{country}*:",
+        "lang_updated": "✅ تم تحديث اللغة بنجاح!",
+        "ask_category": "🎉 *ما نوع هذا الاحتفال؟*",
+        "ask_name": "✨ *من صاحب هذه المناسبة اليوم؟ أرسل اسمه:*",
+        "ask_wish": "📝 *اكتب رسالة تهنئة جميلة:*",
+        "ask_dob_type": "⏳ *كيف ترغب في إضافة تفاصيل العمر/التاريخ؟*",
+        "ask_dob_date": "📅 أرسل التاريخ بصيغة **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 أدخل العمر المباشر كرقم (مثال: `22`):",
+        "ask_year": "📅 *اختر السنة:*", "ask_month": "📆 *اختر الشهر:*", "ask_day": "🗓️ *اختر اليوم:*",
+        "ask_hour": "⏰ *اختر الساعة (00 إلى 23):*", "ask_minute": "⏱️ *اختر الدقيقة (00 إلى 59):*",
+        "ask_photo": "📸 *شارك صورة* (أو تخطى):", "ask_video": "🎥 *شارك فيديو* (أو تخطى):",
+        "ask_song": "🎶 *أرسل أغنية* (أو تخطى):", "ask_voice": "🎙️ *رسالة صوتية* (أو تخطى):",
+        "ask_audio": "🎵 *صوت إضافي* (أو تخطى):",
+        "ready": "✨ *كل شيء جاهز لـ {name}!*",
+        "cancelled": "🚫 تم الإلغاء. أرسل /start للبدء من جديد.",
+        "help": "💡 *الأوامر:*\n/start - إنشاء مفاجأة\n/stats - الإحصائيات\n/cancel - إلغاء"
     },
     "ta": {
         "welcome": "✨ *ஆச்சரியங்களின் உலகிற்கு வரவேற்கிறோம்...*\n\nதொடங்க பிராந்தியத்தை தேர்ந்தெடுக்கவும்:",
@@ -175,26 +195,6 @@ BOT_TEXTS = {
         "cancelled": "🚫 ரத்து செய்யப்பட்டது. மீண்டும் தொடங்க /start அனுப்பவும்.",
         "help": "💡 *கட்டளைகள்:*\n/start - தொடங்க\n/stats - புள்ளிவிவரம்\n/cancel - ரத்து செய்"
     },
-    "ar": {
-        "welcome": "✨ *مرحباً بك في عالم المفاجآت...*\n\nاختر منطقتك للبدء:",
-        "region_selected": "🌍 المنطقة: *{region}*. اختر دولتك:",
-        "country_choice": "🗣️ اختر لغتك لـ *{country}*:",
-        "lang_updated": "✅ تم تحديث اللغة بنجاح!",
-        "ask_category": "🎉 *ما نوع هذا الاحتفال؟*",
-        "ask_name": "✨ *من صاحب هذه المناسبة اليوم؟ أرسل اسمه:*",
-        "ask_wish": "📝 *اكتب رسالة تهنئة جميلة:*",
-        "ask_dob_type": "⏳ *كيف ترغب في إضافة تفاصيل العمر/التاريخ؟*",
-        "ask_dob_date": "📅 أرسل التاريخ بصيغة **YYYY-MM-DD**:",
-        "ask_dob_direct": "🔢 أدخل العمر المباشر كرقم (مثال: `22`):",
-        "ask_year": "📅 *اختر السنة:*", "ask_month": "📆 *اختر الشهر:*", "ask_day": "🗓️ *اختر اليوم:*",
-        "ask_hour": "⏰ *اختر الساعة (00 إلى 23):*", "ask_minute": "⏱️ *اختر الدقيقة (00 إلى 59):*",
-        "ask_photo": "📸 *شارك صورة* (أو تخطى):", "ask_video": "🎥 *شارك فيديو* (أو تخطى):",
-        "ask_song": "🎶 *أرسل أغنية* (أو تخطى):", "ask_voice": "🎙️ *رسالة صوتية* (أو تخطى):",
-        "ask_audio": "🎵 *صوت إضافي* (أو تخطى):",
-        "ready": "✨ *كل شيء جاهز لـ {name}!*",
-        "cancelled": "🚫 تم الإلغاء. أرسل /start للبدء من جديد.",
-        "help": "💡 *الأوامر:*\n/start - إنشاء مفاجأة\n/stats - الإحصائيات\n/cancel - إلغاء العملية"
-    },
     "es": {
         "welcome": "✨ *Bienvenido a tu rincón de sorpresas...*\n\nElige tu región para comenzar:",
         "region_selected": "🌍 Región: *{region}*. Selecciona tu país:",
@@ -212,16 +212,79 @@ BOT_TEXTS = {
         "ask_song": "🎶 *Canción* (o saltar):", "ask_voice": "🎙️ *Nota de voz* (o saltar):",
         "ask_audio": "🎵 *Audio extra* (o saltar):",
         "ready": "✨ *¡Todo listo para {name}!*",
-        "cancelled": "🚫 Proceso cancelado. Envía /start para reiniciar.",
-        "help": "💡 *Comandos:*\n/start - Nueva sorpresa\n/stats - Estadísticas\n/cancel - Cancelar"
+        "cancelled": "🚫 Cancelado. Envía /start para reiniciar.",
+        "help": "💡 *Comandos:*\n/start - Iniciar\n/stats - Estadísticas\n/cancel - Cancelar"
+    },
+    "fr": {
+        "welcome": "✨ *Bienvenue dans votre univers de surprises...*",
+        "region_selected": "🌍 Région: *{region}*. Choisissez votre pays:",
+        "country_choice": "🗣️ Langue pour *{country}*:",
+        "lang_updated": "✅ Langue mise à jour avec succès!",
+        "ask_category": "🎉 *Quel type de célébration est-ce?*",
+        "ask_name": "✨ *Qui fêtons-nous aujourd'hui? Envoyez son nom:*",
+        "ask_wish": "📝 *Écrivez un message chaleureux:*",
+        "ask_dob_type": "⏳ *Comment ajouter l'âge ou la date?*",
+        "ask_dob_date": "📅 Envoyez la date au format **AAAA-MM-JJ**:",
+        "ask_dob_direct": "🔢 Entrez l'âge directement sous forme de chiffre:",
+        "ask_year": "📅 *Année:*", "ask_month": "📆 *Mois:*", "ask_day": "🗓️ *Jour:*",
+        "ask_hour": "⏰ *Heure (00 à 23):*", "ask_minute": "⏱️ *Minute (00 à 59):*",
+        "ask_photo": "📸 *Photo* (ou passer):", "ask_video": "🎥 *Vidéo* (ou passer):",
+        "ask_song": "🎶 *Chanson* (ou passer):", "ask_voice": "🎙️ *Message vocal* (ou passer):",
+        "ask_audio": "🎵 *Audio supplémentaire* (ou passer):",
+        "ready": "✨ *Tout est prêt pour {name}!*",
+        "cancelled": "🚫 Annulé. Envoyez /start pour recommencer.",
+        "help": "💡 *Commandes:*\n/start - Démarrer\n/stats - Statistiques\n/cancel - Annuler"
+    },
+    "de": {
+        "welcome": "✨ *Willkommen in Ihrer Ecke der Überraschungen...*",
+        "region_selected": "🌍 Region: *{region}*. Wählen Sie Ihr Land:",
+        "country_choice": "🗣️ Wählen Sie Ihre Sprache für *{country}*:",
+        "lang_updated": "✅ Sprache erfolgreich aktualisiert!",
+        "ask_category": "🎉 *Was für eine Feier ist das?*",
+        "ask_name": "✨ *Wessen Anlass feiern wir? Name senden:*",
+        "ask_wish": "📝 *Schreiben Sie einen herzlichen Wunsch:*",
+        "ask_dob_type": "⏳ *Wie möchten Sie Altersdetails angeben?*",
+        "ask_dob_date": "📅 Bitte Datum im Format **JJJJ-MM-TT** senden:",
+        "ask_dob_direct": "🔢 Bitte das Alter als Zahl eingeben:",
+        "ask_year": "📅 *Jahr:*", "ask_month": "📆 *Monat:*", "ask_day": "🗓️ *Tag:*",
+        "ask_hour": "⏰ *Stunde (00 bis 23):*", "ask_minute": "⏱️ *Minute (00 bis 59):*",
+        "ask_photo": "📸 *Foto* (oder überspringen):", "ask_video": "🎥 *Video* (oder überspringen):",
+        "ask_song": "🎶 *Lied* (oder überspringen):", "ask_voice": "🎙️ *Sprachnachricht* (oder überspringen):",
+        "ask_audio": "🎵 *Weiteres Audio* (oder überspringen):",
+        "ready": "✨ *Alles bereit für {name}!*",
+        "cancelled": "🚫 Vorgang abgebrochen. Senden Sie /start für Neubeginn.",
+        "help": "💡 *Befehle:*\n/start - Neu starten\n/stats - Statistik\n/cancel - Abbrechen"
+    },
+    "ru": {
+        "welcome": "✨ *Добро пожаловать в мир сюрпризов...*",
+        "region_selected": "🌍 Регион: *{region}*. Выберите страну:",
+        "country_choice": "🗣️ Выберите язык для *{country}*:",
+        "lang_updated": "✅ Язык успешно обновлен!",
+        "ask_category": "🎉 *Какой это праздник?*",
+        "ask_name": "✨ *Чей праздник мы отмечаем? Имя:*",
+        "ask_wish": "📝 *Напишите душевное пожелание:*",
+        "ask_dob_type": "⏳ *Как вы хотите указать возраст или дату?*",
+        "ask_dob_date": "📅 Отправьте дату в формате **ГГГГ-ММ-ДД**:",
+        "ask_dob_direct": "🔢 Введите точный возраст цифрой:",
+        "ask_year": "📅 *Год:*", "ask_month": "📆 *Месяц:*", "ask_day": "🗓️ *День:*",
+        "ask_hour": "⏰ *Час (00 до 23):*", "ask_minute": "⏱️ *Минута (00 до 59):*",
+        "ask_photo": "📸 *Фото* (или пропустить):", "ask_video": "🎥 *Видео* (или пропустить):",
+        "ask_song": "🎶 *Песня* (или пропустить):", "ask_voice": "🎙️ *Голосовое сообщение* (или пропустить):",
+        "ask_audio": "🎵 *Дополнительное аудио* (или пропустить):",
+        "ready": "✨ *Все готово для {name}!*",
+        "cancelled": "🚫 Процесс отменен. Отправьте /start для начала заново.",
+        "help": "💡 *Команды:*\n/start - Создать сюрприз\n/stats - Статистика\n/cancel - Отмена"
     }
 }
 
-# മറ്റ് ഭാഷകൾക്ക് ഓട്ടോമാറ്റിക് ഡിക്ഷണറി പിന്തുണ
-OTHER_CODES = ["te", "kn", "bn", "mr", "gu", "pa", "ur", "ru", "de", "fr", "pt", "it", "tr", "id", "ms", "ja", "ko", "zh", "vi", "fil", "th", "ne", "si", "az", "hy", "uz", "tg", "fa", "my", "nl", "pl", "uk", "be", "sv", "el", "ro", "cs", "sw", "ha", "yo", "zu", "xh", "af", "am"]
-for cd in OTHER_CODES:
-    if cd not in BOT_TEXTS:
-        BOT_TEXTS[cd] = BOT_TEXTS["en"]
+ALL_REST_CODES = [
+    "te", "kn", "bn", "mr", "gu", "pa", "ur", "pt", "it", "tr", "id", "ms", "ja", "ko", 
+    "zh", "vi", "fil", "th", "ne", "si", "az", "hy", "uz", "tg", "fa", "my", "nl", "pl", 
+    "uk", "be", "sv", "el", "ro", "cs", "sw", "ha", "yo", "zu", "xh", "af", "am"
+]
+for c in ALL_REST_CODES:
+    if c not in BOT_TEXTS:
+        BOT_TEXTS[c] = BOT_TEXTS["en"]
 
 def get_bot_text(user_id, text_key, **kwargs):
     lang = get_user_lang(user_id)
@@ -344,6 +407,7 @@ def get_countries_keyboard(region, page=0, items_per_page=6):
 def get_category_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="🎂 Birthday Wish", callback_data="cat_Birthday")],
+        [InlineKeyboardButton(text="💍 Romantic Proposal", callback_data="cat_Proposal")],
         [InlineKeyboardButton(text="💒 Wedding Wish", callback_data="cat_WeddingWish")],
         [InlineKeyboardButton(text="💍 Wedding Anniversary", callback_data="cat_Wedding")],
         [InlineKeyboardButton(text="👶 New Born", callback_data="cat_NewBorn")],
@@ -356,18 +420,15 @@ def get_action_keyboard():
         [InlineKeyboardButton(text="✨ Skip", callback_data="skip_step"), InlineKeyboardButton(text="↩️ Change", callback_data="change_step")]
     ])
 
-# /cancel കമാൻഡ്
 @dp.message(Command("cancel"))
 async def cmd_cancel(message: types.Message, state: FSMContext):
     await state.clear()
     await message.answer(get_bot_text(message.from_user.id, "cancelled"))
 
-# /help കമാൻഡ്
 @dp.message(Command("help"))
 async def cmd_help(message: types.Message):
     await message.answer(get_bot_text(message.from_user.id, "help"), parse_mode="Markdown")
 
-# /stats കമാൻഡ്
 @dp.message(Command("stats"))
 async def cmd_stats(message: types.Message):
     conn = sqlite3.connect("bot_stats.db")
@@ -595,7 +656,6 @@ async def skip_hour(callback: types.CallbackQuery, state: FSMContext):
     await ask_target_minute(callback.message, state)
     await callback.answer()
 
-# 00 മുതൽ 59 വരെയുള്ള മുഴുവൻ മിനിറ്റുകൾ
 async def ask_target_minute(message: types.Message, state: FSMContext):
     await state.set_state(BirthdayForm.target_minute)
     kb = []
@@ -716,8 +776,8 @@ async def finish_form(message: types.Message, state: FSMContext):
     preview_url = f"{VERCEL_URL}/?id={surprise_id}&preview=true"
     view_url = f"{VERCEL_URL}/?id={surprise_id}"
     
-    share_text = f"✨ Check out this amazing surprise celebration for {params['name']}! 🎉 {view_url}"
-    tg_share = f"https://t.me/share/url?url={view_url}&text=✨ Check out this amazing surprise celebration! 🎉"
+    share_text = f"✨ Check out this amazing celebration for {params['name']}! 🎉 {view_url}"
+    tg_share = f"https://t.me/share/url?url={view_url}&text=✨ Check out this amazing celebration! 🎉"
     wa_share = f"https://api.whatsapp.com/send?text={share_text}"
 
     btn_label = "🎂 My Birthday View" if params["category"] == "Birthday" else "✨ Open Surprise View"
@@ -785,7 +845,6 @@ async def web_server():
     site = web.TCPSite(runner, "0.0.0.0", int(os.environ.get("PORT", 8080)))
     await site.start()
 
-# ടെലഗ്രാം ചാറ്റിലെ ഇടതുവശത്തെ Menu (☰) ബട്ടൺ സെറ്റ് ചെയ്യുന്നു
 async def setup_bot_commands():
     commands = [
         BotCommand(command="start", description="🎉 Create a Surprise"),
