@@ -20,7 +20,6 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 VERCEL_URL = "https://birthday-surprise-app-two.vercel.app"
 
-# --- 40+ രാജ്യങ്ങളുടെയും ഭാഷകളുടെയും സമ്പൂർണ്ണ ഡിക്ഷണറി ---
 COUNTRY_LANGUAGES = {
     "Asia": {
         "🇮🇳 India": [
@@ -358,7 +357,7 @@ BOT_TEXTS = {
         "country_choice": "🗣️ زبان خود را برای *{country}* انتخاب کنید:",
         "lang_updated": "✅ زبان با موفقیت به‌روز شد!",
         "ask_category": "🎉 *این چه نوع جشنی است؟*",
-        "ask_name": "🎉 *امروز جشن تولد یا مناسبت چه کسی است؟ نام را بفرستید:*",
+        "ask_name": "🎉 *امروز مناسبت چه کسی است؟ نام را بفرستید:*",
         "ask_wish": "📝 *یک پیام زیبا بنویسید:*",
         "ask_photo": "📸 *اشتراک‌گذاری عکس* (یا رد کردن):",
         "ask_video": "🎥 *اشتراک‌گذاری ویدیو* (یا رد کردن):",
@@ -450,11 +449,11 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Che tipo di celebrazione è?*",
         "ask_name": "✨ *Di chi è l'occasione speciale che festeggiamo oggi? Invia il nome:*",
         "ask_wish": "📝 *Scrivi un messaggio affettuoso:*",
-        "ask_photo": "📸 *Condividi una foto* (o salka):",
-        "ask_video": "🎥 *Condividi un video* (o salka):",
-        "ask_song": "🎶 *Invia una canzone* (o salka):",
-        "ask_voice": "🎙️ *Invia un messaggio vocale* (o salka):",
-        "ask_audio": "🎵 *Aggiungi un altro audio* (o salka):",
+        "ask_photo": "📸 *Condividi una foto* (o salta):",
+        "ask_video": "🎥 *Condividi un video* (o salta):",
+        "ask_song": "🎶 *Invia una canzone* (o salta):",
+        "ask_voice": "🎙️ *Invia un messaggio vocale* (o salta):",
+        "ask_audio": "🎵 *Aggiungi un altro audio* (o salta):",
         "ready": "✨ *Tutto pronto per {name}!*",
     },
     "de": {
@@ -889,14 +888,45 @@ async def finish_form(message: types.Message, state: FSMContext):
         "extra_audio": data.get("extra_audio", "")
     }
     surprise_id = save_surprise_to_db(message.from_user.id, params["category"], params["name"], params["msg"], params)
-    final_url = f"{VERCEL_URL}/?id={surprise_id}"
     
+    preview_url = f"{VERCEL_URL}/?id={surprise_id}&preview=true"
+    view_url = f"{VERCEL_URL}/?id={surprise_id}"
+    
+    share_text = f"✨ Check out this amazing surprise celebration for {params['name']}! 🎉 {view_url}"
+    tg_share = f"https://t.me/share/url?url={view_url}&text=✨ Check out this amazing surprise celebration! 🎉"
+    wa_share = f"https://api.whatsapp.com/send?text={share_text}"
+
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🎂 Open Surprise", web_app=WebAppInfo(url=final_url))],
-        [InlineKeyboardButton(text="🔗 Copy Link", url=final_url)]
+        [
+            InlineKeyboardButton(text="🤍 Preview Surprise", web_app=WebAppInfo(url=preview_url)),
+            InlineKeyboardButton(text="🎂 My Birthday View", web_app=WebAppInfo(url=view_url))
+        ],
+        [
+            InlineKeyboardButton(text="💬 Share on Telegram", url=tg_share),
+            InlineKeyboardButton(text="🟢 Share on WhatsApp", url=wa_share)
+        ],
+        [
+            InlineKeyboardButton(text="🔗 Copy Link (All Apps)", url=view_url)
+        ],
+        [
+            InlineKeyboardButton(text="🗑️ Delete this Surprise", callback_data=f"delete_surp_{surprise_id}")
+        ]
     ])
-    await message.answer(get_bot_text(message.from_user.id, "ready", name=params["name"]), reply_markup=kb, parse_mode="Markdown")
+    
+    success_msg = get_bot_text(message.from_user.id, "ready", name=params["name"]) + "\n\nChoose how you'd like to experience or share your creation below:"
+    await message.answer(success_msg, reply_markup=kb, parse_mode="Markdown")
     await state.clear()
+
+@dp.callback_query(F.data.startswith("delete_surp_"))
+async def inline_delete_surprise(callback: types.CallbackQuery):
+    surp_id = callback.data.split("_")[2]
+    conn = sqlite3.connect("bot_stats.db")
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM surprises WHERE id = ?", (surp_id,))
+    conn.commit()
+    conn.close()
+    await callback.message.edit_text("🗑️ This surprise has been deleted successfully!")
+    await callback.answer()
 
 async def get_surprise_api(request):
     surprise_id = request.query.get("id")
