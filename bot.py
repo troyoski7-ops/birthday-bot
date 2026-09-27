@@ -18,7 +18,7 @@ OWNER_ID = 1689374364
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
-VERCEL_URL = "https://birthday-surprise-app-two.vercel.app"
+VERCEL_URL = "https://aura-birthday-web.vercel.app"
 
 COUNTRY_LANGUAGES = {
     "Asia": {
@@ -79,7 +79,7 @@ COUNTRY_LANGUAGES = {
     },
 }
 
-# --- 40+ എല്ലാ ഭാഷകൾക്കുമുള്ള സമ്പൂർണ്ണ ബോട്ട് ടെക്സ്റ്റ് ഡിക്ഷണറി ---
+# --- 40+ രാജ്യങ്ങളുടെയും ഭാഷകളുടെയും സമ്പൂർണ്ണ ബോട്ട് ടെക്സ്റ്റ് ഡിക്ഷണറി ---
 BOT_TEXTS = {
     "en": {
         "welcome": "✨ *Welcome to your little corner of surprises...*\n\nYour language is currently set to *English*.",
@@ -89,6 +89,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *What kind of celebration is this?* Choose below:",
         "ask_name": "✨ *Whose special occasion are we celebrating today?* Send me their name:",
         "ask_wish": "📝 *Write a sweet, heartfelt wish or message for them*:",
+        "ask_dob_type": "⏳ *How would you like to add age details for stats?*",
+        "ask_dob_date": "📅 Please send Date in **YYYY-MM-DD** format (e.g., `2003-12-24`):",
+        "ask_dob_direct": "🔢 Please enter their direct age as a number (e.g., `22`):",
+        "ask_year": "📅 *Choose the year for the surprise:*",
+        "ask_month": "📆 *Choose the month:*",
+        "ask_day": "🗓️ *Pick the date:*",
+        "ask_hour": "⏰ *Select the Hour (24-Hour format, 00 to 23):*",
+        "ask_minute": "⏱️ *Select the Minute (00 to 59):*",
         "ask_photo": "📸 *Share a lovely photo* (or skip):",
         "ask_video": "🎥 *Share a video moment* (or skip):",
         "ask_song": "🎶 *Send a favorite song* (or skip):",
@@ -104,6 +112,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *ഇത് എന്തുതരം ആഘോഷമാണ്?*",
         "ask_name": "✨ *ഇന്ന് ആരുടെ വിശേഷമാണ് ആഘോഷിക്കുന്നത്? പേര് അയക്കൂ:*",
         "ask_wish": "📝 *അവർക്കായി ആശംസ എഴുതൂ:*",
+        "ask_dob_type": "⏳ *സ്റ്റാറ്റിസ്റ്റിക്സിനായി തീയതി എങ്ങനെ നൽകണം?*",
+        "ask_dob_date": "📅 തീയതി **YYYY-MM-DD** ഫോർമാറ്റിൽ അയക്കൂ (ഉദാഹരണത്തിന്: `2003-12-24`):",
+        "ask_dob_direct": "🔢 വയസ്സ് മാത്രം നമ്പർ ആയി നൽകൂ (ഉദാഹരണത്തിന്: `22`):",
+        "ask_year": "📅 *വർഷം തിരഞ്ഞെടുക്കൂ:*",
+        "ask_month": "📆 *മാസം തിരഞ്ഞെടുക്കൂ:*",
+        "ask_day": "🗓️ *തീയതി തിരഞ്ഞെടുക്കൂ:*",
+        "ask_hour": "⏰ *മണിക്കൂർ തിരഞ്ഞെടുക്കൂ (00 മുതൽ 23 വരെ):*",
+        "ask_minute": "⏱️ *മിനിറ്റ് തിരഞ്ഞെടുക്കൂ (00 മുതൽ 59 വരെ):*",
         "ask_photo": "📸 *ഫോട്ടോ പങ്കുവെക്കൂ* (ഒഴിവാക്കാം):",
         "ask_video": "🎥 *വീഡിയോ പങ്കുവെക്കൂ* (ഒഴിവാക്കാം):",
         "ask_song": "🎶 *പാട്ട് അയക്കൂ* (ഒഴിവാക്കാം):",
@@ -119,6 +135,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *यह किस प्रकार का उत्सव है?*",
         "ask_name": "✨ *आज हम किसका जश्न मना रहे हैं? नाम भेजें:*",
         "ask_wish": "📝 *एक प्यारा सा संदेश लिखें:*",
+        "ask_dob_type": "⏳ *सांख्यिकी के लिए आयु विवरण कैसे जोड़ना चाहेंगे?*",
+        "ask_dob_date": "📅 कृपया **YYYY-MM-DD** प्रारूप में तिथि भेजें:",
+        "ask_dob_direct": "🔢 सीधी आयु संख्या में दर्ज करें:",
+        "ask_year": "📅 *वर्ष चुनें:*",
+        "ask_month": "📆 *महीना चुनें:*",
+        "ask_day": "🗓️ *तारीख चुनें:*",
+        "ask_hour": "⏰ *घंटा चुनें (00 से 23):*",
+        "ask_minute": "⏱️ *मिनट चुनें (00 से 59):*",
         "ask_photo": "📸 *फोटो शेयर करें* (या छोड़ें):",
         "ask_video": "🎥 *वीडियो शेयर करें* (या छोड़ें):",
         "ask_song": "🎶 *गाना भेजें* (या छोड़ें):",
@@ -130,10 +154,18 @@ BOT_TEXTS = {
         "welcome": "✨ *సర్ప్రైజ్ ప్రపంచానికి స్వాగతం...*",
         "region_selected": "🌍 ప్రాంతం: *{region}*. మీ దేశాన్ని ఎంచుకోండి:",
         "country_choice": "🗣️ *{country}* కోసం మీ భాషను ఎంచుకోండి:",
-        "lang_updated": "✅ భాష வெற்றிகரமாக నవీకరించబడింది!",
+        "lang_updated": "✅ భాష വിജയకరంగా నవీకరించబడింది!",
         "ask_category": "🎉 *ఇది ఏ రకమైన వేడుక?*",
         "ask_name": "✨ *ఈరోజు ఎవరి ప్రత్యేక సందర్భం జరుపుకుంటున్నాము? పేరు పంపండి:*",
         "ask_wish": "📝 *ఒక మంచి సందేశం రాయండి:*",
+        "ask_dob_type": "⏳ *వయస్సు వివరాలను ఎలా జోడించాలనుకుంటున్నారు?*",
+        "ask_dob_date": "📅 **YYYY-MM-DD** ფორმატში თარიღი:",
+        "ask_dob_direct": "🔢 നേരിട്ടുള്ള వయస్సును సంఖ్యగా ఇవ్వండి:",
+        "ask_year": "📅 *సంవత్సరాన్ని ఎంచుకోండి:*",
+        "ask_month": "📆 *నెలను ఎంచుకోండి:*",
+        "ask_day": "🗓️ *తేదీని ఎంచుకోండి:*",
+        "ask_hour": "⏰ *గంటను ఎంచుకోండి (00 నుండి 23):*",
+        "ask_minute": "⏱️ *నిమిషాన్ని ఎంచుకోండి (00 నుండి 59):*",
         "ask_photo": "📸 *ఫోటోను పంచుకోండి* (లేదా దాటవేయి):",
         "ask_video": "🎥 *వీడియోను పంచుకోండి* (లేదా దాటవేయి):",
         "ask_song": "🎶 *పాటను పంపండి* (లేదా దాటవేయి):",
@@ -149,6 +181,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *ಇದು ಯಾವ ರೀತಿಯ ಹಬ್ಬ/ವೇడుಕೆ?*",
         "ask_name": "✨ *ಇವತ್ತು ಯಾರ ವಿಶೇಷ ಸಂದರ್ಭವನ್ನು ಆಚರಿಸುತ್ತಿದ್ದೇವೆ? ಹೆಸರು ಕಳುಹಿಸಿ:*",
         "ask_wish": "📝 *ಒಳ್ಳೆಯ ಸಂದೇಶವನ್ನು ಬರೆಯಿರಿ:*",
+        "ask_dob_type": "⏳ *ವಯಸ್ಸಿನ ವಿವರಗಳನ್ನು ಹೇಗೆ ಸೇರಿಸಲು ಬಯಸುತ್ತೀರಿ?*",
+        "ask_dob_date": "📅 **YYYY-MM-DD** ಸ್ವರೂಪದಲ್ಲಿ ದಿನಾಂಕ ಕಳುಹಿಸಿ:",
+        "ask_dob_direct": "🔢 ನೇರ ವಯಸ್ಸನ್ನು ಸಂಖ್ಯೆಯಲ್ಲಿ ನಮೂದಿಸಿ:",
+        "ask_year": "📅 *ವರ್ಷವನ್ನು ಆಯ್ಕೆಮಾಡಿ:*",
+        "ask_month": "📆 *ತಿಂಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ:*",
+        "ask_day": "🗓️ *ದಿನಾಂಕವನ್ನು ಆಯ್ಕೆಮಾಡಿ:*",
+        "ask_hour": "⏰ *ಗಂಟೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ (00 ರಿಂದ 23):*",
+        "ask_minute": "⏱️ *ನಿಮಿಷವನ್ನು ಆಯ್ಕೆಮಾಡಿ (00 ರಿಂದ 59):*",
         "ask_photo": "📸 *ಫೋಟೋ ಕಳುಹಿಸಿ* (ಅಥವಾ ಬಿಟ್ಟುಬಿಡಿ):",
         "ask_video": "🎥 *ವೀಡಿಯೊ ಕಳುಹಿಸಿ* (ಅಥವಾ ಬಿಟ್ಟುಬಿಡಿ):",
         "ask_song": "🎶 *ಹಾಡು ಕಳುಹಿಸಿ* (ಅಥವಾ ಬಿಟ್ಟುಬಿಡಿ):",
@@ -164,6 +204,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *এটি কি ধরণের উদযাপন?*",
         "ask_name": "✨ *আজ কার বিশেষ দিন? নাম পাঠান:*",
         "ask_wish": "📝 *একটি সুন্দর বার্তা লিখুন:*",
+        "ask_dob_type": "⏳ *বয়সের বিবরণ কীভাবে যোগ করতে চান?*",
+        "ask_dob_date": "📅 **YYYY-MM-DD** ফরম্যাটে তারিখ পাঠান:",
+        "ask_dob_direct": "🔢 সরাসরি বয়স সংখ্যায় লিখুন:",
+        "ask_year": "📅 *বছর নির্বাচন করুন:*",
+        "ask_month": "📆 *মাস নির্বাচন করুন:*",
+        "ask_day": "🗓️ *তারিখ নির্বাচন করুন:*",
+        "ask_hour": "⏰ *ঘণ্টা নির্বাচন করুন (00 থেকে 23):*",
+        "ask_minute": "⏱️ *মিনিট নির্বাচন করুন (00 থেকে 59):*",
         "ask_photo": "📸 *ছবি শেয়ার করুন* (বাদ দিন):",
         "ask_video": "🎥 *ভিডিও শেয়ার করুন* (বাদ দিন):",
         "ask_song": "🎶 *গান পাঠান* (বাদ দিন):",
@@ -179,6 +227,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *どんなお祝いですか？*",
         "ask_name": "✨ *今日は誰のお祝いですか？名前を送信してください:*",
         "ask_wish": "📝 *メッセージを入力してください:*",
+        "ask_dob_type": "⏳ *年齢の詳細を追加する方法を選択してください:*",
+        "ask_dob_date": "📅 **YYYY-MM-DD** 形式で日付送信:",
+        "ask_dob_direct": "🔢 年齢を数字で入力:",
+        "ask_year": "📅 *年を選択:*",
+        "ask_month": "📆 *月を選択:*",
+        "ask_day": "🗓️ *日付を選択:*",
+        "ask_hour": "⏰ *時間を選択 (00〜23):*",
+        "ask_minute": "⏱️ *分を選択 (00〜59):*",
         "ask_photo": "📸 *写真を共有* (スキップ可):",
         "ask_video": "🎥 *動画を共有* (スキップ可):",
         "ask_song": "🎶 *曲を送信* (スキップ可):",
@@ -194,6 +250,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *어떤 축하 행사인가요?*",
         "ask_name": "✨ *오늘 누구를 축하하나요? 이름을 입력하세요:*",
         "ask_wish": "📝 *따뜻한 메시지를 작성하세요:*",
+        "ask_dob_type": "⏳ *나이 세부 정보를 어떻게 추가하시겠습니까?*",
+        "ask_dob_date": "📅 **YYYY-MM-DD** 형식으로 날짜 입력:",
+        "ask_dob_direct": "🔢 나이를 숫자로 입력:",
+        "ask_year": "📅 *연도 선택:*",
+        "ask_month": "📆 *월 선택:*",
+        "ask_day": "🗓️ *일 선택:*",
+        "ask_hour": "⏰ *시간 선택 (00~23):*",
+        "ask_minute": "⏱️ *분 선택 (00~59):*",
         "ask_photo": "📸 *사진 공유* (건너뛰기 가능):",
         "ask_video": "🎥 *동영상 공유* (건너뛰기 가능):",
         "ask_song": "🎶 *노래 보내기* (건너뛰기 가능):",
@@ -209,6 +273,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Bu nə cür bayramdır?*",
         "ask_name": "✨ *Bu gün kimin xüsusi gününü qeyd edirik? Adını göndərin:*",
         "ask_wish": "📝 *Gözəl bir arzu yazın:*",
+        "ask_dob_type": "⏳ *Yaş detallarını necə əlavə etmək istəyirsiniz?*",
+        "ask_dob_date": "📅 **YYYY-MM-DD** formatında tarix göndərin:",
+        "ask_dob_direct": "🔢 Yaşı bir rəqəm olaraq daxil edin:",
+        "ask_year": "📅 *İli seçin:*",
+        "ask_month": "📆 *Ayı seçin:*",
+        "ask_day": "🗓️ *Günü seçin:*",
+        "ask_hour": "⏰ *Saat seçin (00 - 23):*",
+        "ask_minute": "⏱️ *Dəqiqə seçin (00 - 59):*",
         "ask_photo": "📸 *Şəkil paylaşın* (və ya keçin):",
         "ask_video": "🎥 *Video paylaşın* (və ya keçin):",
         "ask_song": "🎶 *Mahnı göndərin* (və ya keçin):",
@@ -224,6 +296,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Ինչ տեսակի տոն է սա:*",
         "ask_name": "✨ *Ում հատուկ օրն ենք այսօր նշում: Ուղարկեք նրա անունը:*",
         "ask_wish": "📝 *Գրեք ջերմ մաղթանք:*",
+        "ask_dob_type": "⏳ *Ինչպես՞ կցանկանաք ավելացնել տարիքի տվյալները:*",
+        "ask_dob_date": "📅 Ուղարկեք ամսաթիվը **YYYY-MM-DD** ձևաչափով:",
+        "ask_dob_direct": "🔢 Մուտքագրեք ուղղակի տարիքը թիվով:",
+        "ask_year": "📅 *Ընտրեք տարին:*",
+        "ask_month": "📆 *Ընտրեք ամիսը:*",
+        "ask_day": "🗓️ *Ընտրեք օրը:*",
+        "ask_hour": "⏰ *Ընտրեք ժամը (00-ից 23):*",
+        "ask_minute": "⏱️ *Ընտրեք րոպեն (00-ից 59):*",
         "ask_photo": "📸 *Կիսվեք լուսանկարով* (կամ բաց թողնել):",
         "ask_video": "🎥 *Կիսվեք տեսանյութով* (կամ բաց թողնել):",
         "ask_song": "🎶 *Ուղարկեք երգ* (կամ բաց թողնել):",
@@ -239,6 +319,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Какой это праздник?*",
         "ask_name": "✨ *Чей праздник мы сегодня отмечаем? Введите имя:*",
         "ask_wish": "📝 *Напишите теплое пожелание:*",
+        "ask_dob_type": "⏳ *Как вы хотите указать возраст для статистики?*",
+        "ask_dob_date": "📅 Отправьте дату в формате **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Введите возраст цифрой:",
+        "ask_year": "📅 *Выберите год:*",
+        "ask_month": "📆 *Выберите месяц:*",
+        "ask_day": "🗓️ *Выберите день:*",
+        "ask_hour": "⏰ *Выберите час (от 00 до 23):*",
+        "ask_minute": "⏱️ *Выберите минуту (от 00 до 59):*",
         "ask_photo": "📸 *Загрузите фото* (или пропустить):",
         "ask_video": "🎥 *Загрузите видео* (или пропустить):",
         "ask_song": "🎶 *Отправьте песню* (или пропустить):",
@@ -254,6 +342,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Perayaan apa ini?*",
         "ask_name": "✨ *Siapa yang merayakan hari spesial hari ini? Kirim namanya:*",
         "ask_wish": "📝 *Tulis pesan ucapan yang manis:*",
+        "ask_dob_type": "⏳ *Bagaimana Anda ingin menambahkan detail usia?*",
+        "ask_dob_date": "📅 Kirim tanggal dalam format **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Masukkan usia langsung sebagai angka:",
+        "ask_year": "📅 *Pilih tahun:*",
+        "ask_month": "📆 *Pilih bulan:*",
+        "ask_day": "🗓️ *Pilih hari:*",
+        "ask_hour": "⏰ *Pilih Jam (00 sampai 23):*",
+        "ask_minute": "⏱️ *Pilih Menit (00 sampai 59):*",
         "ask_photo": "📸 *Bagikan foto* (atau lewati):",
         "ask_video": "🎥 *Bagikan video* (atau lewati):",
         "ask_song": "🎶 *Kirim lagu* (atau lewati):",
@@ -269,6 +365,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Bu ne tür bir kutlama?*",
         "ask_name": "✨ *Bugün kimin özel gününü kutluyoruz? Adını gönderin:*",
         "ask_wish": "📝 *Tatlı bir dilek yazın:*",
+        "ask_dob_type": "⏳ *Yaş bilgilerini nasıl eklemekistersiniz?*",
+        "ask_dob_date": "📅 **YYYY-MM-DD** formatında tarih gönderin:",
+        "ask_dob_direct": "🔢 Yaşı sayı olarak girin:",
+        "ask_year": "📅 *Yılı seçin:*",
+        "ask_month": "📆 *Ayı seçin:*",
+        "ask_day": "🗓️ *Günü seçin:*",
+        "ask_hour": "⏰ *Saati seçin (00 - 23):*",
+        "ask_minute": "⏱️ *Dakikayı seçin (00 - 59):*",
         "ask_photo": "📸 *Bir fotoğraf paylaşın* (veya atlayın):",
         "ask_video": "🎥 *Bir video paylaşın* (veya atlayın):",
         "ask_song": "🎶 *Bir şarkı gönderin* (veya atlayın):",
@@ -284,6 +388,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *ما هي المناسبة؟*",
         "ask_name": "✨ *من هو صاحب المناسبة اليوم؟ أرسل اسمه:*",
         "ask_wish": "📝 *اكتب رسالة جميلة:*",
+        "ask_dob_type": "⏳ *كيف تريد إضافة تفاصيل العمر للإحصائيات؟*",
+        "ask_dob_date": "📅 أرسل التاريخ بالصيغة **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 أدخل العمر المباشر برقم:",
+        "ask_year": "📅 *اختر السنة:*",
+        "ask_month": "📆 *اختر الشهر:*",
+        "ask_day": "🗓️ *اختر اليوم:*",
+        "ask_hour": "⏰ *اختر الساعة (00 إلى 23):*",
+        "ask_minute": "⏱️ *اختر الدقيقة (00 إلى 59):*",
         "ask_photo": "📸 *شارك صورة* (أو تخطي):",
         "ask_video": "🎥 *شارك فيديو* (أو تخطي):",
         "ask_song": "🎶 *أرسل أغنية* (أو تخطي):",
@@ -299,6 +411,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Apakah jenis perayaan ini?*",
         "ask_name": "✨ *Siapa yang kita sambut hari ini? Hantar nama mereka:*",
         "ask_wish": "📝 *Tulis ucapan yang manis:*",
+        "ask_dob_type": "⏳ *Bagaimana anda ingin menambah butiran umur?*",
+        "ask_dob_date": "📅 Hantar tarikh dalam format **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Masukkan umur sebagai nombor:",
+        "ask_year": "📅 *Pilih tahun:*",
+        "ask_month": "📆 *Pilih bulan:*",
+        "ask_day": "🗓️ *Pilih hari:*",
+        "ask_hour": "⏰ *Pilih Jam (00 hingga 23):*",
+        "ask_minute": "⏱️ *Pilih Minit (00 hingga 59):*",
         "ask_photo": "📸 *Kongsi foto* (atau langkau):",
         "ask_video": "🎥 *Kongsi video* (atau langkau):",
         "ask_song": "🎶 *Hantar lagu* (atau langkau):",
@@ -314,6 +434,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *这是什么类型的庆祝活动？*",
         "ask_name": "✨ *今天我们要庆祝谁的节日？发送名字：*",
         "ask_wish": "📝 *写一条祝福消息：*",
+        "ask_dob_type": "⏳ *您想如何添加年龄统计信息？*",
+        "ask_dob_date": "📅 请发送 **YYYY-MM-DD** 格式的日期：",
+        "ask_dob_direct": "🔢 请以数字形式输入年龄：",
+        "ask_year": "📅 *选择年份：*",
+        "ask_month": "📆 *选择月份：*",
+        "ask_day": "🗓️ *选择日期：*",
+        "ask_hour": "⏰ *选择小时 (00至23)：*",
+        "ask_minute": "⏱️ *选择分钟 (00至59)：*",
         "ask_photo": "📸 *分享照片*（可跳过）：",
         "ask_video": "🎥 *分享视频*（可跳过）：",
         "ask_song": "🎶 *发送歌曲*（可跳过）：",
@@ -329,6 +457,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *இது என்ன வகையான விழா?*",
         "ask_name": "✨ *இன்று யாருடைய சிறப்பு நிகழ்வைக் கொண்டாடுகிறோம்? பெயர் அனுப்பவும்:*",
         "ask_wish": "📝 *ஒரு இனிய வாழ்த்துச் செய்தியை எழுதவும்:*",
+        "ask_dob_type": "⏳ *வயது விவரங்களை எவ்வாறு சேர்க்க விரும்புகிறீர்கள்?*",
+        "ask_dob_date": "📅 **YYYY-MM-DD** வடிவத்தில் தேதியை அனுப்பவும்:",
+        "ask_dob_direct": "🔢 நேரடி வயதை எண்ணாக உள்ளிடவும்:",
+        "ask_year": "📅 *ஆண்டைத் தேர்ந்தெடுக்கவும்:*",
+        "ask_month": "📆 *மாதத்தைத் தேர்ந்தெடுக்கவும்:*",
+        "ask_day": "🗓️ *தேதியைத் தேர்ந்தெடுக்கவும்:*",
+        "ask_hour": "⏰ *மணிநேரத்தைத் தேர்ந்தெடுக்கவும் (00 முதல் 23):*",
+        "ask_minute": "⏱️ *நிமிடத்தைத் தேர்ந்தெடுக்கவும் (00 முதல் 59):*",
         "ask_photo": "📸 *புகைப்படத்தைப் பகிரவும்* (தவிர்க்கலாம்):",
         "ask_video": "🎥 *வீடியோவைப் பகிரவும்* (தவிர்க்கலாம்):",
         "ask_song": "🎶 *பாட்டை அனுப்பவும்* (தவிர்க்கலாம்):",
@@ -344,6 +480,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Bu qanday bayram?*",
         "ask_name": "✨ *Bugun kimning bayramini nishonlayapmiz? Ismini yuboring:*",
         "ask_wish": "📝 *Chiroyli tilak yozing:*",
+        "ask_dob_type": "⏳ *Yosh ma'lumotlarini qanday qo'shishni xohlaysiz?*",
+        "ask_dob_date": "📅 Sana **YYYY-MM-DD** formatida yuboring:",
+        "ask_dob_direct": "🔢 To'g'ridan-to'g'ri yoshni raqam bilan kiriting:",
+        "ask_year": "📅 *Yilni tanlang:*",
+        "ask_month": "📆 *Oyni tanlang:*",
+        "ask_day": "🗓️ *Kunni tanlang:*",
+        "ask_hour": "⏰ *Soatni tanlang (00 dan 23 gacha):*",
+        "ask_minute": "⏱️ *Dqiqani tanlang (00 dan 59 gacha):*",
         "ask_photo": "📸 *Rasm ulashing* (yoki o'tkazib yuboring):",
         "ask_video": "🎥 *Video ulashing* (yoki o'tkazib yuboring):",
         "ask_song": "🎶 *Qo'shiq yuboring* (yoki o'tkazib yuboring):",
@@ -359,6 +503,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *این چه نوع جشنی است؟*",
         "ask_name": "🎉 *امروز مناسبت چه کسی است؟ نام را بفرستید:*",
         "ask_wish": "📝 *یک پیام زیبا بنویسید:*",
+        "ask_dob_type": "⏳ *چگونه می‌خواهید جزئیات سن را اضافه کنید؟*",
+        "ask_dob_date": "📅 تاریخ را با فرمت **YYYY-MM-DD** بفرستید:",
+        "ask_dob_direct": "🔢 سن مستقیم را به صورت عدد وارد کنید:",
+        "ask_year": "📅 *سال را انتخاب کنید:*",
+        "ask_month": "📆 *ماه را انتخاب کنید:*",
+        "ask_day": "🗓️ *روز را انتخاب کنید:*",
+        "ask_hour": "⏰ *ساعت را انتخاب کنید (00 تا 23):*",
+        "ask_minute": "⏱️ *دقیقه را انتخاب کنید (00 تا 59):*",
         "ask_photo": "📸 *اشتراک‌گذاری عکس* (یا رد کردن):",
         "ask_video": "🎥 *اشتراک‌گذاری ویدیو* (یا رد کردن):",
         "ask_song": "🎶 *ارسال آهنگ* (یا رد کردن):",
@@ -374,6 +526,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *این چه نوع جشنی است؟*",
         "ask_name": "✨ *امروز مناسبت چه کسی است؟ نام او را بفرستید:*",
         "ask_wish": "📝 *یک پیام صمیمانه بنویسید:*",
+        "ask_dob_type": "⏳ *چگونه می‌خواهید جزئیات سن را اضافه کنید؟*",
+        "ask_dob_date": "📅 تاریخ را با فرمت **YYYY-MM-DD** بفرستید:",
+        "ask_dob_direct": "🔢 سن را به عنوان عدد وارد کنید:",
+        "ask_year": "📅 *سال را انتخاب کنید:*",
+        "ask_month": "📆 *ماه را انتخاب کنید:*",
+        "ask_day": "🗓️ *روز را انتخاب کنید:*",
+        "ask_hour": "⏰ *ساعت را انتخاب کنید (00 تا 23):*",
+        "ask_minute": "⏱️ *دقیقه را انتخاب کنید (00 تا 59):*",
         "ask_photo": "📸 *اشتراک‌گذاری عکس* (یا رد کردن):",
         "ask_video": "🎥 *اشتراک‌گذاری ویدیو* (یا رد کردن):",
         "ask_song": "🎶 *ارسال آهنگ* (یا رد کردن):",
@@ -389,6 +549,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *ဘာပွဲကျင်းပတာလဲ?*",
         "ask_name": "✨ *ဒီနေ့ ဘယ်သူ့ရဲ့ အထူးနေ့လဲ? နာမည်ပို့ပေးပါ:*",
         "ask_wish": "📝 *ဆုတောင်းစကား ရေးပေးပါ:*",
+        "ask_dob_type": "⏳ *အသက်အချက်အလက်ကို ဘယ်လိုထည့်ချင်ပါလဲ?*",
+        "ask_dob_date": "📅 ရက်စွဲကို **YYYY-MM-DD** ပုံစံဖြင့် ပို့ပါ:",
+        "ask_dob_direct": "🔢 အသက်ကို နံပါတ်ဖြင့် ရိုက်ထည့်ပါ:",
+        "ask_year": "📅 *နှစ်ကို ရွေးပါ:*",
+        "ask_month": "📆 *လကို ရွေးပါ:*",
+        "ask_day": "🗓️ *ရက်ကို ရွေးပါ:*",
+        "ask_hour": "⏰ *နာရီကို ရွေးပါ (00 မှ 23):*",
+        "ask_minute": "⏱️ *မိနစ်ကို ရွေးပါ (00 မှ 59):*",
         "ask_photo": "📸 *ဓာတ်ပုံမျှဝေပါ* (သို့) ကျော်ရန်:",
         "ask_video": "🎥 *ဗီဒီယိုမျှဝေပါ* (သို့) ကျော်ရန်:",
         "ask_song": "🎶 *သီချင်းပို့ပါ* (သို့) ကျော်ရန်:",
@@ -404,6 +572,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Đây là lễ kỷ niệm gì?*",
         "ask_name": "✨ *Hôm nay chúng ta mừng dịp đặc biệt của ai? Gửi tên:*",
         "ask_wish": "📝 *Viết một lời chúc ngọt ngào:*",
+        "ask_dob_type": "⏳ *Bạn muốn thêm chi tiết tuổi như thế nào?*",
+        "ask_dob_date": "📅 Gửi ngày theo định dạng **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Nhập tuổi trực tiếp dưới dạng số:",
+        "ask_year": "📅 *Chọn năm:*",
+        "ask_month": "📆 *Chọn tháng:*",
+        "ask_day": "🗓️ *Chọn ngày:*",
+        "ask_hour": "⏰ *Chọn Giờ (00 đến 23):*",
+        "ask_minute": "⏱️ *Chọn Phút (00 đến 59):*",
         "ask_photo": "📸 *Chia sẻ ảnh* (hoặc bỏ qua):",
         "ask_video": "🎥 *Chia sẻ video* (hoặc bỏ qua):",
         "ask_song": "🎶 *Gửi bài hát* (hoặc bỏ qua):",
@@ -419,6 +595,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Anong klaseng pagdiriwang ito?*",
         "ask_name": "✨ *Kanino tayo magdiriwang ngayon? Ipadala ang pangalan:*",
         "ask_wish": "📝 *Sumulat ng magandang mensahe:*",
+        "ask_dob_type": "⏳ *Paano mo gustong idagdag ang detalye ng edad?*",
+        "ask_dob_date": "📅 Magpadala ng petsa sa format na **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Ilagay ang edad bilang numero:",
+        "ask_year": "📅 *Piliin ang taon:*",
+        "ask_month": "📆 *Piliin ang buwan:*",
+        "ask_day": "🗓️ *Piliin ang araw:*",
+        "ask_hour": "⏰ *Piliin ang Oras (00 hanggang 23):*",
+        "ask_minute": "⏱️ *Piliin ang Minuto (00 hanggang 59):*",
         "ask_photo": "📸 *Magbahagi ng larawan* (o laktawan):",
         "ask_video": "🎥 *Magbahagi ng video* (o laktawan):",
         "ask_song": "🎶 *Magpadala ng kanta* (o laktawan):",
@@ -434,6 +618,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Якое гэта свята?*",
         "ask_name": "✨ *Чыё свята мы сёння святкуем? Увядзіце імя:*",
         "ask_wish": "📝 *Напішыце цёплае пажаданне:*",
+        "ask_dob_type": "⏳ *Як вы хочаце дадаць дэталі ўзросту?*",
+        "ask_dob_date": "📅 Адпраўце дату ў фармаце **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Увядзіце ўзрост лічбай:",
+        "ask_year": "📅 *Выберыце год:*",
+        "ask_month": "📆 *Выберыце месяц:*",
+        "ask_day": "🗓️ *Выберыце дзень:*",
+        "ask_hour": "⏰ *Выберыце гадзіну (ад 00 да 23):*",
+        "ask_minute": "⏱️ *Выберыце хвіліну (ад 00 да 59):*",
         "ask_photo": "📸 *Падзяліцеся фота* (або прапусціць):",
         "ask_video": "🎥 *Падзяліцеся відэа* (або прапусціць):",
         "ask_song": "🎶 *Адпраўце песню* (або прапусціць):",
@@ -449,6 +641,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Che tipo di celebrazione è?*",
         "ask_name": "✨ *Di chi è l'occasione speciale che festeggiamo oggi? Invia il nome:*",
         "ask_wish": "📝 *Scrivi un messaggio affettuoso:*",
+        "ask_dob_type": "⏳ *Come vorresti aggiungere i dettagli dell'età?*",
+        "ask_dob_date": "📅 Invia la data nel formato **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Inserisci l'età direttamente come numero:",
+        "ask_year": "📅 *Seleziona l'anno:*",
+        "ask_month": "📆 *Seleziona il mese:*",
+        "ask_day": "🗓️ *Seleziona il giorno:*",
+        "ask_hour": "⏰ *Seleziona l'Ora (da 00 a 23):*",
+        "ask_minute": "⏱️ *Seleziona il Minuto (da 00 a 59):*",
         "ask_photo": "📸 *Condividi una foto* (o salta):",
         "ask_video": "🎥 *Condividi un video* (o salta):",
         "ask_song": "🎶 *Invia una canzone* (o salta):",
@@ -464,6 +664,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Welche Art von Feier ist das?*",
         "ask_name": "✨ *Wessen besonderen Anlass feiern wir heute? Name senden:*",
         "ask_wish": "📝 *Schreiben Sie eine liebevolle Nachricht:*",
+        "ask_dob_type": "⏳ *Wie möchten Sie Altersdetails hinzufügen?*",
+        "ask_dob_date": "📅 Datum im Format **YYYY-MM-DD** senden:",
+        "ask_dob_direct": "🔢 Alter direkt als Zahl eingeben:",
+        "ask_year": "📅 *Jahr wählen:*",
+        "ask_month": "📆 *Monat wählen:*",
+        "ask_day": "🗓️ *Tag wählen:*",
+        "ask_hour": "⏰ *Stunde wählen (00 bis 23):*",
+        "ask_minute": "⏱️ *Minute wählen (00 bis 59):*",
         "ask_photo": "📸 *Foto teilen* (oder überspringen):",
         "ask_video": "🎥 *Video teilen* (oder überspringen):",
         "ask_song": "🎶 *Lied senden* (oder überspringen):",
@@ -479,6 +687,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *¿Qué tipo de celebración es?*",
         "ask_name": "✨ *¿A quién celebramos hoy? Envía su nombre:*",
         "ask_wish": "📝 *Escribe un mensaje cariñoso:*",
+        "ask_dob_type": "⏳ *¿Cómo te gustaría agregar los detalles de edad?*",
+        "ask_dob_date": "📅 Envía la fecha en formato **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Ingresa la edad directamente como número:",
+        "ask_year": "📅 *Selecciona el año:*",
+        "ask_month": "📆 *Selecciona el mes:*",
+        "ask_day": "🗓️ *Selecciona el día:*",
+        "ask_hour": "⏰ *Selecciona la Hora (00 a 23):*",
+        "ask_minute": "⏱️ *Selecciona el Minuto (00 a 59):*",
         "ask_photo": "📸 *Comparte una foto* (o saltar):",
         "ask_video": "🎥 *Comparte un video* (o saltar):",
         "ask_song": "🎶 *Envía una canción* (o saltar):",
@@ -494,6 +710,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Quel type de célébration est-ce ?*",
         "ask_name": "✨ *Quelle occasion spéciale célébrons-nous ? Nom :*",
         "ask_wish": "📝 *Écrivez un message chaleureux :*",
+        "ask_dob_type": "⏳ *Comment souhaitez-vous ajouter les détails d'âge ?*",
+        "ask_dob_date": "📅 Envoyez la date au format **YYYY-MM-DD** :",
+        "ask_dob_direct": "🔢 Entrez l'âge directement sous forme de nombre :",
+        "ask_year": "📅 *Sélectionnez l'année :*",
+        "ask_month": "📆 *Sélectionnez le mois :*",
+        "ask_day": "🗓️ *Sélectionnez le jour :*",
+        "ask_hour": "⏰ *Sélectionnez l'heure (00 à 23) :*",
+        "ask_minute": "⏱️ *Sélectionnez la minute (00 à 59) :*",
         "ask_photo": "📸 *Partagez une photo* (ou ignorer) :",
         "ask_video": "🎥 *Partagez une vidéo* (ou ignorer) :",
         "ask_song": "🎶 *Envoyez une chanson* (ou ignorer) :",
@@ -507,8 +731,16 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Виберіть мову для *{country}*:",
         "lang_updated": "✅ Мову успішно оновлено!",
         "ask_category": "🎉 *Яке це свято?*",
-        "ask_name": "✨ *Чиє свято ми сьогодні святкуємо? Введіть ім'я:*",
+        "ask_name": "✨ *Чиє свято мы сьогодні святкуємо? Введіть ім'я:*",
         "ask_wish": "📝 *Напишіть тепле побажання:*",
+        "ask_dob_type": "⏳ *Як ви хочете додати дані про вік?*",
+        "ask_dob_date": "📅 Надішліть дату у форматі **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Введіть вік числом:",
+        "ask_year": "📅 *Виберіть рік:*",
+        "ask_month": "📆 *Виберіть місяць:*",
+        "ask_day": "🗓️ *Виберіть день:*",
+        "ask_hour": "⏰ *Виберіть годину (від 00 до 23):*",
+        "ask_minute": "⏱️ *Виберіть хвилину (від 00 до 59):*",
         "ask_photo": "📸 *Поділіться фото* (або пропустити):",
         "ask_video": "🎥 *Поділіться відео* (або пропустити):",
         "ask_song": "🎶 *Надішліть пісню* (або пропустити):",
@@ -524,6 +756,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Hii ni sherehe ya aina gani?*",
         "ask_name": "✨ *Tunasherehekea nani leo? Tuma jina lake:*",
         "ask_wish": "📝 *Andika ujumbe mtamu na wenye upendo:*",
+        "ask_dob_type": "⏳ *Ungependa kuongeza vipi maelezo ya umri?*",
+        "ask_dob_date": "📅 Tuma tarehe katika muundo wa **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Ingiza umri moja kwa moja kama namba:",
+        "ask_year": "📅 *Chagua mwaka:*",
+        "ask_month": "📆 *Chagua mwezi:*",
+        "ask_day": "🗓️ *Chagua siku:*",
+        "ask_hour": "⏰ *Chagua Saa (00 hadi 23):*",
+        "ask_minute": "⏱️ *Chagua Dakika (00 hadi 59):*",
         "ask_photo": "📸 *Shiriki picha* (au ruka):",
         "ask_video": "🎥 *Shiriki video* (au ruka):",
         "ask_song": "🎶 *Tuma wimbo* (au ruka):",
@@ -539,6 +779,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Lolu uhlobo luni lomkhosi?*",
         "ask_name": "✨ *Ubani esigubha usuku lwakhe namuhla? Thumela igama lakhe:*",
         "ask_wish": "📝 *Bhala umyalezo omuhle:*",
+        "ask_dob_type": "⏳ *Ungathanda ukungeza kanjani imininingwane yobudala?*",
+        "ask_dob_date": "📅 Thumela usuku ngefomethi **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Faka iminyaka ngqo njენორੋ numba:",
+        "ask_year": "📅 *Khetha unyaka:*",
+        "ask_month": "📆 *Khetha inyanga:*",
+        "ask_day": "🗓️ *Khetha usuku:*",
+        "ask_hour": "⏰ *Khetha iHora (00 kuya ku-23):*",
+        "ask_minute": "⏱️ *Khetha iMizuzu (00 kuya ku-59):*",
         "ask_photo": "📸 *Yabelana ngesithombe* (noma yeqa):",
         "ask_video": "🎥 *Yabelana ngevidiyo* (noma yeqa):",
         "ask_song": "🎶 *Thumela ingoma* (noma yeqa):",
@@ -554,6 +802,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Lolu hlobo luni lombhiyozo?*",
         "ask_name": "✨ *Ngubani esimbhiyozelayo namhlanje? Thumela igama lakhe:*",
         "ask_wish": "📝 *Bhala umyalezo omnandi:*",
+        "ask_dob_type": "⏳ * Ungathanda ukongeza njani iinkcukacha zeminyaka?*",
+        "ask_dob_date": "📅 Thumela umhla ngefomathi **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Faka iminyaka ngqo njengonombolo:",
+        "ask_year": "📅 *Khetha unyaka:*",
+        "ask_month": "📆 *Khetha inyanga:*",
+        "ask_day": "🗓️ *Khetha usuku:*",
+        "ask_hour": "⏰ *Khetha iyure (00 ukuya ku-23):*",
+        "ask_minute": "⏱️ *Khetha umzuzu (00 ukuya ku-59):*",
         "ask_photo": "📸 *Yabelana ngefoto* (okanye tsiba):",
         "ask_video": "🎥 *Yabelana ngevidiyo* (okanye tsiba):",
         "ask_song": "🎶 *Thumela ingoma* (okanye tsiba):",
@@ -569,6 +825,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Watter tipe viering is dit?*",
         "ask_name": "✨ *Wie se spesiale geleentheid vier ons vandag? Stuur hul naam:*",
         "ask_wish": "📝 *Skryf 'n lieflike wens of boodskap:*",
+        "ask_dob_type": "⏳ *Hoe wil jy ouderdomsdetails byvoeg?*",
+        "ask_dob_date": "📅 Stuur datum in **YYYY-MM-DD** formaat:",
+        "ask_dob_direct": "🔢 Voer ouderdom direk as 'n nommer in:",
+        "ask_year": "📅 *Kies die jaar:*",
+        "ask_month": "📆 *Kies die maand:*",
+        "ask_day": "🗓️ *Kies die dag:*",
+        "ask_hour": "⏰ *Kies die uur (00 tot 23):*",
+        "ask_minute": "⏱️ *Kies die minuut (00 tot 59):*",
         "ask_photo": "📸 *Deel 'n foto* (of slaan oor):",
         "ask_video": "🎥 *Deel 'n video* (of slaan oor):",
         "ask_song": "🎶 *Stuur 'n gunsteling liedjie* (of slaan oor):",
@@ -584,6 +848,14 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Que tipo de celebração é esta?*",
         "ask_name": "✨ *De quem é a ocasião especial que estamos comemorando? Envie o nome:*",
         "ask_wish": "📝 *Escreva uma mensagem carinhosa:*",
+        "ask_dob_type": "⏳ *Como você gostaria de adicionar os detalhes da idade?*",
+        "ask_dob_date": "📅 Envie a data no formato **YYYY-MM-DD**:",
+        "ask_dob_direct": "🔢 Digite a idade diretamente como número:",
+        "ask_year": "📅 *Selecione o ano:*",
+        "ask_month": "📆 *Selecione o mês:*",
+        "ask_day": "🗓️ *Selecione o dia:*",
+        "ask_hour": "⏰ *Selecione a Hora (00 a 23):*",
+        "ask_minute": "⏱️ *Selecione o Minuto (00 a 59):*",
         "ask_photo": "📸 *Compartilhe uma foto* (ou pular):",
         "ask_video": "🎥 *Compartilhe um vídeo* (ou pular):",
         "ask_song": "🎶 *Envie uma música* (ou pular):",
@@ -653,16 +925,6 @@ def get_user_lang(user_id):
     conn.close()
     return row[0] if row and row[0] else "en"
 
-def increment_user_creation(user_id):
-    conn = sqlite3.connect("bot_stats.db")
-    cursor = conn.cursor()
-    cursor.execute("""
-        INSERT INTO users (user_id, completed, creations_count) VALUES (?, 1, 1)
-        ON CONFLICT(user_id) DO UPDATE SET completed = 1, creations_count = creations_count + 1
-    """, (user_id,))
-    conn.commit()
-    conn.close()
-
 def save_surprise_to_db(user_id, category, recipient_name, wish_text, params_dict):
     lang_code = get_user_lang(user_id)
     conn = sqlite3.connect("bot_stats.db")
@@ -680,6 +942,13 @@ class BirthdayForm(StatesGroup):
     category = State()
     name = State()
     wish = State()
+    dob_choice = State()
+    dob_input = State()
+    target_year = State()
+    target_month = State()
+    target_day = State()
+    target_hour = State()
+    target_minute = State()
     photo = State()
     video = State()
     song = State()
@@ -741,12 +1010,6 @@ async def process_region(callback: types.CallbackQuery):
     await callback.message.edit_text(get_bot_text(user_id, "region_selected", region=region), reply_markup=get_countries_keyboard(region), parse_mode="Markdown")
     await callback.answer()
 
-@dp.callback_query(F.data.startswith("cpage_"))
-async def process_cpage(callback: types.CallbackQuery):
-    _, region, page = callback.data.split("_")
-    await callback.message.edit_reply_markup(reply_markup=get_countries_keyboard(region, page=int(page)))
-    await callback.answer()
-
 @dp.callback_query(F.data.startswith("country_"))
 async def process_country(callback: types.CallbackQuery, state: FSMContext):
     parts = callback.data.split("_")
@@ -784,22 +1047,6 @@ async def process_category(callback: types.CallbackQuery, state: FSMContext):
     await state.set_state(BirthdayForm.name)
     await callback.answer()
 
-STATE_SEQUENCE = [BirthdayForm.name, BirthdayForm.wish, BirthdayForm.photo, BirthdayForm.video, BirthdayForm.song, BirthdayForm.voice, BirthdayForm.audio]
-
-@dp.callback_query(F.data == "skip_step")
-async def process_skip(callback: types.CallbackQuery, state: FSMContext):
-    current_state = await state.get_state()
-    user_id = callback.from_user.id
-    curr_idx = next((i for i, s in enumerate(STATE_SEQUENCE) if s.state == current_state), -1)
-    if curr_idx != -1 and curr_idx + 1 < len(STATE_SEQUENCE):
-        nxt = STATE_SEQUENCE[curr_idx + 1]
-        await state.set_state(nxt)
-        keys = {BirthdayForm.name: "ask_name", BirthdayForm.wish: "ask_wish", BirthdayForm.photo: "ask_photo", BirthdayForm.video: "ask_video", BirthdayForm.song: "ask_song", BirthdayForm.voice: "ask_voice", BirthdayForm.audio: "ask_audio"}
-        await callback.message.answer(get_bot_text(user_id, keys.get(nxt, "ask_name")), reply_markup=get_action_keyboard(), parse_mode="Markdown")
-    else:
-        await finish_form(callback.message, state)
-    await callback.answer("Skipped")
-
 @dp.message(BirthdayForm.name)
 async def process_name(message: types.Message, state: FSMContext):
     await state.update_data(name=message.text)
@@ -809,6 +1056,165 @@ async def process_name(message: types.Message, state: FSMContext):
 @dp.message(BirthdayForm.wish)
 async def process_wish(message: types.Message, state: FSMContext):
     await state.update_data(wish=message.text)
+    await state.set_state(BirthdayForm.dob_choice)
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="📅 Enter Date (DOB)", callback_data="dob_date")],
+        [InlineKeyboardButton(text="🔢 Enter Direct Details", callback_data="dob_direct")],
+        [InlineKeyboardButton(text="✨ Skip Stats", callback_data="skip_stats")]
+    ])
+    await message.answer(get_bot_text(message.from_user.id, "ask_dob_type"), reply_markup=kb, parse_mode="Markdown")
+
+@dp.callback_query(F.data == "dob_date")
+async def dob_date_selected(callback: types.CallbackQuery, state: FSMContext):
+    await state.update_data(dob_type="date")
+    await state.set_state(BirthdayForm.dob_input)
+    await callback.message.answer(get_bot_text(callback.from_user.id, "ask_dob_date"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
+    await callback.answer()
+
+@dp.callback_query(F.data == "dob_direct")
+async def dob_direct_selected(callback: types.CallbackQuery, state: FSMContext):
+    await state.update_data(dob_type="direct")
+    await state.set_state(BirthdayForm.dob_input)
+    await callback.message.answer(get_bot_text(callback.from_user.id, "ask_dob_direct"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
+    await callback.answer()
+
+@dp.callback_query(F.data == "skip_stats")
+async def skip_stats_selected(callback: types.CallbackQuery, state: FSMContext):
+    await state.update_data(dob="")
+    await ask_target_year(callback.message, state)
+    await callback.answer()
+
+@dp.message(BirthdayForm.dob_input)
+async def process_dob_input(message: types.Message, state: FSMContext):
+    await state.update_data(dob=message.text)
+    await ask_target_year(message, state)
+
+async def ask_target_year(message: types.Message, state: FSMContext):
+    await state.set_state(BirthdayForm.target_year)
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="2026", callback_data="year_2026"), InlineKeyboardButton(text="2027", callback_data="year_2027")],
+        [InlineKeyboardButton(text="✨ Skip", callback_data="skip_year")]
+    ])
+    await message.answer(get_bot_text(message.from_user.id, "ask_year"), reply_markup=kb, parse_mode="Markdown")
+
+@dp.callback_query(F.data.startswith("year_"))
+async def process_year(callback: types.CallbackQuery, state: FSMContext):
+    year = callback.data.split("_")[1]
+    await state.update_data(target_year=year)
+    await ask_target_month(callback.message, state)
+    await callback.answer()
+
+@dp.callback_query(F.data == "skip_year")
+async def skip_year(callback: types.CallbackQuery, state: FSMContext):
+    await state.update_data(target_year="")
+    await ask_target_month(callback.message, state)
+    await callback.answer()
+
+async def ask_target_month(message: types.Message, state: FSMContext):
+    await state.set_state(BirthdayForm.target_month)
+    months = [("January", "01"), ("February", "02"), ("March", "03"), ("April", "04"),
+              ("May", "05"), ("June", "06"), ("July", "07"), ("August", "08"),
+              ("September", "09"), ("October", "10"), ("November", "11"), ("December", "12")]
+    kb = []
+    row = []
+    for m, num in months:
+        row.append(InlineKeyboardButton(text=m, callback_data=f"mon_{num}"))
+        if len(row) == 3:
+            kb.append(row)
+            row = []
+    if row: kb.append(row)
+    kb.append([InlineKeyboardButton(text="✨ Skip", callback_data="skip_month")])
+    await message.answer(get_bot_text(message.from_user.id, "ask_month"), reply_markup=InlineKeyboardMarkup(inline_keyboard=kb), parse_mode="Markdown")
+
+@dp.callback_query(F.data.startswith("mon_"))
+async def process_month(callback: types.CallbackQuery, state: FSMContext):
+    mon = callback.data.split("_")[1]
+    await state.update_data(target_month=mon)
+    await ask_target_day(callback.message, state)
+    await callback.answer()
+
+@dp.callback_query(F.data == "skip_month")
+async def skip_month(callback: types.CallbackQuery, state: FSMContext):
+    await state.update_data(target_month="")
+    await ask_target_day(callback.message, state)
+    await callback.answer()
+
+async def ask_target_day(message: types.Message, state: FSMContext):
+    await state.set_state(BirthdayForm.target_day)
+    kb = []
+    row = []
+    for d in range(1, 29):
+        day_str = f"{d:02d}"
+        row.append(InlineKeyboardButton(text=str(d), callback_data=f"day_{day_str}"))
+        if len(row) == 7:
+            kb.append(row)
+            row = []
+    if row: kb.append(row)
+    kb.append([InlineKeyboardButton(text="✨ Skip", callback_data="skip_day")])
+    await message.answer(get_bot_text(message.from_user.id, "ask_day"), reply_markup=InlineKeyboardMarkup(inline_keyboard=kb), parse_mode="Markdown")
+
+@dp.callback_query(F.data.startswith("day_"))
+async def process_day(callback: types.CallbackQuery, state: FSMContext):
+    day = callback.data.split("_")[1]
+    await state.update_data(target_day=day)
+    await ask_target_hour(callback.message, state)
+    await callback.answer()
+
+@dp.callback_query(F.data == "skip_day")
+async def skip_day(callback: types.CallbackQuery, state: FSMContext):
+    await state.update_data(target_day="")
+    await ask_target_hour(callback.message, state)
+    await callback.answer()
+
+async def ask_target_hour(message: types.Message, state: FSMContext):
+    await state.set_state(BirthdayForm.target_hour)
+    kb = []
+    row = []
+    for h in range(24):
+        h_str = f"{h:02d}"
+        row.append(InlineKeyboardButton(text=h_str, callback_data=f"hour_{h_str}"))
+        if len(row) == 6:
+            kb.append(row)
+            row = []
+    if row: kb.append(row)
+    kb.append([InlineKeyboardButton(text="✨ Skip", callback_data="skip_hour")])
+    await message.answer(get_bot_text(message.from_user.id, "ask_hour"), reply_markup=InlineKeyboardMarkup(inline_keyboard=kb), parse_mode="Markdown")
+
+@dp.callback_query(F.data.startswith("hour_"))
+async def process_hour(callback: types.CallbackQuery, state: FSMContext):
+    hour = callback.data.split("_")[1]
+    await state.update_data(target_hour=hour)
+    await ask_target_minute(callback.message, state)
+    await callback.answer()
+
+@dp.callback_query(F.data == "skip_hour")
+async def skip_hour(callback: types.CallbackQuery, state: FSMContext):
+    await state.update_data(target_hour="")
+    await ask_target_minute(callback.message, state)
+    await callback.answer()
+
+async def ask_target_minute(message: types.Message, state: FSMContext):
+    await state.set_state(BirthdayForm.target_minute)
+    kb = [
+        [InlineKeyboardButton(text="00", callback_data="min_00"), InlineKeyboardButton(text="15", callback_data="min_15"), InlineKeyboardButton(text="30", callback_data="min_30"), InlineKeyboardButton(text="45", callback_data="min_45")],
+        [InlineKeyboardButton(text="✨ Skip", callback_data="skip_minute")]
+    ]
+    await message.answer(get_bot_text(message.from_user.id, "ask_minute"), reply_markup=InlineKeyboardMarkup(inline_keyboard=kb), parse_mode="Markdown")
+
+@dp.callback_query(F.data.startswith("min_"))
+async def process_minute(callback: types.CallbackQuery, state: FSMContext):
+    minute = callback.data.split("_")[1]
+    await state.update_data(target_minute=minute)
+    await prompt_photo(callback.message, state)
+    await callback.answer()
+
+@dp.callback_query(F.data == "skip_minute")
+async def skip_minute(callback: types.CallbackQuery, state: FSMContext):
+    await state.update_data(target_minute="")
+    await prompt_photo(callback.message, state)
+    await callback.answer()
+
+async def prompt_photo(message: types.Message, state: FSMContext):
     await state.set_state(BirthdayForm.photo)
     await message.answer(get_bot_text(message.from_user.id, "ask_photo"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
 
@@ -853,40 +1259,54 @@ async def process_audio(message: types.Message, state: FSMContext):
     await state.update_data(extra_audio=url)
     await finish_form(message, state)
 
-@dp.message(BirthdayForm.photo)
-@dp.message(BirthdayForm.video)
-@dp.message(BirthdayForm.song)
-@dp.message(BirthdayForm.voice)
-@dp.message(BirthdayForm.audio)
-async def skip_media(message: types.Message, state: FSMContext):
+@dp.callback_query(F.data == "skip_step")
+async def process_skip(callback: types.CallbackQuery, state: FSMContext):
     current_state = await state.get_state()
+    user_id = callback.from_user.id
     if current_state == BirthdayForm.photo.state:
         await state.set_state(BirthdayForm.video)
-        await message.answer(get_bot_text(message.from_user.id, "ask_video"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
+        await callback.message.answer(get_bot_text(user_id, "ask_video"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
     elif current_state == BirthdayForm.video.state:
         await state.set_state(BirthdayForm.song)
-        await message.answer(get_bot_text(message.from_user.id, "ask_song"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
+        await callback.message.answer(get_bot_text(user_id, "ask_song"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
     elif current_state == BirthdayForm.song.state:
         await state.set_state(BirthdayForm.voice)
-        await message.answer(get_bot_text(message.from_user.id, "ask_voice"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
+        await callback.message.answer(get_bot_text(user_id, "ask_voice"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
     elif current_state == BirthdayForm.voice.state:
         await state.set_state(BirthdayForm.audio)
-        await message.answer(get_bot_text(message.from_user.id, "ask_audio"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
-    else:
-        await finish_form(message, state)
+        await callback.message.answer(get_bot_text(user_id, "ask_audio"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
+    elif current_state == BirthdayForm.audio.state:
+        await finish_form(callback.message, state)
+    elif current_state == BirthdayForm.dob_input.state:
+        await ask_target_year(callback.message, state)
+    await callback.answer("Skipped")
 
 async def finish_form(message: types.Message, state: FSMContext):
     data = await state.get_data()
+    
+    y = data.get("target_year", "")
+    m = data.get("target_month", "")
+    d = data.get("target_day", "")
+    h = data.get("target_hour", "00")
+    mn = data.get("target_minute", "00")
+    
+    target_time_str = ""
+    if y and m and d:
+        target_time_str = f"{y}-{m}-{d}T{h}:{mn}:00"
+
     params = {
         "name": data.get("name", "Friend"),
         "msg": data.get("wish", ""),
         "category": data.get("category", "Birthday"),
+        "dob": data.get("dob", ""),
+        "target_time": target_time_str,
         "photo": data.get("photo", ""),
         "video": data.get("video", ""),
         "song": data.get("song", ""),
         "voice": data.get("voice", ""),
         "extra_audio": data.get("extra_audio", "")
     }
+    
     surprise_id = save_surprise_to_db(message.from_user.id, params["category"], params["name"], params["msg"], params)
     
     preview_url = f"{VERCEL_URL}/?id={surprise_id}&preview=true"
