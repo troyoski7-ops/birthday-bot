@@ -23,7 +23,7 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 VERCEL_URL = "https://birthday-surprise-app-two.vercel.app"
 
-# --- മുഴുവൻ രാജ്യങ്ങളും ഭാഷകളും (Full 40+ Language Dictionaries) ---
+# --- 40+ രാജ്യങ്ങളുടെയും ഭാഷകളുടെയും ഫുൾ ഡിക്ഷണറി ---
 COUNTRY_LANGUAGES = {
     "Asia": {
         "🇮🇳 India": [
@@ -83,7 +83,6 @@ COUNTRY_LANGUAGES = {
     },
 }
 
-# --- പഴയ എല്ലാ ഭാഷകളും ഉൾപ്പെടുത്തിയ ഫുൾ ഡിക്ഷണറി ---
 BOT_TEXTS = {
     "en": {
         "welcome": "✨ Welcome to your little corner of surprises...\n\nYour language is currently set to **English**. Want to change your country/language? Choose below or keep English:",
@@ -91,9 +90,9 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Choose your language for **{country}**:",
         "lang_updated": "✅ Language preference updated successfully!",
         "ask_category": "🎉 What kind of celebration is this? Choose below:",
-        "owner_active": "🤍 **Owner Mode Active!** Whose special occasion are we celebrating today? Send me their name:",
-        "free_remaining": "🎁 You have **{remaining}** free surprise(s) remaining! Send me their name:",
-        "free_first": "🎁 Your first **{limit}** surprises are **FREE**! Send me their name:",
+        "owner_active": "🤍 **Owner Mode Active!** You have unlimited free creations.\n\nWhose special occasion are we celebrating today? Send me their name:",
+        "free_remaining": "🎁 You have **{remaining}** free surprise(s) remaining!\n\nWhose special occasion are we celebrating today? Send me their name:",
+        "free_first": "🎁 Your first **{limit}** surprises are **FREE**!\n\nWhose occasion are we celebrating today? Send me their name:",
         "ask_name": "Whose special occasion are we celebrating today? Send me their name:",
         "ask_wish": "Write a sweet, heartfelt wish or message for them (Long paragraphs supported!):",
         "ask_age_mode": "How would you like to add age details for stats?",
@@ -454,7 +453,6 @@ BOT_TEXTS = {
         "region_selected": "🌍 Մարզ՝ **{region}**. Ընտրեք ձեր երկիրը:",
         "country_choice": "🗣️ Ընտրեք ձեր լեզուն **{country}**-ի համար:",
         "lang_updated": "✅ Լեզվի նախընտրությունը հաջողությամբ թարմացվեց:",
-        "ask_category": "🎉 Ինչպիսի՞ տոն է սա:",
         "owner_active": "🤍 **Սեփականատիրոջ ռեժիմն ակտիվ է:**\n\nԻ՞նչ ենք նշում այսօր: Ուղարկեք անունը՝",
         "free_remaining": "🎁 Դուք ունեք **{remaining}** անվճար անակնկալ հնարավորություն:",
         "free_first": "🎁 Ձեր առաջին **{limit}** անակնկալներն **ԱՆՎՃԱՐ** են:",
@@ -1003,7 +1001,7 @@ BOT_TEXTS = {
         "ask_category": "🎉 Kokia čia šventė?",
         "owner_active": "🤍 **Savininko režimas aktyvus!**\n\nKą šiandien švenčiame? Atsiųskite vardą:",
         "free_remaining": "🎁 Turite likusias **{remaining}** nemokamas staigmenas!",
-        "free_first": "🎁 Jūsų pirmosios **{limit}** staigmos yra **NEMOKAMOS**!",
+        "free_first": "🎁 Jūsų pirmosios **{limit}** staigmenos yra **NEMOKAMOS**!",
         "ask_name": "Ką šiandien švenčiame? Atsiųskite vardą:",
         "ask_wish": "Parašykite gražų sveikinimą:",
         "ask_age_mode": "Kaip norite pridėti duomenis?",
@@ -1276,15 +1274,46 @@ def get_date_keyboard():
 
 def get_hour_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="00", callback_data="set_hour_00"), InlineKeyboardButton(text="06", callback_data="set_hour_06"), InlineKeyboardButton(text="12", callback_data="set_hour_12"), InlineKeyboardButton(text="18", callback_data="set_hour_18")],
+        [InlineKeyboardButton(text="00", callback_data="set_hour_00"), InlineKeyboardButton(text="01", callback_data="set_hour_01"), InlineKeyboardButton(text="02", callback_data="set_hour_02"), InlineKeyboardButton(text="03", callback_data="set_hour_03"), InlineKeyboardButton(text="04", callback_data="set_hour_04"), InlineKeyboardButton(text="05", callback_data="set_hour_05")],
+        [InlineKeyboardButton(text="06", callback_data="set_hour_06"), InlineKeyboardButton(text="07", callback_data="set_hour_07"), InlineKeyboardButton(text="08", callback_data="set_hour_08"), InlineKeyboardButton(text="09", callback_data="set_hour_09"), InlineKeyboardButton(text="10", callback_data="set_hour_10"), InlineKeyboardButton(text="11", callback_data="set_hour_11")],
+        [InlineKeyboardButton(text="12", callback_data="set_hour_12"), InlineKeyboardButton(text="13", callback_data="set_hour_13"), InlineKeyboardButton(text="14", callback_data="set_hour_14"), InlineKeyboardButton(text="15", callback_data="set_hour_15"), InlineKeyboardButton(text="16", callback_data="set_hour_16"), InlineKeyboardButton(text="17", callback_data="set_hour_17")],
+        [InlineKeyboardButton(text="18", callback_data="set_hour_18"), InlineKeyboardButton(text="19", callback_data="set_hour_19"), InlineKeyboardButton(text="20", callback_data="set_hour_20"), InlineKeyboardButton(text="21", callback_data="set_hour_21"), InlineKeyboardButton(text="22", callback_data="set_hour_22"), InlineKeyboardButton(text="23", callback_data="set_hour_23")],
         [InlineKeyboardButton(text="✨ Skip", callback_data="skip_step"), InlineKeyboardButton(text="↩️ Change", callback_data="change_step")]
     ])
 
 def get_minute_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="00", callback_data="set_min_00"), InlineKeyboardButton(text="15", callback_data="set_min_15"), InlineKeyboardButton(text="30", callback_data="set_min_30"), InlineKeyboardButton(text="45", callback_data="set_min_45")],
-        [InlineKeyboardButton(text="✨ Skip", callback_data="skip_step"), InlineKeyboardButton(text="↩️ Change", callback_data="change_step")]
+        [
+            InlineKeyboardButton(text="00", callback_data="set_min_00"),
+            InlineKeyboardButton(text="05", callback_data="set_min_05"),
+            InlineKeyboardButton(text="10", callback_data="set_min_10"),
+            InlineKeyboardButton(text="15", callback_data="set_min_15"),
+            InlineKeyboardButton(text="20", callback_data="set_min_20"),
+        ],
+        [
+            InlineKeyboardButton(text="25", callback_data="set_min_25"),
+            InlineKeyboardButton(text="30", callback_data="set_min_30"),
+            InlineKeyboardButton(text="35", callback_data="set_min_35"),
+            InlineKeyboardButton(text="40", callback_data="set_min_40"),
+            InlineKeyboardButton(text="45", callback_data="set_min_45"),
+        ],
+        [
+            InlineKeyboardButton(text="50", callback_data="set_min_50"),
+            InlineKeyboardButton(text="55", callback_data="set_min_55"),
+        ],
+        [
+            InlineKeyboardButton(text="✨ Skip", callback_data="skip_step"),
+            InlineKeyboardButton(text="↩️ Change", callback_data="change_step"),
+        ],
     ])
+
+@dp.message(Command("stats"))
+async def cmd_stats(message: types.Message):
+    if message.from_user.id == OWNER_ID:
+        started, completed = get_stats()
+        await message.answer(f"📊 Bot Usage Statistics:\n\n• Total users who started: {started}\n• Total surprises created: {completed}")
+    else:
+        await message.answer("⚠️ You are not authorized to use this command.")
 
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message, state: FSMContext):
@@ -1451,6 +1480,13 @@ async def cb_min(callback: types.CallbackQuery, state: FSMContext):
     await state.set_state(BirthdayForm.photo)
     await callback.message.answer(get_bot_text(callback.from_user.id, "ask_photo"), reply_markup=get_action_keyboard())
     await callback.answer()
+
+@dp.message(BirthdayForm.minute)
+async def process_custom_minute(message: types.Message, state: FSMContext):
+    min_text = message.text.strip().zfill(2)
+    await state.update_data(minute=min_text)
+    await state.set_state(BirthdayForm.photo)
+    await message.answer(get_bot_text(message.from_user.id, "ask_photo"), reply_markup=get_action_keyboard())
 
 @dp.message(BirthdayForm.name)
 async def process_name(message: types.Message, state: FSMContext):
