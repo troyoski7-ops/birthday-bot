@@ -94,7 +94,6 @@
         }
         .details-box span { color: #ffd700; font-weight: 600; }
 
-        /* 🔥 Holographic 3D AR Frame effect */
         .holo-box {
             position: relative;
             background: linear-gradient(135deg, rgba(0,255,204,0.1), rgba(255,51,102,0.1));
@@ -376,16 +375,14 @@
 
     <div id="mainContent" style="display: none; width: 100%; max-width: 360px;">
 
-        <!-- Holographic 3D AR Frame Header -->
         <div class="holo-box">
-            <h1><span id="mainTitle">Happy Birthday</span>, <span id="recipientName">Friend</span>! ✨</h1>
+            <h1><span id="mainTitle">Happy Celebration</span>, <span id="recipientName">Friend</span>! ✨</h1>
         </div>
         
         <div class="details-box" id="infoBox">
             <div>📅 <span id="targetTimeText">Target Time</span>: <span id="displayDate">-</span></div>
         </div>
 
-        <!-- Life Statistics Section -->
         <div class="container" style="padding: 15px;" id="statsContainer">
             <h4 id="statsTitle" style="color: #ffd700; font-size: 0.95rem; margin-bottom: 8px;">⏳ Life Journey Statistics</h4>
             <div class="stats-grid">
@@ -420,13 +417,6 @@
                 </div>
                 <canvas id="scratchCanvas"></canvas>
             </div>
-        </div>
-
-        <!-- Optional Secret Virtual Time Capsule Feature -->
-        <div class="container" style="padding: 12px; background: rgba(0,255,204,0.05); border: 1px dashed #00ffcc;">
-            <h4 style="color: #00ffcc; font-size: 0.9rem; margin-bottom: 4px;">⏳ Secret Virtual Time Capsule</h4>
-            <p style="font-size: 0.75rem; color: #cbd5e1; margin-bottom: 8px;">A secret digital letter locked for the future!</p>
-            <button class="btn" style="background: linear-gradient(45deg, #00ffcc, #00b894); padding: 6px 12px; font-size: 0.75rem;" onclick="openTimeCapsule()">🔓 Unlock Time Capsule</button>
         </div>
 
         <div class="container" id="mediaSection" style="margin-top: 12px;">
@@ -471,7 +461,7 @@
             'en': {
                 lockTitle: "⏳ Portal Locked!", lockSubtitle: "This exclusive surprise opens on:",
                 giftPrompt: "🎁 Tap the Gift Box to Unwrap!", giftSubPrompt: "Tap to unlock your special surprise...",
-                mainTitle: "Happy Birthday", targetTimeText: "Target Time", scratchInstruction: "👇 Scratch the card below to reveal your surprise!",
+                mainTitle: "Happy Celebration", targetTimeText: "Target Time", scratchInstruction: "👇 Scratch the card below to reveal your surprise!",
                 surpriseHeader: "🎉 SPECIAL SURPRISE 🎁", celebrationHeader: "🎂 Celebration Time",
                 statsTitle: "⏳ Life Journey Statistics", labelDays: "Days Lived", labelHours: "Hours Lived",
                 openWhenTitle: "💌 Open When...",
@@ -481,7 +471,7 @@
             'ml': {
                 lockTitle: "⏳ പോർട്ടൽ ലോക്ക് ചെയ്തിരിക്കുന്നു!", lockSubtitle: "ഈ പ്രത്യേക സർപ്രൈസ് തുറക്കുന്ന സമയം:",
                 giftPrompt: "🎁 തുറക്കാൻ ഗിഫ്റ്റ് ബോക്സിൽ അമർത്തൂ!", giftSubPrompt: "നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ ടാപ്പ് ചെയ്യൂ...",
-                mainTitle: "പിറന്നാൾ ആശംസകൾ", targetTimeText: "ലഭ്യമാകുന്ന സമയം", scratchInstruction: "👇 നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ താഴെ സ്ക്രാച്ച് ചെയ്യുക!",
+                mainTitle: "ആശംസകൾ", targetTimeText: "ലഭ്യമാകുന്ന സമയം", scratchInstruction: "👇 നിങ്ങളുടെ സർപ്രൈസ് കാണാൻ താഴെ സ്ക്രാച്ച് ചെയ്യുക!",
                 surpriseHeader: "🎉 പ്രത്യേക സർപ്രൈസ് 🎁", celebrationHeader: "🎂 ആഘോഷ സമയം",
                 statsTitle: "⏳ ജീവിത യാത്രയുടെ കണക്കുകൾ", labelDays: "ജീവിച്ച ദിവസങ്ങൾ", labelHours: "ജീവിച്ച മണിക്കൂറുകൾ",
                 openWhenTitle: "💌 ഈ സമയങ്ങളിൽ തുറക്കൂ...",
@@ -491,22 +481,12 @@
             'hi': {
                 lockTitle: "⏳ पोर्टल लॉक है!", lockSubtitle: "यह विशेष सरप्राइज खुलेगा:",
                 giftPrompt: "🎁 खोलने के लिए गिफ्ट बॉक्स पर टैप करें!", giftSubPrompt: "अपना विशेष सरप्राइज अनलॉक करने के लिए टैप करें...",
-                mainTitle: "जन्मदिन की शुभकामनाएँ", targetTimeText: "लक्ष्य समय", scratchInstruction: "👇 अपना सरप्राइज देखने के लिए नीचे खरोंचें!",
+                mainTitle: "शुभकामनाएँ", targetTimeText: "लक्ष्य समय", scratchInstruction: "👇 अपना सरप्राइज देखने के लिए नीचे खरोंचें!",
                 surpriseHeader: "🎉 विशेष सरप्राइज 🎁", celebrationHeader: "🎂 जश्न का समय",
                 statsTitle: "⏳ जीवन यात्रा के आंकड़े", labelDays: "जीए गए दिन", labelHours: "जीए गए घंटे",
                 openWhenTitle: "💌 जब आप चाहें तब खोलें...",
                 btnBlow: "💨 मोमबत्ती बुझाएं", btnCut: "🕯️ केक काटें", btnPopper: "🎊 पार्टी पॉपर", btnLove: "❤️ प्यार भेजें", btnFireworks: "🎆 आतिशबाजी",
                 guestbookTitle: "💌 शुभकामनाएं दीवार", guestNamePlaceholder: "आपका नाम...", guestWishPlaceholder: "एक छोटी शुभकामना लिखें...", btnPostWish: "शुभकामना पोस्ट करें ✨"
-            },
-            'de': {
-                lockTitle: "⏳ Portal gesperrt!", lockSubtitle: "Diese Überraschung öffnet sich am:",
-                giftPrompt: "🎁 Geschenkbox antippen!", giftSubPrompt: "Antippen zum Freischalten...",
-                mainTitle: "Alles Gute zum Geburtstag", targetTimeText: "Zielzeit", scratchInstruction: "👇 Karte freirubbeln!",
-                surpriseHeader: "🎉 SPEZIELLE ÜBERRASCHUNG 🎁", celebrationHeader: "🎂 Feierzeit",
-                statsTitle: "⏳ Lebensstatistik", labelDays: "Gelebte Tage", labelHours: "Gelebte Stunden",
-                openWhenTitle: "💌 Öffnen, wenn...",
-                btnBlow: "💨 Kerzen ausblasen", btnCut: "🕯️ Torte schneiden", btnPopper: "🎊 Konfetti", btnLove: "❤️ Liebe senden", btnFireworks: "🎆 Feuerwerk",
-                guestbookTitle: "💌 Gästebuch", guestNamePlaceholder: "Dein Name...", guestWishPlaceholder: "Wunsch schreiben...", btnPostWish: "Wunsch posten ✨"
             }
         };
 
@@ -528,11 +508,6 @@
             const msg = openWhenMessages[type] || "You are special!";
             confetti({ particleCount: 30, spread: 50 });
             alert(`💌 Message:\n\n${msg}`);
-        }
-
-        function openTimeCapsule() {
-            confetti({ particleCount: 50, spread: 70, colors: ['#00ffcc', '#ffd700'] });
-            alert("⏳ Virtual Time Capsule:\n\nThis secret digital letter is locked with cherished memories to be remembered forever!");
         }
 
         let icons = ['🎈', '✨', '💖', '🎉', '🌟', '🎂'];
@@ -616,7 +591,6 @@
                 dobOrAge = urlParams.get('dob') || urlParams.get('age') || '';
             }
 
-            // 🌐 Smart Global Auto-Language Morphing based on browser/user settings if available
             let browserLang = navigator.language ? navigator.language.slice(0, 2) : 'en';
             if (!urlParams.get('lang') && translations[browserLang]) {
                 currentLang = browserLang;
