@@ -30,7 +30,7 @@ dp = Dispatcher()
 # Vercel Web App Link (Updated)
 VERCEL_URL = "https://birthday-surprise-app-two.vercel.app"
 
-# --- മുഴുവൻ രാജ്യങ്ങളും ഭാഷകളും (Full Country Languages Dictionary) ---
+# --- മുഴുവൻ രാജ്യങ്ങളും ഭാഷകളും ---
 COUNTRY_LANGUAGES = {
     "Asia": {
         "🇮🇳 India": [
@@ -90,142 +90,96 @@ COUNTRY_LANGUAGES = {
     },
 }
 
-# --- പഴയ എല്ലാ ഭാഷകളും വെഡ്ഡിംഗ് & AR/Time Capsule സപ്പോർട്ടുള്ള ഫുൾ ഡിക്ഷണറി ---
+# --- പഴയ എല്ലാ ഭാഷകളും ഉൾപ്പെടുത്തിയ ഫുൾ ഡിക്ഷണറി ---
 BOT_TEXTS = {
     "en": {
         "welcome": (
-            "✨ Welcome to your luxury celebration & surprises...\n\nYour"
-            " language is currently set to **English**. Want to change your"
-            " country/language? Choose below or keep English:"
+            "✨ Welcome to your little corner of surprises...\n\nYour language is"
+            " currently set to **English**. Want to change your country/language?"
+            " Choose below or keep English:"
         ),
         "region_selected": "🌍 Region: **{region}**. Select your country:",
         "country_choice": "🗣️ Choose your language for **{country}**:",
         "lang_updated": "✅ Language preference updated successfully!",
+        "ask_category": "🎉 What kind of celebration is this? Choose below:",
         "owner_active": (
             "🤍 **Owner Mode Active!** You have unlimited free"
-            " creations.\n\nWhose special occasion (Birthday, Wedding, New"
-            " Born, etc.) are we celebrating today? Send me their name:"
+            " creations.\n\nWhose special occasion are we celebrating today?"
+            " Send me their name:"
         ),
         "free_remaining": (
             "🎁 You have **{remaining}** free surprise(s)"
-            " remaining!\n\nWhose special occasion are we celebrating today?"
-            " Send me their name:"
-        ),
-        "free_first": (
-            "🎁 Your first **{limit}** surprises (Birthday, Wedding, etc.)"
-            " are **FREE**!\n\nWhose occasion are we celebrating today? Send me"
+            " remaining!\n\nWhose occasion are we celebrating today? Send me"
             " their name:"
         ),
-        "ask_name": (
-            "Whose special day (Birthday, Wedding, New Born, Graduation, etc.)"
-            " are we celebrating today? Send me their name:"
+        "free_first": (
+            "🎁 Your first **{limit}** surprises are"
+            " **FREE**!\n\nWhose occasion are we celebrating today? Send me"
+            " their name:"
         ),
-        "ask_wish": (
-            "Write a sweet, heartfelt wish or message for them (Supports"
-            " Holographic AR, Voice Cloning & Time Capsule!):"
-        ),
-        "ask_age_mode": (
-            "How would you like to add date or milestone details for stats &"
-            " time capsule?"
-        ),
-        "ask_dob_input": (
-            "📅 Please send Date (DOB / Wedding Date / Milestone) in"
-            " **YYYY-MM-DD** format (e.g., `2026-09-27`):"
-        ),
-        "ask_age_input": (
-            "🔢 Please enter direct age or milestone years as a number (e.g.,"
-            " `22`):"
-        ),
-        "ask_year": "Choose the year for the celebration:",
+        "ask_name": "Whose special occasion are we celebrating today? Send me their name:",
+        "ask_wish": "Write a sweet, heartfelt wish or message for them (Long paragraphs supported!):",
+        "ask_age_mode": "How would you like to add age details for stats?",
+        "ask_dob_input": "📅 Please send Date of Birth in **YYYY-MM-DD** format (e.g., `2003-12-24`):",
+        "ask_age_input": "🔢 Please enter their direct age as a number (e.g., `22`):",
+        "ask_year": "Choose the year for the surprise:",
         "ask_month": "Choose the month:",
         "ask_date": "Pick the date:",
         "ask_hour": "Select the Hour (24-Hour format, 00 to 23):",
-        "ask_minute": (
-            "Select the Minute (tap button below OR type any number from 00 to"
-            " 59):"
-        ),
-        "ask_photo": "Share a lovely photo for Holographic 3D AR effect (or skip):",
+        "ask_minute": "Select the Minute (tap button below OR type any number from 00 to 59):",
+        "ask_photo": "Share a lovely photo to cherish (or skip):",
         "ask_video": "Share a special video moment (or skip):",
         "ask_song": "Send a favorite song or audio file (or skip):",
-        "ask_voice": (
-            "Send a warm voice note for Neural Voice Cloning & Audio (or skip):"
-        ),
+        "ask_voice": "Send a warm voice note to make it extra special (or skip):",
         "ask_audio": "Add one more audio file if you'd like (or skip):",
-        "ready": (
-            "✨ All ready with AR, Live Reactions & Time Capsule for"
-            " {name}!\n\nChoose how you'd like to experience or share your"
-            " creation below:"
-        ),
+        "ready": "✨ All ready for {name}!\n\nChoose how you'd like to experience or share your creation below:",
     },
     "hi": {
-        "welcome": (
-            "✨ सरप्राइज की इस छोटी सी दुनिया में आपका स्वागत है...\n\nआपकी भाषा"
-            " वर्तमान में **हिंदी** पर सेट है।"
-        ),
+        "welcome": "✨ सरप्राइज की इस छोटी सी दुनिया में आपका स्वागत है...\n\nआपकी भाषा वर्तमान में **हिंदी** पर सेट है।",
         "region_selected": "🌍 क्षेत्र: **{region}**. अपना देश चुनें:",
         "country_choice": "🗣️ **{country}** के लिए अपनी भाषा चुनें:",
         "lang_updated": "✅ भाषा सफलतापूर्वक अपडेट कर दी गई है!",
-        "owner_active": (
-            "🤍 **ओनर मोड सक्रिय है!**\n\nआज हम किसका जश्न मना रहे हैं? नाम"
-            " भेजें:"
-        ),
-        "free_remaining": (
-            "🎁 आपके पास **{remaining}** मुफ्त सरप्राइज शेष हैं!"
-        ),
+        "ask_category": "🎉 यह किस प्रकार का उत्सव है? नीचे से चुनें:",
+        "owner_active": "🤍 **ओनर मोड सक्रिय है!**\n\nआज हम किसका जश्न मना रहे हैं? नाम भेजें:",
+        "free_remaining": "🎁 आपके पास **{remaining}** मुफ्त सरप्राइज शेष हैं!",
         "free_first": "🎁 आपके पहले **{limit}** सरप्राइज **मुफ्त** हैं!",
-        "ask_name": (
-            "आज हम किसका विशेष दिन (जन्मदिन, विवाह, आदि) मना रहे हैं? उनका नाम"
-            " भेजें:"
-        ),
+        "ask_name": "आज हम किसका जश्न मना रहे हैं? उनका नाम भेजें:",
         "ask_wish": "उनके लिए एक प्यारा सा संदेश लिखें:",
-        "ask_age_mode": "विवरण कैसे जोड़ना चाहते हैं?",
-        "ask_dob_input": (
-            "📅 **YYYY-MM-DD** प्रारूप में तिथि भेजें (जैसे: `2026-09-27`):"
-        ),
-        "ask_age_input": "🔢 सीधी संख्या के रूप में दर्ज करें:",
-        "ask_year": "वर्ष चुनें:",
+        "ask_age_mode": "आयु विवरण कैसे जोड़ना चाहते हैं?",
+        "ask_dob_input": "📅 **YYYY-MM-DD** प्रारूप में तिथि भेजें (जैसे: `2003-12-24`):",
+        "ask_age_input": "🔢 सीधी आयु संख्या के रूप में दर्ज करें (जैसे: `22`):",
+        "ask_year": "सरप्राइज के लिए वर्ष चुनें:",
         "ask_month": "महीना चुनें:",
         "ask_date": "तारीख चुनें:",
         "ask_hour": "घंटा चुनें (00-23):",
         "ask_minute": "मिनट चुनें (00-59):",
-        "ask_photo": "एक फोटो शेयर करें (AR होलोग्राम के लिए):",
+        "ask_photo": "एक प्यारी सी फोटो शेयर करें (या छोड़ें):",
         "ask_video": "एक खास वीडियो शेयर करें (या छोड़ें):",
         "ask_song": "पसंदीदा गाना या ऑडियो भेजें (या छोड़ें):",
-        "ask_voice": "वॉयस नोट भेजें (या छोड़ें):",
+        "ask_voice": "एक वॉयस नोट भेजें (या छोड़ें):",
         "ask_audio": "एक और ऑडियो फाइल जोड़ें (या छोड़ें):",
         "ready": "✨ {name} के लिए सब तैयार है!",
     },
     "ml": {
-        "welcome": (
-            "✨ പിറന്നാൾ, വിവാഹം തുടങ്ങിയ വിശേഷങ്ങളുടെ ലോകത്തേക്ക് സ്വാഗതം...\n\nനിങ്ങളുടെ"
-            " ഭാഷ ഇപ്പോൾ **മലയാളം** ആണ്."
-        ),
+        "welcome": "✨ ചെറിയ സർപ്രൈസുകളുടെ ലോകത്തേക്ക് സ്വാഗതം...\n\nനിങ്ങളുടെ ഭാഷ ഇപ്പോൾ **മലയാളം** ആണ്.",
         "region_selected": "🌍 പ്രദേശം: **{region}**. നിങ്ങളുടെ രാജ്യം തിരഞ്ഞെടുക്കൂ:",
         "country_choice": "🗣️ **{country}**-നുള്ള ഭാഷ തിരഞ്ഞെടുക്കൂ:",
         "lang_updated": "✅ ഭാഷ വിജയകരമായി മാറ്റിയിരിക്കുന്നു!",
-        "owner_active": (
-            "🤍 **ഓണർ മോഡ് ആക്ടീവ് ആണ്!**\n\nഇന്ന് ആരുടെ വിശേഷമാണ്"
-            " ആഘോഷിക്കുന്നത്? പേര് അയക്കൂ:"
-        ),
+        "ask_category": "🎉 ഇത് എന്തുതരം ആഘോഷമാണ്? താഴെ നിന്നും തിരഞ്ഞെടുക്കൂ:",
+        "owner_active": "🤍 **ഓണർ മോഡ് ആക്ടീവ് ആണ്!**\n\nഇന്ന് ആരുടെ വിശേഷമാണ് ആഘോഷിക്കുന്നത്? പേര് അയക്കൂ:",
         "free_remaining": "🎁 നിങ്ങൾക്ക് ഇനി **{remaining}** ഫ്രീ സർപ്രൈസുകൾ ബാക്കിയുണ്ട്!",
         "free_first": "🎁 നിങ്ങളുടെ ആദ്യത്തെ **{limit}** സർപ്രൈസുകൾ **സൗജന്യമാണ്**!",
-        "ask_name": (
-            "ഇന്ന് ആരുടെ വിശേഷമാണ് ആഘോഷിക്കുന്നത് (പിറന്നാൾ, വിവാഹം മുതലായവ)?"
-            " അവരുടെ പേര് അയക്കൂ:"
-        ),
-        "ask_wish": "അവർക്കായി മനോഹരമായ ആശംസ എഴുതൂ:",
-        "ask_age_mode": "തീയതി അല്ലെങ്കിൽ വിവരങ്ങൾ എങ്ങനെ ചേർക്കണം?",
-        "ask_dob_input": (
-            "📅 തീയതി **YYYY-MM-DD** ഫോർമാറ്റിൽ അയക്കൂ (ഉദാഹരണത്തിന്:"
-            " `2026-09-27`):"
-        ),
-        "ask_age_input": "🔢 വിവരങ്ങൾ സംഖ്യയായി നൽകൂ (ഉദാഹരണത്തിന്: `22`):",
+        "ask_name": "ഇന്ന് ആരുടെ വിശേഷമാണ് ആഘോഷിക്കുന്നത്? അവരുടെ പേര് അയക്കൂ:",
+        "ask_wish": "അവർക്കായി ഒരു മനോഹരമായ ആശംസ എഴുതൂ:",
+        "ask_age_mode": "വയസ്സ് അല്ലെങ്കിൽ ജനന തീയതി എങ്ങനെ ചേർക്കണം?",
+        "ask_dob_input": "📅 തീയതി **YYYY-MM-DD** ഫോർമാറ്റിൽ അയക്കൂ (ഉദാഹരണത്തിന്: `2003-12-24`):",
+        "ask_age_input": "🔢 പ്രായം മാത്രം സംഖ്യയായി നൽകൂ (ഉദാഹരണത്തിന്: `22`):",
         "ask_year": "വർഷം തിരഞ്ഞെടുക്കൂ:",
         "ask_month": "മാസം തിരഞ്ഞെടുക്കൂ:",
         "ask_date": "തീയതി തിരഞ്ഞെടുക്കൂ:",
         "ask_hour": "മണിക്കൂർ തിരഞ്ഞെടുക്കൂ (00-23):",
         "ask_minute": "മിനിറ്റ് തിരഞ്ഞെടുക്കൂ (00-59):",
-        "ask_photo": "ഒരു ഫോട്ടോ പങ്കുവെക്കൂ (AR ഹോലോഗ്രാം ഇഫക്റ്റിനായി):",
+        "ask_photo": "ഒരു ഫോട്ടോ പങ്കുവെക്കൂ (သို့မဟုတ် ഒഴിവാക്കൂ):",
         "ask_video": "ഒരു വീഡിയോ പങ്കുവെക്കൂ (သို့မဟုတ် ഒഴിവാക്കൂ):",
         "ask_song": "പാട്ടോ ഓഡിയോ ഫയലോ അയക്കൂ (သို့မဟုတ် ഒഴിവാക്കൂ):",
         "ask_voice": "ഒരു വോയിസ് നോട്ട് അയക്കൂ (သို့မဟုတ် ഒഴിവാക്കൂ):",
@@ -233,28 +187,19 @@ BOT_TEXTS = {
         "ready": "✨ {name}-നുള്ള സർപ്രൈസ് റെഡിയാണ്!",
     },
     "te": {
-        "welcome": (
-            "✨ సర్ప్రైజ్‌ల చిన్న ప్రపంచానికి స్వాగతం...\n\nమీ భాష"
-            " ప్రస్తుతం **తెలుగు**కి సెట్ చేయబడింది."
-        ),
+        "welcome": "✨ సర్ప్రైజ్‌ల చిన్న ప్రపంచానికి స్వాగతం...\n\nమీ భాష ప్రస్తుతం **తెలుగు**కి సెట్ చేయబడింది.",
         "region_selected": "🌍 ప్రాంతం: **{region}**. మీ దేశాన్ని ఎంచుకోండి:",
         "country_choice": "🗣️ **{country}** కోసం మీ భాషను ఎంచుకోండి:",
         "lang_updated": "✅ భాష ప్రాధాన్యత విజయవంతంగా నవీకరించబడింది!",
-        "owner_active": (
-            "🤍 **ఓనర్ మోడ్ యాక్టివ్‌లో ఉంది!**\n\nఈరోజు ఏ వేడుక జరుపుకుంటున్నాం?"
-            " పేరును పంపండి:"
-        ),
-        "free_remaining": (
-            "🎁 మీకు ఇంకా **{remaining}** ఉచిత సర్ప్రైజ్‌లు మిగిలి ఉన్నాయి!"
-        ),
+        "ask_category": "🎉 ఇది ఏ రకమైన వేడుక?",
+        "owner_active": "🤍 **ఓనర్ మోడ్ యాక్టివ్‌లో ఉంది!**\n\nఈరోజు ఏ వేడుక జరుపుకుంటున్నాం? పేరును పంపండి:",
+        "free_remaining": "🎁 మీకు ఇంకా **{remaining}** ఉచిత సర్ప్రైజ్‌లు మిగిలి ఉన్నాయి!",
         "free_first": "🎁 మీ మొదటి **{limit}** సర్ప్రైజ్‌లు **ఉచితం**!",
         "ask_name": "ఈరోజు ఏ వేడుక జరుపుకుంటున్నాం? వారి పేరును పంపండి:",
         "ask_wish": "వారి కోసం శుభాకాంక్షలు వ్రాయండి:",
-        "ask_age_mode": "వివరాలను ఎలా జోడించాలనుకుంటున్నారు?",
-        "ask_dob_input": (
-            "📅 తేదీని **YYYY-MM-DD** ფორმატில் அனுப்பவும் (ఉదా: `2026-09-27`):"
-        ),
-        "ask_age_input": "🔢 వివరాలను సంఖ్యగా నమోదు చేయండి:",
+        "ask_age_mode": "వయస్సు వివరాలను ఎలా జోడించాలనుకుంటున్నారు?",
+        "ask_dob_input": "📅 తేదీని **YYYY-MM-DD** ფორმატில் அனுப்பவும் (ఉదా: `2003-12-24`):",
+        "ask_age_input": "🔢 ప్రత్యక్ష వయస్సును సంఖ్యగా నమోదు చేయండి (ఉదా: `22`):",
         "ask_year": "సంవత్సరాన్ని ఎంచుకోండి:",
         "ask_month": "నెలని ఎంచుకోండి:",
         "ask_date": "తేదీని ఎంచుకోండి:",
@@ -268,29 +213,19 @@ BOT_TEXTS = {
         "ready": "✨ {name} కోసం అన్నీ సిద్ధంగా ఉన్నాయి!",
     },
     "kn": {
-        "welcome": (
-            "✨ ಆಶ್ಚರ್ಯಗಳ ಸಣ್ಣ ಜಗತ್ತಿಗೆ ಸ್ವಾಗತ...\n\nನಿಮ್ಮ ಭಾಷೆಯನ್ನು"
-            " **ಕನ್ನಡ**ಕ್ಕೆ ಹೊಂದಿಸಲಾಗಿದೆ."
-        ),
+        "welcome": "✨ ಆಶ್ಚರ್ಯಗಳ ಸಣ್ಣ ಜಗತ್ತಿಗೆ ಸ್ವಾಗತ...\n\nನಿಮ್ಮ ಭಾಷೆಯನ್ನು **ಕನ್ನಡ**ಕ್ಕೆ ಹೊಂದಿಸಲಾಗಿದೆ.",
         "region_selected": "🌍 ಪ್ರದೇಶ: **{region}**. ನಿಮ್ಮ ದೇಶವನ್ನು ಆಯ್ಕೆಮಾಡಿ:",
         "country_choice": "🗣️ **{country}** ಗಾಗಿ ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ:",
         "lang_updated": "✅ ಭಾಷಾ ಪ್ರಾಶಸ್ತ್ಯವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ!",
-        "owner_active": (
-            "🤍 **ಮಾಲೀಕ ಮೋಡ್ ಸಕ್ರಿಯವಾಗಿದೆ!**\n\nಇಂದು ಯಾವ ವಿಶೇಷತೆ ಆಚರಿಸುತ್ತಿದ್ದೇವೆ?"
-            " ಹೆಸರನ್ನು ಕಳುಹಿಸಿ:"
-        ),
-        "free_remaining": (
-            "🎁 ನೀವು **{remaining}** ಉಚಿತ ಆಶ್ಚರ್ಯಗಳನ್ನು ಹೊಂದಿದ್ದೀರಿ!"
-        ),
+        "ask_category": "🎉 ಇದು ಯಾವ ರೀತಿಯ ಆಚರಣೆ?",
+        "owner_active": "🤍 **ಮಾಲೀಕ ಮೋಡ್ ಸಕ್ರಿಯವಾಗಿದೆ!**\n\nಇಂದು ಯಾವ ವಿಶೇಷತೆ ಆಚರಿಸುತ್ತಿದ್ದೇವೆ? ಹೆಸರನ್ನು ಕಳುಹಿಸಿ:",
+        "free_remaining": "🎁 ನೀವು **{remaining}** ಉಚಿತ ಆಶ್ಚರ್ಯಗಳನ್ನು ಹೊಂದಿದ್ದೀರಿ!",
         "free_first": "🎁 ನಿಮ್ಮ ಮೊದಲ **{limit}** ಆಶ್ಚರ್ಯಗಳು **ಉಚಿತ**!",
         "ask_name": "ಇಂದು ಯಾವ ವಿಶೇಷತೆ ಆಚರಿಸುತ್ತಿದ್ದೇವೆ? ಅವರ ಹೆಸರನ್ನು ಕಳುಹಿಸಿ:",
         "ask_wish": "ಅವರಿಗಾಗಿ ಶುಭಾಶಯವನ್ನು ಬರೆಯಿರಿ:",
-        "ask_age_mode": "ವಿವರಗಳನ್ನು ಹೇಗೆ ಸೇರಿಸಲು ಬಯಸುತ್ತೀರಿ?",
-        "ask_dob_input": (
-            "📅 ದಿನಾಂಕವನ್ನು **YYYY-MM-DD** ფორಮ್ಯಾಟ್‌ನಲ್ಲಿ ಕಳುಹಿಸಿ (ಉದಾ:"
-            " `2026-09-27`):"
-        ),
-        "ask_age_input": "🔢 ವಿವರಗಳನ್ನು ಸಂಖ್ಯೆಯಾಗಿ ನಮೂದಿಸಿ:",
+        "ask_age_mode": "ವಯಸ್ಸಿನ ವಿವರಗಳನ್ನು ಹೇಗೆ ಸೇರಿಸಲು ಬಯಸುತ್ತೀರಿ?",
+        "ask_dob_input": "📅 ದಿನಾಂಕವನ್ನು **YYYY-MM-DD** ფორಮ್ಯಾಟ್‌ನಲ್ಲಿ ಕಳುಹಿಸಿ (ಉದಾ: `2003-12-24`):",
+        "ask_age_input": "🔢 ವಯಸ್ಸನ್ನು ಸಂಖ್ಯೆಯಾಗಿ ನಮೂದಿಸಿ (ಉದಾ: `22`):",
         "ask_year": "ವರ್ಷವನ್ನು ಆಯ್ಕೆಮಾಡಿ:",
         "ask_month": "ತಿಂಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ:",
         "ask_date": "ದಿನಾಂಕವನ್ನು ಆಯ್ಕೆಮಾಡಿ:",
@@ -304,25 +239,19 @@ BOT_TEXTS = {
         "ready": "✨ {name} ಗಾಗಿ ಎಲ್ಲವೂ ಸಿದ್ಧವಾಗಿದೆ!",
     },
     "bn": {
-        "welcome": (
-            "✨ আপনার চমকের ছোট দুনিয়ায় স্বাগতম...\n\nআপনার ভাষা বর্তমানে"
-            " **বাংলা** তে সেট করা আছে।"
-        ),
+        "welcome": "✨ আপনার চমকের ছোট দুনিয়ায় স্বাগতম...\n\nআপনার ভাষা বর্তমানে **বাংলা** তে সেট করা আছে।",
         "region_selected": "🌍 অঞ্চল: **{region}**। আপনার দেশ নির্বাচন করুন:",
         "country_choice": "🗣️ **{country}** এর জন্য আপনার ভাষা বেছে নিন:",
         "lang_updated": "✅ ভাষা পছন্দ সফলভাবে আপডেট করা হয়েছে!",
-        "owner_active": (
-            "🤍 **মালিক মোড সক্রিয়!**\n\nআজ কী উদযাপন করছি? তার নাম পাঠান:"
-        ),
+        "ask_category": "🎉 এটি কি ধরনের উদযাপন?",
+        "owner_active": "🤍 **মালিক মোড সক্রিয়!**\n\nআজ কী উদযাপন করছি? তার নাম পাঠান:",
         "free_remaining": "🎁 আপনার **{remaining}** টি বিনামূল্যে সারপ্রাইজ বাকি আছে!",
         "free_first": "🎁 আপনার প্রথম **{limit}** টি সারপ্রাইজ **ফ্রি**!",
         "ask_name": "আজ কার বিশেষ দিন উদযাপন করছি? তার নাম পাঠান:",
         "ask_wish": "তাদের জন্য একটি সুন্দর শুভেচ্ছা লিখুন:",
         "ask_age_mode": "বয়সের বিবরণ কীভাবে যোগ করতে চান?",
-        "ask_dob_input": (
-            "📅 তারিখ **YYYY-MM-DD** ফরম্যাটে পাঠান (যেমন: `2026-09-27`):"
-        ),
-        "ask_age_input": "🔢 সরাসরি সংখ্যায় লিখুন:",
+        "ask_dob_input": "📅 জন্ম তারিখ **YYYY-MM-DD** ফরম্যাটে পাঠান (যেমন: `2003-12-24`):",
+        "ask_age_input": "🔢 সরাসরি বয়স সংখ্যায় লিখুন (যেমন: `22`):",
         "ask_year": "বছর বেছে নিন:",
         "ask_month": "মাস বেছে নিন:",
         "ask_date": "তারিখ বেছে নিন:",
@@ -336,27 +265,19 @@ BOT_TEXTS = {
         "ready": "✨ {name} এর জন্য সবকিছু প্রস্তুত!",
     },
     "ms": {
-        "welcome": (
-            "✨ Selamat datang ke sudut kejutan anda...\n\nBahasa anda ditetapkan"
-            " kepada **Bahasa Melayu**."
-        ),
+        "welcome": "✨ Selamat datang ke sudut kejutan anda...\n\nBahasa anda ditetapkan kepada **Bahasa Melayu**.",
         "region_selected": "🌍 Wilayah: **{region}**. Pilih negara anda:",
         "country_choice": "🗣️ Pilih bahasa anda untuk **{country}**:",
         "lang_updated": "✅ Keutamaan bahasa berjaya dikemas kini!",
-        "owner_active": (
-            "🤍 **Mod Pemilik Aktif!**\n\nApa yang kita sambut hari ini? Hantar"
-            " nama:"
-        ),
+        "ask_category": "🎉 Apakah jenis sambutan ini?",
+        "owner_active": "🤍 **Mod Pemilik Aktif!**\n\nApa yang kita sambut hari ini? Hantar nama:",
         "free_remaining": "🎁 Anda mempunyai **{remaining}** kejutan percuma!",
         "free_first": "🎁 **{limit}** kejutan pertama anda adalah **PERCUMA**!",
         "ask_name": "Apa yang kita sambut hari ini? Hantar nama:",
         "ask_wish": "Tulis ucapan yang manis:",
-        "ask_age_mode": "Bagaimana anda ingin menambah butiran?",
-        "ask_dob_input": (
-            "📅 Sila hantar Tarikh dalam format **YYYY-MM-DD** (cth."
-            " `2026-09-27`):"
-        ),
-        "ask_age_input": "🔢 Sila masukkan butiran sebagai nombor:",
+        "ask_age_mode": "Bagaimana anda ingin menambah butiran umur?",
+        "ask_dob_input": "📅 Sila hantar Tarikh dalam format **YYYY-MM-DD** (cth. `2003-12-24`):",
+        "ask_age_input": "🔢 Sila masukkan umur sebagai nombor (cth. `22`):",
         "ask_year": "Pilih tahun:",
         "ask_month": "Pilih bulan:",
         "ask_date": "Pilih tarikh:",
@@ -370,24 +291,19 @@ BOT_TEXTS = {
         "ready": "✨ Semuanya siap untuk {name}!",
     },
     "zh": {
-        "welcome": (
-            "✨ 欢迎来到您的惊喜角落...\n\n您的语言当前设置为 **中文 (Mandarin)**。"
-        ),
+        "welcome": "✨ 欢迎来到您的惊喜角落...\n\n您的语言当前设置为 **中文 (Mandarin)**。",
         "region_selected": "🌍 地区：**{region}**。请选择您的国家：",
         "country_choice": "🗣️ 请选择 **{country}** 的语言：",
         "lang_updated": "✅ 语言首选项更新成功！",
-        "owner_active": (
-            "🤍 **所有者模式已激活！**\n\n我们今天在庆祝什么？发送名字："
-        ),
+        "ask_category": "🎉 这是什么类型的庆祝活动？",
+        "owner_active": "🤍 **所有者模式已激活！**\n\n我们今天在庆祝什么？发送名字：",
         "free_remaining": "🎁 您还有 **{remaining}** 次免费惊喜制作机会！",
         "free_first": "🎁 您的前 **{limit}** 个惊喜是**免费**的！",
         "ask_name": "我们今天在庆祝什么？发送名字：",
         "ask_wish": "为他们写一份温馨的祝福：",
         "ask_age_mode": "您想如何添加详细信息？",
-        "ask_dob_input": (
-            "📅 请以 **YYYY-MM-DD** 格式发送日期（例如 `2026-09-27`）："
-        ),
-        "ask_age_input": "🔢 请直接输入数字：",
+        "ask_dob_input": "📅 请以 **YYYY-MM-DD** 格式发送日期（例如 `2003-12-24`）：",
+        "ask_age_input": "🔢 请直接输入数字年龄（例如 `22`）：",
         "ask_year": "选择年份：",
         "ask_month": "选择月份：",
         "ask_date": "选择日期：",
@@ -401,27 +317,19 @@ BOT_TEXTS = {
         "ready": "✨ 一切为 {name} 准备就绪！",
     },
     "ta": {
-        "welcome": (
-            "✨ ஆச்சரியங்கள் நிறைந்த உங்களின் சிறிய உலகத்திற்கு"
-            " வரவேற்பு...\n\nஉங்கள் மொழி **தமிழ்** என அமைக்கப்பட்டுள்ளது."
-        ),
+        "welcome": "✨ ஆச்சரியங்கள் நிறைந்த உங்களின் சிறிய உலகத்திற்கு வரவேற்பு...\n\nஉங்கள் மொழி **தமிழ்** என அமைக்கப்பட்டுள்ளது.",
         "region_selected": "🌍 பிராந்தியம்: **{region}**. உங்கள் நாட்டைத் தேர்ந்தெடுக்கவும்:",
         "country_choice": "🗣️ **{country}** க்கான மொழியைத் தேர்ந்தெடுக்கவும்:",
         "lang_updated": "✅ மொழி முன்னுரிமை வெற்றிகரமாக புதுப்பிக்கப்பட்டது!",
-        "owner_active": (
-            "🤍 **உரிமையாளர் பயன்முறை активен!**\n\nஇன்று என்ன கொண்டாடுகிறோம்?"
-            " பெயரை அனுப்பவும்:"
-        ),
+        "ask_category": "🎉 இது என்ன வகையான கொண்டாட்டம்?",
+        "owner_active": "🤍 **உரிமையாளர் பயன்முறை активен!**\n\nஇன்று என்ன கொண்டாடுகிறோம்? பெயரை அனுப்பவும்:",
         "free_remaining": "🎁 உங்களிடம் **{remaining}** இலவச ஆச்சரியங்கள் மீதமுள்ளன!",
         "free_first": "🎁 உங்கள் முதல் **{limit}** ஆச்சரியங்கள் **இலவசம்**!",
         "ask_name": "இன்று என்ன கொண்டாடுகிறோம்? பெயரை அனுப்பவும்:",
         "ask_wish": "அவர்களுக்காக ஒரு இனிய வாழ்த்தை எழுதுங்கள்:",
-        "ask_age_mode": "விவரங்களை எவ்வாறு சேர்க்க விரும்புகிறீர்கள்?",
-        "ask_dob_input": (
-            "📅 தேதியை **YYYY-MM-DD** வடிவத்தில் அனுப்பவும் (எ.கா."
-            " `2026-09-27`):"
-        ),
-        "ask_age_input": "🔢 விவரங்களை எண்ணாக உள்ளிடவும்:",
+        "ask_age_mode": "வயது விவரங்களை எவ்வாறு சேர்க்க விரும்புகிறீர்கள்?",
+        "ask_dob_input": "📅 பிறந்த தேதியை **YYYY-MM-DD** வடிவத்தில் அனுப்பவும் (எ.கா. `2003-12-24`):",
+        "ask_age_input": "🔢 நேரடி வயதை எண்ணாக உள்ளிடவும் (எ.கா. `22`):",
         "ask_year": "ஆண்டைத் தேர்ந்தெடுக்கவும்:",
         "ask_month": "மாதத்தைத் தேர்ந்தெடுக்கவும்:",
         "ask_date": "தேதியைத் தேர்ந்தெடுக்கவும்:",
@@ -435,27 +343,19 @@ BOT_TEXTS = {
         "ready": "✨ {name}க்காக அனைத்தும் தயார்!",
     },
     "uz": {
-        "welcome": (
-            "✨ Kutilmagan sovg'alar olamiga xush kelibsiz...\n\nSizning tilingiz"
-            " **O'zbekcha**ga sozlangan."
-        ),
+        "welcome": "✨ Kutilmagan sovg'alar olamiga xush kelibsiz...\n\nSizning tilingiz **O'zbekcha**ga sozlangan.",
         "region_selected": "🌍 Hudud: **{region}**. Davlatni tanlang:",
         "country_choice": "🗣️ **{country}** uchun tilni tanlang:",
         "lang_updated": "✅ Til muvaffaqiyatli yangilandi!",
-        "owner_active": (
-            "🤍 **Egasi rejimi faol!**\n\nBugun nishonlayapmiz? Ismini yuboring:"
-        ),
+        "ask_category": "🎉 Bu qanday bayram yoki marosim?",
+        "owner_active": "🤍 **Egasi rejimi faol!**\n\nBugun nishonlayapmiz? Ismini yuboring:",
         "free_remaining": "🎁 Sizda **{remaining}** ta bepul imkoniyat qoldi!",
-        "free_first": (
-            "🎁 Dastlabki **{limit}** ta sovg'angiz **BEPUL** yaratiladi!"
-        ),
+        "free_first": "🎁 Dastlabki **{limit}** ta sovg'angiz **BEPUL** yaratiladi!",
         "ask_name": "Bugun nishonlayapmiz? Ismini yuboring:",
         "ask_wish": "Samimiy tilak yozing:",
-        "ask_age_mode": "Tafsilotlarni qanday kiritmoqchisiz?",
-        "ask_dob_input": (
-            "📅 Sanani **YYYY-MM-DD** formatida yuboring (masalan: `2026-09-27`):"
-        ),
-        "ask_age_input": "🔢 Raqam sifatida kiriting:",
+        "ask_age_mode": "Yosh tafsilotlarini qanday kiritmoqchisiz?",
+        "ask_dob_input": "📅 Tug'ilgan sanani **YYYY-MM-DD** formatida yuboring (masalan: `2003-12-24`):",
+        "ask_age_input": "🔢 To'g'ridan-to'g'ri yoshni kiriting (masalan: `22`):",
         "ask_year": "Yilni tanlang:",
         "ask_month": "Oyni tanlang:",
         "ask_date": "Sanani tanlang:",
@@ -469,27 +369,19 @@ BOT_TEXTS = {
         "ready": "✨ {name} uchun barchasi tayyor!",
     },
     "tg": {
-        "welcome": (
-            "✨ Хуш омадед ба гӯшаи сюрпризҳои шумо...\n\nЗабони шумо ба"
-            " **Тоҷикӣ** танзим шудааст."
-        ),
+        "welcome": "✨ Хуш омадед ба гӯшаи сюрпризҳои шумо...\n\nЗабони шумо ба **Тоҷикӣ** танзим шудааст.",
         "region_selected": "🌍 Минқақа: **{region}**. Давлати худро интихоб кунед:",
         "country_choice": "🗣️ Забонро барои **{country}** интихоб кунед:",
         "lang_updated": "✅ Забон бо муваффақият нав карда шуд!",
-        "owner_active": (
-            "🤍 **Режими соҳибмулк фаъол аст!**\n\nИмрӯз чӣ ҷашн"
-            " мегирем? Номро фиристед:"
-        ),
+        "ask_category": "🎉 Ин чӣ гуна ҷашн аст?",
+        "owner_active": "🤍 **Режими соҳибмулк фаъол аст!**\n\nИмрӯз чӣ ҷашн мегирем? Номро фиристед:",
         "free_remaining": "🎁 Шумо **{remaining}** сюрпризи ройгон доред!",
         "free_first": "🎁 Аввалин **{limit}** сюрпризи шумо **РОЙГОН** аст!",
         "ask_name": "Имрӯз чӣ ҷашн мегирем? Номро фиристед:",
         "ask_wish": "Табрики зебо нависед:",
-        "ask_age_mode": "Тафсилотро чӣ тавр iлова кардан мехоҳед?",
-        "ask_dob_input": (
-            "📅 Санаро бо формати **YYYY-MM-DD** фиристед (масалан:"
-            " `2026-09-27`):"
-        ),
-        "ask_age_input": "🔢 Ҳамчун рақам ворид кунед:",
+        "ask_age_mode": "Тафсилоти синну солро чӣ тавр iлова кардан мехоҳед?",
+        "ask_dob_input": "📅 Санаро бо формати **YYYY-MM-DD** фиристед (масалан: `2003-12-24`):",
+        "ask_age_input": "🔢 Синну солро ҳамчун рақам ворид кунед (масалан: `22`):",
         "ask_year": "Солро интихоб кунед:",
         "ask_month": "Моҳро интихоб кунед:",
         "ask_date": "Санаро интихоб кунед:",
@@ -503,28 +395,19 @@ BOT_TEXTS = {
         "ready": "✨ Ҳама чиз барои {name} омода аст!",
     },
     "fa": {
-        "welcome": (
-            "✨ به گوشه کوچک شگفتی های خود خوش آمدید...\n\nزبان شما روی **فارسی**"
-            " تنظیم شده است."
-        ),
+        "welcome": "✨ به گوشه کوچک شگفتی های خود خوش آمدید...\n\nزبان شما روی **فارسی** تنظیم شده است.",
         "region_selected": "🌍 منطقه: **{region}**. کشور خود را انتخاب کنید:",
         "country_choice": "🗣️ زبان خود را برای **{country}** انتخاب کنید:",
         "lang_updated": "✅ زبان با موفقیت به‌روزرسانی شد!",
-        "owner_active": (
-            "🤍 **حالت مالک فعال است!**\n\nامروز چه مناسبتی را جشن می گیریم؟ نام"
-            " را بفرستید:"
-        ),
+        "ask_category": "🎉 این چه نوع جشنی است؟",
+        "owner_active": "🤍 **حالت مالک فعال است!**\n\nامروز چه مناسبتی را جشن می گیریم؟ نام را بفرستید:",
         "free_remaining": "🎁 شما **{remaining}** سورپرایز رایگان دیگر دارید!",
-        "free_first": (
-            "🎁 **{limit}** سورپرایز اول شما کاملاً **رایگان** است!"
-        ),
+        "free_first": "🎁 **{limit}** سورپرایز اول شما کاملاً **رایگان** است!",
         "ask_name": "امروز چه مناسبتی را جشن می گیریم؟ نام را بفرستید:",
         "ask_wish": "یک پیام تبریک صمیمی بنویسید:",
-        "ask_age_mode": "چگونه می‌خواهید جزئیات را اضافه کنید؟",
-        "ask_dob_input": (
-            "📅 تاریخ را با فرمت **YYYY-MM-DD** بفرستید (مثلا: `2026-09-27`):"
-        ),
-        "ask_age_input": "🔢 لطفاً به عنوان یک عدد وارد کنید:",
+        "ask_age_mode": "چگونه می‌خواهید جزئیات سن را اضافه کنید؟",
+        "ask_dob_input": "📅 تاریخ تولد را با فرمت **YYYY-MM-DD** بفرستید (مثلا: `2003-12-24`):",
+        "ask_age_input": "🔢 لطفاً سن را به عنوان یک عدد وارد کنید (مثلا: `22`):",
         "ask_year": "سال را انتخاب کنید:",
         "ask_month": "ماه را انتخاب کنید:",
         "ask_date": "تاریخ را انتخاب کنید:",
@@ -538,32 +421,19 @@ BOT_TEXTS = {
         "ready": "✨ همه چیز برای {name} آماده است!",
     },
     "my": {
-        "welcome": (
-            "✨ အံ့သြစရာလေးများမှ ကြိုဆိုပါတယ်...\n\nသင့်ဘာသာစကားကို"
-            " **မြန်မာ** သို့ သတ်မှတ်ထားပါသည်။"
-        ),
+        "welcome": "✨ အံ့သြစရာလေးများမှ ကြိုဆိုပါတယ်...\n\nသင့်ဘာသာစကားကို **မြန်မာ** သို့ သတ်မှတ်ထားပါသည်။",
         "region_selected": "🌍 ဒေသ: **{region}**။ သင့်နိုင်ငံကို ရွေးပါ-",
         "country_choice": "🗣️ **{country}** အတွက် ဘာသာစကားကို ရွေးပါ-",
         "lang_updated": "✅ ဘာသာစကား အောင်မြင်စွာ ပြောင်းလဲပြီးပါပြီ။",
-        "owner_active": (
-            "🤍 **ပိုင်ရှင်မုဒ် အလုပ်လုပ်နေသည်!**\n\nယနေ့ မည်သည့်ပွဲကို"
-            " ကျင်းပနေသလဲ? အမည်ကို ပို့ပါ-"
-        ),
-        "free_remaining": (
-            "🎁 သင့်တွင် အခမဲ့ အံ့သြစရာ **{remaining}** ခု ကျန်ရှိပါသည်!"
-        ),
-        "free_first": (
-            "🎁 ပထမဆုံး **{limit}** ခုသော အံ့သြစရာများမှာ"
-            " **အခမဲ့** ဖြစ်ပါသည်!"
-        ),
+        "ask_category": "🎉 မည်သည့်ပွဲအခမ်းအနား ဖြစ်ပါသနည်း။",
+        "owner_active": "🤍 **ပိုင်ရှင်မုဒ် အလုပ်လုပ်နေသည်!**\n\nယနေ့ မည်သည့်ပွဲကို ကျင်းပနေသလဲ? အမည်ကို ပို့ပါ-",
+        "free_remaining": "🎁 သင့်တွင် အခမဲ့ အံ့သြစရာ **{remaining}** ခု ကျန်ရှိပါသည်!",
+        "free_first": "🎁 ပထမဆုံး **{limit}** ခုသော အံ့သြစရာများမှာ **အခမဲ့** ဖြစ်ပါသည်!",
         "ask_name": "ယနေ့ မည်သည့်ပွဲကို ကျင်းပနေသလဲ? အမည်ကို ပို့ပါ-",
         "ask_wish": "ဆုတောင်း စာတိုလေး ရေးပါ-",
-        "ask_age_mode": "အချက်အလက်ကို မည်သို့ထည့်လိုသနည်း။",
-        "ask_dob_input": (
-            "📅 ရက်စွဲကို **YYYY-MM-DD** ပုံစံဖြင့် ပို့ပါ (ဥပမာ -"
-            " `2026-09-27`)-"
-        ),
-        "ask_age_input": "🔢 နံပါတ်ဖြင့် ရိုက်ထည့်ပါ:",
+        "ask_age_mode": "အသက်အချက်အလက်ကို မည်သို့ထည့်လိုသနည်း။",
+        "ask_dob_input": "📅 မွေးနေ့ကို **YYYY-MM-DD** ပုံစံဖြင့် ပို့ပါ (ဥပမာ - `2003-12-24`)-",
+        "ask_age_input": "🔢 အသက်ကို နံပါတ်ဖြင့် ရိုက်ထည့်ပါ (ဥပမာ - `22`)-",
         "ask_year": "ခုနှစ်ကို ရွေးပါ-",
         "ask_month": "လကို ရွေးပါ-",
         "ask_date": "ရက်စွဲကို ရွေးပါ-",
@@ -577,27 +447,19 @@ BOT_TEXTS = {
         "ready": "✨ {name} အတွက် အားလုံး အသင့်ဖြစ်ပါပြီ!",
     },
     "az": {
-        "welcome": (
-            "✨ Sürprizlər dünyasına xoş gəlmisiniz...\n\nDiliniz **Azərbaycan"
-            " dili** olaraq təyin edildi."
-        ),
+        "welcome": "✨ Sürprizlər dünyasına xoş gəlmisiniz...\n\nDiliniz **Azərbaycan dili** olaraq təyin edildi.",
         "region_selected": "🌍 Bölgə: **{region}**. Ölkənizi seçin:",
         "country_choice": "🗣️ **{country}** üçün dilinizi seçin:",
         "lang_updated": "✅ Dil seçimi uğurla yeniləndi!",
-        "owner_active": (
-            "🤍 **Sahib Rejimi Aktivdir!**\n\nBu gün nəyi qeyd edirik? Adını"
-            " göndərin:"
-        ),
+        "ask_category": "🎉 Bu hansı növ tədbirdir?",
+        "owner_active": "🤍 **Sahib Rejimi Aktivdir!**\n\nBu gün nəyi qeyd edirik? Adını göndərin:",
         "free_remaining": "🎁 **{remaining}** pulsuz sürpriz haqqınız qaldı!",
         "free_first": "🎁 İlk **{limit}** sürpriziniz **PULSUZDUR**!",
         "ask_name": "Bu gün nəyi qeyd edirik? Adını göndərin:",
         "ask_wish": "Gözəl bir mesaj yazın:",
-        "ask_age_mode": "Məlumatları necə əlavə etmək istəyirsiniz?",
-        "ask_dob_input": (
-            "📅 Tarixi **YYYY-MM-DD** formatında göndərin (məsələn:"
-            " `2026-09-27`):"
-        ),
-        "ask_age_input": "🔢 Rəqəm olaraq daxil edin:",
+        "ask_age_mode": "Yaş məlumatlarını necə əlavə etmək istəyirsiniz?",
+        "ask_dob_input": "📅 Doğum tarixini **YYYY-MM-DD** formatında göndərin (məsələn: `2003-12-24`):",
+        "ask_age_input": "🔢 Yaşınızı rəqəm olaraq daxil edin (məsələn: `22`):",
         "ask_year": "İli seçin:",
         "ask_month": "Ayı seçin:",
         "ask_date": "Tarixi seçin:",
@@ -611,29 +473,19 @@ BOT_TEXTS = {
         "ready": "✨ {name} üçün hər şey hazırdır!",
     },
     "hy": {
-        "welcome": (
-            "✨ Բարի գալուստ անակնկալների աշխարհ...\n\nՁեր լեզուն"
-            " սահմանված է **Հայերեն**:"
-        ),
+        "welcome": "✨ Բարի գալուստ անակնկալների աշխարհ...\n\nՁեր լեզուն սահմանված է **Հայերեն**:",
         "region_selected": "🌍 Մարզ՝ **{region}**. Ընտրեք ձեր երկիրը:",
         "country_choice": "🗣️ Ընտրեք ձեր լեզուն **{country}**-ի համար:",
         "lang_updated": "✅ Լեզվի նախընտրությունը հաջողությամբ թարմացվեց:",
-        "owner_active": (
-            "🤍 **Սեփականատիրոջ ռեժիմն ակտիվ է:**\n\nԻ՞նչ ենք նշում այսօր:"
-            " Ուղարկեք անունը՝"
-        ),
-        "free_remaining": (
-            "🎁 Դուք ունեք **{remaining}** անվճար անակնկալ հնարավորություն:"
-        ),
+        "ask_category": "🎉 Ինչպիսի՞ տոն է սա:",
+        "owner_active": "🤍 **Սեփականատիրոջ ռեժիմն ակտիվ է:**\n\nԻ՞նչ ենք նշում այսօր: Ուղարկեք անունը՝",
+        "free_remaining": "🎁 Դուք ունեք **{remaining}** անվճար անակնկալ հնարավորություն:",
         "free_first": "🎁 Ձեր առաջին **{limit}** անակնկալներն **ԱՆՎՃԱՐ** են:",
         "ask_name": "Ի՞նչ ենք նշում այսօր: Ուղարկեք անունը՝",
         "ask_wish": "Գրեք ջերմ մաղթանք՝",
-        "ask_age_mode": "Ինչպ՞ես եք ցանկանում ավելացնել տվյալները:",
-        "ask_dob_input": (
-            "📅 Ուղարկեք ամսաթիվը **YYYY-MM-DD** ձևաչափով (օր.՝"
-            " `2026-09-27`):"
-        ),
-        "ask_age_input": "🔢 Մուտքագրեք որպես թիվ:",
+        "ask_age_mode": "Ինչպ՞ես եք ցանկանում ավելացնել տարիքի տվյալները:",
+        "ask_dob_input": "📅 Ուղարկեք ծննդյան ամսաթիվը **YYYY-MM-DD** ձևաչափով (օր.՝ `2003-12-24`):",
+        "ask_age_input": "🔢 Մուտքագրեք տարիքը որպես թիվ (օր.՝ `22`):",
         "ask_year": "Ընտրեք տարին՝",
         "ask_month": "Ընտրեք ամիսը՝",
         "ask_date": "Ընտրեք ամսաթիվը՝",
@@ -647,25 +499,18 @@ BOT_TEXTS = {
         "ready": "✨ Ամեն ինչ պատրաստ է {name}-ի համար:",
     },
     "be": {
-        "welcome": (
-            "✨ Сардэчна запрашаем у ваш куток сюрпрызаў...\n\nВаша мова"
-            " ўстаноўлена як **Беларуская**."
-        ),
+        "welcome": "✨ Сардэчна запрашаем у ваш куток сюрпрызаў...\n\nВаша мова ўстаноўлена як **Беларуская**.",
         "region_selected": "🌍 Рэгіён: **{region}**. Выберыце вашу краіну:",
         "country_choice": "🗣️ Выберыце мову для **{country}**:",
         "lang_updated": "✅ Мова паспяхова абноўлена!",
-        "owner_active": (
-            "🤍 **Рэжым уладальніка актыўны!**\n\nШто мы сёння святкуем?"
-            " Адпраўце імя:"
-        ),
+        "ask_category": "🎉 Што гэта за свята?",
+        "owner_active": "🤍 **Рэжым уладальніка актыўны!**\n\nШто мы сёння святкуем? Адпраўце імя:",
         "free_remaining": "🎁 У вас засталося **{remaining}** бясплатных сюрпрызаў!",
         "free_first": "🎁 Вашы першыыя **{limit}** сюрпрызаў **БЯСПЛАТНЫЯ**!",
         "ask_name": "Што мы сёння святкуем? Адпраўце імя:",
         "ask_wish": "Напішыце цёплае віншаванне:",
-        "ask_age_mode": "Як вы хочаце дадаць звесткі?",
-        "ask_dob_input": (
-            "📅 Адпраўце дату ў фармаце **YYYY-MM-DD** (напр., `2003-12-24`):"
-        ),
+        "ask_age_mode": "Як вы хочаце дадаць звесткі пра ўзрост?",
+        "ask_dob_input": "📅 Адпраўце дату ў фармаце **YYYY-MM-DD** (напр., `2003-12-24`):",
         "ask_age_input": "🔢 Увядзіце ўзрост лічбай (напр., `22`):",
         "ask_year": "Выберыце год:",
         "ask_month": "Выберыце месяц:",
@@ -680,28 +525,18 @@ BOT_TEXTS = {
         "ready": "✨ Усё гатова для {name}!",
     },
     "id": {
-        "welcome": (
-            "✨ Selamat datang di sudut kejutan Anda...\n\nBahasa Anda saat ini"
-            " adalah **Bahasa Indonesia**."
-        ),
+        "welcome": "✨ Selamat datang di sudut kejutan Anda...\n\nBahasa Anda saat ini adalah **Bahasa Indonesia**.",
         "region_selected": "🌍 Wilayah: **{region}**. Pilih negara Anda:",
         "country_choice": "🗣️ Pilih bahasa Anda untuk **{country}**:",
         "lang_updated": "✅ Preferensi bahasa berhasil diperbarui!",
-        "owner_active": (
-            "🤍 **Mode Pemilik Aktif!**\n\nApa yang kita rayakan hari ini?"
-            " Kirim namanya:"
-        ),
-        "free_remaining": (
-            "🎁 Anda memiliki **{remaining}** kejutan gratis yang tersisa!"
-        ),
+        "ask_category": "🎉 Perayaan jenis apa ini?",
+        "owner_active": "🤍 **Mode Pemilik Aktif!**\n\nApa yang kita rayakan hari ini? Kirim namanya:",
+        "free_remaining": "🎁 Anda memiliki **{remaining}** kejutan gratis yang tersisa!",
         "free_first": "🎁 **{limit}** kejutan pertama Anda adalah **GRATIS**!",
         "ask_name": "Apa yang kita rayakan hari ini? Kirim namanya:",
         "ask_wish": "Tulis ucapan yang manis:",
         "ask_age_mode": "Bagaimana Anda ingin menambahkan detail usia?",
-        "ask_dob_input": (
-            "📅 Silakan kirim Tanggal dalam format **YYYY-MM-DD** (cth."
-            " `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Silakan kirim Tanggal dalam format **YYYY-MM-DD** (cth. `2003-12-24`):",
         "ask_age_input": "🔢 Silakan masukkan usia sebagai angka (cth. `22`):",
         "ask_year": "Pilih tahun:",
         "ask_month": "Pilih bulan:",
@@ -716,25 +551,18 @@ BOT_TEXTS = {
         "ready": "✨ Semuanya siap untuk {name}!",
     },
     "tr": {
-        "welcome": (
-            "✨ Sürprizler köşenize hoş geldiniz...\n\nDiliniz şu anda"
-            " **Türkçe** olarak ayarlandı."
-        ),
+        "welcome": "✨ Sürprizler köşenize hoş geldiniz...\n\nDiliniz şu anda **Türkçe** olarak ayarlandı.",
         "region_selected": "🌍 Bölge: **{region}**. Ülkenizi seçin:",
         "country_choice": "🗣️ **{country}** için dilinizi seçin:",
         "lang_updated": "✅ Dil tercihi başarıyla güncellendi!",
-        "owner_active": (
-            "🤍 **Sahip Modu Aktif!**\n\nBugün neyi kutluyoruz? Adını gönderin:"
-        ),
+        "ask_category": "🎉 Bu nasıl bir kutlama?",
+        "owner_active": "🤍 **Sahip Modu Aktif!**\n\nBugün neyi kutluyoruz? Adını gönderin:",
         "free_remaining": "🎁 Kalan **{remaining}** ücretsiz sürpriziniz var!",
         "free_first": "🎁 İlk **{limit}** sürpriziniz **ÜCRETSİZ**!",
         "ask_name": "Bugün neyi kutluyoruz? Adını gönderin:",
         "ask_wish": "Tatlı bir mesaj yazın:",
         "ask_age_mode": "Yaş detaylarını nasıl eklemek istersiniz?",
-        "ask_dob_input": (
-            "📅 Lütfen Tarihi **YYYY-MM-DD** formatında gönderin (örn."
-            " `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Lütfen Tarihi **YYYY-MM-DD** formatında gönderin (örn. `2003-12-24`):",
         "ask_age_input": "🔢 Lütfen yaşı bir sayı olarak girin (örn. `22`):",
         "ask_year": "Yılı seçin:",
         "ask_month": "Ayı seçin:",
@@ -749,25 +577,18 @@ BOT_TEXTS = {
         "ready": "✨ {name} için her şey hazır!",
     },
     "pt": {
-        "welcome": (
-            "✨ Bem-vindo ao seu cantinho de surpresas...\n\nSeu idioma está"
-            " definido como **Português**."
-        ),
+        "welcome": "✨ Bem-vindo ao seu cantinho de surpresas...\n\nSeu idioma está definido como **Português**.",
         "region_selected": "🌍 Região: **{region}**. Selecione seu país:",
         "country_choice": "🗣️ Escolha seu idioma para **{country}**:",
         "lang_updated": "✅ Preferência de idioma atualizada com sucesso!",
-        "owner_active": (
-            "🤍 **Modo Proprietário Ativo!**\n\nO que estamos celebrando hoje?"
-            " Envie o nome:"
-        ),
+        "ask_category": "🎉 Que tipo de celebração é esta?",
+        "owner_active": "🤍 **Modo Proprietário Ativo!**\n\nO que estamos celebrando hoje? Envie o nome:",
         "free_remaining": "🎁 Você tem **{remaining}** surpresa(s) gratuita(s)!",
         "free_first": "🎁 Suas primeiras **{limit}** surpresas são **GRÁTIS**!",
         "ask_name": "O que estamos celebrando hoje? Envie o nome:",
         "ask_wish": "Escreva uma mensagem carinhosa:",
         "ask_age_mode": "Como você gostaria de adicionar os detalhes?",
-        "ask_dob_input": (
-            "📅 Envie a Data no formato **YYYY-MM-DD** (ex: `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Envie a Data no formato **YYYY-MM-DD** (ex: `2003-12-24`):",
         "ask_age_input": "🔢 Digite a idade diretamente como número (ex: `22`):",
         "ask_year": "Escolha o ano:",
         "ask_month": "Escolha o mês:",
@@ -782,25 +603,18 @@ BOT_TEXTS = {
         "ready": "✨ Tudo pronto para {name}!",
     },
     "uk": {
-        "welcome": (
-            "✨ Ласкаво просимо у ваш куточок сюрпризів...\n\nВаша мова: "
-            "**Українська**."
-        ),
+        "welcome": "✨ Ласкаво просимо у ваш куточок сюрпризів...\n\nВаша мова: **Українська**.",
         "region_selected": "🌍 Регіон: **{region}**. Виберіть вашу країну:",
         "country_choice": "🗣️ Виберіть мову для **{country}**:",
         "lang_updated": "✅ Мову успішно оновлено!",
-        "owner_active": (
-            "🤍 **Режим власника активний!**\n\nЩо ми сьогодні святкуємо?"
-            " Надішліть ім'я:"
-        ),
+        "ask_category": "🎉 Що це за свято?",
+        "owner_active": "🤍 **Режим власника активний!**\n\nЩо ми сьогодні святкуємо? Надішліть ім'я:",
         "free_remaining": "🎁 У вас залишилось **{remaining}** безкоштовних сюрпризів!",
         "free_first": "🎁 Ваші перші **{limit}** сюрпризів **безкоштовні**!",
         "ask_name": "Що ми сьогодні святкуємо? Надішліть ім'я:",
         "ask_wish": "Напишіть тепле привітання:",
         "ask_age_mode": "Як ви хочете додати дані про вік?",
-        "ask_dob_input": (
-            "📅 Надішліть дату у форматі **YYYY-MM-DD** (напр., `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Надішліть дату у форматі **YYYY-MM-DD** (напр., `2003-12-24`):",
         "ask_age_input": "🔢 Введіть вік числом (напр., `22`):",
         "ask_year": "Виберіть рік:",
         "ask_month": "Виберіть місяць:",
@@ -815,27 +629,18 @@ BOT_TEXTS = {
         "ready": "✨ Все готово для {name}!",
     },
     "fi": {
-        "welcome": (
-            "✨ Tervetuloa yllätysten nurkkaan...\n\nKielesi on asetettu"
-            " **suomeksi**."
-        ),
+        "welcome": "✨ Tervetuloa yllätysten nurkkaan...\n\nKielesi on asetettu **suomeksi**.",
         "region_selected": "🌍 Alue: **{region}**. Valitse maasi:",
         "country_choice": "🗣️ Valitse kieli maalle **{country}**:",
         "lang_updated": "✅ Kieliasetus päivitetty onnistuneesti!",
-        "owner_active": (
-            "🤍 **Omistajatila aktiivinen!**\n\nMitä juhlimme tänään? Lähetä"
-            " nimi:"
-        ),
-        "free_remaining": (
-            "🎁 Sinulla on **{remaining}** ilmainen yllätys jäljellä!"
-        ),
+        "ask_category": "🎉 Millainen juhla tämä on?",
+        "owner_active": "🤍 **Omistajatila aktiivinen!**\n\nMitä juhlimme tänään? Lähetä nimi:",
+        "free_remaining": "🎁 Sinulla on **{remaining}** ilmainen yllätys jäljellä!",
         "free_first": "🎁 Ensimmäiset **{limit}** yllätystäsi ovat **ILMAISIA**!",
         "ask_name": "Mitä juhlimme tänään? Lähetä nimi:",
         "ask_wish": "Kirjoita lämmin toivotus:",
         "ask_age_mode": "Miten haluat lisätä ikätiedot?",
-        "ask_dob_input": (
-            "📅 Lähetä päivämäärä muodossa **YYYY-MM-DD** (esim. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Lähetä päivämäärä muodossa **YYYY-MM-DD** (esim. `2003-12-24`):",
         "ask_age_input": "🔢 Anna suora ikä numerona (esim. `22`):",
         "ask_year": "Valitse vuosi:",
         "ask_month": "Valitse kuukausi:",
@@ -850,25 +655,18 @@ BOT_TEXTS = {
         "ready": "✨ Kaikki valmista {name} varten!",
     },
     "nl": {
-        "welcome": (
-            "✨ Welkom in je kleine hoekje vol verrassingen...\n\nJe taal is"
-            " ingesteld op **Nederlands**."
-        ),
+        "welcome": "✨ Welkom in je kleine hoekje vol verrassingen...\n\nJe taal is ingesteld op **Nederlands**.",
         "region_selected": "🌍 Regio: **{region}**. Selecteer je land:",
         "country_choice": "🗣️ Kies je taal voor **{country}**:",
         "lang_updated": "✅ Taalvoorkeur succesvol bijgewerkt!",
-        "owner_active": (
-            "🤍 **Eigenaarmodus actief!**\n\nWat vieren we vandaag? Stuur de"
-            " naam:"
-        ),
+        "ask_category": "🎉 Wat voor soort feest is dit?",
+        "owner_active": "🤍 **Eigenaarmodus actief!**\n\nWat vieren we vandaag? Stuur de naam:",
         "free_remaining": "🎁 Je hebt nog **{remaining}** gratis verrassing(en)!",
         "free_first": "🎁 Je eerste **{limit}** verrassingen zijn **GRATIS**!",
         "ask_name": "Wat vieren we vandaag? Stuur de naam:",
         "ask_wish": "Schrijf een lieve wens:",
         "ask_age_mode": "Hoe wil je de leeftijdsgegevens toevoegen?",
-        "ask_dob_input": (
-            "📅 Stuur de datum in **YYYY-MM-DD** formaat (bijv. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Stuur de datum in **YYYY-MM-DD** formaat (bijv. `2003-12-24`):",
         "ask_age_input": "🔢 Voer de leeftijd in als getal (bijv. `22`):",
         "ask_year": "Kies het jaar:",
         "ask_month": "Kies de maand:",
@@ -883,29 +681,18 @@ BOT_TEXTS = {
         "ready": "✨ Alles klaar voor {name}!",
     },
     "pl": {
-        "welcome": (
-            "✨ Witaj w swoim małym kąciku niespodzianek...\n\nTwój język to"
-            " **Polski**."
-        ),
+        "welcome": "✨ Witaj w swoim małym kąciku niespodzianek...\n\nTwój język to **Polski**.",
         "region_selected": "🌍 Region: **{region}**. Wybierz swój kraj:",
         "country_choice": "🗣️ Wybierz język dla **{country}**:",
         "lang_updated": "✅ Pomyślnie zaktualizowano preferencje językowe!",
-        "owner_active": (
-            "🤍 **Tryb właściciela aktywny!**\n\nCo dzisiaj świętujemy? Wyślij"
-            " imię:"
-        ),
-        "free_remaining": (
-            "🎁 Masz jeszcze **{remaining}** darmowych niespodzianek!"
-        ),
-        "free_first": (
-            "🎁 Twoje pierwsze **{limit}** niespodzianek jest **DARMOWYCH**!"
-        ),
+        "ask_category": "🎉 Co to za święto?",
+        "owner_active": "🤍 **Tryb właściciela aktywny!**\n\nCo dzisiaj świętujemy? Wyślij imię:",
+        "free_remaining": "🎁 Masz jeszcze **{remaining}** darmowych niespodzianek!",
+        "free_first": "🎁 Twoje pierwsze **{limit}** niespodzianek jest **DARMOWYCH**!",
         "ask_name": "Co dzisiaj świętujemy? Wyślij imię:",
         "ask_wish": "Napisz miłe życzenia:",
         "ask_age_mode": "Jak chcesz dodać szczegóły wieku?",
-        "ask_dob_input": (
-            "📅 Wyślij datę w formacie **YYYY-MM-DD** (np. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Wyślij datę w formacie **YYYY-MM-DD** (np. `2003-12-24`):",
         "ask_age_input": "🔢 Wprowadź wiek jako liczbę (np. `22`):",
         "ask_year": "Wybierz rok:",
         "ask_month": "Wybierz miesiąc:",
@@ -920,24 +707,18 @@ BOT_TEXTS = {
         "ready": "✨ Wszystko gotowe dla {name}!",
     },
     "sv": {
-        "welcome": (
-            "✨ Välkommen till din lilla hörna av överraskningar...\n\nDitt språk"
-            " är inställt på **Svenska**."
-        ),
+        "welcome": "✨ Välkommen till din lilla hörna av överraskningar...\n\nDitt språk är inställt på **Svenska**.",
         "region_selected": "🌍 Region: **{region}**. Välj ditt land:",
         "country_choice": "🗣️ Välj ditt språk för **{country}**:",
         "lang_updated": "✅ Språkinställningen har uppdaterats!",
-        "owner_active": (
-            "🤍 **Ägarläge aktivt!**\n\nVad firar vi idag? Skicka namnet:"
-        ),
+        "ask_category": "🎉 Vad är det för firande?",
+        "owner_active": "🤍 **Ägarläge aktivt!**\n\nVad firar vi idag? Skicka namnet:",
         "free_remaining": "🎁 Du har **{remaining}** gratis överraskningar kvar!",
         "free_first": "🎁 Dina första **{limit}** överraskningar är **GRATIS**!",
         "ask_name": "Vad firar vi idag? Skicka namnet:",
         "ask_wish": "Skriv en fin hälsning:",
         "ask_age_mode": "Hur vill du lägga till åldersdetaljer?",
-        "ask_dob_input": (
-            "📅 Skicka datum i formatet **YYYY-MM-DD** (t.ex. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Skicka datum i formatet **YYYY-MM-DD** (t.ex. `2003-12-24`):",
         "ask_age_input": "🔢 Ange ålder direkt som ett nummer (t.ex. `22`):",
         "ask_year": "Välj år:",
         "ask_month": "Välj månad:",
@@ -952,26 +733,18 @@ BOT_TEXTS = {
         "ready": "✨ Allt klart för {name}!",
     },
     "no": {
-        "welcome": (
-            "✨ Velkommen til ditt lille hjørne av overraskelser...\n\nSpråket"
-            " ditt er satt til **Norsk**."
-        ),
+        "welcome": "✨ Velkommen til ditt lille hjørne av overraskelser...\n\nSpråket ditt er satt til **Norsk**.",
         "region_selected": "🌍 Region: **{region}**. Velg landet ditt:",
         "country_choice": "🗣️ Velg språk for **{country}**:",
         "lang_updated": "✅ Språkvalg oppdatert!",
-        "owner_active": (
-            "🤍 **Eiermodus aktiv!**\n\nHva feirer vi i dag? Send navnet:"
-        ),
-        "free_remaining": (
-            "🎁 Du har **{remaining}** gratis overraskelser igjen!"
-        ),
+        "ask_category": "🎉 Hva slags feiring er dette?",
+        "owner_active": "🤍 **Eiermodus aktiv!**\n\nHva feirer vi i dag? Send navnet:",
+        "free_remaining": "🎁 Du har **{remaining}** gratis overraskelser igjen!",
         "free_first": "🎁 Dine første **{limit}** overraskelser er **GRATIS**!",
         "ask_name": "Hva feirer vi i dag? Send navnet:",
         "ask_wish": "Skriv en fin hilsen:",
         "ask_age_mode": "Hvordan vil du legge til aldersdetaljer?",
-        "ask_dob_input": (
-            "📅 Send dato i formatet **YYYY-MM-DD** (f.eks. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Send dato i formatet **YYYY-MM-DD** (f.eks. `2003-12-24`):",
         "ask_age_input": "🔢 Angi alder direkte som et tall (f.eks. `22`):",
         "ask_year": "Velg år:",
         "ask_month": "Velg måned:",
@@ -986,24 +759,18 @@ BOT_TEXTS = {
         "ready": "✨ Alt klar for {name}!",
     },
     "da": {
-        "welcome": (
-            "✨ Velkommen til dit lille hjørne af overraskelser...\n\nDit sprog"
-            " er sat til **Dansk**."
-        ),
+        "welcome": "✨ Velkommen til dit lille hjørne af overraskelser...\n\nDit sprog er sat til **Dansk**.",
         "region_selected": "🌍 Region: **{region}**. Vælg dit land:",
         "country_choice": "🗣️ Vælg dit sprog for **{country}**:",
         "lang_updated": "✅ Sprogvalg opdateret!",
-        "owner_active": (
-            "🤍 **Ejertilstand aktiv!**\n\nHvad fejrer vi i dag? Send navnet:"
-        ),
+        "ask_category": "🎉 Hvad er det for en fejring?",
+        "owner_active": "🤍 **Ejertilstand aktiv!**\n\nHvad fejrer vi i dag? Send navnet:",
         "free_remaining": "🎁 Du har **{remaining}** gratis overraskelser tilbage!",
         "free_first": "🎁 Dine første **{limit}** overraskelser er **GRATIS**!",
         "ask_name": "Hvad fejrer vi i dag? Send navnet:",
         "ask_wish": "Skriv en sød hilsen:",
         "ask_age_mode": "Hvordan vil du tilføje aldersdetaljer?",
-        "ask_dob_input": (
-            "📅 Send dato i formatet **YYYY-MM-DD** (f.eks. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Send dato i formatet **YYYY-MM-DD** (f.eks. `2003-12-24`):",
         "ask_age_input": "🔢 Indtast alderen direkte som et tal (f.eks. `22`):",
         "ask_year": "Vælg år:",
         "ask_month": "Vælg måned:",
@@ -1018,31 +785,19 @@ BOT_TEXTS = {
         "ready": "✨ Alt klar til {name}!",
     },
     "el": {
-        "welcome": (
-            "✨ Καλώς ήρθατε στη μικρή σας γωνιά έκπληξης...\n\nΗ γλώσσα σας"
-            " έχει οριστεί σε **Ελληνικά**."
-        ),
+        "welcome": "✨ Καλώς ήρθατε στη μικρή σας γωνιά έκπληξης...\n\nΗ γλώσσα σας έχει οριστεί σε **Ελληνικά**.",
         "region_selected": "🌍 Περιοχή: **{region}**. Επιλέξτε τη χώρα σας:",
         "country_choice": "🗣️ Επιλέξτε τη γλώσσα σας για **{country}**:",
         "lang_updated": "✅ Η προτίμηση γλώσσας ενημερώθηκε επιτυχώς!",
-        "owner_active": (
-            "🤍 **Ενεργή λειτουργία κατόχου!**\n\nΤι γιορτάζουμε σήμερα;"
-            " Στείλτε το όνομα:"
-        ),
+        "ask_category": "🎉 Τι είδους γιορτή είναι αυτή;",
+        "owner_active": "🤍 **Ενεργή λειτουργία κατόχου!**\n\nΤι γιορτάζουμε σήμερα; Στείλτε το όνομα:",
         "free_remaining": "🎁 Έχετε **{remaining}** δωρεάν έκπληξη/εις απομείνει!",
-        "free_first": (
-            "🎁 Οι πρώτες **{limit}** εκπλήξεις σας είναι **ΔΩΡΕΑΝ**!"
-        ),
+        "free_first": "🎁 Οι πρώτες **{limit}** εκπλήξεις σας είναι **ΔΩΡΕΑΝ**!",
         "ask_name": "Τι γιορτάζουμε σήμερα; Στείλτε το όνομα:",
         "ask_wish": "Γράψτε ένα γλυκό μήνυμα:",
         "ask_age_mode": "Πώς θα θέλατε να προσθέσετε λεπτομέρειες;",
-        "ask_dob_input": (
-            "📅 Στείλτε την ημερομηνία σε μορφή **YYYY-MM-DD** (π.χ."
-            " `2003-12-24`):"
-        ),
-        "ask_age_input": (
-            "🔢 Εισαγάγετε απευθείας την ηλικία ως αριθμό (π.χ. `22`):"
-        ),
+        "ask_dob_input": "📅 Στείλτε την ημερομηνία σε μορφή **YYYY-MM-DD** (π.χ. `2003-12-24`):",
+        "ask_age_input": "🔢 Εισαγάγετε απευθείας την ηλικία ως αριθμό (π.χ. `22`):",
         "ask_year": "Επιλέξτε έτος:",
         "ask_month": "Επιλέξτε μήνα:",
         "ask_date": "Επιλέξτε ημερομηνία:",
@@ -1056,24 +811,18 @@ BOT_TEXTS = {
         "ready": "✨ Όλα έτοιμα για το/τη {name}!",
     },
     "cs": {
-        "welcome": (
-            "✨ Vítejte ve svém malém koutku překvapení...\n\nJazyk je"
-            " nastaven na **Češtinu**."
-        ),
+        "welcome": "✨ Vítejte ve svém malém koutku překvapení...\n\nJazyk je nastaven na **Češtinu**.",
         "region_selected": "🌍 Region: **{region}**. Vyberte svou zemi:",
         "country_choice": "🗣️ Vyberte jazyk pro **{country}**:",
         "lang_updated": "✅ Jazykové předvolby byly úspěšně aktualizovány!",
-        "owner_active": (
-            "🤍 **Režim vlastníka aktivní!**\n\nCo dnes slavíme? Pošlete jméno:"
-        ),
+        "ask_category": "🎉 O jakou oslavu se jedná?",
+        "owner_active": "🤍 **Režim vlastníka aktivní!**\n\nCo dnes slavíme? Pošlete jméno:",
         "free_remaining": "🎁 Zbývá vám **{remaining}** bezplatných překvapení!",
         "free_first": "🎁 Vašich prvních **{limit}** překvapení je **ZDARMA**!",
         "ask_name": "Co dnes slavíme? Pošlete jméno:",
         "ask_wish": "Napište milé přání:",
         "ask_age_mode": "Jak chcete přidat údaje?",
-        "ask_dob_input": (
-            "📅 Pošlete datum ve formátu **YYYY-MM-DD** (např. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Pošlete datum ve formátu **YYYY-MM-DD** (např. `2003-12-24`):",
         "ask_age_input": "🔢 Zadejte věk přímo jako číslo (např. `22`):",
         "ask_year": "Vyberte rok:",
         "ask_month": "Vyberte měsíc:",
@@ -1088,25 +837,18 @@ BOT_TEXTS = {
         "ready": "✨ Vše je připraveno pro {name}!",
     },
     "hu": {
-        "welcome": (
-            "✨ Üdvözöllek a meglepetések kis világában...\n\nA nyelved"
-            " beállítása: **Magyar**."
-        ),
+        "welcome": "✨ Üdvözöllek a meglepetések kis világában...\n\nA nyelved beállítása: **Magyar**.",
         "region_selected": "🌍 Régió: **{region}**. Válaszd ki az országodat:",
         "country_choice": "🗣️ Válaszd ki a nyelvet ehhez: **{country}**:",
         "lang_updated": "✅ Nyelvi beállítás sikeresen frissítve!",
-        "owner_active": (
-            "🤍 **Tulajdonos mód aktív!**\n\nMit ünnepelünk ma? Küldd el a nevet:"
-        ),
+        "ask_category": "🎉 Milyen ünnepség ez?",
+        "owner_active": "🤍 **Tulajdonos mód aktív!**\n\nMit ünnepelünk ma? Küldd el a nevet:",
         "free_remaining": "🎁 Még **{remaining}** ingyenes meglepetésed van!",
         "free_first": "🎁 Az első **{limit}** meglepetésed **INGYENES**!",
         "ask_name": "Mit ünnepelünk ma? Küldd el a nevet:",
         "ask_wish": "Írj egy kedves üzenetet:",
         "ask_age_mode": "Hogyan szeretnéd hozzáadni az adatokat?",
-        "ask_dob_input": (
-            "📅 Kérlek küldd el a dátumot **YYYY-MM-DD** formátumban (pl."
-            " `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Kérlek küldd el a dátumot **YYYY-MM-DD** formátumban (pl. `2003-12-24`):",
         "ask_age_input": "🔢 Kérlek add meg a kort számként (pl. `22`):",
         "ask_year": "Vlaszd ki az évet:",
         "ask_month": "Válaszd ki a hónapot:",
@@ -1121,24 +863,18 @@ BOT_TEXTS = {
         "ready": "✨ Minden kész {name} számára!",
     },
     "ro": {
-        "welcome": (
-            "✨ Bine ai venit în colțul tău de surprize...\n\nLimba ta este"
-            " setată pe **Română**."
-        ),
+        "welcome": "✨ Bine ai venit în colțul tău de surprize...\n\nLimba ta este setată pe **Română**.",
         "region_selected": "🌍 Regiune: **{region}**. Selectează țara ta:",
         "country_choice": "🗣️ Alege limba pentru **{country}**:",
         "lang_updated": "✅ Preferința de limbă a fost actualizată cu succes!",
-        "owner_active": (
-            "🤍 **Mod Proprietar Activ!**\n\nCe sărbătorim azi? Trimite numele:"
-        ),
+        "ask_category": "🎉 Ce fel de sărbătoare este aceasta?",
+        "owner_active": "🤍 **Mod Proprietar Activ!**\n\nCe sărbătorim azi? Trimite numele:",
         "free_remaining": "🎁 Mai ai **{remaining}** surprize gratuite!",
         "free_first": "🎁 Primele **{limit}** surprize sunt **GRATUITE**!",
         "ask_name": "Ce sărbătorim azi? Trimite numele:",
         "ask_wish": "Scrie un mesaj frumos:",
         "ask_age_mode": "Cum dorești să adaugi detaliile?",
-        "ask_dob_input": (
-            "📅 Trimite data în formatul **YYYY-MM-DD** (de ex. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Trimite data în formatul **YYYY-MM-DD** (de ex. `2003-12-24`):",
         "ask_age_input": "🔢 Introdu vârsta direct ca număr (de ex. `22`):",
         "ask_year": "Alege anul:",
         "ask_month": "Alege luna:",
@@ -1153,24 +889,18 @@ BOT_TEXTS = {
         "ready": "✨ Totul este pregătit pentru {name}!",
     },
     "hr": {
-        "welcome": (
-            "✨ Dobrodošli u svoj mali kutak iznenađenja...\n\nVaš jezik je"
-            " postavljen na **Hrvatski**."
-        ),
+        "welcome": "✨ Dobrodošli u svoj mali kutak iznenađenja...\n\nVaš jezik je postavljen na **Hrvatski**.",
         "region_selected": "🌍 Regija: **{region}**. Odaberite svoju zemlju:",
         "country_choice": "🗣️ Odaberite jezik za **{country}**:",
         "lang_updated": "✅ Jezična preferencija uspješno ažurirana!",
-        "owner_active": (
-            "🤍 **Način vlasnika aktivan!**\n\nŠto danas slavimo? Pošaljite ime:"
-        ),
+        "ask_category": "🎉 Kakva je ovo proslava?",
+        "owner_active": "🤍 **Način vlasnika aktivan!**\n\nŠto danas slavimo? Pošaljite ime:",
         "free_remaining": "🎁 Imate još **{remaining}** besplatnih iznenađenja!",
         "free_first": "🎁 Vaših prvih **{limit}** iznenađenja je **BESPLATNO**!",
         "ask_name": "Što danas slavimo? Pošaljite ime:",
         "ask_wish": "Napišite lijepu čestitku:",
         "ask_age_mode": "Kako želite dodati detalje?",
-        "ask_dob_input": (
-            "📅 Pošaljite datum u formatu **YYYY-MM-DD** (npr. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Pošaljite datum u formatu **YYYY-MM-DD** (npr. `2003-12-24`):",
         "ask_age_input": "🔢 Unesite dob kao broj (npr. `22`):",
         "ask_year": "Odaberite godinu:",
         "ask_month": "Odaberite mjesec:",
@@ -1185,24 +915,18 @@ BOT_TEXTS = {
         "ready": "✨ Sve je spremno za {name}!",
     },
     "sk": {
-        "welcome": (
-            "✨ Vitajte vo svom malom kútiku prekvapení...\n\nJazyk je"
-            " nastavený na **Slovenčinu**."
-        ),
+        "welcome": "✨ Vitajte vo svom malom kútiku prekvapení...\n\nJazyk je nastavený na **Slovenčinu**.",
         "region_selected": "🌍 Región: **{region}**. Vyberte svoju krajinu:",
         "country_choice": "🗣️ Vyberte jazyk pre **{country}**:",
         "lang_updated": "✅ Jazykové predvoľby boli úspešne aktualizované!",
-        "owner_active": (
-            "🤍 **Režim vlastníka aktívny!**\n\nČo dnes oslavujeme? Pošlite meno:"
-        ),
+        "ask_category": "🎉 O akú oslavu ide?",
+        "owner_active": "🤍 **Režim vlastníka aktívny!**\n\nČo dnes oslavujeme? Pošlite meno:",
         "free_remaining": "🎁 Zostáva vám **{remaining}** bezplatných prekvapení!",
         "free_first": "🎁 Vašich prvých **{limit}** prekvapení je **ZADARMO**!",
         "ask_name": "Čo dnes oslavujeme? Pošlite meno:",
         "ask_wish": "Napíšte milé prianie:",
         "ask_age_mode": "Ako chcete pridať údaje?",
-        "ask_dob_input": (
-            "📅 Pošlite dátum vo formáte **YYYY-MM-DD** (napr. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Pošlite dátum vo formáte **YYYY-MM-DD** (napr. `2003-12-24`):",
         "ask_age_input": "🔢 Zadajte vek priamo ako číslo (napr. `22`):",
         "ask_year": "Vyberte rok:",
         "ask_month": "Vyberte mesiac:",
@@ -1217,25 +941,18 @@ BOT_TEXTS = {
         "ready": "✨ Všetko je pripravené pre {name}!",
     },
     "bg": {
-        "welcome": (
-            "✨ Добре дошли в малкия си кът за изненади...\n\nВашият език е"
-            " зададен на **Български**."
-        ),
+        "welcome": "✨ Добре дошли в малкия си кът за изненади...\n\nВашият език е зададен на **Български**.",
         "region_selected": "🌍 Регион: **{region}**. Изберете вашата държава:",
         "country_choice": "🗣️ Изберете език за **{country}**:",
         "lang_updated": "✅ Езиковите предпочитания са обновени успешно!",
-        "owner_active": (
-            "🤍 **Режимът на собственик е активен!**\n\nКакво празнуваме днес?"
-            " Изпратете име:"
-        ),
+        "ask_category": "🎉 Какъв празник е това?",
+        "owner_active": "🤍 **Режимът на собственик е активен!**\n\nКакво празнуваме днес? Изпратете име:",
         "free_remaining": "🎁 Имате оставащи **{remaining}** безплатни изненади!",
         "free_first": "🎁 Вашите първи **{limit}** изненади са **БЕЗПЛАТНИ**!",
         "ask_name": "Какво празнуваме днес? Изпратете име:",
         "ask_wish": "Напишете мило пожелание:",
         "ask_age_mode": "Как искате да добавите детайли?",
-        "ask_dob_input": (
-            "📅 Изпратете дата във формат **YYYY-MM-DD** (напр. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Изпратете дата във формат **YYYY-MM-DD** (напр. `2003-12-24`):",
         "ask_age_input": "🔢 Въведете възрастта като число (напр. `22`):",
         "ask_year": "Изберете година:",
         "ask_month": "Изберете месец:",
@@ -1250,24 +967,18 @@ BOT_TEXTS = {
         "ready": "✨ Всичко е готово за {name}!",
     },
     "sr": {
-        "welcome": (
-            "✨ Dobrodošli u svoj mali kutak iznenađenja...\n\nVaš jezik je"
-            " podešen na **Srpski**."
-        ),
+        "welcome": "✨ Dobrodošli u svoj mali kutak iznenađenja...\n\nVaš jezik je podešen na **Srpski**.",
         "region_selected": "🌍 Region: **{region}**. Izaberite svoju zemlju:",
         "country_choice": "🗣️ Izaberite jezik za **{country}**:",
         "lang_updated": "✅ Jezička podešavanja su uspešno ažurirana!",
-        "owner_active": (
-            "🤍 **Režim vlasnika aktivan!**\n\nŠta danas slavimo? Pošaljite ime:"
-        ),
+        "ask_category": "🎉 Kakva je ovo proslava?",
+        "owner_active": "🤍 **Režim vlasnika aktivan!**\n\nŠta danas slavimo? Pošaljite ime:",
         "free_remaining": "🎁 Imate još **{remaining}** besplatnih iznenađenja!",
         "free_first": "🎁 Vaših prvih **{limit}** iznenađenja je **BESPLATNO**!",
         "ask_name": "Šta danas slavimo? Pošaljite ime:",
         "ask_wish": "Napišite lepu čestitku:",
         "ask_age_mode": "Kako želite da dodate detalje?",
-        "ask_dob_input": (
-            "📅 Pošaljite datum u formatu **YYYY-MM-DD** (npr. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Pošaljite datum u formatu **YYYY-MM-DD** (npr. `2003-12-24`):",
         "ask_age_input": "🔢 Unesite starost kao broj (npr. `22`):",
         "ask_year": "Izaberite godinu:",
         "ask_month": "Izaberite mesec:",
@@ -1282,24 +993,18 @@ BOT_TEXTS = {
         "ready": "✨ Sve je spremno za {name}!",
     },
     "sl": {
-        "welcome": (
-            "✨ Dobrodošli v svojem malem kotičku presenečenj...\n\nVaš jezik je"
-            " nastavljen na **Slovenščino**."
-        ),
+        "welcome": "✨ Dobrodošli v svojem malem kotičku presenečenj...\n\nVaš jezik je nastavljen na **Slovenščino**.",
         "region_selected": "🌍 Regija: **{region}**. Izberite svojo državo:",
         "country_choice": "🗣️ Izberite jezik za **{country}**:",
         "lang_updated": "✅ Jezikovna nastavitev je bila uspešno posodobljena!",
-        "owner_active": (
-            "🤍 **Način lastnika aktiven!**\n\nKaj praznujemo danes? Pošljite ime:"
-        ),
+        "ask_category": "🎉 Kakšna praznovanje je to?",
+        "owner_active": "🤍 **Način lastnika aktiven!**\n\nKaj praznujemo danes? Pošljite ime:",
         "free_remaining": "🎁 Imate še **{remaining}** brezplačnih presenečenj!",
         "free_first": "🎁 Vaših prvih **{limit}** presenečenj je **BREZPLAČNIH**!",
         "ask_name": "Kaj praznujemo danes? Pošljite ime:",
         "ask_wish": "Napišite lepo voščilo:",
         "ask_age_mode": "Kako želite dodati podatke?",
-        "ask_dob_input": (
-            "📅 Pošljite datum v formatu **YYYY-MM-DD** (npr. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Pošljite datum v formatu **YYYY-MM-DD** (npr. `2003-12-24`):",
         "ask_age_input": "🔢 Vnesite starost kot številko (npr. `22`):",
         "ask_year": "Izberite leto:",
         "ask_month": "Izberite mesec:",
@@ -1314,29 +1019,18 @@ BOT_TEXTS = {
         "ready": "✨ Vse je pripravljeno za {name}!",
     },
     "lt": {
-        "welcome": (
-            "✨ Sveiki atvykę į savo mažą staigmenų kampelį...\n\nJūsų kalba"
-            " nustatyta į **Lietuvių**."
-        ),
+        "welcome": "✨ Sveiki atvykę į savo mažą staigmenų kampelį...\n\nJūsų kalba nustatyta į **Lietuvių**.",
         "region_selected": "🌍 Regionas: **{region}**. Pasirinkite savo šalį:",
         "country_choice": "🗣️ Pasirinkite kalbą **{country}** šaliai:",
         "lang_updated": "✅ Kalbos nustatymai sėkmingai atnaujinti!",
-        "owner_active": (
-            "🤍 **Savininko režimas aktyvus!**\n\nKą šiandien švenčiame?"
-            " Atsiųskite vardą:"
-        ),
-        "free_remaining": (
-            "🎁 Turite likusias **{remaining}** nemokamas staigmenas!"
-        ),
-        "free_first": (
-            "🎁 Jūsų pirmosios **{limit}** staigmenos yra **NEMOKAMOS**!"
-        ),
+        "ask_category": "🎉 Kokia čia šventė?",
+        "owner_active": "🤍 **Savininko režimas aktyvus!**\n\nKą šiandien švenčiame? Atsiųskite vardą:",
+        "free_remaining": "🎁 Turite likusias **{remaining}** nemokamas staigmenas!",
+        "free_first": "🎁 Jūsų pirmosios **{limit}** staigmenos yra **NEMOKAMOS**!",
         "ask_name": "Ką šiandien švenčiame? Atsiųskite vardą:",
         "ask_wish": "Parašykite gražų sveikinimą:",
         "ask_age_mode": "Kaip norite pridėti duomenis?",
-        "ask_dob_input": (
-            "📅 Atsiųskite datą formatu **YYYY-MM-DD** (pvz. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Atsiųskite datą formatu **YYYY-MM-DD** (pvz. `2003-12-24`):",
         "ask_age_input": "🔢 Įveskite amžių skaičiumi (pvz. `22`):",
         "ask_year": "Pasirinkite metus:",
         "ask_month": "Pasirinkite mėnesį:",
@@ -1351,27 +1045,18 @@ BOT_TEXTS = {
         "ready": "✨ Viskas paruošta {name}!",
     },
     "lv": {
-        "welcome": (
-            "✨ Laipni lūdzam jūsu mazo pārsteigumu stūrītī...\n\nJūsu valoda ir"
-            " iestatīta uz **Latviešu**."
-        ),
+        "welcome": "✨ Laipni lūdzam jūsu mazo pārsteigumu stūrītī...\n\nJūsu valoda ir iestatīta uz **Latviešu**.",
         "region_selected": "🌍 Reģions: **{region}**. Izvēlieties savu valsti:",
         "country_choice": "🗣️ Izvēlieties valodu priekš **{country}**:",
         "lang_updated": "✅ Valodas iestatījumi veiksmīgi atjaunināti!",
-        "owner_active": (
-            "🤍 **Īpašnieka režīms aktīvs!**\n\nKo mēs šodien svinam? Atsūtiet"
-            " vārdu:"
-        ),
+        "ask_category": "🎉 Kādi svētki tie ir?",
+        "owner_active": "🤍 **Īpašnieka režīms aktīvs!**\n\nKo mēs šodien svinam? Atsūtiet vārdu:",
         "free_remaining": "🎁 Jums ir atlikuši **{remaining}** bezmaksas pārsteigumi!",
-        "free_first": (
-            "🎁 Jūsu pirmie **{limit}** pārsteigumi ir **BEZMAKSAS**!"
-        ),
+        "free_first": "🎁 Jūsu pirmie **{limit}** pārsteigumi ir **BEZMAKSAS**!",
         "ask_name": "Ko mēs šodien svinam? Atsūtiet vārdu:",
         "ask_wish": "Uzrakstiet jauku vēlējumu:",
         "ask_age_mode": "Kā jūs vēlaties pievienot informāciju?",
-        "ask_dob_input": (
-            "📅 Nosūtiet datumu formātā **YYYY-MM-DD** (piem. `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Nosūtiet datumu formātā **YYYY-MM-DD** (piem. `2003-12-24`):",
         "ask_age_input": "🔢 Ievadiet vecumu kā skaitli (piem. `22`):",
         "ask_year": "Izvēlieties gadu:",
         "ask_month": "Izvēlieties mēnesi:",
@@ -1386,25 +1071,18 @@ BOT_TEXTS = {
         "ready": "✨ Viss gatavs {name}!",
     },
     "et": {
-        "welcome": (
-            "✨ Tere tulemast üllatuste nurka...\n\nTeie keeleks on määratud"
-            " **Eesti**."
-        ),
+        "welcome": "✨ Tere tulemast üllatuste nurka...\n\nTeie keeleks on määratud **Eesti**.",
         "region_selected": "🌍 Piirkond: **{region}**. Valige oma riik:",
         "country_choice": "🗣️ Valige keel riigile **{country}**:",
         "lang_updated": "✅ Keelesäte edukalt uuendatud!",
-        "owner_active": (
-            "🤍 **Omaniku režiim aktiivne!**\n\nMida me täna tähistame? Saatke"
-            " nimi:"
-        ),
+        "ask_category": "🎉 Milline pidu see on?",
+        "owner_active": "🤍 **Omaniku režiim aktiivne!**\n\nMida me täna tähistame? Saatke nimi:",
         "free_remaining": "🎁 Teil on jäänud **{remaining}** tasuta üllatust!",
         "free_first": "🎁 Teie esimese **{limit}** üllatust on **TASUTA**!",
         "ask_name": "Mida me täna tähistame? Saatke nimi:",
         "ask_wish": "Kirjutage südamlik soov:",
         "ask_age_mode": "Kuidas soovite andmeid lisada?",
-        "ask_dob_input": (
-            "📅 Saatke kuupäev formaadis **YYYY-MM-DD** (nt `2003-12-24`):"
-        ),
+        "ask_dob_input": "📅 Saatke kuupäev formaadis **YYYY-MM-DD** (nt `2003-12-24`):",
         "ask_age_input": "🔢 Sisestage vanus numbrina (nt `22`):",
         "ask_year": "Valige aasta:",
         "ask_month": "Valige kuu:",
@@ -1448,6 +1126,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS surprises (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER,
+            category TEXT,
             recipient_name TEXT,
             wish_text TEXT,
             params_json TEXT,
@@ -1524,17 +1203,18 @@ def get_user_lang(user_id):
   return row[0] if row and row[0] else "en"
 
 
-def save_surprise_to_db(user_id, recipient_name, wish_text, params_dict):
+def save_surprise_to_db(user_id, category, recipient_name, wish_text, params_dict):
   lang_code = get_user_lang(user_id)
   conn = sqlite3.connect("bot_stats.db")
   cursor = conn.cursor()
   cursor.execute(
       """
-        INSERT INTO surprises (user_id, recipient_name, wish_text, params_json, lang)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO surprises (user_id, category, recipient_name, wish_text, params_json, lang)
+        VALUES (?, ?, ?, ?, ?, ?)
     """,
       (
           user_id,
+          category,
           recipient_name,
           wish_text,
           json.dumps(params_dict),
@@ -1560,6 +1240,7 @@ def get_stats():
 
 
 class BirthdayForm(StatesGroup):
+  category = State()
   name = State()
   wish = State()
   age_choice = State()
@@ -1638,6 +1319,18 @@ def get_countries_keyboard(region, page=0, items_per_page=6):
       [InlineKeyboardButton(text="🔙 Back", callback_data="back_to_regions")]
   )
   return InlineKeyboardMarkup(inline_keyboard=keyboard)
+
+
+def get_category_keyboard():
+  return InlineKeyboardMarkup(
+      inline_keyboard=[
+          [InlineKeyboardButton(text="🎂 Birthday Wish", callback_data="cat_Birthday")],
+          [InlineKeyboardButton(text="💍 Wedding Anniversary", callback_data="cat_Wedding")],
+          [InlineKeyboardButton(text="👶 New Born", callback_data="cat_NewBorn")],
+          [InlineKeyboardButton(text="🎓 Graduation", callback_data="cat_Graduation")],
+          [InlineKeyboardButton(text="🌟 Other Celebration", callback_data="cat_Other")]
+      ]
+  )
 
 
 def get_action_keyboard():
@@ -1905,53 +1598,23 @@ async def back_regions(callback: types.CallbackQuery):
 async def proceed_after_language(
     message: types.Message, user_id: int, state: FSMContext
 ):
-  creations = get_user_creations(user_id)
-
-  if user_id == OWNER_ID:
-    text = get_bot_text(user_id, "owner_active")
-    await message.answer(
-        text, reply_markup=get_action_keyboard(), parse_mode="Markdown"
-    )
-    await state.set_state(BirthdayForm.name)
-  elif creations < FREE_LIMIT:
-    remaining_free = FREE_LIMIT - creations
-    if creations > 0:
-      text = get_bot_text(user_id, "free_remaining", remaining=remaining_free)
-    else:
-      text = get_bot_text(user_id, "free_first", limit=FREE_LIMIT)
-    await message.answer(
-        text, reply_markup=get_action_keyboard(), parse_mode="Markdown"
-    )
-    await state.set_state(BirthdayForm.name)
-  else:
-    await message.answer(
-        "⭐ You have used all your 5 free surprises!\nPlease unlock full"
-        " access for the next creation with **1 Telegram Star**:",
-        parse_mode="Markdown",
-    )
-    await message.answer_invoice(
-        title="Celebration Surprise Creator",
-        description=(
-            "Create a custom, time-locked luxury celebration web app."
-        ),
-        payload="birthday_bot_stars_access",
-        currency="XTR",
-        prices=[LabeledPrice(label="Access Fee", amount=1)],
-    )
+  await message.answer(
+      get_bot_text(user_id, "ask_category"),
+      reply_markup=get_category_keyboard(),
+  )
+  await state.set_state(BirthdayForm.category)
 
 
-@dp.pre_checkout_query()
-async def process_pre_checkout_query(pre_checkout_query: types.PreCheckoutQuery):
-  await bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
-
-
-@dp.message(F.successful_payment)
-async def process_successful_payment(message: types.Message, state: FSMContext):
-  user_id = message.from_user.id
-  record_start(user_id)
-  text = get_bot_text(user_id, "ask_name")
-  await message.answer(text, reply_markup=get_action_keyboard())
+@dp.callback_query(F.data.startswith("cat_"))
+async def process_category(callback: types.CallbackQuery, state: FSMContext):
+  category = callback.data.split("_")[1]
+  await state.update_data(category=category)
+  user_id = callback.from_user.id
+  await callback.message.answer(
+      get_bot_text(user_id, "ask_name"), reply_markup=get_action_keyboard()
+  )
   await state.set_state(BirthdayForm.name)
+  await callback.answer()
 
 
 STATE_SEQUENCE = [
@@ -2212,6 +1875,8 @@ async def finish_form(message: types.Message, state: FSMContext):
     params["name"] = data.get("name")
   if data.get("wish"):
     params["msg"] = data.get("wish")
+  if data.get("category"):
+    params["category"] = data.get("category")
 
   if data.get("dob"):
     params["dob"] = data.get("dob")
@@ -2282,6 +1947,7 @@ async def finish_form(message: types.Message, state: FSMContext):
 
   surprise_id = save_surprise_to_db(
       user_id=user_id,
+      category=data.get("category", "Birthday"),
       recipient_name=data.get("name", "Friend"),
       wish_text=data.get("wish", ""),
       params_dict=params,
@@ -2291,7 +1957,7 @@ async def finish_form(message: types.Message, state: FSMContext):
   final_url = f"{VERCEL_URL}/?id={surprise_id}"
 
   share_text = urllib.parse.quote(
-      f"✨ Celebration for {data.get('name', 'Dear')}! I made a surprise just for you:"
+      f"✨ Special Celebration for {data.get('name', 'Dear')}! I made a surprise just for you:"
   )
   telegram_share_url = f"https://t.me/share/url?url={urllib.parse.quote(final_url)}&text={share_text}"
   whatsapp_share_url = f"https://api.whatsapp.com/send?text={share_text}%20{urllib.parse.quote(final_url)}"
