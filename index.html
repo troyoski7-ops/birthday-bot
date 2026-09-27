@@ -559,7 +559,7 @@
         async function loadSurpriseData() {
             let name = 'Friend';
             let msg = 'Wishing you an extraordinary day filled with joy and success!';
-            let photoUrl = '', video, song, voice, dobOrAge = '', category = 'Birthday';
+            let photoUrl = '', video = '', song = '', voice = '', dobOrAge = '', category = 'Birthday';
 
             if (surpriseId) {
                 try {
@@ -571,9 +571,9 @@
                         category = data.category || 'Birthday';
                         targetTimeStr = data.target_time || '';
                         photoUrl = data.photo || '';
-                        video = data.video;
-                        song = data.song;
-                        voice = data.voice;
+                        video = data.video || '';
+                        song = data.song || '';
+                        voice = data.voice || '';
                         currentLang = data.lang || 'en';
                         dobOrAge = data.dob || data.age || '';
                     }
@@ -585,9 +585,9 @@
                 msg = urlParams.get('msg') || 'Wishing you an extraordinary day!';
                 targetTimeStr = urlParams.get('target_time') || '';
                 photoUrl = urlParams.get('photo') || '';
-                video = urlParams.get('video');
-                song = urlParams.get('song');
-                voice = urlParams.get('voice');
+                video = urlParams.get('video') || '';
+                song = urlParams.get('song') || '';
+                voice = urlParams.get('voice') || '';
                 currentLang = urlParams.get('lang') || 'en';
                 dobOrAge = urlParams.get('dob') || urlParams.get('age') || '';
             }
