@@ -154,7 +154,7 @@ BOT_TEXTS = {
         "welcome": "✨ *సర్ప్రైజ్ ప్రపంచానికి స్వాగతం...*",
         "region_selected": "🌍 ప్రాంతం: *{region}*. మీ దేశాన్ని ఎంచుకోండి:",
         "country_choice": "🗣️ *{country}* కోసం మీ భాషను ఎంచుకోండి:",
-        "lang_updated": "✅ భాష വിജയకరంగా నవీకరించబడింది!",
+        "lang_updated": "✅ భాష வெற்றிகரமாக నవీకరించబడింది!",
         "ask_category": "🎉 *ఇది ఏ రకమైన వేడుక?*",
         "ask_name": "✨ *ఈరోజు ఎవరి ప్రత్యేక సందర్భం జరుపుకుంటున్నాము? పేరు పంపండి:*",
         "ask_wish": "📝 *ఒక మంచి సందేశం రాయండి:*",
@@ -617,7 +617,7 @@ BOT_TEXTS = {
         "lang_updated": "✅ Мова паспяхова абноўлена!",
         "ask_category": "🎉 *Якое гэта свята?*",
         "ask_name": "✨ *Чыё свята мы сёння святкуем? Увядзіце імя:*",
-        "ask_wish": "📝 *Напішыце цёплае пажаданне:*",
+        "ask_wish": "📝 *Напишыце цёплае пажаданне:*",
         "ask_dob_type": "⏳ *Як вы хочаце дадаць дэталі ўзросту?*",
         "ask_dob_date": "📅 Адпраўце дату ў фармаце **YYYY-MM-DD**:",
         "ask_dob_direct": "🔢 Увядзіце ўзрост лічбай:",
@@ -781,7 +781,7 @@ BOT_TEXTS = {
         "ask_wish": "📝 *Bhala umyalezo omuhle:*",
         "ask_dob_type": "⏳ *Ungathanda ukungeza kanjani imininingwane yobudala?*",
         "ask_dob_date": "📅 Thumela usuku ngefomethi **YYYY-MM-DD**:",
-        "ask_dob_direct": "🔢 Faka iminyaka ngqo njენორੋ numba:",
+        "ask_dob_direct": "🔢 Faka iminyaka ngqo njengonombolo:",
         "ask_year": "📅 *Khetha unyaka:*",
         "ask_month": "📆 *Khetha inyanga:*",
         "ask_day": "🗓️ *Khetha usuku:*",
@@ -802,7 +802,7 @@ BOT_TEXTS = {
         "ask_category": "🎉 *Lolu hlobo luni lombhiyozo?*",
         "ask_name": "✨ *Ngubani esimbhiyozelayo namhlanje? Thumela igama lakhe:*",
         "ask_wish": "📝 *Bhala umyalezo omnandi:*",
-        "ask_dob_type": "⏳ * Ungathanda ukongeza njani iinkcukacha zeminyaka?*",
+        "ask_dob_type": "⏳ *Ungathanda ukongeza njani iinkcukacha zeminyaka?*",
         "ask_dob_date": "📅 Thumela umhla ngefomathi **YYYY-MM-DD**:",
         "ask_dob_direct": "🔢 Faka iminyaka ngqo njengonombolo:",
         "ask_year": "📅 *Khetha unyaka:*",
@@ -1143,7 +1143,7 @@ async def ask_target_day(message: types.Message, state: FSMContext):
     await state.set_state(BirthdayForm.target_day)
     kb = []
     row = []
-    for d in range(1, 29):
+    for d in range(1, 32):
         day_str = f"{d:02d}"
         row.append(InlineKeyboardButton(text=str(d), callback_data=f"day_{day_str}"))
         if len(row) == 7:
@@ -1195,10 +1195,16 @@ async def skip_hour(callback: types.CallbackQuery, state: FSMContext):
 
 async def ask_target_minute(message: types.Message, state: FSMContext):
     await state.set_state(BirthdayForm.target_minute)
-    kb = [
-        [InlineKeyboardButton(text="00", callback_data="min_00"), InlineKeyboardButton(text="15", callback_data="min_15"), InlineKeyboardButton(text="30", callback_data="min_30"), InlineKeyboardButton(text="45", callback_data="min_45")],
-        [InlineKeyboardButton(text="✨ Skip", callback_data="skip_minute")]
-    ]
+    kb = []
+    row = []
+    for m in range(0, 60):
+        m_str = f"{m:02d}"
+        row.append(InlineKeyboardButton(text=m_str, callback_data=f"min_{m_str}"))
+        if len(row) == 6:
+            kb.append(row)
+            row = []
+    if row: kb.append(row)
+    kb.append([InlineKeyboardButton(text="✨ Skip", callback_data="skip_minute")])
     await message.answer(get_bot_text(message.from_user.id, "ask_minute"), reply_markup=InlineKeyboardMarkup(inline_keyboard=kb), parse_mode="Markdown")
 
 @dp.callback_query(F.data.startswith("min_"))
