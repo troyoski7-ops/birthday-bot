@@ -1263,7 +1263,7 @@ BOT_TEXTS = {
         "ask_photo": "Zdieľajte fotku (alebo preskočte):",
         "ask_video": "Zdieľajte video (alebo preskočte):",
         "ask_song": "Pošlite pesničku (alebo preskočte):",
-        "ask_voice": "Pošlite hlasovú správu (alebo preskočte):",
+        "ask_voice": "Pošlite hlasovую správu (alebo preskočte):",
         "ask_audio": "Pridajte ďalšie audio (alebo preskočte):",
         "ready": "✨ Všetko je pripravené pre {name}!",
     },
@@ -2420,7 +2420,6 @@ async def finish_form(message: types.Message, state: FSMContext):
   if data.get("wish"):
     params["msg"] = data.get("wish")
 
-  # DOB അല്ലെങ്കിൽ Age പാസ് ചെയ്യുന്നു
   if data.get("dob"):
     params["dob"] = data.get("dob")
   if data.get("age"):
