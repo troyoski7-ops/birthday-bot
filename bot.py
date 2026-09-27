@@ -30,7 +30,7 @@ dp = Dispatcher()
 # Vercel Web App Link (Updated)
 VERCEL_URL = "https://birthday-surprise-app-two.vercel.app"
 
-# --- മുഴുവൻ രാജ്യങ്ങളും ഭാഷകളും ---
+# --- മുഴുവൻ രാജ്യങ്ങളും ഭാഷകളും (Full Country Languages Dictionary) ---
 COUNTRY_LANGUAGES = {
     "Asia": {
         "🇮🇳 India": [
@@ -90,46 +90,53 @@ COUNTRY_LANGUAGES = {
     },
 }
 
-# --- പഴയ എല്ലാ ഭാഷകളും ഉൾപ്പെടുത്തിയ ഫുൾ ഡിക്ഷണറി ---
+# --- പഴയ എല്ലാ ഭാഷകളും വെഡ്ഡിംഗ് & AR/Time Capsule സപ്പോർട്ടുള്ള ഫുൾ ഡിക്ഷണറി ---
 BOT_TEXTS = {
     "en": {
         "welcome": (
-            "✨ Welcome to your little corner of surprises...\n\nYour language is"
-            " currently set to **English**. Want to change your country/language?"
-            " Choose below or keep English:"
+            "✨ Welcome to your luxury celebration & surprises...\n\nYour"
+            " language is currently set to **English**. Want to change your"
+            " country/language? Choose below or keep English:"
         ),
         "region_selected": "🌍 Region: **{region}**. Select your country:",
         "country_choice": "🗣️ Choose your language for **{country}**:",
         "lang_updated": "✅ Language preference updated successfully!",
         "owner_active": (
             "🤍 **Owner Mode Active!** You have unlimited free"
-            " creations.\n\nWhose birthday are we celebrating today? Send me"
-            " their name:"
+            " creations.\n\nWhose special occasion (Birthday, Wedding, New"
+            " Born, etc.) are we celebrating today? Send me their name:"
         ),
         "free_remaining": (
-            "🎁 You have **{remaining}** free birthday surprise(s)"
-            " remaining!\n\nWhose birthday are we celebrating today? Send me"
-            " their name:"
+            "🎁 You have **{remaining}** free surprise(s)"
+            " remaining!\n\nWhose special occasion are we celebrating today?"
+            " Send me their name:"
         ),
         "free_first": (
-            "🎁 Your first **{limit}** birthday surprises are"
-            " **FREE**!\n\nWhose birthday are we celebrating today? Send me"
+            "🎁 Your first **{limit}** surprises (Birthday, Wedding, etc.)"
+            " are **FREE**!\n\nWhose occasion are we celebrating today? Send me"
             " their name:"
         ),
         "ask_name": (
-            "Whose birthday are we celebrating today? Send me their name:"
+            "Whose special day (Birthday, Wedding, New Born, Graduation, etc.)"
+            " are we celebrating today? Send me their name:"
         ),
         "ask_wish": (
-            "Write a sweet, heartfelt birthday wish or message for them (Long"
-            " paragraphs supported!):"
+            "Write a sweet, heartfelt wish or message for them (Supports"
+            " Holographic AR, Voice Cloning & Time Capsule!):"
         ),
-        "ask_age_mode": "How would you like to add age details for stats?",
+        "ask_age_mode": (
+            "How would you like to add date or milestone details for stats &"
+            " time capsule?"
+        ),
         "ask_dob_input": (
-            "📅 Please send Date of Birth in **YYYY-MM-DD** format (e.g.,"
-            " `2003-12-24`):"
+            "📅 Please send Date (DOB / Wedding Date / Milestone) in"
+            " **YYYY-MM-DD** format (e.g., `2026-09-27`):"
         ),
-        "ask_age_input": "🔢 Please enter their direct age as a number (e.g., `22`):",
-        "ask_year": "Choose the year for the surprise:",
+        "ask_age_input": (
+            "🔢 Please enter direct age or milestone years as a number (e.g.,"
+            " `22`):"
+        ),
+        "ask_year": "Choose the year for the celebration:",
         "ask_month": "Choose the month:",
         "ask_date": "Pick the date:",
         "ask_hour": "Select the Hour (24-Hour format, 00 to 23):",
@@ -137,16 +144,17 @@ BOT_TEXTS = {
             "Select the Minute (tap button below OR type any number from 00 to"
             " 59):"
         ),
-        "ask_photo": "Share a lovely photo to cherish (or skip):",
+        "ask_photo": "Share a lovely photo for Holographic 3D AR effect (or skip):",
         "ask_video": "Share a special video moment (or skip):",
         "ask_song": "Send a favorite song or audio file (or skip):",
         "ask_voice": (
-            "Send a warm voice note to make it extra special (or skip):"
+            "Send a warm voice note for Neural Voice Cloning & Audio (or skip):"
         ),
         "ask_audio": "Add one more audio file if you'd like (or skip):",
         "ready": (
-            "✨ All ready for {name}!\n\nChoose how you'd like to experience or"
-            " share your creation below:"
+            "✨ All ready with AR, Live Reactions & Time Capsule for"
+            " {name}!\n\nChoose how you'd like to experience or share your"
+            " creation below:"
         ),
     },
     "hi": {
@@ -158,65 +166,66 @@ BOT_TEXTS = {
         "country_choice": "🗣️ **{country}** के लिए अपनी भाषा चुनें:",
         "lang_updated": "✅ भाषा सफलतापूर्वक अपडेट कर दी गई है!",
         "owner_active": (
-            "🤍 **ओनर मोड सक्रिय है!**\n\nआज हम किसका जन्मदिन मना रहे हैं? उनका"
-            " नाम भेजें:"
+            "🤍 **ओनर मोड सक्रिय है!**\n\nआज हम किसका जश्न मना रहे हैं? नाम"
+            " भेजें:"
         ),
         "free_remaining": (
-            "🎁 आपके पास **{remaining}** मुफ्त जन्मदिन सरप्राइज शेष हैं!"
+            "🎁 आपके पास **{remaining}** मुफ्त सरप्राइज शेष हैं!"
         ),
-        "free_first": (
-            "🎁 आपके पहले **{limit}** जन्मदिन सरप्राइज **मुफ्त** हैं!"
+        "free_first": "🎁 आपके पहले **{limit}** सरप्राइज **मुफ्त** हैं!",
+        "ask_name": (
+            "आज हम किसका विशेष दिन (जन्मदिन, विवाह, आदि) मना रहे हैं? उनका नाम"
+            " भेजें:"
         ),
-        "ask_name": "आज हम किसका जन्मदिन मना रहे हैं? उनका नाम भेजें:",
-        "ask_wish": "उनके लिए एक प्यारा सा जन्मदिन का संदेश लिखें:",
-        "ask_age_mode": "आयु विवरण कैसे जोड़ना चाहते हैं?",
+        "ask_wish": "उनके लिए एक प्यारा सा संदेश लिखें:",
+        "ask_age_mode": "विवरण कैसे जोड़ना चाहते हैं?",
         "ask_dob_input": (
-            "📅 **YYYY-MM-DD** प्रारूप में जन्म तिथि भेजें (जैसे:"
-            " `2003-12-24`):"
+            "📅 **YYYY-MM-DD** प्रारूप में तिथि भेजें (जैसे: `2026-09-27`):"
         ),
-        "ask_age_input": "🔢 सीधी आयु संख्या के रूप में दर्ज करें (जैसे: `22`):",
-        "ask_year": "सरप्राइज के लिए वर्ष चुनें:",
+        "ask_age_input": "🔢 सीधी संख्या के रूप में दर्ज करें:",
+        "ask_year": "वर्ष चुनें:",
         "ask_month": "महीना चुनें:",
         "ask_date": "तारीख चुनें:",
         "ask_hour": "घंटा चुनें (00-23):",
         "ask_minute": "मिनट चुनें (00-59):",
-        "ask_photo": "एक प्यारी सी फोटो शेयर करें (या छोड़ें):",
+        "ask_photo": "एक फोटो शेयर करें (AR होलोग्राम के लिए):",
         "ask_video": "एक खास वीडियो शेयर करें (या छोड़ें):",
         "ask_song": "पसंदीदा गाना या ऑडियो भेजें (या छोड़ें):",
-        "ask_voice": "एक वॉयस नोट भेजें (या छोड़ें):",
+        "ask_voice": "वॉयस नोट भेजें (या छोड़ें):",
         "ask_audio": "एक और ऑडियो फाइल जोड़ें (या छोड़ें):",
         "ready": "✨ {name} के लिए सब तैयार है!",
     },
     "ml": {
         "welcome": (
-            "✨ ചെറിയ സർപ്രൈസുകളുടെ ലോകത്തേക്ക് സ്വാഗതം...\n\nനിങ്ങളുടെ ഭാഷ"
-            " ഇപ്പോൾ **മലയാളം** ആണ്."
+            "✨ പിറന്നാൾ, വിവാഹം തുടങ്ങിയ വിശേഷങ്ങളുടെ ലോകത്തേക്ക് സ്വാഗതം...\n\nനിങ്ങളുടെ"
+            " ഭാഷ ഇപ്പോൾ **മലയാളം** ആണ്."
         ),
         "region_selected": "🌍 പ്രദേശം: **{region}**. നിങ്ങളുടെ രാജ്യം തിരഞ്ഞെടുക്കൂ:",
         "country_choice": "🗣️ **{country}**-നുള്ള ഭാഷ തിരഞ്ഞെടുക്കൂ:",
         "lang_updated": "✅ ഭാഷ വിജയകരമായി മാറ്റിയിരിക്കുന്നു!",
         "owner_active": (
-            "🤍 **ഓണർ മോഡ് ആക്ടീവ് ആണ്!**\n\nഇന്ന് ആരുടെ പിറന്നാളാണ്"
-            " ആഘോഷിക്കുന്നത്? അവരുടെ പേര് അയക്കൂ:"
+            "🤍 **ഓണർ മോഡ് ആക്ടീവ് ആണ്!**\n\nഇന്ന് ആരുടെ വിശേഷമാണ്"
+            " ആഘോഷിക്കുന്നത്? പേര് അയക്കൂ:"
         ),
         "free_remaining": "🎁 നിങ്ങൾക്ക് ഇനി **{remaining}** ഫ്രീ സർപ്രൈസുകൾ ബാക്കിയുണ്ട്!",
         "free_first": "🎁 നിങ്ങളുടെ ആദ്യത്തെ **{limit}** സർപ്രൈസുകൾ **സൗജന്യമാണ്**!",
         "ask_name": (
-            "ഇന്ന് ആരുടെ പിറന്നാളാണ് ആഘോഷിക്കുന്നത്? അവരുടെ പേര് അയക്കൂ:"
+            "ഇന്ന് ആരുടെ വിശേഷമാണ് ആഘോഷിക്കുന്നത് (പിറന്നാൾ, വിവാഹം മുതലായവ)?"
+            " അവരുടെ പേര് അയക്കൂ:"
         ),
-        "ask_wish": "അവർക്കായി ഒരു മനോഹരമായ പിറന്നാളാശംസ എഴുതൂ:",
-        "ask_age_mode": "വയസ്സ് അല്ലെങ്കിൽ ജനന തീയതി എങ്ങനെ ചേർക്കണം?",
+        "ask_wish": "അവർക്കായി മനോഹരമായ ആശംസ എഴുതൂ:",
+        "ask_age_mode": "തീയതി അല്ലെങ്കിൽ വിവരങ്ങൾ എങ്ങനെ ചേർക്കണം?",
         "ask_dob_input": (
-            "📅 ജനന തീയതി **YYYY-MM-DD** ഫോർമാറ്റിൽ അയക്കൂ (ഉദാഹരണത്തിന്:"
-            " `2003-12-24`):"
+            "📅 തീയതി **YYYY-MM-DD** ഫോർമാറ്റിൽ അയക്കൂ (ഉദാഹരണത്തിന്:"
+            " `2026-09-27`):"
         ),
-        "ask_age_input": "🔢 പ്രായം മാത്രം സംഖ്യയായി നൽകൂ (ഉദാഹരണത്തിന്: `22`):",
+        "ask_age_input": "🔢 വിവരങ്ങൾ സംഖ്യയായി നൽകൂ (ഉദാഹരണത്തിന്: `22`):",
         "ask_year": "വർഷം തിരഞ്ഞെടുക്കൂ:",
         "ask_month": "മാസം തിരഞ്ഞെടുക്കൂ:",
         "ask_date": "തീയതി തിരഞ്ഞെടുക്കൂ:",
         "ask_hour": "മണിക്കൂർ തിരഞ്ഞെടുക്കൂ (00-23):",
         "ask_minute": "മിനിറ്റ് തിരഞ്ഞെടുക്കൂ (00-59):",
-        "ask_photo": "ഒരു ഫോട്ടോ പങ്കുവെക്കൂ (သို့မဟုတ် ഒഴിവാക്കൂ):",
+        "ask_photo": "ഒരു ഫോട്ടോ പങ്കുവെക്കൂ (AR ഹോലോഗ്രാം ഇഫക്റ്റിനായി):",
         "ask_video": "ഒരു വീഡിയോ പങ്കുവെക്കൂ (သို့မဟုတ် ഒഴിവാക്കൂ):",
         "ask_song": "പാട്ടോ ഓഡിയോ ഫയലോ അയക്കൂ (သို့မဟုတ် ഒഴിവാക്കൂ):",
         "ask_voice": "ഒരു വോയിസ് നോട്ട് അയക്കൂ (သို့မဟုတ် ഒഴിവാക്കൂ):",
@@ -232,26 +241,20 @@ BOT_TEXTS = {
         "country_choice": "🗣️ **{country}** కోసం మీ భాషను ఎంచుకోండి:",
         "lang_updated": "✅ భాష ప్రాధాన్యత విజయవంతంగా నవీకరించబడింది!",
         "owner_active": (
-            "🤍 **ఓనర్ మోడ్ యాక్టివ్‌లో ఉంది!**\n\nఈరోజు ఎవరి పుట్టినరోజు జరుపుకుంటున్నాం?"
-            " వారి పేరును పంపండి:"
+            "🤍 **ఓనర్ మోడ్ యాక్టివ్‌లో ఉంది!**\n\nఈరోజు ఏ వేడుక జరుపుకుంటున్నాం?"
+            " పేరును పంపండి:"
         ),
         "free_remaining": (
             "🎁 మీకు ఇంకా **{remaining}** ఉచిత సర్ప్రైజ్‌లు మిగిలి ఉన్నాయి!"
         ),
-        "free_first": (
-            "🎁 మీ మొదటి **{limit}** పుట్టినరోజు సర్ప్రైజ్‌లు"
-            " **ఉచితం**!"
-        ),
-        "ask_name": (
-            "ఈరోజు ఎవరి పుట్టినరోజు జరుపుకుంటున్నాం? వారి పేరును పంపండి:"
-        ),
-        "ask_wish": "వారి కోసం ఒక చక్కటి పుట్టినరోజు శుభాకాంక్షలు వ్రాయండి:",
-        "ask_age_mode": "వయస్సు వివరాలను ఎలా జోడించాలనుకుంటున్నారు?",
+        "free_first": "🎁 మీ మొదటి **{limit}** సర్ప్రైజ్‌లు **ఉచితం**!",
+        "ask_name": "ఈరోజు ఏ వేడుక జరుపుకుంటున్నాం? వారి పేరును పంపండి:",
+        "ask_wish": "వారి కోసం శుభాకాంక్షలు వ్రాయండి:",
+        "ask_age_mode": "వివరాలను ఎలా జోడించాలనుకుంటున్నారు?",
         "ask_dob_input": (
-            "📅 పుట్టిన తేదీని **YYYY-MM-DD** ფორმატில் அனுப்பவும் (ఉదా: "
-            "`2003-12-24`):"
+            "📅 తేదీని **YYYY-MM-DD** ფორმატில் அனுப்பவும் (ఉదా: `2026-09-27`):"
         ),
-        "ask_age_input": "🔢 ప్రత్యక్ష వయస్సును సంఖ్యగా నమోదు చేయండి (ఉదా: `22`):",
+        "ask_age_input": "🔢 వివరాలను సంఖ్యగా నమోదు చేయండి:",
         "ask_year": "సంవత్సరాన్ని ఎంచుకోండి:",
         "ask_month": "నెలని ఎంచుకోండి:",
         "ask_date": "తేదీని ఎంచుకోండి:",
@@ -273,24 +276,21 @@ BOT_TEXTS = {
         "country_choice": "🗣️ **{country}** ಗಾಗಿ ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ:",
         "lang_updated": "✅ ಭಾಷಾ ಪ್ರಾಶಸ್ತ್ಯವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ!",
         "owner_active": (
-            "🤍 **ಮಾಲೀಕ ಮೋಡ್ ಸಕ್ರಿಯವಾಗಿದೆ!**\n\nಇಂದು ನಾವು ಯಾರ ಹುಟ್ಟುಹಬ್ಬವನ್ನು"
-            " ಆಚರಿಸುತ್ತಿದ್ದೇವೆ? ಅವರ ಹೆಸರನ್ನು ಕಳುಹಿಸಿ:"
+            "🤍 **ಮಾಲೀಕ ಮೋಡ್ ಸಕ್ರಿಯವಾಗಿದೆ!**\n\nಇಂದು ಯಾವ ವಿಶೇಷತೆ ಆಚರಿಸುತ್ತಿದ್ದೇವೆ?"
+            " ಹೆಸರನ್ನು ಕಳುಹಿಸಿ:"
         ),
         "free_remaining": (
-            "🎁 ನೀವು **{remaining}** ಉಚಿತ ಜನ್ಮದಿನದ ಆಶ್ಚರ್ಯಗಳನ್ನು"
-            " ಹೊಂದಿದ್ದೀರಿ!"
+            "🎁 ನೀವು **{remaining}** ಉಚಿತ ಆಶ್ಚರ್ಯಗಳನ್ನು ಹೊಂದಿದ್ದೀರಿ!"
         ),
-        "free_first": "🎁 ನಿಮ್ಮ ಮೊದಲ **{limit}** ಜನ್ಮದಿನದ ಆಶ್ಚರ್ಯಗಳು **ಉಚಿತ**!",
-        "ask_name": (
-            "ಇಂದು ನಾವು ಯಾರ ಹುಟ್ಟುಹಬ್ಬವನ್ನು ಆಚರಿಸುತ್ತಿದ್ದೇವೆ? ಅವರ ಹೆಸರನ್ನು ಕಳುಹಿಸಿ:"
-        ),
-        "ask_wish": "ಅವರಿಗಾಗಿ ಮಧುರವಾದ ಜನ್ಮದಿನದ ಶುಭಾಶಯವನ್ನು ಬರೆಯಿರಿ:",
-        "ask_age_mode": "ವಯಸ್ಸಿನ ವಿವರಗಳನ್ನು ಹೇಗೆ ಸೇರಿಸಲು ಬಯಸುತ್ತೀರಿ?",
+        "free_first": "🎁 ನಿಮ್ಮ ಮೊದಲ **{limit}** ಆಶ್ಚರ್ಯಗಳು **ಉಚಿತ**!",
+        "ask_name": "ಇಂದು ಯಾವ ವಿಶೇಷತೆ ಆಚರಿಸುತ್ತಿದ್ದೇವೆ? ಅವರ ಹೆಸರನ್ನು ಕಳುಹಿಸಿ:",
+        "ask_wish": "ಅವರಿಗಾಗಿ ಶುಭಾಶಯವನ್ನು ಬರೆಯಿರಿ:",
+        "ask_age_mode": "ವಿವರಗಳನ್ನು ಹೇಗೆ ಸೇರಿಸಲು ಬಯಸುತ್ತೀರಿ?",
         "ask_dob_input": (
-            "📅 ಹುಟ್ಟಿದ ದಿನಾಂಕವನ್ನು **YYYY-MM-DD** ფორಮ್ಯಾಟ್‌ನಲ್ಲಿ ಕಳುಹಿಸಿ (ಉದಾ:"
-            " `2003-12-24`):"
+            "📅 ದಿನಾಂಕವನ್ನು **YYYY-MM-DD** ფორಮ್ಯಾಟ್‌ನಲ್ಲಿ ಕಳುಹಿಸಿ (ಉದಾ:"
+            " `2026-09-27`):"
         ),
-        "ask_age_input": "🔢 ವಯಸ್ಸನ್ನು ಸಂಖ್ಯೆಯಾಗಿ ನಮೂದಿಸಿ (ಉದಾ: `22`):",
+        "ask_age_input": "🔢 ವಿವರಗಳನ್ನು ಸಂಖ್ಯೆಯಾಗಿ ನಮೂದಿಸಿ:",
         "ask_year": "ವರ್ಷವನ್ನು ಆಯ್ಕೆಮಾಡಿ:",
         "ask_month": "ತಿಂಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ:",
         "ask_date": "ದಿನಾಂಕವನ್ನು ಆಯ್ಕೆಮಾಡಿ:",
@@ -312,18 +312,17 @@ BOT_TEXTS = {
         "country_choice": "🗣️ **{country}** এর জন্য আপনার ভাষা বেছে নিন:",
         "lang_updated": "✅ ভাষা পছন্দ সফলভাবে আপডেট করা হয়েছে!",
         "owner_active": (
-            "🤍 **মালিক মোড সক্রিয়!**\n\nআজ কার জন্মদিন উদযাপন করছি? তার নাম"
-            " পাঠান:"
+            "🤍 **মালিক মোড সক্রিয়!**\n\nআজ কী উদযাপন করছি? তার নাম পাঠান:"
         ),
         "free_remaining": "🎁 আপনার **{remaining}** টি বিনামূল্যে সারপ্রাইজ বাকি আছে!",
-        "free_first": "🎁 আপনার প্রথম **{limit}** টি জন্মদিনের সারপ্রাইজ **ফ্রি**!",
-        "ask_name": "আজ কার জন্মদিন উদযাপন করছি? তার নাম পাঠান:",
-        "ask_wish": "তাদের জন্য একটি সুন্দর জন্মদিনের শুভেচ্ছা লিখুন:",
+        "free_first": "🎁 আপনার প্রথম **{limit}** টি সারপ্রাইজ **ফ্রি**!",
+        "ask_name": "আজ কার বিশেষ দিন উদযাপন করছি? তার নাম পাঠান:",
+        "ask_wish": "তাদের জন্য একটি সুন্দর শুভেচ্ছা লিখুন:",
         "ask_age_mode": "বয়সের বিবরণ কীভাবে যোগ করতে চান?",
         "ask_dob_input": (
-            "📅 জন্ম তারিখ **YYYY-MM-DD** ফরম্যাটে পাঠান (যেমন: `2003-12-24`):"
+            "📅 তারিখ **YYYY-MM-DD** ফরম্যাটে পাঠান (যেমন: `2026-09-27`):"
         ),
-        "ask_age_input": "🔢 সরাসরি বয়স সংখ্যায় লিখুন (যেমন: `22`):",
+        "ask_age_input": "🔢 সরাসরি সংখ্যায় লিখুন:",
         "ask_year": "বছর বেছে নিন:",
         "ask_month": "মাস বেছে নিন:",
         "ask_date": "তারিখ বেছে নিন:",
@@ -345,21 +344,19 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Pilih bahasa anda untuk **{country}**:",
         "lang_updated": "✅ Keutamaan bahasa berjaya dikemas kini!",
         "owner_active": (
-            "🤍 **Mod Pemilik Aktif!**\n\nHari jadi siapa yang kita"
-            " sambut hari ini? Hantar nama:"
+            "🤍 **Mod Pemilik Aktif!**\n\nApa yang kita sambut hari ini? Hantar"
+            " nama:"
         ),
         "free_remaining": "🎁 Anda mempunyai **{remaining}** kejutan percuma!",
         "free_first": "🎁 **{limit}** kejutan pertama anda adalah **PERCUMA**!",
-        "ask_name": "Hari jadi siapa yang kita sambut hari ini? Hantar nama:",
-        "ask_wish": "Tulis ucapan hari jadi yang manis:",
-        "ask_age_mode": "Bagaimana anda ingin menambah butiran umur?",
+        "ask_name": "Apa yang kita sambut hari ini? Hantar nama:",
+        "ask_wish": "Tulis ucapan yang manis:",
+        "ask_age_mode": "Bagaimana anda ingin menambah butiran?",
         "ask_dob_input": (
-            "📅 Sila hantar Tarikh Lahir dalam format **YYYY-MM-DD** (cth."
-            " `2003-12-24`):"
+            "📅 Sila hantar Tarikh dalam format **YYYY-MM-DD** (cth."
+            " `2026-09-27`):"
         ),
-        "ask_age_input": (
-            "🔢 Sila masukkan umur langsung sebagai nombor (cth. `22`):"
-        ),
+        "ask_age_input": "🔢 Sila masukkan butiran sebagai nombor:",
         "ask_year": "Pilih tahun:",
         "ask_month": "Pilih bulan:",
         "ask_date": "Pilih tarikh:",
@@ -380,17 +377,17 @@ BOT_TEXTS = {
         "country_choice": "🗣️ 请选择 **{country}** 的语言：",
         "lang_updated": "✅ 语言首选项更新成功！",
         "owner_active": (
-            "🤍 **所有者模式已激活！**\n\n我们今天在庆祝谁的生日？发送名字："
+            "🤍 **所有者模式已激活！**\n\n我们今天在庆祝什么？发送名字："
         ),
         "free_remaining": "🎁 您还有 **{remaining}** 次免费惊喜制作机会！",
-        "free_first": "🎁 您的前 **{limit}** 个生日惊喜是**免费**的！",
-        "ask_name": "我们今天在庆祝谁的生日？发送名字：",
-        "ask_wish": "为他们写一份温馨的生日祝福：",
-        "ask_age_mode": "您想如何添加年龄详细信息？",
+        "free_first": "🎁 您的前 **{limit}** 个惊喜是**免费**的！",
+        "ask_name": "我们今天在庆祝什么？发送名字：",
+        "ask_wish": "为他们写一份温馨的祝福：",
+        "ask_age_mode": "您想如何添加详细信息？",
         "ask_dob_input": (
-            "📅 请以 **YYYY-MM-DD** 格式发送出生日期（例如 `2003-12-24`）："
+            "📅 请以 **YYYY-MM-DD** 格式发送日期（例如 `2026-09-27`）："
         ),
-        "ask_age_input": "🔢 请直接输入数字年龄（例如 `22`）：",
+        "ask_age_input": "🔢 请直接输入数字：",
         "ask_year": "选择年份：",
         "ask_month": "选择月份：",
         "ask_date": "选择日期：",
@@ -412,19 +409,19 @@ BOT_TEXTS = {
         "country_choice": "🗣️ **{country}** க்கான மொழியைத் தேர்ந்தெடுக்கவும்:",
         "lang_updated": "✅ மொழி முன்னுரிமை வெற்றிகரமாக புதுப்பிக்கப்பட்டது!",
         "owner_active": (
-            "🤍 **உரிமையாளர் பயன்முறை активен!**\n\nஇன்று யாருடைய பிறந்தநாளைக்"
-            " கொண்டாடுகிறோம்? பெயரை அனுப்பவும்:"
+            "🤍 **உரிமையாளர் பயன்முறை активен!**\n\nஇன்று என்ன கொண்டாடுகிறோம்?"
+            " பெயரை அனுப்பவும்:"
         ),
         "free_remaining": "🎁 உங்களிடம் **{remaining}** இலவச ஆச்சரியங்கள் மீதமுள்ளன!",
         "free_first": "🎁 உங்கள் முதல் **{limit}** ஆச்சரியங்கள் **இலவசம்**!",
-        "ask_name": "இன்று யாருடைய பிறந்தநாளைக் கொண்டாடுகிறோம்? பெயரை அனுப்பவும்:",
-        "ask_wish": "அவர்களுக்காக ஒரு இனிய பிறந்தநாள் வாழ்த்தை எழுதுங்கள்:",
-        "ask_age_mode": "வயது விவரங்களை எவ்வாறு சேர்க்க விரும்புகிறீர்கள்?",
+        "ask_name": "இன்று என்ன கொண்டாடுகிறோம்? பெயரை அனுப்பவும்:",
+        "ask_wish": "அவர்களுக்காக ஒரு இனிய வாழ்த்தை எழுதுங்கள்:",
+        "ask_age_mode": "விவரங்களை எவ்வாறு சேர்க்க விரும்புகிறீர்கள்?",
         "ask_dob_input": (
-            "📅 பிறந்த தேதியை **YYYY-MM-DD** வடிவத்தில் அனுப்பவும் (எ.கா."
-            " `2003-12-24`):"
+            "📅 தேதியை **YYYY-MM-DD** வடிவத்தில் அனுப்பவும் (எ.கா."
+            " `2026-09-27`):"
         ),
-        "ask_age_input": "🔢 நேரடி வயதை எண்ணாக உள்ளிடவும் (எ.கா. `22`):",
+        "ask_age_input": "🔢 விவரங்களை எண்ணாக உள்ளிடவும்:",
         "ask_year": "ஆண்டைத் தேர்ந்தெடுக்கவும்:",
         "ask_month": "மாதத்தைத் தேர்ந்தெடுக்கவும்:",
         "ask_date": "தேதியைத் தேர்ந்தெடுக்கவும்:",
@@ -446,23 +443,19 @@ BOT_TEXTS = {
         "country_choice": "🗣️ **{country}** uchun tilni tanlang:",
         "lang_updated": "✅ Til muvaffaqiyatli yangilandi!",
         "owner_active": (
-            "🤍 **Egasi rejimi faol!**\n\nBugun kimning tug'ilgan kunini"
-            " nishonlayapmiz? Ismini yuboring:"
+            "🤍 **Egasi rejimi faol!**\n\nBugun nishonlayapmiz? Ismini yuboring:"
         ),
         "free_remaining": "🎁 Sizda **{remaining}** ta bepul imkoniyat qoldi!",
         "free_first": (
             "🎁 Dastlabki **{limit}** ta sovg'angiz **BEPUL** yaratiladi!"
         ),
-        "ask_name": (
-            "Bugun kimning tug'ilgan kunini nishonlayapmiz? Ismini yuboring:"
-        ),
-        "ask_wish": "Tug'ilgan kun uchun samimiy tilak yozing:",
-        "ask_age_mode": "Yosh tafsilotlarini qanday kiritmoqchisiz?",
+        "ask_name": "Bugun nishonlayapmiz? Ismini yuboring:",
+        "ask_wish": "Samimiy tilak yozing:",
+        "ask_age_mode": "Tafsilotlarni qanday kiritmoqchisiz?",
         "ask_dob_input": (
-            "📅 Tug'ilgan sanani **YYYY-MM-DD** formatida yuboring (masalan:"
-            " `2003-12-24`):"
+            "📅 Sanani **YYYY-MM-DD** formatida yuboring (masalan: `2026-09-27`):"
         ),
-        "ask_age_input": "🔢 To'g'ridan-to'g'ri yoshni kiriting (masalan: `22`):",
+        "ask_age_input": "🔢 Raqam sifatida kiriting:",
         "ask_year": "Yilni tanlang:",
         "ask_month": "Oyni tanlang:",
         "ask_date": "Sanani tanlang:",
@@ -484,19 +477,19 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Забонро барои **{country}** интихоб кунед:",
         "lang_updated": "✅ Забон бо муваффақият нав карда шуд!",
         "owner_active": (
-            "🤍 **Режими соҳибмулк фаъол аст!**\n\nИмрӯз таваллуди киро"
-            " ҷашн мегирем? Номро фиристед:"
+            "🤍 **Режими соҳибмулк фаъол аст!**\n\nИмрӯз чӣ ҷашн"
+            " мегирем? Номро фиристед:"
         ),
         "free_remaining": "🎁 Шумо **{remaining}** сюрпризи ройгон доред!",
         "free_first": "🎁 Аввалин **{limit}** сюрпризи шумо **РОЙГОН** аст!",
-        "ask_name": "Имрӯз таваллуди киро ҷашн мегирем? Номро фиристед:",
-        "ask_wish": "Табрики зебои зодрӯз нависед:",
-        "ask_age_mode": "Тафсилоти синну солро чӣ тавр илова кардан мехоҳед?",
+        "ask_name": "Имрӯз чӣ ҷашн мегирем? Номро фиристед:",
+        "ask_wish": "Табрики зебо нависед:",
+        "ask_age_mode": "Тафсилотро чӣ тавр iлова кардан мехоҳед?",
         "ask_dob_input": (
-            "📅 Санаи таваллудро бо формати **YYYY-MM-DD** фиристед (масалан:"
-            " `2003-12-24`):"
+            "📅 Санаро бо формати **YYYY-MM-DD** фиристед (масалан:"
+            " `2026-09-27`):"
         ),
-        "ask_age_input": "🔢 Синну солро мустақиман ҳамчун рақам ворид кунед (масалан: `22`):",
+        "ask_age_input": "🔢 Ҳамчун рақам ворид кунед:",
         "ask_year": "Солро интихоб кунед:",
         "ask_month": "Моҳро интихоб кунед:",
         "ask_date": "Санаро интихоб кунед:",
@@ -518,21 +511,20 @@ BOT_TEXTS = {
         "country_choice": "🗣️ زبان خود را برای **{country}** انتخاب کنید:",
         "lang_updated": "✅ زبان با موفقیت به‌روزرسانی شد!",
         "owner_active": (
-            "🤍 **حالت مالک فعال است!**\n\nامروز تولد چه کسی را جشن می گیریم؟ نام"
+            "🤍 **حالت مالک فعال است!**\n\nامروز چه مناسبتی را جشن می گیریم؟ نام"
             " را بفرستید:"
         ),
         "free_remaining": "🎁 شما **{remaining}** سورپرایز رایگان دیگر دارید!",
         "free_first": (
             "🎁 **{limit}** سورپرایز اول شما کاملاً **رایگان** است!"
         ),
-        "ask_name": "امروز تولد چه کسی را جشن می گیریم؟ نام را بفرستید:",
-        "ask_wish": "یک پیام تبریک تولد صمیمی بنویسید:",
-        "ask_age_mode": "چگونه می‌خواهید جزئیات سن را اضافه کنید؟",
+        "ask_name": "امروز چه مناسبتی را جشن می گیریم؟ نام را بفرستید:",
+        "ask_wish": "یک پیام تبریک صمیمی بنویسید:",
+        "ask_age_mode": "چگونه می‌خواهید جزئیات را اضافه کنید؟",
         "ask_dob_input": (
-            "📅 لطفاً تاریخ تولد را با فرمت **YYYY-MM-DD** بفرستید (مثلا:"
-            " `2003-12-24`):"
+            "📅 تاریخ را با فرمت **YYYY-MM-DD** بفرستید (مثلا: `2026-09-27`):"
         ),
-        "ask_age_input": "🔢 لطفاً سن را مستقیماً به عنوان یک عدد وارد کنید (مثلا: `22`):",
+        "ask_age_input": "🔢 لطفاً به عنوان یک عدد وارد کنید:",
         "ask_year": "سال را انتخاب کنید:",
         "ask_month": "ماه را انتخاب کنید:",
         "ask_date": "تاریخ را انتخاب کنید:",
@@ -554,7 +546,7 @@ BOT_TEXTS = {
         "country_choice": "🗣️ **{country}** အတွက် ဘာသာစကားကို ရွေးပါ-",
         "lang_updated": "✅ ဘာသာစကား အောင်မြင်စွာ ပြောင်းလဲပြီးပါပြီ။",
         "owner_active": (
-            "🤍 **ပိုင်ရှင်မုဒ် အလုပ်လုပ်နေသည်!**\n\nယနေ့ မည်သူ့မွေးနေ့ကို"
+            "🤍 **ပိုင်ရှင်မုဒ် အလုပ်လုပ်နေသည်!**\n\nယနေ့ မည်သည့်ပွဲကို"
             " ကျင်းပနေသလဲ? အမည်ကို ပို့ပါ-"
         ),
         "free_remaining": (
@@ -564,14 +556,14 @@ BOT_TEXTS = {
             "🎁 ပထမဆုံး **{limit}** ခုသော အံ့သြစရာများမှာ"
             " **အခမဲ့** ဖြစ်ပါသည်!"
         ),
-        "ask_name": "ယနေ့ မည်သူ့မွေးနေ့ကို ကျင်းပနေသလဲ? အမည်ကို ပို့ပါ-",
-        "ask_wish": "မွေးနေ့ဆုတောင်း စာတိုလေး ရေးပါ-",
-        "ask_age_mode": "အသက်အချက်အလက်ကို မည်သို့ထည့်လိုသနည်း။",
+        "ask_name": "ယနေ့ မည်သည့်ပွဲကို ကျင်းပနေသလဲ? အမည်ကို ပို့ပါ-",
+        "ask_wish": "ဆုတောင်း စာတိုလေး ရေးပါ-",
+        "ask_age_mode": "အချက်အလက်ကို မည်သို့ထည့်လိုသနည်း။",
         "ask_dob_input": (
-            "📅 မွေးနေ့ကို **YYYY-MM-DD** ပုံစံဖြင့် ပို့ပါ (ဥပမာ -"
-            " `2003-12-24`)-"
+            "📅 ရက်စွဲကို **YYYY-MM-DD** ပုံစံဖြင့် ပို့ပါ (ဥပမာ -"
+            " `2026-09-27`)-"
         ),
-        "ask_age_input": "🔢 အသက်ကို နံပါတ်ဖြင့် ရိုက်ထည့်ပါ (ဥပမာ - `22`)-",
+        "ask_age_input": "🔢 နံပါတ်ဖြင့် ရိုက်ထည့်ပါ:",
         "ask_year": "ခုနှစ်ကို ရွေးပါ-",
         "ask_month": "လကို ရွေးပါ-",
         "ask_date": "ရက်စွဲကို ရွေးပါ-",
@@ -593,19 +585,19 @@ BOT_TEXTS = {
         "country_choice": "🗣️ **{country}** üçün dilinizi seçin:",
         "lang_updated": "✅ Dil seçimi uğurla yeniləndi!",
         "owner_active": (
-            "🤍 **Sahib Rejimi Aktivdir!**\n\nBu gün kimin ad gününü"
-            " qeyd edirik? Adını göndərin:"
+            "🤍 **Sahib Rejimi Aktivdir!**\n\nBu gün nəyi qeyd edirik? Adını"
+            " göndərin:"
         ),
         "free_remaining": "🎁 **{remaining}** pulsuz sürpriz haqqınız qaldı!",
-        "free_first": "🎁 İlk **{limit}** doğum günü sürpriziniz **PULSUZDUR**!",
-        "ask_name": "Bu gün kimin ad gününü qeyd edirik? Adını göndərin:",
-        "ask_wish": "Gözəl bir doğum günü mesajı yazın:",
-        "ask_age_mode": "Yaş məlumatlarını necə əlavə etmək istəyirsiniz?",
+        "free_first": "🎁 İlk **{limit}** sürpriziniz **PULSUZDUR**!",
+        "ask_name": "Bu gün nəyi qeyd edirik? Adını göndərin:",
+        "ask_wish": "Gözəl bir mesaj yazın:",
+        "ask_age_mode": "Məlumatları necə əlavə etmək istəyirsiniz?",
         "ask_dob_input": (
-            "📅 Doğum tarixini **YYYY-MM-DD** formatında göndərin (məsələn:"
-            " `2003-12-24`):"
+            "📅 Tarixi **YYYY-MM-DD** formatında göndərin (məsələn:"
+            " `2026-09-27`):"
         ),
-        "ask_age_input": "🔢 Birbaşa yaşınızı rəqəm olaraq daxil edin (məsələn: `22`):",
+        "ask_age_input": "🔢 Rəqəm olaraq daxil edin:",
         "ask_year": "İli seçin:",
         "ask_month": "Ayı seçin:",
         "ask_date": "Tarixi seçin:",
@@ -627,26 +619,21 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Ընտրեք ձեր լեզուն **{country}**-ի համար:",
         "lang_updated": "✅ Լեզվի նախընտրությունը հաջողությամբ թարմացվեց:",
         "owner_active": (
-            "🤍 **Սեփականատիրոջ ռեժիմն ակտիվ է:**\n\nՈ՞ւմ ծնունդն ենք"
-            " նշում այսօր: Ուղարկեք անունը՝"
+            "🤍 **Սեփականատիրոջ ռեժիմն ակտիվ է:**\n\nԻ՞նչ ենք նշում այսօր:"
+            " Ուղարկեք անունը՝"
         ),
         "free_remaining": (
             "🎁 Դուք ունեք **{remaining}** անվճար անակնկալ հնարավորություն:"
         ),
-        "free_first": (
-            "🎁 Ձեր առաջին **{limit}** ծննդյան անակնկալներն"
-            " **ԱՆՎՃԱՐ** են:"
-        ),
-        "ask_name": "Ո՞ւմ ծնունդն ենք նշում այսօր: Ուղարկեք անունը՝",
-        "ask_wish": "Գրեք ջերմ ծննդյան մաղթանք՝",
-        "ask_age_mode": "Ինչպ՞ես եք ցանկանում ավելացնել տարիքի տվյալները:",
+        "free_first": "🎁 Ձեր առաջին **{limit}** անակնկալներն **ԱՆՎՃԱՐ** են:",
+        "ask_name": "Ի՞նչ ենք նշում այսօր: Ուղարկեք անունը՝",
+        "ask_wish": "Գրեք ջերմ մաղթանք՝",
+        "ask_age_mode": "Ինչպ՞ես եք ցանկանում ավելացնել տվյալները:",
         "ask_dob_input": (
-            "📅 Խնդրում ենք ուղարկել ծննդյան ամսաթիվը **YYYY-MM-DD** ձևաչափով"
-            " (օր.՝ `2003-12-24`):"
+            "📅 Ուղարկեք ամսաթիվը **YYYY-MM-DD** ձևաչափով (օր.՝"
+            " `2026-09-27`):"
         ),
-        "ask_age_input": (
-            "🔢 Խնդրում ենք մուտքագրել ուղղակի տարիքը որպես թիվ (օր.՝ `22`):"
-        ),
+        "ask_age_input": "🔢 Մուտքագրեք որպես թիվ:",
         "ask_year": "Ընտրեք տարին՝",
         "ask_month": "Ընտրեք ամիսը՝",
         "ask_date": "Ընտրեք ամսաթիվը՝",
@@ -668,21 +655,18 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Выберыце мову для **{country}**:",
         "lang_updated": "✅ Мова паспяхова абноўлена!",
         "owner_active": (
-            "🤍 **Рэжым уладальніка актыўны!**\n\nЧый дзень нараджэння мы"
-            " сёння святкуем? Адпраўце імя:"
+            "🤍 **Рэжым уладальніка актыўны!**\n\nШто мы сёння святкуем?"
+            " Адпраўце імя:"
         ),
         "free_remaining": "🎁 У вас засталося **{remaining}** бясплатных сюрпрызаў!",
         "free_first": "🎁 Вашы першыыя **{limit}** сюрпрызаў **БЯСПЛАТНЫЯ**!",
-        "ask_name": "Чый дзень нараджэння мы сёння святкуем? Адпраўце імя:",
-        "ask_wish": "Напішыце цёплае віншаванне з днём нараджэння:",
-        "ask_age_mode": "Як вы хочаце дадаць звесткі пра ўзрост?",
+        "ask_name": "Што мы сёння святкуем? Адпраўце імя:",
+        "ask_wish": "Напішыце цёплае віншаванне:",
+        "ask_age_mode": "Як вы хочаце дадаць звесткі?",
         "ask_dob_input": (
-            "📅 Калі ласка, адпраўце дату нараджэння ў фармаце **YYYY-MM-DD**"
-            " (напр., `2003-12-24`):"
+            "📅 Адпраўце дату ў фармаце **YYYY-MM-DD** (напр., `2003-12-24`):"
         ),
-        "ask_age_input": (
-            "🔢 Калі ласка, увядзіце ўзрост лічбай (напр., `22`):"
-        ),
+        "ask_age_input": "🔢 Увядзіце ўзрост лічбай (напр., `22`):",
         "ask_year": "Выберыце год:",
         "ask_month": "Выберыце месяц:",
         "ask_date": "Выберыце дату:",
@@ -704,26 +688,21 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Pilih bahasa Anda untuk **{country}**:",
         "lang_updated": "✅ Preferensi bahasa berhasil diperbarui!",
         "owner_active": (
-            "🤍 **Mode Pemilik Aktif!**\n\nUlang tahun siapa yang kita"
-            " rayakan hari ini? Kirim namanya:"
+            "🤍 **Mode Pemilik Aktif!**\n\nApa yang kita rayakan hari ini?"
+            " Kirim namanya:"
         ),
         "free_remaining": (
             "🎁 Anda memiliki **{remaining}** kejutan gratis yang tersisa!"
         ),
-        "free_first": (
-            "🎁 **{limit}** kejutan ulang tahun pertama Anda adalah"
-            " **GRATIS**!"
-        ),
-        "ask_name": "Ulang tahun siapa yang kita rayakan hari ini? Kirim namanya:",
-        "ask_wish": "Tulis ucapan selamat ulang tahun yang manis:",
+        "free_first": "🎁 **{limit}** kejutan pertama Anda adalah **GRATIS**!",
+        "ask_name": "Apa yang kita rayakan hari ini? Kirim namanya:",
+        "ask_wish": "Tulis ucapan yang manis:",
         "ask_age_mode": "Bagaimana Anda ingin menambahkan detail usia?",
         "ask_dob_input": (
-            "📅 Silakan kirim Tanggal Lahir dalam format **YYYY-MM-DD** (cth."
+            "📅 Silakan kirim Tanggal dalam format **YYYY-MM-DD** (cth."
             " `2003-12-24`):"
         ),
-        "ask_age_input": (
-            "🔢 Silakan masukkan usia langsung sebagai angka (cth. `22`):"
-        ),
+        "ask_age_input": "🔢 Silakan masukkan usia sebagai angka (cth. `22`):",
         "ask_year": "Pilih tahun:",
         "ask_month": "Pilih bulan:",
         "ask_date": "Pilih tanggal:",
@@ -745,23 +724,18 @@ BOT_TEXTS = {
         "country_choice": "🗣️ **{country}** için dilinizi seçin:",
         "lang_updated": "✅ Dil tercihi başarıyla güncellendi!",
         "owner_active": (
-            "🤍 **Sahip Modu Aktif!**\n\nBugün kimin doğum gününü"
-            " kutluyoruz? Adını gönderin:"
+            "🤍 **Sahip Modu Aktif!**\n\nBugün neyi kutluyoruz? Adını gönderin:"
         ),
         "free_remaining": "🎁 Kalan **{remaining}** ücretsiz sürpriziniz var!",
-        "free_first": (
-            "🎁 İlk **{limit}** doğum günü sürpriziniz **ÜCRETSİZ**!"
-        ),
-        "ask_name": "Bugün kimin doğum gününü kutluyoruz? Adını gönderin:",
-        "ask_wish": "Tatlı bir doğum günü mesajı yazın:",
+        "free_first": "🎁 İlk **{limit}** sürpriziniz **ÜCRETSİZ**!",
+        "ask_name": "Bugün neyi kutluyoruz? Adını gönderin:",
+        "ask_wish": "Tatlı bir mesaj yazın:",
         "ask_age_mode": "Yaş detaylarını nasıl eklemek istersiniz?",
         "ask_dob_input": (
-            "📅 Lütfen Doğum Tarihini **YYYY-MM-DD** formatında gönderin (örn."
+            "📅 Lütfen Tarihi **YYYY-MM-DD** formatında gönderin (örn."
             " `2003-12-24`):"
         ),
-        "ask_age_input": (
-            "🔢 Lütfen doğrudan yaşı bir sayı olarak girin (örn. `22`):"
-        ),
+        "ask_age_input": "🔢 Lütfen yaşı bir sayı olarak girin (örn. `22`):",
         "ask_year": "Yılı seçin:",
         "ask_month": "Ayı seçin:",
         "ask_date": "Tarihi seçin:",
@@ -783,23 +757,18 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Escolha seu idioma para **{country}**:",
         "lang_updated": "✅ Preferência de idioma atualizada com sucesso!",
         "owner_active": (
-            "🤍 **Modo Proprietário Ativo!**\n\nDe quem é o aniversário"
-            " hoje? Envie o nome:"
+            "🤍 **Modo Proprietário Ativo!**\n\nO que estamos celebrando hoje?"
+            " Envie o nome:"
         ),
         "free_remaining": "🎁 Você tem **{remaining}** surpresa(s) gratuita(s)!",
-        "free_first": (
-            "🎁 Suas primeiras **{limit}** surpresas são **GRÁTIS**!"
-        ),
-        "ask_name": "De quem é o aniversário hoje? Envie o nome:",
-        "ask_wish": "Escreva uma mensagem de aniversário carinhosa:",
-        "ask_age_mode": "Como você gostaria de adicionar os detalhes de idade?",
+        "free_first": "🎁 Suas primeiras **{limit}** surpresas são **GRÁTIS**!",
+        "ask_name": "O que estamos celebrando hoje? Envie o nome:",
+        "ask_wish": "Escreva uma mensagem carinhosa:",
+        "ask_age_mode": "Como você gostaria de adicionar os detalhes?",
         "ask_dob_input": (
-            "📅 Por favor, envie a Data de Nascimento no formato **YYYY-MM-DD**"
-            " (ex: `2003-12-24`):"
+            "📅 Envie a Data no formato **YYYY-MM-DD** (ex: `2003-12-24`):"
         ),
-        "ask_age_input": (
-            "🔢 Por favor, digite a idade diretamente como número (ex: `22`):"
-        ),
+        "ask_age_input": "🔢 Digite a idade diretamente como número (ex: `22`):",
         "ask_year": "Escolha o ano:",
         "ask_month": "Escolha o mês:",
         "ask_date": "Escolha a data:",
@@ -821,21 +790,18 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Виберіть мову для **{country}**:",
         "lang_updated": "✅ Мову успішно оновлено!",
         "owner_active": (
-            "🤍 **Режим власника активний!**\n\nЧий день народження ми сьогодні"
-            " святкуємо? Надішліть ім'я:"
+            "🤍 **Режим власника активний!**\n\nЩо ми сьогодні святкуємо?"
+            " Надішліть ім'я:"
         ),
         "free_remaining": "🎁 У вас залишилось **{remaining}** безкоштовних сюрпризів!",
         "free_first": "🎁 Ваші перші **{limit}** сюрпризів **безкоштовні**!",
-        "ask_name": "Чий день народження ми сьогодні святкуємо? Надішліть ім'я:",
-        "ask_wish": "Напишіть тепле привітання з днем народження:",
+        "ask_name": "Що ми сьогодні святкуємо? Надішліть ім'я:",
+        "ask_wish": "Напишіть тепле привітання:",
         "ask_age_mode": "Як ви хочете додати дані про вік?",
         "ask_dob_input": (
-            "📅 Будь ласка, надішліть дату народження у форматі **YYYY-MM-DD**"
-            " (напр., `2003-12-24`):"
+            "📅 Надішліть дату у форматі **YYYY-MM-DD** (напр., `2003-12-24`):"
         ),
-        "ask_age_input": (
-            "🔢 Будь ласка, введіть вік числом (напр., `22`):"
-        ),
+        "ask_age_input": "🔢 Введіть вік числом (напр., `22`):",
         "ask_year": "Виберіть рік:",
         "ask_month": "Виберіть місяць:",
         "ask_date": "Виберіть дату:",
@@ -857,18 +823,18 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Valitse kieli maalle **{country}**:",
         "lang_updated": "✅ Kieliasetus päivitetty onnistuneesti!",
         "owner_active": (
-            "🤍 **Omistajatila aktiivinen!**\n\nKenen syntymäpäivää"
-            " juhlimme tänään? Lähetä nimi:"
+            "🤍 **Omistajatila aktiivinen!**\n\nMitä juhlimme tänään? Lähetä"
+            " nimi:"
         ),
         "free_remaining": (
             "🎁 Sinulla on **{remaining}** ilmainen yllätys jäljellä!"
         ),
         "free_first": "🎁 Ensimmäiset **{limit}** yllätystäsi ovat **ILMAISIA**!",
-        "ask_name": "Kenen syntymäpäivää juhlimme tänään? Lähetä nimi:",
-        "ask_wish": "Kirjoita lämmin syntymäpäivätoivotus:",
+        "ask_name": "Mitä juhlimme tänään? Lähetä nimi:",
+        "ask_wish": "Kirjoita lämmin toivotus:",
         "ask_age_mode": "Miten haluat lisätä ikätiedot?",
         "ask_dob_input": (
-            "📅 Lähetä syntymäaika muodossa **YYYY-MM-DD** (esim. `2003-12-24`):"
+            "📅 Lähetä päivämäärä muodossa **YYYY-MM-DD** (esim. `2003-12-24`):"
         ),
         "ask_age_input": "🔢 Anna suora ikä numerona (esim. `22`):",
         "ask_year": "Valitse vuosi:",
@@ -892,19 +858,18 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Kies je taal voor **{country}**:",
         "lang_updated": "✅ Taalvoorkeur succesvol bijgewerkt!",
         "owner_active": (
-            "🤍 **Eigenaarmodus actief!**\n\nWiens verjaardag vieren we"
-            " vandaag? Stuur de naam:"
+            "🤍 **Eigenaarmodus actief!**\n\nWat vieren we vandaag? Stuur de"
+            " naam:"
         ),
         "free_remaining": "🎁 Je hebt nog **{remaining}** gratis verrassing(en)!",
         "free_first": "🎁 Je eerste **{limit}** verrassingen zijn **GRATIS**!",
-        "ask_name": "Wiens verjaardag vieren we vandaag? Stuur de naam:",
-        "ask_wish": "Schrijf een lieve verjaardagswens:",
+        "ask_name": "Wat vieren we vandaag? Stuur de naam:",
+        "ask_wish": "Schrijf een lieve wens:",
         "ask_age_mode": "Hoe wil je de leeftijdsgegevens toevoegen?",
         "ask_dob_input": (
-            "📅 Stuur de geboortedatum in **YYYY-MM-DD** formaat (bijv."
-            " `2003-12-24`):"
+            "📅 Stuur de datum in **YYYY-MM-DD** formaat (bijv. `2003-12-24`):"
         ),
-        "ask_age_input": "🔢 Voer de directe leeftijd in als getal (bijv. `22`):",
+        "ask_age_input": "🔢 Voer de leeftijd in als getal (bijv. `22`):",
         "ask_year": "Kies het jaar:",
         "ask_month": "Kies de maand:",
         "ask_date": "Kies de datum:",
@@ -926,8 +891,8 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Wybierz język dla **{country}**:",
         "lang_updated": "✅ Pomyślnie zaktualizowano preferencje językowe!",
         "owner_active": (
-            "🤍 **Tryb właściciela aktywny!**\n\nCzyje urodziny dziś"
-            " świętujemy? Wyślij imię:"
+            "🤍 **Tryb właściciela aktywny!**\n\nCo dzisiaj świętujemy? Wyślij"
+            " imię:"
         ),
         "free_remaining": (
             "🎁 Masz jeszcze **{remaining}** darmowych niespodzianek!"
@@ -935,14 +900,13 @@ BOT_TEXTS = {
         "free_first": (
             "🎁 Twoje pierwsze **{limit}** niespodzianek jest **DARMOWYCH**!"
         ),
-        "ask_name": "Czyje urodziny dziś świętujemy? Wyślij imię:",
-        "ask_wish": "Napisz miłe życzenia urodzinowe:",
+        "ask_name": "Co dzisiaj świętujemy? Wyślij imię:",
+        "ask_wish": "Napisz miłe życzenia:",
         "ask_age_mode": "Jak chcesz dodać szczegóły wieku?",
         "ask_dob_input": (
-            "📅 Wyślij datę urodzenia w formacie **YYYY-MM-DD** (np."
-            " `2003-12-24`):"
+            "📅 Wyślij datę w formacie **YYYY-MM-DD** (np. `2003-12-24`):"
         ),
-        "ask_age_input": "🔢 Wprowadź bezpośredni wiek jako liczbę (np. `22`):",
+        "ask_age_input": "🔢 Wprowadź wiek jako liczbę (np. `22`):",
         "ask_year": "Wybierz rok:",
         "ask_month": "Wybierz miesiąc:",
         "ask_date": "Wybierz datę:",
@@ -964,17 +928,15 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Välj ditt språk för **{country}**:",
         "lang_updated": "✅ Språkinställningen har uppdaterats!",
         "owner_active": (
-            "🤍 **Ägarläge aktivt!**\n\nVems födelsedag firar vi idag? Skicka"
-            " namnet:"
+            "🤍 **Ägarläge aktivt!**\n\nVad firar vi idag? Skicka namnet:"
         ),
         "free_remaining": "🎁 Du har **{remaining}** gratis överraskningar kvar!",
         "free_first": "🎁 Dina första **{limit}** överraskningar är **GRATIS**!",
-        "ask_name": "Vems födelsedag firar vi idag? Skicka namnet:",
-        "ask_wish": "Skriv en fin födelsedagshälsning:",
+        "ask_name": "Vad firar vi idag? Skicka namnet:",
+        "ask_wish": "Skriv en fin hälsning:",
         "ask_age_mode": "Hur vill du lägga till åldersdetaljer?",
         "ask_dob_input": (
-            "📅 Skicka födelsedatum i formatet **YYYY-MM-DD** (t.ex."
-            " `2003-12-24`):"
+            "📅 Skicka datum i formatet **YYYY-MM-DD** (t.ex. `2003-12-24`):"
         ),
         "ask_age_input": "🔢 Ange ålder direkt som ett nummer (t.ex. `22`):",
         "ask_year": "Välj år:",
@@ -998,18 +960,17 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Velg språk for **{country}**:",
         "lang_updated": "✅ Språkvalg oppdatert!",
         "owner_active": (
-            "🤍 **Eiermodus aktiv!**\n\nHvis bursdag feirer vi i dag? Send"
-            " navnet:"
+            "🤍 **Eiermodus aktiv!**\n\nHva feirer vi i dag? Send navnet:"
         ),
         "free_remaining": (
             "🎁 Du har **{remaining}** gratis overraskelser igjen!"
         ),
         "free_first": "🎁 Dine første **{limit}** overraskelser er **GRATIS**!",
-        "ask_name": "Hvis bursdag feirer vi i dag? Send navnet:",
-        "ask_wish": "Skriv en fin bursdagshilsen:",
+        "ask_name": "Hva feirer vi i dag? Send navnet:",
+        "ask_wish": "Skriv en fin hilsen:",
         "ask_age_mode": "Hvordan vil du legge til aldersdetaljer?",
         "ask_dob_input": (
-            "📅 Send fødselsdato i formatet **YYYY-MM-DD** (f.eks. `2003-12-24`):"
+            "📅 Send dato i formatet **YYYY-MM-DD** (f.eks. `2003-12-24`):"
         ),
         "ask_age_input": "🔢 Angi alder direkte som et tall (f.eks. `22`):",
         "ask_year": "Velg år:",
@@ -1033,18 +994,17 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Vælg dit sprog for **{country}**:",
         "lang_updated": "✅ Sprogvalg opdateret!",
         "owner_active": (
-            "🤍 **Ejertilstand aktiv!**\n\nHvis fødselsdag fejrer vi i dag?"
-            " Send navnet:"
+            "🤍 **Ejertilstand aktiv!**\n\nHvad fejrer vi i dag? Send navnet:"
         ),
         "free_remaining": "🎁 Du har **{remaining}** gratis overraskelser tilbage!",
         "free_first": "🎁 Dine første **{limit}** overraskelser er **GRATIS**!",
-        "ask_name": "Hvis fødselsdag fejrer vi i dag? Send navnet:",
-        "ask_wish": "Skriv en sød fødselsdagshilsen:",
+        "ask_name": "Hvad fejrer vi i dag? Send navnet:",
+        "ask_wish": "Skriv en sød hilsen:",
         "ask_age_mode": "Hvordan vil du tilføje aldersdetaljer?",
         "ask_dob_input": (
-            "📅 Send fødselsdato i formatet **YYYY-MM-DD** (f.eks. `2003-12-24`):"
+            "📅 Send dato i formatet **YYYY-MM-DD** (f.eks. `2003-12-24`):"
         ),
-        "ask_age_input": "🔢 Indtast venligst alderen direkte som et tal (f.eks. `22`):",
+        "ask_age_input": "🔢 Indtast alderen direkte som et tal (f.eks. `22`):",
         "ask_year": "Vælg år:",
         "ask_month": "Vælg måned:",
         "ask_date": "Vælg dato:",
@@ -1066,18 +1026,18 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Επιλέξτε τη γλώσσα σας για **{country}**:",
         "lang_updated": "✅ Η προτίμηση γλώσσας ενημερώθηκε επιτυχώς!",
         "owner_active": (
-            "🤍 **Ενεργή λειτουργία κατόχου!**\n\nΤα γενέθλια ποιου"
-            " γιορτάζουμε σήμερα; Στείλτε το όνομα:"
+            "🤍 **Ενεργή λειτουργία κατόχου!**\n\nΤι γιορτάζουμε σήμερα;"
+            " Στείλτε το όνομα:"
         ),
         "free_remaining": "🎁 Έχετε **{remaining}** δωρεάν έκπληξη/εις απομείνει!",
         "free_first": (
             "🎁 Οι πρώτες **{limit}** εκπλήξεις σας είναι **ΔΩΡΕΑΝ**!"
         ),
-        "ask_name": "Τα γενέθλια ποιου γιορτάζουμε σήμερα; Στείλτε το όνομα:",
-        "ask_wish": "Γράψτε ένα γλυκό μήνυμα γενεθλίων:",
-        "ask_age_mode": "Πώς θα θέλατε να προσθέσετε λεπτομέρειες ηλικίας;",
+        "ask_name": "Τι γιορτάζουμε σήμερα; Στείλτε το όνομα:",
+        "ask_wish": "Γράψτε ένα γλυκό μήνυμα:",
+        "ask_age_mode": "Πώς θα θέλατε να προσθέσετε λεπτομέρειες;",
         "ask_dob_input": (
-            "📅 Στείλτε την ημερομηνία γέννησης σε μορφή **YYYY-MM-DD** (π.χ."
+            "📅 Στείλτε την ημερομηνία σε μορφή **YYYY-MM-DD** (π.χ."
             " `2003-12-24`):"
         ),
         "ask_age_input": (
@@ -1104,17 +1064,15 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Vyberte jazyk pro **{country}**:",
         "lang_updated": "✅ Jazykové předvolby byly úspěšně aktualizovány!",
         "owner_active": (
-            "🤍 **Režim vlastníka aktivní!**\n\nČí narozeniny dnes slavíme?"
-            " Pošlete jméno:"
+            "🤍 **Režim vlastníka aktivní!**\n\nCo dnes slavíme? Pošlete jméno:"
         ),
         "free_remaining": "🎁 Zbývá vám **{remaining}** bezplatných překvapení!",
         "free_first": "🎁 Vašich prvních **{limit}** překvapení je **ZDARMA**!",
-        "ask_name": "Čí narozeniny dnes slavíme? Pošlete jméno:",
-        "ask_wish": "Napište milé narozeninové přání:",
-        "ask_age_mode": "Jak chcete přidat údaje o věku?",
+        "ask_name": "Co dnes slavíme? Pošlete jméno:",
+        "ask_wish": "Napište milé přání:",
+        "ask_age_mode": "Jak chcete přidat údaje?",
         "ask_dob_input": (
-            "📅 Pošlete datum narození ve formátu **YYYY-MM-DD** (např."
-            " `2003-12-24`):"
+            "📅 Pošlete datum ve formátu **YYYY-MM-DD** (např. `2003-12-24`):"
         ),
         "ask_age_input": "🔢 Zadejte věk přímo jako číslo (např. `22`):",
         "ask_year": "Vyberte rok:",
@@ -1138,21 +1096,18 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Válaszd ki a nyelvet ehhez: **{country}**:",
         "lang_updated": "✅ Nyelvi beállítás sikeresen frissítve!",
         "owner_active": (
-            "🤍 **Tulajdonos mód aktív!**\n\nKinek a születésnapját"
-            " ünnepeljük ma? Küldd el a nevet:"
+            "🤍 **Tulajdonos mód aktív!**\n\nMit ünnepelünk ma? Küldd el a nevet:"
         ),
         "free_remaining": "🎁 Még **{remaining}** ingyenes meglepetésed van!",
         "free_first": "🎁 Az első **{limit}** meglepetésed **INGYENES**!",
-        "ask_name": "Kinek a születésnapját ünnepeljük ma? Küldd el a nevet:",
-        "ask_wish": "Írj egy kedves születésnapi üzenetet:",
-        "ask_age_mode": "Hogyan szeretnéd hozzáadni a életkor adatait?",
+        "ask_name": "Mit ünnepelünk ma? Küldd el a nevet:",
+        "ask_wish": "Írj egy kedves üzenetet:",
+        "ask_age_mode": "Hogyan szeretnéd hozzáadni az adatokat?",
         "ask_dob_input": (
-            "📅 Kérlek küldd el a születési dátumot **YYYY-MM-DD** formátumban"
-            " (pl. `2003-12-24`):"
+            "📅 Kérlek küldd el a dátumot **YYYY-MM-DD** formátumban (pl."
+            " `2003-12-24`):"
         ),
-        "ask_age_input": (
-            "🔢 Kérlek add meg a közvetlen életkort számként (pl. `22`):"
-        ),
+        "ask_age_input": "🔢 Kérlek add meg a kort számként (pl. `22`):",
         "ask_year": "Vlaszd ki az évet:",
         "ask_month": "Válaszd ki a hónapot:",
         "ask_date": "Válaszd ki a napot:",
@@ -1174,17 +1129,15 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Alege limba pentru **{country}**:",
         "lang_updated": "✅ Preferința de limbă a fost actualizată cu succes!",
         "owner_active": (
-            "🤍 **Mod Proprietar Activ!**\n\nA cui zi de naștere o"
-            " sărbătorim azi? Trimite numele:"
+            "🤍 **Mod Proprietar Activ!**\n\nCe sărbătorim azi? Trimite numele:"
         ),
         "free_remaining": "🎁 Mai ai **{remaining}** surprize gratuite!",
         "free_first": "🎁 Primele **{limit}** surprize sunt **GRATUITE**!",
-        "ask_name": "A cui zi de naștere o sărbătorim azi? Trimite numele:",
-        "ask_wish": "Scrie un mesaj frumos de la mulți ani:",
-        "ask_age_mode": "Cum dorești să adaugi detaliile legate de vârstă?",
+        "ask_name": "Ce sărbătorim azi? Trimite numele:",
+        "ask_wish": "Scrie un mesaj frumos:",
+        "ask_age_mode": "Cum dorești să adaugi detaliile?",
         "ask_dob_input": (
-            "📅 Trimite data nașterii în formatul **YYYY-MM-DD** (de ex."
-            " `2003-12-24`):"
+            "📅 Trimite data în formatul **YYYY-MM-DD** (de ex. `2003-12-24`):"
         ),
         "ask_age_input": "🔢 Introdu vârsta direct ca număr (de ex. `22`):",
         "ask_year": "Alege anul:",
@@ -1208,19 +1161,17 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Odaberite jezik za **{country}**:",
         "lang_updated": "✅ Jezična preferencija uspješno ažurirana!",
         "owner_active": (
-            "🤍 **Način vlasnika aktivan!**\n\nČiji rođendan danas slavimo?"
-            " Pošaljite ime:"
+            "🤍 **Način vlasnika aktivan!**\n\nŠto danas slavimo? Pošaljite ime:"
         ),
         "free_remaining": "🎁 Imate još **{remaining}** besplatnih iznenađenja!",
         "free_first": "🎁 Vaših prvih **{limit}** iznenađenja je **BESPLATNO**!",
-        "ask_name": "Čiji rođendan danas slavimo? Pošaljite ime:",
-        "ask_wish": "Napišite lijepu rođendansku čestitku:",
-        "ask_age_mode": "Kako želite dodati detalje o dobi?",
+        "ask_name": "Što danas slavimo? Pošaljite ime:",
+        "ask_wish": "Napišite lijepu čestitku:",
+        "ask_age_mode": "Kako želite dodati detalje?",
         "ask_dob_input": (
-            "📅 Pošaljite datum rođenja u formatu **YYYY-MM-DD** (npr."
-            " `2003-12-24`):"
+            "📅 Pošaljite datum u formatu **YYYY-MM-DD** (npr. `2003-12-24`):"
         ),
-        "ask_age_input": "🔢 Unesite direktnu dob kao broj (npr. `22`):",
+        "ask_age_input": "🔢 Unesite dob kao broj (npr. `22`):",
         "ask_year": "Odaberite godinu:",
         "ask_month": "Odaberite mjesec:",
         "ask_date": "Odaberite datum:",
@@ -1242,17 +1193,15 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Vyberte jazyk pre **{country}**:",
         "lang_updated": "✅ Jazykové predvoľby boli úspešne aktualizované!",
         "owner_active": (
-            "🤍 **Režim vlastníka aktívny!**\n\nČie narodeniny dnes slavíme?"
-            " Pošlite meno:"
+            "🤍 **Režim vlastníka aktívny!**\n\nČo dnes oslavujeme? Pošlite meno:"
         ),
         "free_remaining": "🎁 Zostáva vám **{remaining}** bezplatných prekvapení!",
         "free_first": "🎁 Vašich prvých **{limit}** prekvapení je **ZADARMO**!",
-        "ask_name": "Čie narodeniny dnes slavíme? Pošlite meno:",
-        "ask_wish": "Napíšte milé narodeninové prianie:",
-        "ask_age_mode": "Ako chcete pridať údaje o veku?",
+        "ask_name": "Čo dnes oslavujeme? Pošlite meno:",
+        "ask_wish": "Napíšte milé prianie:",
+        "ask_age_mode": "Ako chcete pridať údaje?",
         "ask_dob_input": (
-            "📅 Pošlite dátum narodenia vo formáte **YYYY-MM-DD** (napr."
-            " `2003-12-24`):"
+            "📅 Pošlite dátum vo formáte **YYYY-MM-DD** (napr. `2003-12-24`):"
         ),
         "ask_age_input": "🔢 Zadajte vek priamo ako číslo (napr. `22`):",
         "ask_year": "Vyberte rok:",
@@ -1276,19 +1225,18 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Изберете език за **{country}**:",
         "lang_updated": "✅ Езиковите предпочитания са обновени успешно!",
         "owner_active": (
-            "🤍 **Режимът на собственик е активен!**\n\nЧий рожден ден"
-            " празнуваме днес? Изпратете име:"
+            "🤍 **Режимът на собственик е активен!**\n\nКакво празнуваме днес?"
+            " Изпратете име:"
         ),
         "free_remaining": "🎁 Имате оставащи **{remaining}** безплатни изненади!",
         "free_first": "🎁 Вашите първи **{limit}** изненади са **БЕЗПЛАТНИ**!",
-        "ask_name": "Чий рожден ден празнуваме днес? Изпратете име:",
-        "ask_wish": "Напишете мило пожелание за рожден ден:",
-        "ask_age_mode": "Как искате да добавите детайли за възрастта?",
+        "ask_name": "Какво празнуваме днес? Изпратете име:",
+        "ask_wish": "Напишете мило пожелание:",
+        "ask_age_mode": "Как искате да добавите детайли?",
         "ask_dob_input": (
-            "📅 Моля, изпратете дата на раждане във формат **YYYY-MM-DD** (напр."
-            " `2003-12-24`):"
+            "📅 Изпратете дата във формат **YYYY-MM-DD** (напр. `2003-12-24`):"
         ),
-        "ask_age_input": "🔢 Моля, въведете възрастта като число (напр. `22`):",
+        "ask_age_input": "🔢 Въведете възрастта като число (напр. `22`):",
         "ask_year": "Изберете година:",
         "ask_month": "Изберете месец:",
         "ask_date": "Изберете дата:",
@@ -1310,19 +1258,17 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Izaberite jezik za **{country}**:",
         "lang_updated": "✅ Jezička podešavanja su uspešno ažurirana!",
         "owner_active": (
-            "🤍 **Režim vlasnika aktivan!**\n\nČiji rođendan danas slavimo?"
-            " Pošaljite ime:"
+            "🤍 **Režim vlasnika aktivan!**\n\nŠta danas slavimo? Pošaljite ime:"
         ),
         "free_remaining": "🎁 Imate još **{remaining}** besplatnih iznenađenja!",
         "free_first": "🎁 Vaših prvih **{limit}** iznenađenja je **BESPLATNO**!",
-        "ask_name": "Čiji rođendan danas slavimo? Pošaljite ime:",
-        "ask_wish": "Napišite lepu rođendansku čestitku:",
-        "ask_age_mode": "Kako želite da dodate detalje o godinama?",
+        "ask_name": "Šta danas slavimo? Pošaljite ime:",
+        "ask_wish": "Napišite lepu čestitku:",
+        "ask_age_mode": "Kako želite da dodate detalje?",
         "ask_dob_input": (
-            "📅 Pošaljite datum rođenja u formatu **YYYY-MM-DD** (npr."
-            " `2003-12-24`):"
+            "📅 Pošaljite datum u formatu **YYYY-MM-DD** (npr. `2003-12-24`):"
         ),
-        "ask_age_input": "🔢 Unesite direktnu starost kao broj (npr. `22`):",
+        "ask_age_input": "🔢 Unesite starost kao broj (npr. `22`):",
         "ask_year": "Izaberite godinu:",
         "ask_month": "Izaberite mesec:",
         "ask_date": "Izaberite datum:",
@@ -1344,19 +1290,17 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Izberite jezik za **{country}**:",
         "lang_updated": "✅ Jezikovna nastavitev je bila uspešno posodobljena!",
         "owner_active": (
-            "🤍 **Način lastnika aktiven!**\n\nČigavi rojstni dan praznujemo"
-            " danes? Pošljite ime:"
+            "🤍 **Način lastnika aktiven!**\n\nKaj praznujemo danes? Pošljite ime:"
         ),
         "free_remaining": "🎁 Imate še **{remaining}** brezplačnih presenečenj!",
         "free_first": "🎁 Vaših prvih **{limit}** presenečenj je **BREZPLAČNIH**!",
-        "ask_name": "Čigavi rojstni dan praznujemo danes? Pošljite ime:",
-        "ask_wish": "Napišite lepo rojstnodnevno voščilo:",
-        "ask_age_mode": "Kako želite dodati podatke o starosti?",
+        "ask_name": "Kaj praznujemo danes? Pošljite ime:",
+        "ask_wish": "Napišite lepo voščilo:",
+        "ask_age_mode": "Kako želite dodati podatke?",
         "ask_dob_input": (
-            "📅 Pošljite datum rojstva v formatu **YYYY-MM-DD** (npr."
-            " `2003-12-24`):"
+            "📅 Pošljite datum v formatu **YYYY-MM-DD** (npr. `2003-12-24`):"
         ),
-        "ask_age_input": "🔢 Vnesite neposredno starost kot številko (npr. `22`):",
+        "ask_age_input": "🔢 Vnesite starost kot številko (npr. `22`):",
         "ask_year": "Izberite leto:",
         "ask_month": "Izberite mesec:",
         "ask_date": "Izberite datum:",
@@ -1378,8 +1322,8 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Pasirinkite kalbą **{country}** šaliai:",
         "lang_updated": "✅ Kalbos nustatymai sėkmingai atnaujinti!",
         "owner_active": (
-            "🤍 **Savininko režimas aktyvus!**\n\nKieno gimtadienį šiandien"
-            " švenčiame? Atsiųskite vardą:"
+            "🤍 **Savininko režimas aktyvus!**\n\nKą šiandien švenčiame?"
+            " Atsiųskite vardą:"
         ),
         "free_remaining": (
             "🎁 Turite likusias **{remaining}** nemokamas staigmenas!"
@@ -1387,14 +1331,13 @@ BOT_TEXTS = {
         "free_first": (
             "🎁 Jūsų pirmosios **{limit}** staigmenos yra **NEMOKAMOS**!"
         ),
-        "ask_name": "Kieno gimtadienį šiandien švenčiame? Atsiųskite vardą:",
-        "ask_wish": "Parašykite gražų gimtadienio sveikinimą:",
-        "ask_age_mode": "Kaip norite pridėti amžiaus duomenis?",
+        "ask_name": "Ką šiandien švenčiame? Atsiųskite vardą:",
+        "ask_wish": "Parašykite gražų sveikinimą:",
+        "ask_age_mode": "Kaip norite pridėti duomenis?",
         "ask_dob_input": (
-            "📅 Prašome atsiųsti gimimo datą formatu **YYYY-MM-DD** (pvz."
-            " `2003-12-24`):"
+            "📅 Atsiųskite datą formatu **YYYY-MM-DD** (pvz. `2003-12-24`):"
         ),
-        "ask_age_input": "🔢 Įveskite amžių tiesiogiai skaičiumi (pvz. `22`):",
+        "ask_age_input": "🔢 Įveskite amžių skaičiumi (pvz. `22`):",
         "ask_year": "Pasirinkite metus:",
         "ask_month": "Pasirinkite mėnesį:",
         "ask_date": "Pasirinkite datą:",
@@ -1416,21 +1359,20 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Izvēlieties valodu priekš **{country}**:",
         "lang_updated": "✅ Valodas iestatījumi veiksmīgi atjaunināti!",
         "owner_active": (
-            "🤍 **Īpašnieka režīms aktīvs!**\n\nKura dzimšanas dienu mēs"
-            " šodien svinam? Atsūtiet vārdu:"
+            "🤍 **Īpašnieka režīms aktīvs!**\n\nKo mēs šodien svinam? Atsūtiet"
+            " vārdu:"
         ),
         "free_remaining": "🎁 Jums ir atlikuši **{remaining}** bezmaksas pārsteigumi!",
         "free_first": (
             "🎁 Jūsu pirmie **{limit}** pārsteigumi ir **BEZMAKSAS**!"
         ),
-        "ask_name": "Kura dzimšanas dienu mēs šodien svinam? Atsūtiet vārdu:",
-        "ask_wish": "Uzrakstiet jauku dzimšanas dienas vēlējumu:",
-        "ask_age_mode": "Kā jūs vēlaties pievienot vecuma informāciju?",
+        "ask_name": "Ko mēs šodien svinam? Atsūtiet vārdu:",
+        "ask_wish": "Uzrakstiet jauku vēlējumu:",
+        "ask_age_mode": "Kā jūs vēlaties pievienot informāciju?",
         "ask_dob_input": (
-            "📅 Lūdzu, nosūtiet dzimšanas datumu formātā **YYYY-MM-DD** (piem."
-            " `2003-12-24`):"
+            "📅 Nosūtiet datumu formātā **YYYY-MM-DD** (piem. `2003-12-24`):"
         ),
-        "ask_age_input": "🔢 Lūdzu, ievadiet tiešo vecumu kā skaitli (piem. `22`):",
+        "ask_age_input": "🔢 Ievadiet vecumu kā skaitli (piem. `22`):",
         "ask_year": "Izvēlieties gadu:",
         "ask_month": "Izvēlieties mēnesi:",
         "ask_date": "Izvēlieties datumu:",
@@ -1452,18 +1394,18 @@ BOT_TEXTS = {
         "country_choice": "🗣️ Valige keel riigile **{country}**:",
         "lang_updated": "✅ Keelesäte edukalt uuendatud!",
         "owner_active": (
-            "🤍 **Omaniku režiim aktiivne!**\n\nKelle sünnipäeva me täna"
-            " tähistame? Saatke nimi:"
+            "🤍 **Omaniku režiim aktiivne!**\n\nMida me täna tähistame? Saatke"
+            " nimi:"
         ),
         "free_remaining": "🎁 Teil on jäänud **{remaining}** tasuta üllatust!",
         "free_first": "🎁 Teie esimese **{limit}** üllatust on **TASUTA**!",
-        "ask_name": "Kelle sünnipäeva me täna tähistame? Saatke nimi:",
-        "ask_wish": "Kirjutage südamlik sünnipäevasoov:",
-        "ask_age_mode": "Kuidas soovite vanuseandmeid lisada?",
+        "ask_name": "Mida me täna tähistame? Saatke nimi:",
+        "ask_wish": "Kirjutage südamlik soov:",
+        "ask_age_mode": "Kuidas soovite andmeid lisada?",
         "ask_dob_input": (
-            "📅 Palun saatke sünniaeg formaadis **YYYY-MM-DD** (nt `2003-12-24`):"
+            "📅 Saatke kuupäev formaadis **YYYY-MM-DD** (nt `2003-12-24`):"
         ),
-        "ask_age_input": "🔢 Palun sisestage otse vanus numbrina (nt `22`):",
+        "ask_age_input": "🔢 Sisestage vanus numbrina (nt `22`):",
         "ask_year": "Valige aasta:",
         "ask_month": "Valige kuu:",
         "ask_date": "Valige kuupäev:",
@@ -1475,158 +1417,6 @@ BOT_TEXTS = {
         "ask_voice": "Saatke häälsõnum (või jätke vahele):",
         "ask_audio": "Lisage teine heli (või jätke vahele):",
         "ready": "✨ Kõik on {name} jaoks valmis!",
-    },
-    "de": {
-        "welcome": (
-            "✨ Willkommen in deiner kleinen Ecke voller Überraschungen...\n\nDeine"
-            " Sprache ist auf **Deutsch** eingestellt."
-        ),
-        "region_selected": "🌍 Region: **{region}**. Wähle dein Land:",
-        "country_choice": "🗣️ Wähle deine Sprache für **{country}**:",
-        "lang_updated": "✅ Spracheinstellung erfolgreich aktualisiert!",
-        "owner_active": (
-            "🤍 **Inhabermodus aktiv!**\n\nWessen Geburtstag feiern wir heute?"
-            " Sende mir den Namen:"
-        ),
-        "free_remaining": (
-            "🎁 Du hast noch **{remaining}** kostenlose Überraschungen!"
-        ),
-        "free_first": (
-            "🎁 Deine ersten **{limit}** Geburtstagsüberraschungen sind"
-            " **KOSTENLOS**!"
-        ),
-        "ask_name": "Wessen Geburtstag feiern wir heute? Sende mir den Namen:",
-        "ask_wish": "Schreibe einen lieben Geburtstagswunsch:",
-        "ask_age_mode": "Wie möchtest du die Altersdetails hinzufügen?",
-        "ask_dob_input": (
-            "📅 Bitte gib das Geburtsdatum im Format **YYYY-MM-DD** an (z.B."
-            " `2003-12-24`):"
-        ),
-        "ask_age_input": "🔢 Bitte gib das direkte Alter als Zahl ein (z.B. `22`):",
-        "ask_year": "Wähle das Jahr für die Überraschung:",
-        "ask_month": "Wähle den Monat:",
-        "ask_date": "Wähle das Datum:",
-        "ask_hour": "Wähle die Stunde (00-23):",
-        "ask_minute": "Wähle die Minute (00-59):",
-        "ask_photo": "Teile ein schönes Foto (oder überspringe es):",
-        "ask_video": "Teile ein spezielles Video (oder überspringe es):",
-        "ask_song": "Sende ein Lieblingslied (oder überspringe es):",
-        "ask_voice": "Sende eine Sprachnotiz (oder überspringe es):",
-        "ask_audio": "Füge eine weitere Audiodatei hinzu (oder überspringe sie):",
-        "ready": "✨ Alles bereit für {name}!",
-    },
-    "es": {
-        "welcome": (
-            "✨ Bienvenido a tu pequeño rincón de sorpresas...\n\nTu idioma"
-            " está configurado en **Español**."
-        ),
-        "region_selected": "🌍 Región: **{region}**. Selecciona tu país:",
-        "country_choice": "🗣️ Elige tu idioma para **{country}**:",
-        "lang_updated": "✅ ¡Preferencia de idioma actualizada con éxito!",
-        "owner_active": (
-            "🤍 **¡Modo propietario activo!**\n\n¿De quién es el cumpleaños hoy?"
-            " Envía el nombre:"
-        ),
-        "free_remaining": (
-            "🎁 ¡Tienes **{remaining}** sorpresa(s) gratuita(s) restante(s)!"
-        ),
-        "free_first": (
-            "🎁 ¡Tus primeras **{limit}** sorpresas de cumpleaños son"
-            " **GRATIS**!"
-        ),
-        "ask_name": "¿De quién es el cumpleaños hoy? Envía el nombre:",
-        "ask_wish": "Escribe un bonito mensaje de cumpleaños:",
-        "ask_age_mode": "¿Cómo te gustaría añadir los detalles de edad?",
-        "ask_dob_input": (
-            "📅 Envía la fecha de nacimiento en formato **YYYY-MM-DD** (ej."
-            " `2003-12-24`):"
-        ),
-        "ask_age_input": "🔢 Ingresa la edad directamente como número (ej. `22`):",
-        "ask_year": "Elige el año para la sorpresa:",
-        "ask_month": "Elige el mes:",
-        "ask_date": "Elige la fecha:",
-        "ask_hour": "Selecciona la hora (00-23):",
-        "ask_minute": "Selecciona el minuto (00-59):",
-        "ask_photo": "Comparte una foto (o salta este paso):",
-        "ask_video": "Comparte un vídeo (o salta este paso):",
-        "ask_song": "Envía una canción (o salta este paso):",
-        "ask_voice": "Envía una nota de voz (o salta este paso):",
-        "ask_audio": "Agrega otro audio (o salta este paso):",
-        "ready": "✨ ¡Todo listo para {name}!",
-    },
-    "fr": {
-        "welcome": (
-            "✨ Bienvenue dans votre petit coin de surprises...\n\nVotre langue"
-            " est définie sur **Français**."
-        ),
-        "region_selected": "🌍 Région : **{region}**. Sélectionnez votre pays :",
-        "country_choice": "🗣️ Choisissez votre langue pour **{country}** :",
-        "lang_updated": "✅ Préférence de langue mise à jour avec succès !",
-        "owner_active": (
-            "🤍 **Mode Propriétaire Actif !**\n\nL'anniversaire de qui"
-            " célébrons-nous aujourd'hui ? Envoyez le nom :"
-        ),
-        "free_remaining": (
-            "🎁 Il vous reste **{remaining}** surprise(s) gratuite(s) !"
-        ),
-        "free_first": (
-            "🎁 Vos **{limit}** premières surprises d'anniversaire sont"
-            " **GRATUITES** !"
-        ),
-        "ask_name": (
-            "L'anniversaire de qui célébrons-nous aujourd'hui ? Envoyez le nom :"
-        ),
-        "ask_wish": "Écrivez un doux message d'anniversaire :",
-        "ask_age_mode": "Comment souhaitez-vous ajouter les détails de l'âge ?",
-        "ask_dob_input": (
-            "📅 Veuillez envoyer la date de naissance au format **YYYY-MM-DD**"
-            " (ex. `2003-12-24`) :"
-        ),
-        "ask_age_input": "🔢 Veuillez entrer l'âge direct en chiffre (ex. `22`) :",
-        "ask_year": "Choisissez l'année pour la surprise :",
-        "ask_month": "Choisissez le mois :",
-        "ask_date": "Choisissez la date :",
-        "ask_hour": "Sélectionnez l'heure (00-23) :",
-        "ask_minute": "Sélectionnez la minute (00-59) :",
-        "ask_photo": "Partagez une photo (ou passez) :",
-        "ask_video": "Partagez une vidéo (ou passez) :",
-        "ask_song": "Envoyez une chanson (ou passez) :",
-        "ask_voice": "Envoyez une note vocale (ou passez) :",
-        "ask_audio": "Ajoutez un autre audio (ou passez) :",
-        "ready": "✨ Tout est prêt pour {name} !",
-    },
-    "ar": {
-        "welcome": (
-            "✨ أهلاً بك في ركن المفاجآت الخاص بك...\n\nلغتك الحالية هي"
-            " **العربية**."
-        ),
-        "region_selected": "🌍 المنطقة: **{region}**. اختر بلدك:",
-        "country_choice": "🗣️ اختر لغتك لـ **{country}**:",
-        "lang_updated": "✅ تم تحديث تفضيل اللغة بنجاح!",
-        "owner_active": (
-            "🤍 **وضع المالك مفعل!**\n\nعيد ميلاد من نحتفل به اليوم؟ أرسل الاسم:"
-        ),
-        "free_remaining": "🎁 لديك **{remaining}** مفاجأة مجانية متبقية!",
-        "free_first": "🎁 أول **{limit}** مفاجأة عيد ميلاد لك هي **مجانية**!",
-        "ask_name": "عيد ميلاد من نحتفل به اليوم؟ أرسل الاسم:",
-        "ask_wish": "اكتب امنية عيد ميلاد لطيفة:",
-        "ask_age_mode": "كيف ترغب في إضافة تفاصيل العمر؟",
-        "ask_dob_input": (
-            "📅 يرجى إرسال تاريخ الميلاد بالصيغة **YYYY-MM-DD** (مثل:"
-            " `2003-12-24`):"
-        ),
-        "ask_age_input": "🔢 يرجى إدخال العمر المباشر كرقْم (مثل: `22`):",
-        "ask_year": "اختر سنة المفاجأة:",
-        "ask_month": "اختر الشهر:",
-        "ask_date": "اختر التاريخ:",
-        "ask_hour": "اختر الساعة (00-23):",
-        "ask_minute": "اختر الدقيقة (00-59):",
-        "ask_photo": "شارك صورة (أو تخطى):",
-        "ask_video": "شارك فيديو (أو تخطى):",
-        "ask_song": "أرسل أغنية (أو تخطى):",
-        "ask_voice": "أرسل ملاحظة صوتية (أو تخطى):",
-        "ask_audio": "أضف ملف صوتي آخر (أو تخطى):",
-        "ready": "✨ كل شيء جاهز لـ {name}!",
     },
 }
 
@@ -1866,17 +1656,18 @@ def get_age_choice_keyboard():
       inline_keyboard=[
           [
               InlineKeyboardButton(
-                  text="📅 Enter Date of Birth (DOB)", callback_data="choice_dob"
+                  text="📅 Enter Date (DOB / Wedding Date)",
+                  callback_data="choice_dob",
               )
           ],
           [
               InlineKeyboardButton(
-                  text="🔢 Enter Direct Age", callback_data="choice_age"
+                  text="🔢 Enter Direct Details", callback_data="choice_age"
               )
           ],
           [
               InlineKeyboardButton(
-                  text="✨ Skip Life Stats", callback_data="skip_step"
+                  text="✨ Skip Stats", callback_data="skip_step"
               )
           ],
       ]
@@ -2134,13 +1925,15 @@ async def proceed_after_language(
     await state.set_state(BirthdayForm.name)
   else:
     await message.answer(
-        "⭐ You have used all your 5 free birthday surprises!\nPlease unlock"
-        " full access for the next creation with **1 Telegram Star**:",
+        "⭐ You have used all your 5 free surprises!\nPlease unlock full"
+        " access for the next creation with **1 Telegram Star**:",
         parse_mode="Markdown",
     )
     await message.answer_invoice(
-        title="Birthday Surprise Creator",
-        description="Create a custom, time-locked luxury birthday web app.",
+        title="Celebration Surprise Creator",
+        description=(
+            "Create a custom, time-locked luxury celebration web app."
+        ),
         payload="birthday_bot_stars_access",
         currency="XTR",
         prices=[LabeledPrice(label="Access Fee", amount=1)],
@@ -2498,7 +2291,7 @@ async def finish_form(message: types.Message, state: FSMContext):
   final_url = f"{VERCEL_URL}/?id={surprise_id}"
 
   share_text = urllib.parse.quote(
-      f"✨ Happy Birthday {data.get('name', 'Dear')}! I made a little surprise just for you:"
+      f"✨ Celebration for {data.get('name', 'Dear')}! I made a surprise just for you:"
   )
   telegram_share_url = f"https://t.me/share/url?url={urllib.parse.quote(final_url)}&text={share_text}"
   whatsapp_share_url = f"https://api.whatsapp.com/send?text={share_text}%20{urllib.parse.quote(final_url)}"
@@ -2511,7 +2304,7 @@ async def finish_form(message: types.Message, state: FSMContext):
                   web_app=WebAppInfo(url=preview_url),
               ),
               InlineKeyboardButton(
-                  text="🎂 My Birthday View",
+                  text="🎂 Celebration View",
                   web_app=WebAppInfo(url=preview_url),
               ),
           ],
@@ -2571,7 +2364,7 @@ async def delete_surprise_callback(callback: types.CallbackQuery):
     conn.commit()
     conn.close()
     await callback.message.edit_text(
-        "🗑️ This birthday surprise has been permanently deleted."
+        "🗑️ This surprise has been permanently deleted."
     )
     await callback.answer("Deleted successfully!", show_alert=True)
   else:
