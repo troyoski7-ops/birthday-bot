@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>✨ Ultimate Luxury Life Celebrations & Surprises ✨</title>
+    <title>✨ AuraBirthday Surprise ✨</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
@@ -16,7 +16,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             overflow-y: auto;
             position: relative;
@@ -24,19 +24,19 @@
 
         .top-bar {
             width: 100%;
-            max-width: 360px;
+            max-width: 380px;
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             z-index: 10;
         }
         .lang-select {
             background: rgba(255, 215, 0, 0.15);
             border: 1px solid rgba(255, 215, 0, 0.4);
             color: #ffd700;
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
             outline: none;
             backdrop-filter: blur(5px);
@@ -53,13 +53,12 @@
         .float-item {
             position: absolute;
             bottom: -50px;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             animation: floatUp 8s infinite linear;
             cursor: pointer;
             pointer-events: auto;
             transition: transform 0.2s;
         }
-        .float-item:hover { transform: scale(1.3); }
         @keyframes floatUp {
             0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
             100% { transform: translateY(-110vh) rotate(360deg); opacity: 0.1; }
@@ -67,82 +66,74 @@
 
         .container {
             width: 100%;
-            max-width: 360px;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 24px;
-            padding: 22px;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.15);
-            margin-bottom: 16px;
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            border-radius: 20px;
+            padding: 18px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            margin-bottom: 14px;
             position: relative;
             z-index: 1;
         }
 
-        h1 { font-size: 1.55rem; color: #ffd700; margin-bottom: 6px; letter-spacing: 0.5px; }
-        #recipientName { color: #ff3366; text-shadow: 0 0 14px rgba(255, 51, 102, 0.7); }
-        
+        .holo-box {
+            background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,51,102,0.08));
+            border: 2px solid #ff3366;
+            border-radius: 18px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 0 15px rgba(255,51,102,0.3);
+        }
+        h1 { font-size: 1.4rem; color: #ffd700; margin-bottom: 4px; }
+        #recipientName { color: #ff3366; text-shadow: 0 0 10px rgba(255, 51, 102, 0.7); }
+
         .details-box {
-            background: rgba(255, 215, 0, 0.08);
-            border: 1px dashed rgba(255, 215, 0, 0.45);
-            border-radius: 14px;
-            padding: 12px;
-            margin-bottom: 14px;
-            font-size: 0.9rem;
+            background: rgba(255, 215, 0, 0.06);
+            border: 1px dashed rgba(255, 215, 0, 0.35);
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
             color: #f8fafc;
-            line-height: 1.6;
         }
         .details-box span { color: #ffd700; font-weight: 600; }
-
-        .holo-box {
-            position: relative;
-            background: linear-gradient(135deg, rgba(0,255,204,0.1), rgba(255,51,102,0.1));
-            border: 2px solid #00ffcc;
-            border-radius: 16px;
-            padding: 15px;
-            margin-bottom: 14px;
-            box-shadow: 0 0 20px rgba(0,255,204,0.3);
-            animation: holoGlow 3s infinite alternate;
-        }
-        @keyframes holoGlow {
-            0% { box-shadow: 0 0 10px rgba(0,255,204,0.2); border-color: #00ffcc; }
-            100% { box-shadow: 0 0 25px rgba(255,51,102,0.5); border-color: #ff3366; }
-        }
 
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         .stat-card {
-            background: rgba(255, 215, 0, 0.08);
-            border: 1px solid rgba(255, 215, 0, 0.25);
-            border-radius: 12px;
-            padding: 10px;
+            background: rgba(255, 215, 0, 0.06);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 8px;
             text-align: center;
         }
-        .stat-card .num { font-size: 1.05rem; font-weight: bold; color: #ffd700; }
-        .stat-card .label { font-size: 0.75rem; color: #cbd5e1; margin-top: 2px; }
+        .stat-card .num { font-size: 1rem; font-weight: bold; color: #ffd700; }
+        .stat-card .label { font-size: 0.7rem; color: #cbd5e1; margin-top: 2px; }
 
         .open-when-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         .envelope-btn {
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.35);
-            border-radius: 12px;
-            padding: 10px 8px;
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 8px;
             color: #fff;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             cursor: pointer;
             transition: all 0.2s;
             text-align: center;
         }
-        .envelope-btn:hover { background: rgba(255, 215, 0, 0.25); transform: translateY(-2px); }
+        .envelope-btn:hover { background: rgba(255, 215, 0, 0.2); }
 
         #giftSection {
             display: flex;
@@ -152,7 +143,7 @@
             padding: 40px 10px;
         }
         .gift-box {
-            font-size: 5.8rem;
+            font-size: 5rem;
             cursor: pointer;
             animation: bounceGift 1.3s infinite ease-in-out;
             transition: transform 0.3s;
@@ -160,25 +151,24 @@
         .gift-box:hover { transform: scale(1.15); }
         @keyframes bounceGift {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-12px); }
         }
 
         .scratch-container {
             position: relative;
             width: 100%;
-            height: 260px;
-            border-radius: 16px;
+            height: 240px;
+            border-radius: 14px;
             overflow: hidden;
             background: linear-gradient(135deg, #2a2a40, #1a1a2e);
-            border: 2px solid rgba(255, 215, 0, 0.35);
+            border: 2px solid rgba(255, 215, 0, 0.3);
             color: #fff;
-            margin: 10px auto;
+            margin: 8px auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 14px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            padding: 12px;
         }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; touch-action: none; z-index: 2; }
         
@@ -192,113 +182,82 @@
             flex-direction: column;
             justify-content: center;
         }
-        .hidden-content h3 { color: #ffd700; margin-bottom: 8px; font-size: 1.1rem; }
-        .hidden-content p { 
-            color: #e2e8f0; 
-            font-size: 0.9rem; 
-            line-height: 1.5; 
-            word-wrap: break-word; 
-            overflow-wrap: break-word; 
-            text-align: center; 
-            white-space: pre-wrap; 
-        }
+        .hidden-content h3 { color: #ffd700; margin-bottom: 6px; font-size: 1rem; }
+        .hidden-content p { color: #e2e8f0; font-size: 0.85rem; line-height: 1.4; white-space: pre-wrap; word-wrap: break-word; }
 
         .single-photo-box {
             width: 100%;
-            max-height: 260px;
-            border-radius: 14px;
+            max-height: 240px;
+            border-radius: 12px;
             overflow: hidden;
-            margin-bottom: 12px;
-            border: 1px solid rgba(255,215,255,0.15);
+            margin-bottom: 10px;
             background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .single-photo-box img {
-            width: 100%;
-            height: 100%;
-            max-height: 250px;
-            object-fit: contain;
-            background: #000;
-            border-radius: 12px;
-        }
+        .single-photo-box img { width: 100%; max-height: 230px; object-fit: contain; border-radius: 10px; }
 
         .media-box video {
             width: 100%;
-            max-height: 320px;
+            max-height: 280px;
             object-fit: contain;
-            border-radius: 12px;
+            border-radius: 10px;
             background: #000;
-            margin-bottom: 12px;
-            outline: none;
+            margin-bottom: 10px;
         }
-        .media-box audio { width: 100%; margin-top: 8px; border-radius: 10px; }
+        .media-box audio { width: 100%; margin-top: 6px; border-radius: 8px; margin-bottom: 8px; height: 32px; }
 
         .guestbook-box {
             background: rgba(0,0,0,0.25);
-            border-radius: 12px;
-            padding: 10px;
-            margin-top: 12px;
+            border-radius: 10px;
+            padding: 8px;
+            margin-top: 10px;
             text-align: left;
-            max-height: 140px;
+            max-height: 120px;
             overflow-y: auto;
         }
-        .guestbook-item {
-            font-size: 0.8rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 6px 0;
-        }
+        .guestbook-item { font-size: 0.78rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 5px 0; }
         .guestbook-item strong { color: #ffd700; }
         .guestbook-input {
             width: 100%;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
             border: 1px solid rgba(255,215,0,0.3);
             border-radius: 8px;
-            padding: 8px;
+            padding: 7px;
             color: #fff;
-            font-size: 0.85rem;
-            margin-top: 8px;
+            font-size: 0.8rem;
+            margin-top: 6px;
             outline: none;
         }
 
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
+        .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 8px; }
         .btn {
             background: linear-gradient(45deg, #ffd700, #ffaa00);
             color: #1a1a2e;
             border: none;
-            padding: 10px 16px;
-            font-size: 0.85rem;
-            border-radius: 30px;
+            padding: 8px 14px;
+            font-size: 0.8rem;
+            border-radius: 25px;
             cursor: pointer;
             font-weight: 700;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.35);
-            transition: transform 0.2s ease;
+            box-shadow: 0 3px 12px rgba(255, 215, 0, 0.3);
         }
         .btn:active { transform: scale(0.95); }
         .btn-heart { background: linear-gradient(45deg, #ff3366, #ff6b81); color: #fff; }
+        .btn-danger { background: linear-gradient(45deg, #ff4757, #ff6b81); color: #fff; }
+        .btn-telegram { background: linear-gradient(45deg, #229ED9, #1785b5); color: #fff; }
+        .btn-whatsapp { background: linear-gradient(45deg, #25D366, #128C7E); color: #fff; }
 
-        .locked-screen { display: none; padding: 35px 20px; }
-        .timer-digits { font-size: 1.5rem; color: #ffd700; font-weight: bold; margin: 15px 0; text-shadow: 0 0 10px rgba(255,215,0,0.4); }
-
+        .locked-screen { display: none; padding: 30px 15px; }
+        .timer-digits { font-size: 1.3rem; color: #ffd700; font-weight: bold; margin: 12px 0; }
         .floating-heart {
-            position: fixed;
-            bottom: 20px;
-            font-size: 1.8rem;
-            pointer-events: none;
-            animation: floatHeart 2.5s ease-out forwards;
-            z-index: 9999;
+            position: fixed; bottom: 20px; font-size: 1.6rem; pointer-events: none;
+            animation: floatHeart 2.5s ease-out forwards; z-index: 9999;
         }
         @keyframes floatHeart {
             0% { transform: translateY(0) scale(0.8); opacity: 1; }
-            100% { transform: translateY(-300px) scale(1.4); opacity: 0; }
+            100% { transform: translateY(-250px) scale(1.3); opacity: 0; }
         }
     </style>
 </head>
@@ -307,54 +266,15 @@
     <div class="top-bar">
         <select id="langSwitcher" class="lang-select" onchange="changeLanguage(this.value)">
             <option value="en">English</option>
-            <option value="hi">हिन्दी</option>
             <option value="ml">മലയാളം</option>
-            <option value="te">తెలుగు</option>
-            <option value="kn">ಕನ್ನಡ</option>
-            <option value="bn">বাংলা</option>
-            <option value="ja">Japanese</option>
-            <option value="ko">Korean</option>
-            <option value="az">Azerbaijani</option>
-            <option value="hy">Armenian</option>
-            <option value="ru">Russian</option>
-            <option value="id">Indonesian</option>
-            <option value="tr">Turkish</option>
-            <option value="ar">Arabic</option>
-            <option value="ms">Malay</option>
-            <option value="zh">Chinese</option>
-            <option value="uz">Uzbek</option>
-            <option value="tg">Tajik</option>
-            <option value="fa">فارسی</option>
-            <option value="my">Burmese</option>
-            <option value="de">German</option>
-            <option value="es">Spanish</option>
-            <option value="fr">French</option>
-            <option value="uk">Ukrainian</option>
-            <option value="be">Belarusian</option>
-            <option value="it">Italian</option>
-            <option value="sw">Swahili</option>
-            <option value="zu">Zulu</option>
-            <option value="xh">Xhosa</option>
-            <option value="af">Afrikaans</option>
-            <option value="pt">Portuguese</option>
-            <option value="fi">Finnish</option>
-            <option value="nl">Dutch</option>
-            <option value="pl">Polish</option>
-            <option value="sv">Swedish</option>
-            <option value="no">Norwegian</option>
-            <option value="da">Dansk</option>
-            <option value="el">Greek</option>
-            <option value="cs">Czech</option>
-            <option value="hu">Hungarian</option>
-            <option value="ro">Romanian</option>
-            <option value="hr">Croatian</option>
-            <option value="sk">Slovak</option>
-            <option value="bg">Bulgarian</option>
-            <option value="sr">Srpski</option>
-            <option value="sl">Slovenian</option>
-            <option value="lt">Lithuanian</option>
-            <option value="lv">Latvian</option>
-            <option value="et">Estonian</option>
+            <option value="hi">हिन्दी</option>
+            <option value="ar">العربية</option>
+            <option value="ru">Русский</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
         </select>
     </div>
 
@@ -362,29 +282,29 @@
 
     <div id="lockSection" class="container locked-screen">
         <h2 id="lockTitle">⏳ Portal Locked!</h2>
-        <p id="lockSubtitle" style="color: #cbd5e1; margin-top: 5px;">This exclusive surprise opens on:</p>
-        <p id="targetTimeDisplay" style="color: #ffd700; font-weight: bold; margin: 8px 0; font-size: 1.1rem;"></p>
+        <p id="lockSubtitle" style="color: #cbd5e1; font-size: 0.85rem; margin-top: 4px;">This exclusive surprise opens on:</p>
+        <p id="targetTimeDisplay" style="color: #ffd700; font-weight: bold; margin: 6px 0; font-size: 1rem;"></p>
         <div class="timer-digits" id="countdownTimer">Loading...</div>
     </div>
 
     <div id="giftSection" class="container">
-        <h2 id="giftPrompt">🎁 Tap the Gift Box to Unwrap!</h2>
+        <h2 id="giftPrompt" style="font-size: 1.2rem;">🎁 Tap the Gift Box to Unwrap!</h2>
         <div class="gift-box" onclick="openGift()">🎁</div>
-        <p id="giftSubPrompt" style="font-size: 0.85rem; color: #cbd5e1; margin-top: 10px;">Tap to unlock your special surprise...</p>
+        <p id="giftSubPrompt" style="font-size: 0.8rem; color: #cbd5e1; margin-top: 8px;">Tap to unlock your special surprise...</p>
     </div>
 
-    <div id="mainContent" style="display: none; width: 100%; max-width: 360px;">
+    <div id="mainContent" style="display: none; width: 100%; max-width: 380px;">
 
         <div class="holo-box">
-            <h1><span id="mainTitle">Happy Celebration</span>, <span id="recipientName">Friend</span>! ✨</h1>
+            <h1><span id="mainTitle">Happy Birthday</span>, <span id="recipientName">Friend</span>! ✨</h1>
         </div>
         
         <div class="details-box" id="infoBox">
             <div>📅 <span id="targetTimeText">Target Time</span>: <span id="displayDate">-</span></div>
         </div>
 
-        <div class="container" style="padding: 15px;" id="statsContainer">
-            <h4 id="statsTitle" style="color: #ffd700; font-size: 0.95rem; margin-bottom: 8px;">⏳ Life Journey Statistics</h4>
+        <div class="container" style="padding: 12px;" id="statsContainer">
+            <h4 id="statsTitle" style="color: #ffd700; font-size: 0.9rem; margin-bottom: 6px;">⏳ Life Journey Statistics</h4>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="num" id="statDays">-</div>
@@ -397,8 +317,8 @@
             </div>
         </div>
 
-        <div class="container" style="padding: 15px;">
-            <h4 id="openWhenTitle" style="color: #ffd700; font-size: 0.95rem; margin-bottom: 8px;">💌 Open When...</h4>
+        <div class="container" style="padding: 12px;">
+            <h4 id="openWhenTitle" style="color: #ffd700; font-size: 0.9rem; margin-bottom: 6px;">💌 Open When...</h4>
             <div class="open-when-grid">
                 <button class="envelope-btn" onclick="openEnvelope('sad')">💙 You're Sad</button>
                 <button class="envelope-btn" onclick="openEnvelope('laugh')">😂 Need a Laugh</button>
@@ -407,7 +327,7 @@
             </div>
         </div>
 
-        <p id="scratchInstruction" style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;">👇 Scratch the card below to reveal your surprise!</p>
+        <p id="scratchInstruction" style="font-size: 0.8rem; color: #cbd5e1; margin-bottom: 8px;">👇 Scratch the card below to reveal your surprise!</p>
 
         <div class="container">
             <div class="scratch-container">
@@ -419,16 +339,16 @@
             </div>
         </div>
 
-        <div class="container" id="mediaSection" style="margin-top: 12px;">
-            <h3 id="celebrationHeader">🎂 Celebration Time</h3>
+        <div class="container" id="mediaSection" style="margin-top: 10px;">
+            <h3 id="celebrationHeader" style="font-size: 1.1rem; margin-bottom: 8px;">🎂 Celebration Time</h3>
             
+            <!-- ഫോട്ടോ, വീഡിയോ, ഓഡിയോകൾ ബോട്ടിൽ നിന്ന് വന്ന് ഇവിടെ പ്ലേ ആകും -->
             <div id="singlePhotoWrapper" class="single-photo-box" style="display:none;">
                 <img id="singlePhotoImg" src="" alt="Surprise Photo">
             </div>
-
             <div id="mediaContainer" class="media-box"></div>
             
-            <div style="font-size: 3rem; margin: 14px 0;" id="cakeEmoji">🎂🔥</div>
+            <div style="font-size: 2.5rem; margin: 10px 0;" id="cakeEmoji">🎂🔥</div>
             
             <div class="btn-group">
                 <button class="btn" onclick="blowCandles()" id="btnBlow">💨 Blow Candles</button>
@@ -442,14 +362,27 @@
                 <button class="btn" style="background: linear-gradient(45deg, #00ffcc, #00b894);" onclick="launchGrandFireworks()" id="btnFireworks">🎆 Grand Fireworks</button>
             </div>
 
-            <div style="margin-top: 20px; border-top: 1px solid rgba(255,215,0,0.2); padding-top: 12px;">
-                <h4 id="guestbookTitle" style="color: #ffd700; font-size: 0.95rem; margin-bottom: 6px;">💌 Guestbook Wishes</h4>
+            <!-- ഷെയർ & ഡിലീറ്റ് ബട്ടണുകൾ -->
+            <div class="btn-group" style="margin-top: 14px; border-top: 1px solid rgba(255,215,0,0.2); padding-top: 10px;">
+                <button class="btn btn-telegram" onclick="shareTelegram()" id="btnTelegram">✈️ Telegram</button>
+                <button class="btn btn-whatsapp" onclick="shareWhatsApp()" id="btnWhatsapp">💬 WhatsApp</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" style="background: linear-gradient(45deg, #3498db, #2980b9); color:#fff;" onclick="copyLink()" id="btnCopy">📋 Copy Link</button>
+                <button class="btn btn-danger" onclick="deleteSurprise()" id="btnDelete">🗑️ Delete</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" style="background: linear-gradient(45deg, #9b59b6, #8e44ad); color:#fff; width: 100%;" onclick="shareAllApps()" id="btnShareAll">🌐 Share (All Apps)</button>
+            </div>
+
+            <div style="margin-top: 14px; border-top: 1px solid rgba(255,215,0,0.2); padding-top: 10px;">
+                <h4 id="guestbookTitle" style="color: #ffd700; font-size: 0.9rem; margin-bottom: 6px;">💌 Guestbook Wishes</h4>
                 <div class="guestbook-box" id="guestbookList">
                     <div class="guestbook-item"><strong>System:</strong> Welcome to the celebration! Leave a wish below.</div>
                 </div>
                 <input type="text" id="guestName" class="guestbook-input" placeholder="Your Name...">
                 <input type="text" id="guestWish" class="guestbook-input" placeholder="Write a short wish...">
-                <button class="btn" style="width: 100%; margin-top: 8px; padding: 7px;" onclick="addGuestWish()" id="btnPostWish">Post Wish ✨</button>
+                <button class="btn" style="width: 100%; margin-top: 6px; padding: 6px;" onclick="addGuestWish()" id="btnPostWish">Post Wish ✨</button>
             </div>
         </div>
     </div>
@@ -466,6 +399,7 @@
                 statsTitle: "⏳ Life Journey Statistics", labelDays: "Days Lived", labelHours: "Hours Lived",
                 openWhenTitle: "💌 Open When...",
                 btnBlow: "💨 Blow Candles", btnCut: "🕯️ Cut Cake", btnPopper: "🎊 Party Popper", btnLove: "❤️ Send Love", btnFireworks: "🎆 Grand Fireworks",
+                btnTelegram: "✈️ Telegram", btnWhatsapp: "💬 WhatsApp", btnCopy: "📋 Copy Link", btnDelete: "🗑️ Delete", btnShareAll: "🌐 Share (All Apps)",
                 guestbookTitle: "💌 Guestbook Wishes", guestNamePlaceholder: "Your Name...", guestWishPlaceholder: "Write a short wish...", btnPostWish: "Post Wish ✨"
             },
             'ml': {
@@ -476,24 +410,13 @@
                 statsTitle: "⏳ ജീവിത യാത്രയുടെ കണക്കുകൾ", labelDays: "ജീവിച്ച ദിവസങ്ങൾ", labelHours: "ജീവിച്ച മണിക്കൂറുകൾ",
                 openWhenTitle: "💌 ഈ സമയങ്ങളിൽ തുറക്കൂ...",
                 btnBlow: "💨 മെഴുകുതിരി അണയ്ക്കുക", btnCut: "🕯️ കേക്ക് മുറിക്കുക", btnPopper: "🎊 പാർട്ടി പോപ്പർ", btnLove: "❤️ സ്നേഹം അയക്കുക", btnFireworks: "🎆 കരിമരുന്ന് പ്രയോഗം",
+                btnTelegram: "✈️ ടെലഗ്രാം", btnWhatsapp: "💬 വാട്സാപ്പ്", btnCopy: "📋 ലിങ്ക് കോപ്പി ചെയ്യുക", btnDelete: "🗑️ ഡിലീറ്റ് ചെയ്യുക", btnShareAll: "🌐 ഷെയർ ചെയ്യുക",
                 guestbookTitle: "💌 ആശംസാ പുസ്തകം", guestNamePlaceholder: "നിങ്ങളുടെ പേര്...", guestWishPlaceholder: "ചെറിയൊരു ആശംസ എഴുതൂ...", btnPostWish: "പോസ്റ്റ് ചെയ്യൂ ✨"
-            },
-            'hi': {
-                lockTitle: "⏳ पोर्टल लॉक है!", lockSubtitle: "यह विशेष सरप्राइज खुलेगा:",
-                giftPrompt: "🎁 खोलने के लिए गिफ्ट बॉक्स पर टैप करें!", giftSubPrompt: "अपना विशेष सरप्राइज अनलॉक करने के लिए टैप करें...",
-                mainTitle: "शुभकामनाएँ", targetTimeText: "लक्ष्य समय", scratchInstruction: "👇 अपना सरप्राइज देखने के लिए नीचे खरोंचें!",
-                surpriseHeader: "🎉 विशेष सरप्राइज 🎁", celebrationHeader: "🎂 जश्न का समय",
-                statsTitle: "⏳ जीवन यात्रा के आंकड़े", labelDays: "जीए गए दिन", labelHours: "जीए गए घंटे",
-                openWhenTitle: "💌 जब आप चाहें तब खोलें...",
-                btnBlow: "💨 मोमबत्ती बुझाएं", btnCut: "🕯️ केक काटें", btnPopper: "🎊 पार्टी पॉपर", btnLove: "❤️ प्यार भेजें", btnFireworks: "🎆 आतिशबाजी",
-                guestbookTitle: "💌 शुभकामनाएं दीवार", guestNamePlaceholder: "आपका नाम...", guestWishPlaceholder: "एक छोटी शुभकामना लिखें...", btnPostWish: "शुभकामना पोस्ट करें ✨"
             }
         };
 
         function getTranslation(lang, key) {
-            if (translations[lang] && translations[lang][key]) {
-                return translations[lang][key];
-            }
+            if (translations[lang] && translations[lang][key]) return translations[lang][key];
             return translations['en'][key] || '';
         }
 
@@ -505,22 +428,20 @@
         };
 
         function openEnvelope(type) {
-            const msg = openWhenMessages[type] || "You are special!";
-            confetti({ particleCount: 30, spread: 50 });
-            alert(`💌 Message:\n\n${msg}`);
+            alert(`💌 Message:\n\n${openWhenMessages[type] || "You are special!"}`);
         }
 
         let icons = ['🎈', '✨', '💖', '🎉', '🌟', '🎂'];
         let floatBg = document.getElementById('floatingBg');
-        for (let i = 0; i < 16; i++) {
+        for (let i = 0; i < 14; i++) {
             let div = document.createElement('div');
             div.className = 'float-item';
             div.innerText = icons[Math.floor(Math.random() * icons.length)];
-            div.style.left = `${Math.random() * 92}%`;
+            div.style.left = `${Math.random() * 90}%`;
             div.style.animationDuration = `${6 + Math.random() * 5}s`;
             div.style.animationDelay = `${Math.random() * 5}s`;
             div.addEventListener('click', (e) => {
-                confetti({ particleCount: 35, spread: 65, origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight } });
+                confetti({ particleCount: 30, spread: 50, origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight } });
                 div.remove();
             });
             floatBg.appendChild(div);
@@ -531,25 +452,17 @@
         let targetTimeStr = '';
 
         function calculateLifeStats(dobOrAge) {
-            let diffDays = 0;
-            let diffHours = 0;
-
+            let diffDays = 20 * 365, diffHours = 20 * 365 * 24;
             if (dobOrAge && dobOrAge.includes('-')) {
                 let birthDate = new Date(dobOrAge);
-                let now = new Date();
-                let diffTime = Math.abs(now - birthDate);
+                let diffTime = Math.abs(new Date() - birthDate);
                 diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
                 diffHours = Math.floor(diffTime / (1000 * 60 * 60));
             } else if (dobOrAge && !isNaN(dobOrAge)) {
                 let age = parseInt(dobOrAge);
                 diffDays = age * 365;
                 diffHours = age * 365 * 24;
-            } else {
-                let defaultAge = 20;
-                diffDays = defaultAge * 365;
-                diffHours = defaultAge * 365 * 24;
             }
-
             document.getElementById('statDays').innerText = diffDays.toLocaleString();
             document.getElementById('statHours').innerText = diffHours.toLocaleString();
         }
@@ -557,9 +470,7 @@
         let currentLang = 'en';
 
         async function loadSurpriseData() {
-            let name = 'Friend';
-            let msg = 'Wishing you an extraordinary day filled with joy and success!';
-            let photoUrl = '', video = '', song = '', voice = '', dobOrAge = '', category = 'Birthday';
+            let name = 'Friend', msg = 'Wishing you an extraordinary day!', photoUrl = '', video = '', song = '', voice = '', extraAudio = '', dobOrAge = '', category = 'Birthday';
 
             if (surpriseId) {
                 try {
@@ -574,11 +485,12 @@
                         video = data.video || '';
                         song = data.song || '';
                         voice = data.voice || '';
+                        extraAudio = data.extra_audio || '';
                         currentLang = data.lang || 'en';
                         dobOrAge = data.dob || data.age || '';
                     }
                 } catch (e) {
-                    console.error("Failed to load surprise from API:", e);
+                    console.error("API Error:", e);
                 }
             } else {
                 name = urlParams.get('name') || 'Friend';
@@ -588,13 +500,9 @@
                 video = urlParams.get('video') || '';
                 song = urlParams.get('song') || '';
                 voice = urlParams.get('voice') || '';
+                extraAudio = urlParams.get('extra_audio') || '';
                 currentLang = urlParams.get('lang') || 'en';
                 dobOrAge = urlParams.get('dob') || urlParams.get('age') || '';
-            }
-
-            let browserLang = navigator.language ? navigator.language.slice(0, 2) : 'en';
-            if (!urlParams.get('lang') && translations[browserLang]) {
-                currentLang = browserLang;
             }
 
             document.getElementById('langSwitcher').value = currentLang;
@@ -613,7 +521,6 @@
             document.getElementById('mainTitle').innerText = catTitles[category] || "✨ Happy Celebration";
 
             if (targetTimeStr) document.getElementById('displayDate').innerText = targetTimeStr.replace('T', ' ');
-
             calculateLifeStats(dobOrAge);
 
             let photoWrapper = document.getElementById('singlePhotoWrapper');
@@ -627,9 +534,10 @@
 
             let mediaContainer = document.getElementById('mediaContainer');
             mediaContainer.innerHTML = '';
-            if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls playsinline preload="metadata" src="${video}"></video></div>`;
-            if (song) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎶 Song / Audio</p><audio controls src="${song}"></audio></div>`;
-            if (voice) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎙️ Neural Voice Greeting</p><audio controls src="${voice}"></audio></div>`;
+            if (video) mediaContainer.innerHTML += `<div style="margin-top:8px;"><video controls playsinline preload="metadata" src="${video}"></video></div>`;
+            if (song) mediaContainer.innerHTML += `<div style="margin-top:8px;"><p style="font-size:0.8rem; color:#ffd700; margin-bottom:2px;">🎶 Song / Audio</p><audio controls src="${song}"></audio></div>`;
+            if (voice) mediaContainer.innerHTML += `<div style="margin-top:8px;"><p style="font-size:0.8rem; color:#ffd700; margin-bottom:2px;">🎙️ Neural Voice Greeting</p><audio controls src="${voice}"></audio></div>`;
+            if (extraAudio) mediaContainer.innerHTML += `<div style="margin-top:8px;"><p style="font-size:0.8rem; color:#ffd700; margin-bottom:2px;">🎵 Additional Audio File</p><audio controls src="${extraAudio}"></audio></div>`;
 
             checkTimeLock();
         }
@@ -640,27 +548,43 @@
         }
 
         function applyTranslations(lang) {
-            document.getElementById('lockTitle').innerText = getTranslation(lang, 'lockTitle');
-            document.getElementById('lockSubtitle').innerText = getTranslation(lang, 'lockSubtitle');
-            document.getElementById('giftPrompt').innerText = getTranslation(lang, 'giftPrompt');
-            document.getElementById('giftSubPrompt').innerText = getTranslation(lang, 'giftSubPrompt');
-            document.getElementById('targetTimeText').innerText = getTranslation(lang, 'targetTimeText');
-            document.getElementById('scratchInstruction').innerText = getTranslation(lang, 'scratchInstruction');
-            document.getElementById('surpriseHeader').innerText = getTranslation(lang, 'surpriseHeader');
-            document.getElementById('celebrationHeader').innerText = getTranslation(lang, 'celebrationHeader');
-            document.getElementById('statsTitle').innerText = getTranslation(lang, 'statsTitle');
-            document.getElementById('labelDays').innerText = getTranslation(lang, 'labelDays');
-            document.getElementById('labelHours').innerText = getTranslation(lang, 'labelHours');
-            document.getElementById('openWhenTitle').innerText = getTranslation(lang, 'openWhenTitle');
-            document.getElementById('btnBlow').innerText = getTranslation(lang, 'btnBlow');
-            document.getElementById('btnCut').innerText = getTranslation(lang, 'btnCut');
-            document.getElementById('btnPopper').innerText = getTranslation(lang, 'btnPopper');
-            document.getElementById('btnLove').innerText = getTranslation(lang, 'btnLove');
-            document.getElementById('btnFireworks').innerText = getTranslation(lang, 'btnFireworks');
-            document.getElementById('guestbookTitle').innerText = getTranslation(lang, 'guestbookTitle');
-            document.getElementById('guestName').placeholder = getTranslation(lang, 'guestNamePlaceholder');
-            document.getElementById('guestWish').placeholder = getTranslation(lang, 'guestWishPlaceholder');
-            document.getElementById('btnPostWish').innerText = getTranslation(lang, 'btnPostWish');
+            ['lockTitle', 'lockSubtitle', 'giftPrompt', 'giftSubPrompt', 'targetTimeText', 'scratchInstruction', 'surpriseHeader', 'celebrationHeader', 'statsTitle', 'labelDays', 'labelHours', 'openWhenTitle', 'btnBlow', 'btnCut', 'btnPopper', 'btnLove', 'btnFireworks', 'btnTelegram', 'btnWhatsapp', 'btnCopy', 'btnDelete', 'btnShareAll', 'guestbookTitle', 'btnPostWish'].forEach(id => {
+                let el = document.getElementById(id);
+                if (el) el.innerText = getTranslation(lang, id);
+            });
+            let nameInput = document.getElementById('guestName');
+            let wishInput = document.getElementById('guestWish');
+            if (nameInput) nameInput.placeholder = getTranslation(lang, 'guestNamePlaceholder');
+            if (wishInput) wishInput.placeholder = getTranslation(lang, 'guestWishPlaceholder');
+        }
+
+        function shareTelegram() {
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=✨ Check out this amazing surprise celebration! 🎉`, '_blank');
+        }
+
+        function shareWhatsApp() {
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent("✨ Check out this amazing surprise celebration! 🎉 " + window.location.href)}`, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => alert("📋 Link copied to clipboard!"));
+        }
+
+        function shareAllApps() {
+            if (navigator.share) {
+                navigator.share({ title: 'Special Surprise Celebration', text: '✨ Check out this amazing surprise celebration!', url: window.location.href });
+            } else {
+                copyLink();
+            }
+        }
+
+        async function deleteSurprise() {
+            if (!surpriseId) return alert("No surprise ID found.");
+            if (confirm("Are you sure you want to delete this surprise?")) {
+                let res = await fetch(`${BOT_API_URL}/api/delete?id=${surpriseId}`, { method: 'DELETE' });
+                if (res.ok) { alert("🗑️ Deleted successfully!"); window.location.reload(); }
+                else { alert("Failed to delete."); }
+            }
         }
 
         function addGuestWish() {
@@ -691,26 +615,14 @@
             let parts = str.split(/t|\s+/i);
             let dateParts = parts[0].split('-');
             let timeParts = (parts[1] || '00:00:00').split(':');
-            return new Date(
-                parseInt(dateParts[0]),
-                parseInt(dateParts[1]) - 1,
-                parseInt(dateParts[2]),
-                parseInt(timeParts[0] || 0),
-                parseInt(timeParts[1] || 0),
-                parseInt(timeParts[2] || 0)
-            ).getTime();
+            return new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]), parseInt(timeParts[0] || 0), parseInt(timeParts[1] || 0), parseInt(timeParts[2] || 0)).getTime();
         }
 
         function checkTimeLock() {
             let isPreview = urlParams.get('preview') === 'true';
-            if (!targetTimeStr || isPreview) { 
-                document.getElementById('lockSection').style.display = 'none';
-                return; 
-            }
+            if (!targetTimeStr || isPreview) { document.getElementById('lockSection').style.display = 'none'; return; }
             let targetTime = parseTargetDate(targetTimeStr);
-            let now = new Date().getTime();
-            let distance = targetTime - now;
-
+            let distance = targetTime - new Date().getTime();
             if (distance <= 0) {
                 document.getElementById('lockSection').style.display = 'none';
             } else {
@@ -718,117 +630,81 @@
                 document.getElementById('giftSection').style.display = 'none';
                 document.getElementById('targetTimeDisplay').innerText = targetTimeStr.replace('T', ' ');
                 setInterval(() => {
-                    let now = new Date().getTime();
-                    let dist = targetTime - now;
-                    if (dist <= 0) { location.reload(); }
+                    let dist = targetTime - new Date().getTime();
+                    if (dist <= 0) location.reload();
                     else {
-                        let days = Math.floor(dist / (1000 * 60 * 60 * 24));
-                        let hours = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                        let mins = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
-                        let secs = Math.floor((dist % (1000 * 60)) / 1000);
-                        document.getElementById('countdownTimer').innerText = `${days}d ${hours}h ${mins}m ${secs}s`;
+                        let d = Math.floor(dist / (1000 * 60 * 60 * 24));
+                        let h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        let m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+                        let s = Math.floor((dist % (1000 * 60)) / 1000);
+                        document.getElementById('countdownTimer').innerText = `${d}d ${h}h ${m}m ${s}s`;
                     }
                 }, 1000);
             }
         }
 
         let canvas = document.getElementById('scratchCanvas');
-        let ctx = canvas.getContext('2d');
+        let ctx = canvas ? canvas.getContext('2d') : null;
 
         function initCanvas() {
             if (!canvas) return;
             canvas.width = canvas.parentElement.clientWidth;
             canvas.height = canvas.parentElement.clientHeight;
             ctx.globalCompositeOperation = 'source-over';
-            let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-            gradient.addColorStop(0, '#bdc3c7');
-            gradient.addColorStop(1, '#2c3e50');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#ffd700';
-            ctx.font = 'bold 16px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
+            let grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            grad.addColorStop(0, '#bdc3c7'); grad.addColorStop(1, '#2c3e50');
+            ctx.fillStyle = grad; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#ffd700'; ctx.font = 'bold 15px sans-serif';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             ctx.fillText('✨ SCRATCH HERE ✨', canvas.width / 2, canvas.height / 2);
         }
 
         let isDrawing = false;
         function scratch(x, y) {
             ctx.globalCompositeOperation = 'destination-out';
-            ctx.beginPath();
-            ctx.arc(x, y, 22, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.beginPath(); ctx.arc(x, y, 20, 0, Math.PI * 2); ctx.fill();
         }
-
-        function getPosition(e) {
+        function getPos(e) {
             let rect = canvas.getBoundingClientRect();
-            let clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            let clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            return { x: clientX - rect.left, y: clientY - rect.top };
+            let cx = e.touches ? e.touches[0].clientX : e.clientX;
+            let cy = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: cx - rect.left, y: cy - rect.top };
+        }
+        if (canvas) {
+            canvas.addEventListener('mousedown', (e) => { isDrawing = true; let p = getPos(e); scratch(p.x, p.y); });
+            canvas.addEventListener('mousemove', (e) => { if (isDrawing) { let p = getPos(e); scratch(p.x, p.y); } });
+            window.addEventListener('mouseup', () => isDrawing = false);
+            canvas.addEventListener('touchstart', (e) => { isDrawing = true; let p = getPos(e); scratch(p.x, p.y); e.preventDefault(); });
+            canvas.addEventListener('touchmove', (e) => { if (isDrawing) { let p = getPos(e); scratch(p.x, p.y); e.preventDefault(); } });
+            canvas.addEventListener('touchend', () => isDrawing = false);
         }
 
-        canvas.addEventListener('mousedown', (e) => { isDrawing = true; let pos = getPosition(e); scratch(pos.x, pos.y); });
-        canvas.addEventListener('mousemove', (e) => { if (!isDrawing) return; let pos = getPosition(e); scratch(pos.x, pos.y); });
-        window.addEventListener('mouseup', () => { isDrawing = false; });
-        canvas.addEventListener('touchstart', (e) => { isDrawing = true; let pos = getPosition(e); scratch(pos.x, pos.y); e.preventDefault(); });
-        canvas.addEventListener('touchmove', (e) => { if (!isDrawing) return; let pos = getPosition(e); scratch(pos.x, pos.y); e.preventDefault(); });
-        canvas.addEventListener('touchend', () => { isDrawing = false; });
-
-        function blowCandles() {
-            document.getElementById('cakeEmoji').innerHTML = '🎂💨✨';
-            confetti({ particleCount: 90, spread: 75, origin: { y: 0.6 } });
-        }
-
-        function cutCake() {
-            document.getElementById('cakeEmoji').innerHTML = '🍰 🔪 ✨';
-            confetti({
-                particleCount: 180,
-                spread: 110,
-                origin: { y: 0.6 },
-                colors: ['#ffd700', '#ff3366', '#ffffff', '#00ffcc']
-            });
-        }
-
+        function blowCandles() { document.getElementById('cakeEmoji').innerHTML = '🎂💨✨'; confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } }); }
+        function cutCake() { document.getElementById('cakeEmoji').innerHTML = '🍰 🔪 ✨'; confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 }, colors: ['#ffd700', '#ff3366', '#fff', '#00ffcc'] }); }
         function firePartyPopper() {
-            let duration = 2 * 1000;
-            let end = Date.now() + duration;
-
+            let end = Date.now() + 1500;
             (function frame() {
-                confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 } });
-                confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 } });
-                if (Date.now() < end) { requestAnimationFrame(frame); }
+                confetti({ particleCount: 5, angle: 60, spread: 50, origin: { x: 0 } });
+                confetti({ particleCount: 5, angle: 120, spread: 50, origin: { x: 1 } });
+                if (Date.now() < end) requestAnimationFrame(frame);
             })();
         }
-
         function sendLoveHearts() {
-            let hearts = ['❤️', '💖', '💝', '💗', '💓', '✨'];
-            for (let i = 0; i < 12; i++) {
-                let heart = document.createElement('div');
-                heart.className = 'floating-heart';
-                heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
-                heart.style.left = `${20 + Math.random() * 60}%`;
-                heart.style.animationDelay = `${Math.random() * 0.5}s`;
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 2500);
-            }
-            confetti({ particleCount: 50, spread: 80, origin: { y: 0.8 }, colors: ['#ff3366', '#ff6b81'] });
+            ['❤️', '💖', '💝', '💗', '✨'].forEach(h => {
+                let div = document.createElement('div');
+                div.className = 'floating-heart'; div.innerText = h;
+                div.style.left = `${30 + Math.random() * 40}%`;
+                document.body.appendChild(div);
+                setTimeout(() => div.remove(), 2500);
+            });
+            confetti({ particleCount: 40, spread: 70, origin: { y: 0.8 }, colors: ['#ff3366', '#ff6b81'] });
         }
-
         function launchGrandFireworks() {
-            let count = 250;
-            let defaults = { origin: { y: 0.7 } };
-
-            function fire(particleRatio, opts) {
-              confetti(Object.assign({}, defaults, opts, {
-                particleCount: Math.floor(count * particleRatio)
-              }));
-            }
-
+            let count = 200, defaults = { origin: { y: 0.7 } };
+            function fire(ratio, opts) { confetti(Object.assign({}, defaults, opts, { particleCount: Math.floor(count * ratio) })); }
             fire(0.25, { spread: 26, startVelocity: 55 });
             fire(0.2, { spread: 60 });
             fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-            fire(0.1, { spread: 120, startVelocity: 45 });
         }
 
         if (window.Telegram && window.Telegram.WebApp) {
