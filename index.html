@@ -559,7 +559,7 @@
         async function loadSurpriseData() {
             let name = 'Friend';
             let msg = 'Wishing you an extraordinary day filled with joy and success!';
-            let photoUrl = '', video, song, voice, dobOrAge = '';
+            let photoUrl = '', video, song, voice, dobOrAge = '', category = 'Birthday';
 
             if (surpriseId) {
                 try {
@@ -568,6 +568,7 @@
                         let data = await response.json();
                         name = data.name || name;
                         msg = data.msg || msg;
+                        category = data.category || 'Birthday';
                         targetTimeStr = data.target_time || '';
                         photoUrl = data.photo || '';
                         video = data.video;
@@ -601,16 +602,31 @@
 
             document.getElementById('recipientName').innerText = name;
             document.getElementById('wishMessage').innerText = msg;
+            
+            let catTitles = {
+                "Birthday": "🎂 Happy Birthday",
+                "Wedding": "💍 Happy Wedding Anniversary",
+                "NewBorn": "👶 Welcome Little One",
+                "Graduation": "🎓 Congratulations on Graduation",
+                "Other": "✨ Special Celebration"
+            };
+            document.getElementById('mainTitle').innerText = catTitles[category] || "✨ Happy Celebration";
+
             if (targetTimeStr) document.getElementById('displayDate').innerText = targetTimeStr.replace('T', ' ');
 
             calculateLifeStats(dobOrAge);
 
+            let photoWrapper = document.getElementById('singlePhotoWrapper');
+            let photoImg = document.getElementById('singlePhotoImg');
             if (photoUrl) {
-                document.getElementById('singlePhotoWrapper').style.display = 'flex';
-                document.getElementById('singlePhotoImg').src = photoUrl;
+                photoWrapper.style.display = 'flex';
+                photoImg.src = photoUrl;
+            } else {
+                photoWrapper.style.display = 'none';
             }
 
             let mediaContainer = document.getElementById('mediaContainer');
+            mediaContainer.innerHTML = '';
             if (video) mediaContainer.innerHTML += `<div style="margin-top:10px;"><video controls playsinline preload="metadata" src="${video}"></video></div>`;
             if (song) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎶 Song / Audio</p><audio controls src="${song}"></audio></div>`;
             if (voice) mediaContainer.innerHTML += `<div style="margin-top:10px;"><p style="font-size:0.85rem; color:#ffd700; margin-bottom:4px;">🎙️ Neural Voice Greeting</p><audio controls src="${voice}"></audio></div>`;
@@ -628,7 +644,6 @@
             document.getElementById('lockSubtitle').innerText = getTranslation(lang, 'lockSubtitle');
             document.getElementById('giftPrompt').innerText = getTranslation(lang, 'giftPrompt');
             document.getElementById('giftSubPrompt').innerText = getTranslation(lang, 'giftSubPrompt');
-            document.getElementById('mainTitle').innerText = getTranslation(lang, 'mainTitle');
             document.getElementById('targetTimeText').innerText = getTranslation(lang, 'targetTimeText');
             document.getElementById('scratchInstruction').innerText = getTranslation(lang, 'scratchInstruction');
             document.getElementById('surpriseHeader').innerText = getTranslation(lang, 'surpriseHeader');
