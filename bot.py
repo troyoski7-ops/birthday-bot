@@ -99,7 +99,7 @@ BOT_TEXTS = {
         "ask_dob_type": "⏳ *How would you like to add age / date details for stats?*",
         "ask_dob_date": "📅 Please send Date in **YYYY-MM-DD** format:",
         "ask_dob_direct": "🔢 Please enter their direct age as a number:",
-        "ask_year": "📅 *Choose the year forيتي the surprise:*",
+        "ask_year": "📅 *Choose the year for the surprise:*",
         "ask_month": "📆 *Choose the month:*",
         "ask_day": "🗓️ *Pick the date:*",
         "ask_hour": "⏰ *Select the Hour (24-Hour format, 00 to 23):*",
