@@ -95,7 +95,6 @@ BOT_TEXTS = {
         "ask_category": "🎉 *What kind of celebration or wish is this?* Choose below:",
         "det_ask_name": "✨ *Whose special celebration is this?* Send their name:",
         "det_ask_wish": "📝 *Write a sweet, heartfelt message for them:*",
-        "ask_gender": "👤 *Select target profile (Boy / Girl):*",
         "ask_dob_type": "⏳ *How would you like to add age / date details for stats?*",
         "ask_dob_date": "📅 Please send Date in **YYYY-MM-DD** format:",
         "ask_dob_direct": "🔢 Please enter their direct age as a number:",
@@ -125,7 +124,6 @@ BOT_TEXTS = {
         "ask_category": "🎉 *ഇത് എന്തുതരം ആഘോഷം അല്ലെങ്കിൽ ആശംസയാണ്?*",
         "det_ask_name": "✨ *ആരുടെ ആഘോഷമാണ്? പേര് അയക്കൂ:*",
         "det_ask_wish": "📝 *ദീർഘമായ ആശംസ സന്ദേശം എഴുതൂ:*",
-        "ask_gender": "👤 *പ്രൊഫൈൽ തിരഞ്ഞെടുക്കൂ (Boy / Girl):*",
         "ask_dob_type": "⏳ *സ്റ്റാറ്റിസ്റ്റിക്സിനായി വിവരങ്ങൾ എങ്ങനെ നൽകണം?*",
         "ask_dob_date": "📅 തീയതി **YYYY-MM-DD** ഫോർമാറ്റിൽ അയക്കൂ:",
         "ask_dob_direct": "🔢 വയസ്സ് മാത്രം നമ്പർ ആയി നൽകൂ:",
@@ -249,7 +247,6 @@ class DetailedForm(StatesGroup):
     category = State()
     name = State()
     wish = State()
-    gender = State()
     dob_choice = State()
     dob_input = State()
     target_year = State()
@@ -312,11 +309,6 @@ def get_category_keyboard():
         [InlineKeyboardButton(text="💼 New Job", callback_data="cat_NewJob"), InlineKeyboardButton(text="🏆 Achievement", callback_data="cat_Achievement")],
         [InlineKeyboardButton(text="✈️ Safe Journey", callback_data="cat_Journey"), InlineKeyboardButton(text="🎁 Just For You", callback_data="cat_JustForYou")],
         [InlineKeyboardButton(text="😊 Have a Great Day", callback_data="cat_GreatDay"), InlineKeyboardButton(text="🌟 Other Celebration", callback_data="cat_Other")]
-    ])
-
-def get_gender_keyboard():
-    return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="👦 Boy / Groom", callback_data="gender_boy"), InlineKeyboardButton(text="👧 Girl / Bride", callback_data="gender_girl")]
     ])
 
 def get_action_keyboard():
@@ -448,11 +440,11 @@ async def process_category(callback: types.CallbackQuery, state: FSMContext):
         return
 
     if category in DETAILED_CATEGORIES:
-        await state.update_data(category=category)
+        await state.update_data(category=category, gender="boy")
         await callback.message.answer(get_bot_text(user_id, "det_ask_name"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
         await state.set_state(DetailedForm.name)
     else:
-        await state.update_data(category=category)
+        await state.update_data(category=category, gender="boy")
         await callback.message.answer(get_bot_text(user_id, "sim_ask_name"), parse_mode="Markdown")
         await state.set_state(SimpleForm.name)
     await callback.answer()
@@ -504,30 +496,12 @@ async def process_name(message: types.Message, state: FSMContext):
     data = await state.get_data()
     cat = data.get("category", "")
     
-    if cat in ["Wedding", "WeddingWish", "NewBorn", "Graduation"]:
-        await state.set_state(DetailedForm.gender)
-        await message.answer(get_bot_text(message.from_user.id, "ask_gender"), reply_markup=get_gender_keyboard(), parse_mode="Markdown")
-    else:
-        if cat in ["Festival", "HouseWarming"]:
-            await state.update_data(dob="", age="")
-            await ask_target_year(message, state)
-        else:
-            await state.set_state(DetailedForm.wish)
-            await message.answer(get_bot_text(message.from_user.id, "det_ask_wish"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
-
-@dp.callback_query(F.data.startswith("gender_"))
-async def process_gender(callback: types.CallbackQuery, state: FSMContext):
-    gender = callback.data.split("_")[1]
-    await state.update_data(gender=gender)
-    data = await state.get_data()
-    cat = data.get("category", "")
     if cat in ["Festival", "HouseWarming"]:
         await state.update_data(dob="", age="")
-        await ask_target_year(callback.message, state)
+        await ask_target_year(message, state)
     else:
         await state.set_state(DetailedForm.wish)
-        await callback.message.answer(get_bot_text(callback.from_user.id, "det_ask_wish"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
-    await callback.answer()
+        await message.answer(get_bot_text(message.from_user.id, "det_ask_wish"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
 
 @dp.message(DetailedForm.wish)
 async def process_wish(message: types.Message, state: FSMContext):
