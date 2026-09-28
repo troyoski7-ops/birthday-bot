@@ -99,7 +99,7 @@ BOT_TEXTS = {
         "ask_dob_type": "⏳ *How would you like to add age / date details for stats?*",
         "ask_dob_date": "📅 Please send Date in **YYYY-MM-DD** format:",
         "ask_dob_direct": "🔢 Please enter their direct age as a number:",
-        "ask_year": "📅 *Choose the year for the surprise:*",
+        "ask_year": "📅 *Choose the year forيتي the surprise:*",
         "ask_month": "📆 *Choose the month:*",
         "ask_day": "🗓️ *Pick the date:*",
         "ask_hour": "⏰ *Select the Hour (24-Hour format, 00 to 23):*",
@@ -296,6 +296,7 @@ def get_countries_keyboard(region, page=0, items_per_page=6):
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
 DETAILED_CATEGORIES = ["Birthday", "HouseWarming", "Proposal", "WeddingWish", "Wedding", "NewBorn", "Graduation", "Festival", "Other"]
+SIMPLE_CATEGORIES = ["Morning", "Night", "Congratulations", "Love", "MissYou", "Thanks", "Sorry", "Luck", "AllTheBest", "GetWell", "TakeCare", "Exam", "NewJob", "Achievement", "Journey", "JustForYou", "GreatDay"]
 
 def get_category_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
@@ -752,7 +753,7 @@ async def process_skip(callback: types.CallbackQuery, state: FSMContext):
         await callback.message.answer(get_bot_text(user_id, "ask_video"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
     elif current_state == DetailedForm.video.state:
         await state.set_state(DetailedForm.song)
-        await callback.message.answer(get__bot_text(user_id, "ask_song") if 'get_bot_text' in globals() else get_bot_text(user_id, "ask_song"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
+        await callback.message.answer(get_bot_text(user_id, "ask_song"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
     elif current_state == DetailedForm.song.state:
         await state.set_state(DetailedForm.voice)
         await callback.message.answer(get_bot_text(user_id, "ask_voice"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
