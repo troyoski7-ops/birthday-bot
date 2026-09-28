@@ -141,10 +141,98 @@ BOT_TEXTS = {
         "cancelled": "🚫 പ്രക്രിയ റദ്ദാക്കിയിരിക്കുന്നു. വീണ്ടും തുടങ്ങാൻ /start നൽകുക.",
         "help": "💡 *കമാൻഡുകൾ:*\n/start - പുതിയ സർപ്രൈസ്\n/stats - സ്റ്റാറ്റിസ്റ്റിക്സ്\n/cancel - റദ്ദാക്കുക",
         "pay_required": "⭐ *പരിധി കഴിഞ്ഞിരിക്കുന്നു!* ബോട്ട് 500 യൂസർമാരെ പിന്നിട്ടു. തുടർന്നും സർപ്രൈസുകൾ ഉണ്ടാക്കാൻ ടെലഗ്രാം സ്റ്റാർസ് നൽകുക."
+    },
+    "ru": {
+        "welcome": "✨ *Добро пожаловать в мир сюрпризов...*\n\nВыберите регион и страну:",
+        "region_selected": "🌍 Регион: *{region}*. Выберите страну:",
+        "country_choice": "🗣️ Выберите язык:",
+        "lang_updated": "✅ Язык успешно обновлен!",
+        "ask_category": "🎉 *Какой это праздник или пожелание?*",
+        "det_ask_name": "✨ *Чей это праздник? Отправьте имя:*",
+        "det_ask_wish": "📝 *Напишите подробное пожелание:*",
+        "ask_gender": "👤 *Выберите профиль (Мальчик / Девочка):*",
+        "ask_dob_type": "⏳ *Как добавить детали?*", "ask_dob_date": "📅 Дата (ГГГГ-ММ-ДД):", "ask_dob_direct": "🔢 Возраст:",
+        "ask_year": "📅 *Год:*", "ask_month": "📆 *Месяц:*", "ask_day": "🗓️ *День:*", "ask_hour": "⏰ *Час:*", "ask_minute": "⏱️ *Минута:*",
+        "ask_photo": "📸 *Фото*:", "ask_video": "🎥 *Видео*:", "ask_song": "🎶 *Песня*:", "ask_voice": "🎙️ *Голос*:", "ask_audio": "🎵 *Аудио*:",
+        "ready": "✨ *Все готово для {name}!*",
+        "sim_ask_name": "✨ *Для кого это пожелание? Имя:*", "sim_ask_wish": "📝 *Напишите короткое пожелание:*", "simple_ready": "✨ *Ваше простое пожелание для {name} готово!*",
+        "cancelled": "🚫 Отменено.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *Лимит исчерпан!* Оплатите через Telegram Stars."
+    },
+    "fa": {
+        "welcome": "✨ *به دنیای شگفتی‌ها خوش آمدید...*\n\nمنطقه و کشور خود را انتخاب کنید:",
+        "region_selected": "🌍 منطقه: *{region}*. کشور خود را انتخاب کنید:",
+        "country_choice": "🗣️ زبان خود را انتخاب کنید:",
+        "lang_updated": "✅ زبان به‌روز شد!",
+        "ask_category": "🎉 *این چه نوع جشن یا آرزویی است؟*",
+        "det_ask_name": "✨ *این جشن برای کیست؟ نام را بفرستید:*",
+        "det_ask_wish": "📝 *پیام تفصیلی خود را بنویسید:*",
+        "ask_gender": "👤 *انتخاب مشخصات (پسر / دختر):*",
+        "ask_dob_type": "⏳ *افزودن جزئیات؟*", "ask_dob_date": "📅 تاریخ (YYYY-MM-DD):", "ask_dob_direct": "🔢 سن:",
+        "ask_year": "📅 *سال:*", "ask_month": "📆 *ماه:*", "ask_day": "🗓️ *روز:*", "ask_hour": "⏰ *ساعت:*", "ask_minute": "⏱️ *دقیقه:*",
+        "ask_photo": "📸 *عکس*:", "ask_video": "🎥 *ویدیو*:", "ask_song": "🎶 *آهنگ*:", "ask_voice": "🎙️ *صدا*:", "ask_audio": "🎵 *فایل صوتی*:",
+        "ready": "✨ *همه چیز برای {name} آماده است!*",
+        "sim_ask_name": "✨ *این برای چه کسی است؟ نام:*", "sim_ask_wish": "📝 *پیام کوتاه خود را بنویسید:*", "simple_ready": "✨ *آرزوی شما برای {name} آماده است!*",
+        "cancelled": "🚫 لغو شد.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *حد به پایان رسید!* پرداخت با Telegram Stars."
+    },
+    "it": {
+        "welcome": "✨ *Benvenuto nel tuo angolo di sorprese...*", "region_selected": "🌍 Regione: *{region}*. Seleziona il paese:", "country_choice": "🗣️ Scegli la lingua:", "lang_updated": "✅ Lingua aggiornata!", "ask_category": "🎉 *Che tipo di celebrazione è?*",
+        "det_ask_name": "✨ *Di chi è la festa? Invia il nome:*", "det_ask_wish": "📝 *Scrivi un messaggio dettagliato:*",
+        "ask_gender": "👤 *Seleziona profilo (Ragazzo / Ragazza):*",
+        "ask_dob_type": "⏳ *Aggiungere dettagli?*", "ask_dob_date": "📅 Data (AAAA-MM-GG):", "ask_dob_direct": "🔢 Età:", "ask_year": "📅 *Anno:*", "ask_month": "📆 *Mese:*", "ask_day": "🗓️ *Giorno:*", "ask_hour": "⏰ *Ora:*", "ask_minute": "⏱️ *Minuto:*", "ask_photo": "📸 *Foto*:", "ask_video": "🎥 *Video*:", "ask_song": "🎶 *Canzone*:", "ask_voice": "🎙️ *Voce*:", "ask_audio": "🎵 *Audio*:", "ready": "✨ *Tutto pronto per {name}!*",
+        "sim_ask_name": "✨ *Per chi è? Nome:*", "sim_ask_wish": "📝 *Scrivi un augurio veloce:*", "simple_ready": "✨ *Il tuo augurio per {name} è pronto!*",
+        "cancelled": "🚫 Annullato.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *Limite raggiunto!* Paga con Telegram Stars."
+    },
+    "id": {
+        "welcome": "✨ *Selamat datang di dunia kejutan...*", "region_selected": "🌍 Wilayah: *{region}*. Pilih negara:", "country_choice": "🗣️ Pilih bahasa:", "lang_updated": "✅ Bahasa diperbarui!", "ask_category": "🎉 *Perayaan apa ini?*",
+        "det_ask_name": "✨ *Perayaan siapa ini? Kirim nama:*", "det_ask_wish": "📝 *Tulis pesan lengkap:*",
+        "ask_gender": "👤 *Pilih profil (Laki-laki / Perempuan):*",
+        "ask_dob_type": "⏳ *Tambah detail?*", "ask_dob_date": "📅 Tanggal (YYYY-MM-DD):", "ask_dob_direct": "🔢 Usia:", "ask_year": "📅 *Tahun:*", "ask_month": "📆 *Bulan:*", "ask_day": "🗓️ *Hari:*", "ask_hour": "⏰ *Jam:*", "ask_minute": "⏱️ *Menit:*", "ask_photo": "📸 *Foto*:", "ask_video": "🎥 *Video*:", "ask_song": "🎶 *Lagu*:", "ask_voice": "🎙️ *Suara*:", "ask_audio": "🎵 *Audio*:", "ready": "✨ *Semua siap untuk {name}!*",
+        "sim_ask_name": "✨ *Untuk siapa ini? Nama:*", "sim_ask_wish": "📝 *Tulis pesan singkat:*", "simple_ready": "✨ *Kejutan untuk {name} sudah siap!*",
+        "cancelled": "🚫 Dibatalkan.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *Batas tercapai!* Bayar dengan Telegram Stars."
+    },
+    "uz": {
+        "welcome": "✨ *Kutilmagan sovg'alar olamiga xush kelibsiz...*", "region_selected": "🌍 Hudud: *{region}*. Mamlakatni tanlang:", "country_choice": "🗣️ Tilni tanlang:", "lang_updated": "✅ Til yangilandi!", "ask_category": "🎉 *Bu qanday bayram?*",
+        "det_ask_name": "✨ *Bu kimning bayrami? Ismini yuboring:*", "det_ask_wish": "📝 *To'liq xabar yozing:*",
+        "ask_gender": "👤 *Profilni tanlang (O'g'il / Qiz):*",
+        "ask_dob_type": "⏳ *Batafsil qo'shish?*", "ask_dob_date": "📅 Sana (YYYY-MM-DD):", "ask_dob_direct": "🔢 Yoshingiz:", "ask_year": "📅 *Yil:*", "ask_month": "📆 *Oy:*", "ask_day": "🗓️ *Kun:*", "ask_hour": "⏰ *Soat:*", "ask_minute": "⏱️ *Daqiqa:*", "ask_photo": "📸 *Rasm*:", "ask_video": "🎥 *Video*:", "ask_song": "🎶 *Qo'shiq*:", "ask_voice": "🎙️ *Ovoz*:", "ask_audio": "🎵 *Audio*:", "ready": "✨ *{name} uchun hamma narsa tayyor!*",
+        "sim_ask_name": "✨ *Bu kim uchun? Ism:*", "sim_ask_wish": "📝 *Qisqa tilak yozing:*", "simple_ready": "✨ *{name} uchun tilak tayyor!*",
+        "cancelled": "🚫 Bekor qilindi.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *Limit tugadi!* Telegram Stars orqali to'lang."
+    },
+    "tg": {
+        "welcome": "✨ *Ба олами сюрпризҳо хуш омадед...*", "region_selected": "🌍 Минтақа: *{region}*. Кишварро интихоб кунед:", "country_choice": "🗣️ Забонро интихоб кунед:", "lang_updated": "✅ Забон навсозӣ шуд!", "ask_category": "🎉 *Ин чӣ гуна ҷашн аст?*",
+        "det_ask_name": "✨ *Ин ҷашни кист? Номро фиристед:*", "det_ask_wish": "📝 *Паёми муфассал нависед:*",
+        "ask_gender": "👤 *Профилро интихоб кунед (Писар / Духтар):*",
+        "ask_dob_type": "⏳ *Маълумот мехоҳед?*", "ask_dob_date": "📅 Сана (YYYY-MM-DD):", "ask_dob_direct": "🔢 Синну сол:", "ask_year": "📅 *Сол:*", "ask_month": "📆 *Моҳ:*", "ask_day": "🗓️ *Рӯз:*", "ask_hour": "⏰ *Соат:*", "ask_minute": "⏱️ *Дақиқа:*", "ask_photo": "📸 *Сурат*:", "ask_video": "🎥 *Видео*:", "ask_song": "🎶 *Суруд*:", "ask_voice": "🎙️ *Овоз*:", "ask_audio": "🎵 *Аудио*:", "ready": "✨ *Ҳама чиз барои {name} омода аст!*",
+        "sim_ask_name": "✨ *Ин барои кист? Ном:*", "sim_ask_wish": "📝 *Паёми кӯтоҳ нависед:*", "simple_ready": "✨ *Орзуи {name} омода аст!*",
+        "cancelled": "🚫 Бекор карда шуд.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *Лимит тамом шуд!* Telegram Stars."
+    },
+    "az": {
+        "welcome": "✨ *Sürprizlər dünyasına xoş gəlmisiniz...*", "region_selected": "🌍 Region: *{region}*. Ölkə seçin:", "country_choice": "🗣️ Dil seçin:", "lang_updated": "✅ Dil yeniləndi!", "ask_category": "🎉 *Bu hansı bayramdır?*",
+        "det_ask_name": "✨ *Bu kimin bayramıdır? Ad göndərin:*", "det_ask_wish": "📝 *Ətraflı təbrik yazın:*",
+        "ask_gender": "👤 *Profil seçin (Oğlan / Qız):*",
+        "ask_dob_type": "⏳ *Məlumat əlavə edilsin?*", "ask_dob_date": "📅 Tarix (YYYY-MM-DD):", "ask_dob_direct": "🔢 Yaş:", "ask_year": "📅 *İl:*", "ask_month": "📆 *Ay:*", "ask_day": "🗓️ *Gün:*", "ask_hour": "⏰ *Saat:*", "ask_minute": "⏱️ *Dəqiqə:*", "ask_photo": "📸 *Şəkil*:", "ask_video": "🎥 *Video*:", "ask_song": "🎶 *Mahnı*:", "ask_voice": "🎙️ *Səs*:", "ask_audio": "🎵 *Audio*:", "ready": "✨ *{name} üçün hər şey hazırdır!*",
+        "sim_ask_name": "✨ *Bu kimin üçündür? Ad:*", "sim_ask_wish": "📝 *Qısa təbrik yazın:*", "simple_ready": "✨ *{name} üçün arzunuz hazırdır!*",
+        "cancelled": "🚫 Ləğv edildi.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *Limit bitdi!* Telegram Stars ilə ödəyin."
+    },
+    "my": {
+        "welcome": "✨ *အံ့သြဖွယ်လောကမှ ကြိုဆိုပါသည်...*", "region_selected": "🌍 ဒေသ: *{region}*. နိုင်ငံရွေးပါ:", "country_choice": "🗣️ ဘာသာစကားရွေးပါ:", "lang_updated": "✅ ဘာသာစကားပြောင်းလဲပြီးပါပြီ!", "ask_category": "🎉 *မည်သည့်ပွဲတော်ဖြစ်ပါသနည်း?*",
+        "det_ask_name": "✨ *မည်သူ့အတွက်ဖြစ်ပါသလဲ? အမည်ပို့ပါ:*", "det_ask_wish": "📝 *ဆုတောင်းစကားရေးပါ:*",
+        "ask_gender": "👤 *ကျား/မ ရွေးချယ်ပါ:*",
+        "ask_dob_type": "⏳ *အသေးစိတ်ထည့်မည်လား?*", "ask_dob_date": "📅 ရက်စွဲ (YYYY-MM-DD):", "ask_dob_direct": "🔢 အသက်:", "ask_year": "📅 *နှစ်:*", "ask_month": "📆 *လ:*", "ask_day": "🗓️ *ရက်:*", "ask_hour": "⏰ *နာရီ:*", "ask_minute": "⏱️ *မိနစ်:*", "ask_photo": "📸 *ဓာတ်ပုံ*:", "ask_video": "🎥 *ဗီဒီယို*:", "ask_song": "🎶 *သီချင်း*:", "ask_voice": "🎙️ *အသံဖိုင်*:", "ask_audio": "🎵 *အပိုအသံဖိုင်*:", "ready": "✨ *{name} အတွက် အဆင်သင့်ဖြစ်ပါပြီ!*",
+        "sim_ask_name": "✨ *မည်သူ့အတွက်လဲ? အမည်:*", "sim_ask_wish": "📝 *တိုတောင်းသောဆုမွန်ကောင်းရေးပါ:*", "simple_ready": "✨ *{name} အတွက် ဆုတောင်းအဆင်သင့်ဖြစ်ပါပြီ!*",
+        "cancelled": "🚫 ပယ်ဖျက်ပြီးပါပြီ။", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *ကန့်သတ်ချက်ပြည့်ပါပြီ!* Telegram Stars ဖြင့် ပေးချေပါ။"
+    },
+    "zh": {
+        "welcome": "✨ *欢迎来到惊喜世界...*", "region_selected": "🌍 地区: *{region}*. 请选择国家：", "country_choice": "🗣️ 请选择语言：", "lang_updated": "✅ 语言更新成功！", "ask_category": "🎉 *这是什么类型的庆祝？*",
+        "det_ask_name": "✨ *这是谁的庆祝？发送名字：*", "det_ask_wish": "📝 *写下详细祝福：*",
+        "ask_gender": "👤 *选择性别 (男生 / 女生):*",
+        "ask_dob_type": "⏳ *添加详细信息？*", "ask_dob_date": "📅 日期 (YYYY-MM-DD):", "ask_dob_direct": "🔢 年龄:", "ask_year": "📅 *年:*", "ask_month": "📆 *月:*", "ask_day": "🗓️ *日:*", "ask_hour": "⏰ *小时:*", "ask_minute": "⏱️ *分钟:*", "ask_photo": "📸 *照片*:", "ask_video": "🎥 *视频*:", "ask_song": "🎶 *歌曲*:", "ask_voice": "🎙️ *语音*:", "ask_audio": "🎵 *音频*:", "ready": "✨ *一切就绪，为 {name} 准备好！*",
+        "sim_ask_name": "✨ *这是给谁的？名字：*", "sim_ask_wish": "📝 *写下简短祝福：*", "simple_ready": "✨ *为您为 {name} 准备的祝福已就绪！*",
+        "cancelled": "🚫 已取消。", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *已达上限！* 请使用 Telegram Stars 支付。"
     }
 }
 
-OTHER_LANGS = ["ru", "fa", "it", "id", "uz", "tg", "az", "my", "zh", "ja", "ko", "hi", "tr", "pt", "ms", "vi", "fil", "th", "ne", "si", "hy", "nl", "pl", "uk", "be", "sv", "el", "ro", "cs", "sw", "ha", "yo", "zu", "xh", "af", "am", "es", "de", "fr", "ar", "ta", "te", "kn", "bn", "mr", "gu", "pa", "ur"]
+OTHER_LANGS = ["ja", "ko", "hi", "tr", "pt", "ms", "vi", "fil", "th", "ne", "si", "hy", "nl", "pl", "uk", "be", "sv", "el", "ro", "cs", "sw", "ha", "yo", "zu", "xh", "af", "am", "es", "de", "fr", "ar", "ta", "te", "kn", "bn", "mr", "gu", "pa", "ur"]
 for lang in OTHER_LANGS:
     if lang not in BOT_TEXTS:
         BOT_TEXTS[lang] = BOT_TEXTS["en"]
@@ -296,7 +384,6 @@ def get_countries_keyboard(region, page=0, items_per_page=6):
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
 DETAILED_CATEGORIES = ["Birthday", "HouseWarming", "Proposal", "WeddingWish", "Wedding", "NewBorn", "Graduation", "Festival", "Other"]
-SIMPLE_CATEGORIES = ["Morning", "Night", "Congratulations", "Love", "MissYou", "Thanks", "Sorry", "Luck", "AllTheBest", "GetWell", "TakeCare", "Exam", "NewJob", "Achievement", "Journey", "JustForYou", "GreatDay"]
 
 def get_category_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
@@ -505,7 +592,8 @@ async def process_name(message: types.Message, state: FSMContext):
     data = await state.get_data()
     cat = data.get("category", "")
     
-    if cat in ["Wedding", "WeddingWish", "NewBorn", "Graduation"]:
+    # നിങ്ങൾ പറഞ്ഞതുപോലെ Wedding Wish, Graduation എന്നിവയ്ക്ക് മാത്രം Boy / Girl ചോദിക്കുന്നു
+    if cat in ["WeddingWish", "Graduation"]:
         await state.set_state(DetailedForm.gender)
         await message.answer(get_bot_text(message.from_user.id, "ask_gender"), reply_markup=get_gender_keyboard(), parse_mode="Markdown")
     else:
