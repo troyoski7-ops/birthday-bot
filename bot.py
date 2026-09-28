@@ -11,6 +11,8 @@ from aiogram.types import (
     InlineKeyboardMarkup,
     BotCommand,
     WebAppInfo,
+    PreCheckoutQuery,
+    LabeledPrice
 )
 from aiohttp import web
 
@@ -23,15 +25,15 @@ VERCEL_URL = "https://aura-birthday-web.vercel.app"
 
 COUNTRY_LANGUAGES = {
     "Asia": {
+        "🇯🇵 Japan": [("Japanese", "ja")],
+        "🇰🇷 South Korea": [("Korean", "ko")],
+        "🇨🇳 China": [("Chinese (Mandarin)", "zh")],
         "🇮🇳 India": [
             ("English", "en"), ("Malayalam", "ml"), ("Hindi", "hi"),
             ("Tamil", "ta"), ("Telugu", "te"), ("Kannada", "kn"),
             ("Bengali", "bn"), ("Marathi", "mr"), ("Gujarati", "gu"),
             ("Punjabi", "pa"), ("Urdu", "ur")
         ],
-        "🇯🇵 Japan": [("Japanese", "ja")],
-        "🇰🇷 South Korea": [("Korean", "ko")],
-        "🇨🇳 China": [("Chinese (Mandarin)", "zh")],
         "🇦🇿 Azerbaijan": [("Azerbaijani", "az")],
         "🇦🇲 Armenia": [("Armenian", "hy")],
         "🇷🇺 Russia": [("Russian", "ru")],
@@ -83,19 +85,21 @@ COUNTRY_LANGUAGES = {
     }
 }
 
-# 40+ ഭാഷകളുടെ യഥാർത്ഥ വിവർത്തനങ്ങൾ കോഡിൽ എഴുതി ചേർത്ത ഡിക്ഷണറി
+# 40+ ഭാഷകളുടെ സമ്പൂർണ്ണ ബോട്ട് ടെക്സ്റ്റ് ഡിക്ഷണറി (Detailed & Simple പൂർണ്ണമായി തരംതിരിച്ചത്)
 BOT_TEXTS = {
     "en": {
         "welcome": "✨ *Welcome to your little corner of surprises...*\n\nChoose your region and country to get started:",
         "region_selected": "🌍 Region: *{region}*. Select your country:",
         "country_choice": "🗣️ Choose your language for *{country}*:",
         "lang_updated": "✅ Language updated successfully!",
-        "ask_category": "🎉 *What kind of celebration is this?* Choose below:",
-        "ask_name": "✨ *Whose special occasion are we celebrating today?* Send me their name:",
-        "ask_wish": "📝 *Write a sweet, heartfelt wish or message for them (Long paragraphs supported!):*",
+        "ask_category": "🎉 *What kind of celebration or wish is this?* Choose below:",
+        
+        # Detailed form prompts
+        "ask_name": "✨ *Whose special celebration is this?* Send their name:",
+        "ask_wish": "📝 *Write a sweet, heartfelt message for them:*",
         "ask_dob_type": "⏳ *How would you like to add age / date details for stats?*",
-        "ask_dob_date": "📅 Please send Date in **YYYY-MM-DD** format (e.g., `2003-12-24`):",
-        "ask_dob_direct": "🔢 Please enter their direct age as a number (e.g., `22`):",
+        "ask_dob_date": "📅 Please send Date in **YYYY-MM-DD** format:",
+        "ask_dob_direct": "🔢 Please enter their direct age as a number:",
         "ask_year": "📅 *Choose the year for the surprise:*",
         "ask_month": "📆 *Choose the month:*",
         "ask_day": "🗓️ *Pick the date:*",
@@ -107,184 +111,159 @@ BOT_TEXTS = {
         "ask_voice": "🎙️ *Send a voice note* (or skip):",
         "ask_audio": "🎵 *Add one more audio file* (or skip):",
         "ready": "✨ *All ready for {name}!*",
+
+        # Simple form prompts
+        "sim_ask_name": "✨ *Whose name is this wish for?* Send name:",
+        "sim_ask_wish": "📝 *Type your quick wish message:*",
+        "simple_ready": "✨ *Your simple wish for {name} is ready!*",
+
         "cancelled": "🚫 The process was cancelled. Send /start to begin again.",
-        "help": "💡 *Available Commands:*\n/start - Create surprise\n/stats - System stats\n/cancel - Cancel process"
+        "help": "💡 *Available Commands:*\n/start - Create surprise\n/stats - System stats\n/cancel - Cancel process",
+        "pay_required": "⭐ *Limit Reached!* The bot has crossed 500 users. To create more surprises, please pay with Telegram Stars."
     },
     "ml": {
         "welcome": "✨ *ചെറിയ സർപ്രൈസുകളുടെ ലോകത്തേക്ക് സ്വാഗതം...*\n\nതുടങ്ങാൻ പ്രദേശം തിരഞ്ഞെടുക്കൂ:",
         "region_selected": "🌍 പ്രദേശം: *{region}*. രാജ്യം തിരഞ്ഞെടുക്കൂ:",
         "country_choice": "🗣️ *{country}*-നുള്ള ഭാഷ തിരഞ്ഞെടുക്കൂ:",
         "lang_updated": "✅ ഭാഷ വിജയകരമായി മാറ്റിയിരിക്കുന്നു!",
-        "ask_category": "🎉 *ഇത് എന്തുതരം ആഘോഷമാണ്?*",
-        "ask_name": "✨ *ആരുടെ വിശേഷമാണ് ആഘോഷിക്കുന്നത്? പേര് അയക്കൂ:*",
-        "ask_wish": "📝 *അവർക്കായി ആശംസ എഴുതൂ:*",
+        "ask_category": "🎉 *ഇത് എന്തുതരം ആഘോഷം അല്ലെങ്കിൽ ആശംസയാണ്?*",
+        
+        # Detailed form prompts
+        "ask_name": "✨ *ആരുടെ ആഘോഷമാണ്? പേര് അയക്കൂ:*",
+        "ask_wish": "📝 *ദീർഘമായ ആശംസ സന്ദേശം എഴുതൂ:*",
         "ask_dob_type": "⏳ *സ്റ്റാറ്റിസ്റ്റിക്സിനായി വിവരങ്ങൾ എങ്ങനെ നൽകണം?*",
-        "ask_dob_date": "📅 തീയതി **YYYY-MM-DD** ഫോർമാറ്റിൽ അയക്കൂ (ഉദാ: `2003-12-24`):",
-        "ask_dob_direct": "🔢 വയസ്സ് മാത്രം നമ്പർ ആയി നൽകൂ (ഉദാ: `22`):",
-        "ask_year": "📅 *വർഷം തിരഞ്ഞെടുക്കൂ:*",
-        "ask_month": "📆 *മാസം തിരഞ്ഞെടുക്കൂ:*",
-        "ask_day": "🗓️ *തീയതി തിരഞ്ഞെടുക്കൂ:*",
-        "ask_hour": "⏰ *മണിക്കൂർ തിരഞ്ഞെടുക്കൂ (00 മുതൽ 23 വരെ):*",
-        "ask_minute": "⏱️ *മിനിറ്റ് തിരഞ്ഞെടുക്കൂ (00 മുതൽ 59 വരെ):*",
-        "ask_photo": "📸 *ഫോട്ടോ പങ്കുവെക്കൂ* (ഒഴിവാക്കാം):",
-        "ask_video": "🎥 *വീഡിയോ പങ്കുവെക്കൂ* (ഒഴിവാക്കാം):",
-        "ask_song": "🎶 *പാട്ട് അയക്കൂ* (ഒഴിവാക്കാം):",
-        "ask_voice": "🎙️ *വോയിസ് നോട്ട് അയക്കൂ* (ഒഴിവാക്കാം):",
+        "ask_dob_date": "📅 തീയതി **YYYY-MM-DD** ഫോർമാറ്റിൽ അയക്കൂ:",
+        "ask_dob_direct": "🔢 വയസ്സ് മാത്രം നമ്പർ ആയി നൽകൂ:",
+        "ask_year": "📅 *വർഷം തിരഞ്ഞെടുക്കൂ:*", "ask_month": "📆 *മാസം തിരഞ്ഞെടുക്കൂ:*", "ask_day": "🗓️ *തീയതി തിരഞ്ഞെടുക്കൂ:*",
+        "ask_hour": "⏰ *മണിക്കൂർ തിരഞ്ഞെടുക്കൂ:*", "ask_minute": "⏱️ *മിനിറ്റ് തിരഞ്ഞെടുക്കൂ:*",
+        "ask_photo": "📸 *ഫോട്ടോ പങ്കുവെക്കൂ* (ഒഴിവാക്കാം):", "ask_video": "🎥 *വീഡിയോ പങ്കുവെക്കൂ* (ഒഴിവാക്കാം):",
+        "ask_song": "🎶 *പാട്ട് അയക്കൂ* (ഒഴിവാക്കാം):", "ask_voice": "🎙️ *വോയിസ് നോട്ട് അയക്കൂ* (ഒഴിവാക്കാം):",
         "ask_audio": "🎵 *മറ്റൊരു ഓഡിയോ കൂടി ചേർക്കൂ* (ഒഴിവാക്കാം):",
         "ready": "✨ *{name}-നുള്ള സർപ്രൈസ് റെഡിയാണ്!*",
+
+        # Simple form prompts
+        "sim_ask_name": "✨ *ആർക്കാണ് ഈ വിഷ് അയക്കുന്നത്? പേര് നൽകൂ:*",
+        "sim_ask_wish": "📝 *നിങ്ങളുടെ ചെറിയ ആശംസ ടൈപ്പ് ചെയ്യൂ:*",
+        "simple_ready": "✨ *{name}-നുള്ള സിമ്പിൾ വിഷ് റെഡിയാണ്!*",
+
         "cancelled": "🚫 പ്രക്രിയ റദ്ദാക്കിയിരിക്കുന്നു. വീണ്ടും തുടങ്ങാൻ /start നൽകുക.",
-        "help": "💡 *കമാൻഡുകൾ:*\n/start - പുതിയ സർപ്രൈസ്\n/stats - സ്റ്റാറ്റിസ്റ്റിക്സ്\n/cancel - റദ്ദാക്കുക"
-    },
-    "hi": {
-        "welcome": "✨ *सरप्राइज की खूबसूरत दुनिया में आपका स्वागत है...*\n\nशुरू करने के लिए क्षेत्र चुनें:",
-        "region_selected": "🌍 क्षेत्र: *{region}*. अपना देश चुनें:",
-        "country_choice": "🗣️ *{country}* के लिए भाषा चुनें:",
-        "lang_updated": "✅ भाषा अपडेट कर दी गई है!",
-        "ask_category": "🎉 *यह किस प्रकार का उत्सव है?*",
-        "ask_name": "✨ *आज किसका खास दिन है? नाम भेजें:*",
-        "ask_wish": "📝 *एक प्यारा सा संदेश लिखें:*",
-        "ask_dob_type": "⏳ *सांख्यिकी के लिए विवरण कैसे जोड़ना चाहेंगे?*",
-        "ask_dob_date": "📅 तिथि **YYYY-MM-DD** प्रारूप में भेजें:",
-        "ask_dob_direct": "🔢 आयु संख्या में दर्ज करें (उदा. `22`):",
-        "ask_year": "📅 *वर्ष चुनें:*", "ask_month": "📆 *महीना चुनें:*", "ask_day": "🗓️ *तारीख चुनें:*",
-        "ask_hour": "⏰ *घंटा चुनें (00 से 23):*", "ask_minute": "⏱️ *मिनट चुनें (00 से 59):*",
-        "ask_photo": "📸 *फोटो शेयर करें* (या छोड़ें):", "ask_video": "🎥 *वीडियो शेयर करें* (या छोड़ें):",
-        "ask_song": "🎶 *गाना भेजें* (या छोड़ें):", "ask_voice": "🎙️ *वॉयस नोट भेजें* (या छोड़ें):",
-        "ask_audio": "🎵 *अतिरिक्त ऑडियो जोड़ें* (या छोड़ें):",
-        "ready": "✨ *{name} के लिए सब तैयार है!*",
-        "cancelled": "🚫 प्रक्रिया रद्द कर दी गई। /start भेजें।",
-        "help": "💡 *कमांड:*\n/start - शुरू करें\n/stats - आंकड़े\n/cancel - रद्द करें"
-    },
-    "ar": {
-        "welcome": "✨ *مرحباً بك في عالم المفاجآت الساحر...*\n\nاختر منطقتك للبدء:",
-        "region_selected": "🌍 المنطقة: *{region}*. اختر دولتك:",
-        "country_choice": "🗣️ اختر لغتك لـ *{country}*:",
-        "lang_updated": "✅ تم تحديث اللغة بنجاح!",
-        "ask_category": "🎉 *ما نوع هذا الاحتفال؟*",
-        "ask_name": "✨ *من صاحب هذه المناسبة اليوم؟ أرسل اسمه:*",
-        "ask_wish": "📝 *اكتب رسالة تهنئة جميلة:*",
-        "ask_dob_type": "⏳ *كيف ترغب في إضافة تفاصيل العمر/التاريخ؟*",
-        "ask_dob_date": "📅 أرسل التاريخ بصيغة **YYYY-MM-DD**:",
-        "ask_dob_direct": "🔢 أدخل العمر المباشر كرقم (مثال: `22`):",
-        "ask_year": "📅 *اختر السنة:*", "ask_month": "📆 *اختر الشهر:*", "ask_day": "🗓️ *اختر اليوم:*",
-        "ask_hour": "⏰ *اختر الساعة (00 إلى 23):*", "ask_minute": "⏱️ *اختر الدقيقة (00 إلى 59):*",
-        "ask_photo": "📸 *شارك صورة* (أو تخطى):", "ask_video": "🎥 *شارك فيديو* (أو تخطى):",
-        "ask_song": "🎶 *أرسل أغنية* (أو تخطى):", "ask_voice": "🎙️ *رسالة صوتية* (أو تخطى):",
-        "ask_audio": "🎵 *صوت إضافي* (أو تخطى):",
-        "ready": "✨ *كل شيء جاهز لـ {name}!*",
-        "cancelled": "🚫 تم الإلغاء. أرسل /start للبدء من جديد.",
-        "help": "💡 *الأوامر:*\n/start - إنشاء مفاجأة\n/stats - الإحصائيات\n/cancel - إلغاء"
-    },
-    "ta": {
-        "welcome": "✨ *ஆச்சரியங்களின் உலகிற்கு வரவேற்கிறோம்...*\n\nதொடங்க பிராந்தியத்தை தேர்ந்தெடுக்கவும்:",
-        "region_selected": "🌍 பிராந்தியம்: *{region}*. நாட்டை தேர்ந்தெடுக்கவும்:",
-        "country_choice": "🗣️ *{country}*-க்கான மொழியை தேர்ந்தெடுக்கவும்:",
-        "lang_updated": "✅ மொழி வெற்றிகரமாக மாற்றப்பட்டது!",
-        "ask_category": "🎉 *இது என்ன வகையான விழா?*",
-        "ask_name": "✨ *இன்று யாருடைய சிறப்பு நாள்? பெயரை அனுப்பவும்:*",
-        "ask_wish": "📝 *அன்பான வாழ்த்து செய்தியை எழுதுங்கள்:*",
-        "ask_dob_type": "⏳ *விவரங்களை எவ்வாறு சேர்க்க விரும்புகிறீர்கள்?*",
-        "ask_dob_date": "📅 தேதியை **YYYY-MM-DD** வடிவத்தில் அனுப்பவும்:",
-        "ask_dob_direct": "🔢 நேரடி வயதை எண்ணாக உள்ளிடவும்:",
-        "ask_year": "📅 *ஆண்டைத் தேர்ந்தெடுக்கவும்:*", "ask_month": "📆 *மாதத்தைத் தேர்ந்தெடுக்கவும்:*", "ask_day": "🗓️ *தேதியைத் தேர்ந்தெடுக்கவும்:*",
-        "ask_hour": "⏰ *மணிநேரம் (00 முதல் 23):*", "ask_minute": "⏱️ *நிமிடம் (00 முதல் 59):*",
-        "ask_photo": "📸 *புகைப்படம்* (அல்லது தவிர்க்கவும்):", "ask_video": "🎥 *வீடியோ* (அல்லது தவிர்க்கவும்):",
-        "ask_song": "🎶 *பாடல்* (அல்லது தவிர்க்கவும்):", "ask_voice": "🎙️ *குரல் பதிவு* (அல்லது தவிர்க்கவும்):",
-        "ask_audio": "🎵 *கூடுதல் ஆடியோ* (அல்லது தவிர்க்கவும்):",
-        "ready": "✨ *{name}-க்கான ஏற்பாடுகள் தயார்!*",
-        "cancelled": "🚫 ரத்து செய்யப்பட்டது. மீண்டும் தொடங்க /start அனுப்பவும்.",
-        "help": "💡 *கட்டளைகள்:*\n/start - தொடங்க\n/stats - புள்ளிவிவரம்\n/cancel - ரத்து செய்"
-    },
-    "es": {
-        "welcome": "✨ *Bienvenido a tu rincón de sorpresas...*\n\nElige tu región para comenzar:",
-        "region_selected": "🌍 Región: *{region}*. Selecciona tu país:",
-        "country_choice": "🗣️ Idioma para *{country}*:",
-        "lang_updated": "✅ ¡Idioma actualizado exitosamente!",
-        "ask_category": "🎉 *¿Qué tipo de celebración es?*",
-        "ask_name": "✨ *¿De quién es la ocasión especial? Nombre:*",
-        "ask_wish": "📝 *Escribe un mensaje cariñoso:*",
-        "ask_dob_type": "⏳ *¿Cómo añadir la edad o fecha?*",
-        "ask_dob_date": "📅 Fecha en formato **YYYY-MM-DD**:",
-        "ask_dob_direct": "🔢 Edad directamente en número:",
-        "ask_year": "📅 *Año:*", "ask_month": "📆 *Mes:*", "ask_day": "🗓️ *Día:*",
-        "ask_hour": "⏰ *Hora (00 a 23):*", "ask_minute": "⏱️ *Minuto (00 a 59):*",
-        "ask_photo": "📸 *Foto* (o saltar):", "ask_video": "🎥 *Video* (o saltar):",
-        "ask_song": "🎶 *Canción* (o saltar):", "ask_voice": "🎙️ *Nota de voz* (o saltar):",
-        "ask_audio": "🎵 *Audio extra* (o saltar):",
-        "ready": "✨ *¡Todo listo para {name}!*",
-        "cancelled": "🚫 Cancelado. Envía /start para reiniciar.",
-        "help": "💡 *Comandos:*\n/start - Iniciar\n/stats - Estadísticas\n/cancel - Cancelar"
-    },
-    "fr": {
-        "welcome": "✨ *Bienvenue dans votre univers de surprises...*",
-        "region_selected": "🌍 Région: *{region}*. Choisissez votre pays:",
-        "country_choice": "🗣️ Langue pour *{country}*:",
-        "lang_updated": "✅ Langue mise à jour avec succès!",
-        "ask_category": "🎉 *Quel type de célébration est-ce?*",
-        "ask_name": "✨ *Qui fêtons-nous aujourd'hui? Envoyez son nom:*",
-        "ask_wish": "📝 *Écrivez un message chaleureux:*",
-        "ask_dob_type": "⏳ *Comment ajouter l'âge ou la date?*",
-        "ask_dob_date": "📅 Envoyez la date au format **AAAA-MM-JJ**:",
-        "ask_dob_direct": "🔢 Entrez l'âge directement sous forme de chiffre:",
-        "ask_year": "📅 *Année:*", "ask_month": "📆 *Mois:*", "ask_day": "🗓️ *Jour:*",
-        "ask_hour": "⏰ *Heure (00 à 23):*", "ask_minute": "⏱️ *Minute (00 à 59):*",
-        "ask_photo": "📸 *Photo* (ou passer):", "ask_video": "🎥 *Vidéo* (ou passer):",
-        "ask_song": "🎶 *Chanson* (ou passer):", "ask_voice": "🎙️ *Message vocal* (ou passer):",
-        "ask_audio": "🎵 *Audio supplémentaire* (ou passer):",
-        "ready": "✨ *Tout est prêt pour {name}!*",
-        "cancelled": "🚫 Annulé. Envoyez /start pour recommencer.",
-        "help": "💡 *Commandes:*\n/start - Démarrer\n/stats - Statistiques\n/cancel - Annuler"
-    },
-    "de": {
-        "welcome": "✨ *Willkommen in Ihrer Ecke der Überraschungen...*",
-        "region_selected": "🌍 Region: *{region}*. Wählen Sie Ihr Land:",
-        "country_choice": "🗣️ Wählen Sie Ihre Sprache für *{country}*:",
-        "lang_updated": "✅ Sprache erfolgreich aktualisiert!",
-        "ask_category": "🎉 *Was für eine Feier ist das?*",
-        "ask_name": "✨ *Wessen Anlass feiern wir? Name senden:*",
-        "ask_wish": "📝 *Schreiben Sie einen herzlichen Wunsch:*",
-        "ask_dob_type": "⏳ *Wie möchten Sie Altersdetails angeben?*",
-        "ask_dob_date": "📅 Bitte Datum im Format **JJJJ-MM-TT** senden:",
-        "ask_dob_direct": "🔢 Bitte das Alter als Zahl eingeben:",
-        "ask_year": "📅 *Jahr:*", "ask_month": "📆 *Monat:*", "ask_day": "🗓️ *Tag:*",
-        "ask_hour": "⏰ *Stunde (00 bis 23):*", "ask_minute": "⏱️ *Minute (00 bis 59):*",
-        "ask_photo": "📸 *Foto* (oder überspringen):", "ask_video": "🎥 *Video* (oder überspringen):",
-        "ask_song": "🎶 *Lied* (oder überspringen):", "ask_voice": "🎙️ *Sprachnachricht* (oder überspringen):",
-        "ask_audio": "🎵 *Weiteres Audio* (oder überspringen):",
-        "ready": "✨ *Alles bereit für {name}!*",
-        "cancelled": "🚫 Vorgang abgebrochen. Senden Sie /start für Neubeginn.",
-        "help": "💡 *Befehle:*\n/start - Neu starten\n/stats - Statistik\n/cancel - Abbrechen"
+        "help": "💡 *കമാൻഡുകൾ:*\n/start - പുതിയ സർപ്രൈസ്\n/stats - സ്റ്റാറ്റിസ്റ്റിക്സ്\n/cancel - റദ്ദാക്കുക",
+        "pay_required": "⭐ *പരിധി കഴിഞ്ഞിരിക്കുന്നു!* ബോട്ട് 500 യൂസർമാരെ പിന്നിട്ടു. തുടർന്നും സർപ്രൈസുകൾ ഉണ്ടാക്കാൻ ടെലഗ്രാം സ്റ്റാർസ് നൽകുക."
     },
     "ru": {
-        "welcome": "✨ *Добро пожаловать в мир сюрпризов...*",
+        "welcome": "✨ *Добро пожаловать в мир сюрпризов...*\n\nВыберите регион и страну:",
         "region_selected": "🌍 Регион: *{region}*. Выберите страну:",
-        "country_choice": "🗣️ Выберите язык для *{country}*:",
+        "country_choice": "🗣️ Выберите язык:",
         "lang_updated": "✅ Язык успешно обновлен!",
-        "ask_category": "🎉 *Какой это праздник?*",
-        "ask_name": "✨ *Чей праздник мы отмечаем? Имя:*",
-        "ask_wish": "📝 *Напишите душевное пожелание:*",
-        "ask_dob_type": "⏳ *Как вы хотите указать возраст или дату?*",
-        "ask_dob_date": "📅 Отправьте дату в формате **ГГГГ-ММ-ДД**:",
-        "ask_dob_direct": "🔢 Введите точный возраст цифрой:",
+        "ask_category": "🎉 *Какой это праздник или пожелание?*",
+        
+        # Detailed form prompts
+        "ask_name": "✨ *Чей это праздник? Отправьте имя:*",
+        "ask_wish": "📝 *Напишите подробное пожелание:*",
+        "ask_dob_type": "⏳ *Как добавить детали?*",
+        "ask_dob_date": "📅 Дата (ГГГГ-ММ-ДД):",
+        "ask_dob_direct": "🔢 Возраст:",
         "ask_year": "📅 *Год:*", "ask_month": "📆 *Месяц:*", "ask_day": "🗓️ *День:*",
-        "ask_hour": "⏰ *Час (00 до 23):*", "ask_minute": "⏱️ *Минута (00 до 59):*",
-        "ask_photo": "📸 *Фото* (или пропустить):", "ask_video": "🎥 *Видео* (или пропустить):",
-        "ask_song": "🎶 *Песня* (или пропустить):", "ask_voice": "🎙️ *Голосовое сообщение* (или пропустить):",
-        "ask_audio": "🎵 *Дополнительное аудио* (или пропустить):",
+        "ask_hour": "⏰ *Час:*", "ask_minute": "⏱️ *Минута:*",
+        "ask_photo": "📸 *Фото*:", "ask_video": "🎥 *Видео*:", "ask_song": "🎶 *Песня*:",
+        "ask_voice": "🎙️ *Голос*:", "ask_audio": "🎵 *Аудио*:",
         "ready": "✨ *Все готово для {name}!*",
-        "cancelled": "🚫 Процесс отменен. Отправьте /start для начала заново.",
-        "help": "💡 *Команды:*\n/start - Создать сюрприз\n/stats - Статистика\n/cancel - Отмена"
+
+        # Simple form prompts
+        "sim_ask_name": "✨ *Для кого это пожелание? Имя:*",
+        "sim_ask_wish": "📝 *Напишите короткое пожелание:*",
+        "simple_ready": "✨ *Ваше простое пожелание для {name} готово!*",
+
+        "cancelled": "🚫 Отменено.",
+        "help": "💡 /start, /stats, /cancel",
+        "pay_required": "⭐ *Лимит исчерпан!* Оплатите через Telegram Stars."
+    },
+    "fa": {
+        "welcome": "✨ *به دنیای شگفتی‌ها خوش آمدید...*\n\nمنطقه و کشور خود را انتخاب کنید:",
+        "region_selected": "🌍 منطقه: *{region}*. کشور خود را انتخاب کنید:",
+        "country_choice": "🗣️ زبان خود را انتخاب کنید:",
+        "lang_updated": "✅ زبان به‌روز شد!",
+        "ask_category": "🎉 *این چه نوع جشن یا آرزویی است؟*",
+        
+        # Detailed & Simple form prompts
+        "ask_name": "✨ *این جشن برای کیست؟ نام را بفرستید:*",
+        "ask_wish": "📝 *پیام تفصیلی خود را بنویسید:*",
+        "ask_dob_type": "⏳ *افزودن جزئیات؟*", "ask_dob_date": "📅 تاریخ (YYYY-MM-DD):", "ask_dob_direct": "🔢 سن:",
+        "ask_year": "📅 *سال:*", "ask_month": "📆 *ماه:*", "ask_day": "🗓️ *روز:*", "ask_hour": "⏰ *ساعت:*", "ask_minute": "⏱️ *دقیقه:*",
+        "ask_photo": "📸 *عکس*:", "ask_video": "🎥 *ویدیو*:", "ask_song": "🎶 *آهنگ*:", "ask_voice": "🎙️ *صدا*:", "ask_audio": "🎵 *فایل صوتی*:",
+        "ready": "✨ *همه چیز برای {name} آماده است!*",
+        
+        "sim_ask_name": "✨ *این برای چه کسی است؟ نام:*",
+        "sim_ask_wish": "📝 *پیام کوتاه خود را بنویسید:*",
+        "simple_ready": "✨ *آرزوی شما برای {name} آماده است!*",
+
+        "cancelled": "🚫 لغو شد.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *حد به پایان رسید!* پرداخت با Telegram Stars."
+    },
+    "id": {
+        "welcome": "✨ *Selamat datang di dunia kejutan...*", "region_selected": "🌍 Wilayah: *{region}*. Pilih negara:", "country_choice": "🗣️ Pilih bahasa:", "lang_updated": "✅ Bahasa diperbarui!", "ask_category": "🎉 *Perayaan apa ini?*",
+        "ask_name": "✨ *Perayaan siapa ini? Kirim nama:*", "ask_wish": "📝 *Tulis pesan lengkap:*",
+        "ask_dob_type": "⏳ *Tambah detail?*", "ask_dob_date": "📅 Tanggal (YYYY-MM-DD):", "ask_dob_direct": "🔢 Usia:", "ask_year": "📅 *Tahun:*", "ask_month": "📆 *Bulan:*", "ask_day": "🗓️ *Hari:*", "ask_hour": "⏰ *Jam:*", "ask_minute": "⏱️ *Menit:*", "ask_photo": "📸 *Foto*:", "ask_video": "🎥 *Video*:", "ask_song": "🎶 *Lagu*:", "ask_voice": "🎙️ *Suara*:", "ask_audio": "🎵 *Audio*:", "ready": "✨ *Semua siap untuk {name}!*",
+        "sim_ask_name": "✨ *Untuk siapa ini? Nama:*", "sim_ask_wish": "📝 *Tulis pesan singkat:*", "simple_ready": "✨ *Kejutan untuk {name} sudah siap!*",
+        "cancelled": "🚫 Dibatalkan.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *Batas tercapai!* Bayar dengan Telegram Stars."
+    },
+    "uz": {
+        "welcome": "✨ *Kutilmagan sovg'alar olamiga xush kelibsiz...*", "region_selected": "🌍 Hudud: *{region}*. Mamlakatni tanlang:", "country_choice": "🗣️ Tilni tanlang:", "lang_updated": "✅ Til yangilandi!", "ask_category": "🎉 *Bu qanday bayram?*",
+        "ask_name": "✨ *Bu kimning bayrami? Ismini yuboring:*", "ask_wish": "📝 *To'liq xabar yozing:*",
+        "ask_dob_type": "⏳ *Batafsil qo'shish?*", "ask_dob_date": "📅 Sana (YYYY-MM-DD):", "ask_dob_direct": "🔢 Yoshingiz:", "ask_year": "📅 *Yil:*", "ask_month": "📆 *Oy:*", "ask_day": "🗓️ *Kun:*", "ask_hour": "⏰ *Soat:*", "ask_minute": "⏱️ *Dqiqa:*", "ask_photo": "📸 *Rasm*:", "ask_video": "🎥 *Video*:", "ask_song": "🎶 *Qo'shiq*:", "ask_voice": "🎙️ *Ovoz*:", "ask_audio": "🎵 *Audio*:", "ready": "✨ *{name} uchun hamma narsa tayyor!*",
+        "sim_ask_name": "✨ *Bu kim uchun? Ism:*", "sim_ask_wish": "📝 *Qisqa tilak yozing:*", "simple_ready": "✨ *{name} uchun tilak tayyor!*",
+        "cancelled": "🚫 Bekor qilindi.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *Limit tugadi!* Telegram Stars orqali to'lang."
+    },
+    "tg": {
+        "welcome": "✨ *به جҳони tаajjub خوش آمدید...*", "region_selected": "🌍 Минтақа: *{region}*. Кишварро интихоб кунед:", "country_choice": "🗣️ Забонро интихоб кунед:", "lang_updated": "✅ Забон навсозӣ شد!", "ask_category": "🎉 *Ин чӣ гуна ҷашн است?*",
+        "ask_name": "✨ *Ин ҷашни кист? Номро фиристед:*", "ask_wish": "📝 *Паёми муфассал нависед:*",
+        "ask_dob_type": "⏳ *Маълумот мехоҳед?*", "ask_dob_date": "📅 Сана (YYYY-MM-DD):", "ask_dob_direct": "🔢 Синну сол:", "ask_year": "📅 *Сол:*", "ask_month": "📆 *Моҳ:*", "ask_day": "🗓️ *Рӯз:*", "ask_hour": "⏰ *Соат:*", "ask_minute": "⏱️ *Дақиқа:*", "ask_photo": "📸 *Сурат*:", "ask_video": "🎥 *Видео*:", "ask_song": "🎶 *Суруд*:", "ask_voice": "🎙️ *Овоз*:", "ask_audio": "🎵 *Аудио*:", "ready": "✨ *Ҳама чиз барои {name} омода است!*",
+        "sim_ask_name": "✨ *Ин барои кист? Ном:*", "sim_ask_wish": "📝 *Паёми кӯтоҳ нависед:*", "simple_ready": "✨ *Орзуи {name} омода است!*",
+        "cancelled": "🚫 Бекор карда شد.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *Лимит тамом شد!* Telegram Stars."
+    },
+    "it": {
+        "welcome": "✨ *Benvenuto nel tuo angolo di sorprese...*", "region_selected": "🌍 Regione: *{region}*. Seleziona il paese:", "country_choice": "🗣️ Scegli la lingua:", "lang_updated": "✅ Lingua aggiornata!", "ask_category": "🎉 *Che tipo di celebrazione è?*",
+        "ask_name": "✨ *Di chi è la festa? Invia il nome:*", "ask_wish": "📝 *Scrivi un messaggio dettagliato:*",
+        "ask_dob_type": "⏳ *Aggiungere dettagli?*", "ask_dob_date": "📅 Data (AAAA-MM-GG):", "ask_dob_direct": "🔢 Età:", "ask_year": "📅 *Anno:*", "ask_month": "📆 *Mese:*", "ask_day": "🗓️ *Giorno:*", "ask_hour": "⏰ *Ora:*", "ask_minute": "⏱️ *Minuto:*", "ask_photo": "📸 *Foto*:", "ask_video": "🎥 *Video*:", "ask_song": "🎶 *Canzone*:", "ask_voice": "🎙️ *Voce*:", "ask_audio": "🎵 *Audio*:", "ready": "✨ *Tutto pronto per {name}!*",
+        "sim_ask_name": "✨ *Per chi è? Nome:*", "sim_ask_wish": "📝 *Scrivi un augurio veloce:*", "simple_ready": "✨ *Il tuo augurio per {name} è pronto!*",
+        "cancelled": "🚫 Annullato.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *Limite raggiunto!* Paga con Telegram Stars."
+    },
+    "zh": {
+        "welcome": "✨ *欢迎来到惊喜世界...*", "region_selected": "🌍 地区: *{region}*. 请选择国家：", "country_choice": "🗣️ 请选择语言：", "lang_updated": "✅ 语言更新成功！", "ask_category": "🎉 *这是什么类型的庆祝？*",
+        "ask_name": "✨ *这是谁的庆祝？发送名字：*", "ask_wish": "📝 *写下详细祝福：*",
+        "ask_dob_type": "⏳ *添加详细信息？*", "ask_dob_date": "📅 日期 (YYYY-MM-DD):", "ask_dob_direct": "🔢 年龄:", "ask_year": "📅 *年:*", "ask_month": "📆 *月:*", "ask_day": "🗓️ *日:*", "ask_hour": "⏰ *小时:*", "ask_minute": "⏱️ *分钟:*", "ask_photo": "📸 *照片*:", "ask_video": "🎥 *视频*:", "ask_song": "🎶 *歌曲*:", "ask_voice": "🎙️ *语音*:", "ask_audio": "🎵 *音频*:", "ready": "✨ *一切就绪，为 {name} 准备好！*",
+        "sim_ask_name": "✨ *这是给谁的？名字：*", "sim_ask_wish": "📝 *写下简短祝福：*", "simple_ready": "✨ *为您为 {name} 准备的祝福已就绪！*",
+        "cancelled": "🚫 已取消。", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *已达上限！* 请使用 Telegram Stars 支付。"
+    },
+    "ja": {
+        "welcome": "✨ *サプライズの世界へようこそ...*", "region_selected": "🌍 地域: *{region}*. 国を選択してください:", "country_choice": "🗣️ 言語を選択してください:", "lang_updated": "✅ 言語が更新されました！", "ask_category": "🎉 *どのようなお祝いですか？*",
+        "ask_name": "✨ *誰のお祝いですか？お名前：*", "ask_wish": "📝 *詳しいメッセージを入力：*",
+        "ask_dob_type": "⏳ *詳細を追加しますか？*", "ask_dob_date": "📅 日付 (YYYY-MM-DD):", "ask_dob_direct": "🔢 年齢:", "ask_year": "📅 *年:*", "ask_month": "📆 *月:*", "ask_day": "🗓️ *日:*", "ask_hour": "⏰ *時:*", "ask_minute": "⏱️ *分:*", "ask_photo": "📸 *写真*:", "ask_video": "🎥 *動画*:", "ask_song": "🎶 *曲*:", "ask_voice": "🎙️ *音声*:", "ask_audio": "🎵 *オーディオ*:", "ready": "✨ *{name} さんの準備が整いました！*",
+        "sim_ask_name": "✨ *誰のためのものですか？名前：*", "sim_ask_wish": "📝 *短いメッセージを入力：*", "simple_ready": "✨ *{name} さんへのメッセージの準備ができました！*",
+        "cancelled": "🚫 キャンセルされました。", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *制限に達しました！* Telegram Starsでお支払いください。"
+    },
+    "ko": {
+        "welcome": "✨ *서프라이즈의 세계에 오신 것을 환영합니다...*", "region_selected": "🌍 지역: *{region}*. 국가를 선택하세요:", "country_choice": "🗣️ 언어를 선택하세요:", "lang_updated": "✅ 언어가 업데이트되었습니다!", "ask_category": "🎉 *어떤 축하인가요?*",
+        "ask_name": "✨ *누구의 축하인가요? 이름 입력:*", "ask_wish": "📝 *상세한 메시지 작성:*",
+        "ask_dob_type": "⏳ *세부 정보를 추가하시겠습니까?*", "ask_dob_date": "📅 날짜 (YYYY-MM-DD):", "ask_dob_direct": "🔢 나이:", "ask_year": "📅 *연도:*", "ask_month": "📆 *월:*", "ask_day": "🗓️ *일:*", "ask_hour": "⏰ *시:*", "ask_minute": "⏱️ *분:*", "ask_photo": "📸 *사진*:", "ask_video": "🎥 *동영상*:", "ask_song": "🎶 *노래*:", "ask_voice": "🎙️ *음성*:", "ask_audio": "🎵 *오디오*:",
+        "ready": "✨ *{name}님을 위한 모든 준비가 완료되었습니다!*",
+        "sim_ask_name": "✨ *누구를 위한 것인가요? 이름:*", "sim_ask_wish": "📝 *짧은 메시지 작성:*", "simple_ready": "✨ *{name}님을 위한 소원이 준비되었습니다!*",
+        "cancelled": "🚫 취소되었습니다.", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *한도 초과!* Telegram Stars로 결제하세요."
+    },
+    "hi": {
+        "welcome": "✨ *सरप्राइज की खूबसूरत दुनिया में आपका स्वागत है...*", "region_selected": "🌍 क्षेत्र: *{region}*. अपना देश चुनें:", "country_choice": "🗣️ भाषा चुनें:", "lang_updated": "✅ भाषा अपडेट कर दी गई है!", "ask_category": "🎉 *यह किस प्रकार का उत्सव है?*",
+        "ask_name": "✨ *यह किसका उत्सव है? नाम भेजें:*", "ask_wish": "📝 *विस्तृत संदेश लिखें:*",
+        "ask_dob_type": "⏳ *विवरण कैसे जोड़ना चाहेंगे?*", "ask_dob_date": "📅 तिथि (YYYY-MM-DD):", "ask_dob_direct": "🔢 आयु:", "ask_year": "📅 *वर्ष चुनें:*", "ask_month": "📆 *महीना चुनें:*", "ask_day": "🗓️ *तारीख चुनें:*", "ask_hour": "⏰ *घंटा चुनें:*", "ask_minute": "⏱️ *मिनट चुनें:*", "ask_photo": "📸 *फोटो*:", "ask_video": "🎥 *वीडियो*:", "ask_song": "🎶 *गाना*:", "ask_voice": "🎙️ *वॉयस नोट*:", "ask_audio": "🎵 *ऑडियो*:",
+        "ready": "✨ *{name} के लिए सब तैयार है!*",
+        "sim_ask_name": "✨ *यह किसके लिए है? नाम:*", "sim_ask_wish": "📝 *संक्षिप्त संदेश लिखें:*", "simple_ready": "✨ *{name} के लिए शुभकामना तैयार है!*",
+        "cancelled": "🚫 प्रक्रिया रद्द。", "help": "💡 /start, /stats, /cancel", "pay_required": "⭐ *सीमा समाप्त!* टेलीग्राम स्टार्स दें।"
     }
 }
 
-ALL_REST_CODES = [
-    "te", "kn", "bn", "mr", "gu", "pa", "ur", "pt", "it", "tr", "id", "ms", "ja", "ko", 
-    "zh", "vi", "fil", "th", "ne", "si", "az", "hy", "uz", "tg", "fa", "my", "nl", "pl", 
-    "uk", "be", "sv", "el", "ro", "cs", "sw", "ha", "yo", "zu", "xh", "af", "am"
-]
-for c in ALL_REST_CODES:
-    if c not in BOT_TEXTS:
-        BOT_TEXTS[c] = BOT_TEXTS["en"]
+# ബാക്കി എല്ലാ ഭാഷകൾക്കും ഇംഗ്ലീഷ് ഡിഫോൾട്ട് നൽകുവാൻ
+OTHER_LANGS = ["tr", "pt", "ms", "vi", "fil", "th", "ne", "si", "az", "hy", "my", "nl", "pl", "uk", "be", "sv", "el", "ro", "cs", "sw", "ha", "yo", "zu", "xh", "af", "am", "es", "de", "fr", "ar", "ta", "te", "kn", "bn", "mr", "gu", "pa", "ur"]
+for lang in OTHER_LANGS:
+    if lang not in BOT_TEXTS:
+        BOT_TEXTS[lang] = BOT_TEXTS["en"]
 
 def get_bot_text(user_id, text_key, **kwargs):
     lang = get_user_lang(user_id)
@@ -301,7 +280,8 @@ def init_db():
             started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             completed INTEGER DEFAULT 0,
             creations_count INTEGER DEFAULT 0,
-            lang TEXT DEFAULT 'en'
+            lang TEXT DEFAULT 'en',
+            unlimited_until TIMESTAMP DEFAULT NULL
         )
     """)
     cursor.execute("""
@@ -346,6 +326,27 @@ def get_user_lang(user_id):
     conn.close()
     return row[0] if row and row[0] else "en"
 
+def get_total_users():
+    conn = sqlite3.connect("bot_stats.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM users")
+    count = cursor.fetchone()[0]
+    conn.close()
+    return count
+
+def check_user_access(user_id):
+    if user_id == OWNER_ID:
+        return True
+    total_users = get_total_users()
+    if total_users <= 500:
+        return True
+    conn = sqlite3.connect("bot_stats.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT unlimited_until FROM users WHERE user_id = ? AND unlimited_until > DATETIME('now')", (user_id,))
+    row = cursor.fetchone()
+    conn.close()
+    return row is not None
+
 def save_surprise_to_db(user_id, category, recipient_name, wish_text, params_dict):
     lang_code = get_user_lang(user_id)
     conn = sqlite3.connect("bot_stats.db")
@@ -360,7 +361,7 @@ def save_surprise_to_db(user_id, category, recipient_name, wish_text, params_dic
     conn.close()
     return surprise_id
 
-class BirthdayForm(StatesGroup):
+class DetailedForm(StatesGroup):
     category = State()
     name = State()
     wish = State()
@@ -376,6 +377,11 @@ class BirthdayForm(StatesGroup):
     song = State()
     voice = State()
     audio = State()
+
+class SimpleForm(StatesGroup):
+    category = State()
+    name = State()
+    wish = State()
 
 def get_region_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
@@ -404,14 +410,22 @@ def get_countries_keyboard(region, page=0, items_per_page=6):
     keyboard.append([InlineKeyboardButton(text="🔙 Back", callback_data="back_to_regions")])
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
+DETAILED_CATEGORIES = ["Birthday", "HouseWarming", "Proposal", "WeddingWish", "Wedding", "NewBorn", "Graduation", "Other"]
+
 def get_category_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🎂 Birthday Wish", callback_data="cat_Birthday")],
-        [InlineKeyboardButton(text="💍 Romantic Proposal", callback_data="cat_Proposal")],
-        [InlineKeyboardButton(text="💒 Wedding Wish", callback_data="cat_WeddingWish")],
-        [InlineKeyboardButton(text="💍 Wedding Anniversary", callback_data="cat_Wedding")],
-        [InlineKeyboardButton(text="👶 New Born", callback_data="cat_NewBorn")],
-        [InlineKeyboardButton(text="🎓 Graduation", callback_data="cat_Graduation")],
+        [InlineKeyboardButton(text="🎂 Happy Birthday", callback_data="cat_Birthday"), InlineKeyboardButton(text="🏡 House Warming", callback_data="cat_HouseWarming")],
+        [InlineKeyboardButton(text="🎉 Congratulations", callback_data="cat_Congratulations"), InlineKeyboardButton(text="❤️ I Love You", callback_data="cat_Love")],
+        [InlineKeyboardButton(text="🫂 I Miss You", callback_data="cat_MissYou"), InlineKeyboardButton(text="🙏 Thank You", callback_data="cat_Thanks")],
+        [InlineKeyboardButton(text="🥺 I’m Sorry", callback_data="cat_Sorry"), InlineKeyboardButton(text="🌅 Good Morning", callback_data="cat_Morning")],
+        [InlineKeyboardButton(text="🌙 Good Night", callback_data="cat_Night"), InlineKeyboardButton(text="🍀 Good Luck", callback_data="cat_Luck")],
+        [InlineKeyboardButton(text="💪 All the Best", callback_data="cat_AllTheBest"), InlineKeyboardButton(text="🩷 Get Well Soon", callback_data="cat_GetWell")],
+        [InlineKeyboardButton(text="🫶 Take Care", callback_data="cat_TakeCare"), InlineKeyboardButton(text="🎓 Exam Best of Luck", callback_data="cat_Exam")],
+        [InlineKeyboardButton(text="💼 New Job", callback_data="cat_NewJob"), InlineKeyboardButton(text="💍 Happy Anniversary", callback_data="cat_Wedding")],
+        [InlineKeyboardButton(text="👶 New Born Baby", callback_data="cat_NewBorn"), InlineKeyboardButton(text="🏆 Achievement", callback_data="cat_Achievement")],
+        [InlineKeyboardButton(text="✈️ Safe Journey", callback_data="cat_Journey"), InlineKeyboardButton(text="🎁 Just For You", callback_data="cat_JustForYou")],
+        [InlineKeyboardButton(text="😊 Have a Great Day", callback_data="cat_GreatDay"), InlineKeyboardButton(text="💍 Proposal", callback_data="cat_Proposal")],
+        [InlineKeyboardButton(text="💒 Wedding Wish", callback_data="cat_WeddingWish"), InlineKeyboardButton(text="🎓 Graduation", callback_data="cat_Graduation")],
         [InlineKeyboardButton(text="🌟 Other Celebration", callback_data="cat_Other")]
     ])
 
@@ -477,7 +491,7 @@ async def process_country(callback: types.CallbackQuery, state: FSMContext):
     if len(langs) == 1:
         save_user_lang(user_id, langs[0][1])
         await callback.message.edit_text(get_bot_text(user_id, "lang_updated"))
-        await proceed_to_category(callback.message, user_id, state)
+        await check_access_and_proceed(callback.message, user_id, state)
     else:
         kb = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text=l[0], callback_data=f"setlang_{l[1]}")] for l in langs])
         await callback.message.edit_text(get_bot_text(user_id, "country_choice", country=country), reply_markup=kb, parse_mode="Markdown")
@@ -489,34 +503,126 @@ async def set_final_lang(callback: types.CallbackQuery, state: FSMContext):
     user_id = callback.from_user.id
     save_user_lang(user_id, lang_code)
     await callback.message.edit_text(get_bot_text(user_id, "lang_updated"))
-    await proceed_to_category(callback.message, user_id, state)
+    await check_access_and_proceed(callback.message, user_id, state)
     await callback.answer()
 
-async def proceed_to_category(message: types.Message, user_id: int, state: FSMContext):
-    await message.answer(get_bot_text(user_id, "ask_category"), reply_markup=get_category_keyboard(), parse_mode="Markdown")
-    await state.set_state(BirthdayForm.category)
+async def check_access_and_proceed(message: types.Message, user_id: int, state: FSMContext):
+    total_users = get_total_users()
+    if total_users > 500 and user_id != OWNER_ID and not check_user_access(user_id):
+        kb = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="⭐ Pay 50 Stars (1 Month Unlimited)", callback_data="buy_unlimited")]
+        ])
+        await message.answer(get_bot_text(user_id, "pay_required"), reply_markup=kb, parse_mode="Markdown")
+    else:
+        await message.answer(get_bot_text(user_id, "ask_category"), reply_markup=get_category_keyboard(), parse_mode="Markdown")
+
+@dp.callback_query(F.data == "buy_unlimited")
+async def buy_unlimited_handler(callback: types.CallbackQuery):
+    prices = [LabeledPrice(label="Monthly Unlimited Pass", amount=50)]
+    await bot.send_invoice(
+        chat_id=callback.from_user.id,
+        title="Unlimited Surprises Pass",
+        description="Get 1 month of unlimited surprise creation after 500 users limit!",
+        payload="monthly_unlimited_pass",
+        currency="XTR",
+        prices=prices
+    )
+    await callback.answer()
+
+@dp.pre_checkout_query()
+async def pre_checkout_handler(pre_checkout_query: PreCheckoutQuery):
+    await bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
+
+@dp.message(F.successful_payment)
+async def successful_payment_handler(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    conn = sqlite3.connect("bot_stats.db")
+    cursor = conn.cursor()
+    cursor.execute("UPDATE users SET unlimited_until = DATETIME('now', '+30 days') WHERE user_id = ?", (user_id,))
+    conn.commit()
+    conn.close()
+    await message.answer("🎉 Payment successful! You now have unlimited access for 30 days. Send /start to begin.")
 
 @dp.callback_query(F.data.startswith("cat_"))
 async def process_category(callback: types.CallbackQuery, state: FSMContext):
     category = callback.data.split("_")[1]
-    await state.update_data(category=category)
     user_id = callback.from_user.id
-    await callback.message.answer(get_bot_text(user_id, "ask_name"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
-    await state.set_state(BirthdayForm.name)
+    
+    total_users = get_total_users()
+    if total_users > 500 and user_id != OWNER_ID and not check_user_access(user_id):
+        kb = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="⭐ Pay 50 Stars (1 Month Unlimited)", callback_data="buy_unlimited")]
+        ])
+        await callback.message.answer(get_bot_text(user_id, "pay_required"), reply_markup=kb, parse_mode="Markdown")
+        await callback.answer()
+        return
+
+    if category in DETAILED_CATEGORIES:
+        await state.update_data(category=category)
+        await callback.message.answer(get_bot_text(user_id, "ask_name"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
+        await state.set_state(DetailedForm.name)
+    else:
+        await state.update_data(category=category)
+        await callback.message.answer(get_bot_text(user_id, "sim_ask_name"), parse_mode="Markdown")
+        await state.set_state(SimpleForm.name)
     await callback.answer()
 
-@dp.message(BirthdayForm.name)
+@dp.message(SimpleForm.name)
+async def process_simple_name(message: types.Message, state: FSMContext):
+    await state.update_data(name=message.text.strip())
+    await state.set_state(SimpleForm.wish)
+    await message.answer(get_bot_text(message.from_user.id, "sim_ask_wish"), parse_mode="Markdown")
+
+@dp.message(SimpleForm.wish)
+async def process_simple_wish(message: types.Message, state: FSMContext):
+    await state.update_data(wish=message.text.strip())
+    data = await state.get_data()
+    
+    params = {
+        "name": data.get("name", "Friend"),
+        "msg": data.get("wish", ""),
+        "category": data.get("category", "Birthday"),
+        "dob": "", "age": "", "target_time": "",
+        "photo": "", "video": "", "song": "", "voice": "", "extra_audio": ""
+    }
+    
+    surprise_id = save_surprise_to_db(message.from_user.id, params["category"], params["name"], params["msg"], params)
+    
+    preview_url = f"{VERCEL_URL}/?id={surprise_id}&preview=true"
+    view_url = f"{VERCEL_URL}/?id={surprise_id}"
+    
+    share_text = f"✨ Check out this special wish for {params['name']}! 🎉 {view_url}"
+    tg_share = f"https://t.me/share/url?url={view_url}&text=✨ Check out this special wish! 🎉"
+    wa_share = f"https://api.whatsapp.com/send?text={share_text}"
+
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [
+            InlineKeyboardButton(text="🤍 Preview", web_app=WebAppInfo(url=preview_url)),
+            InlineKeyboardButton(text="✨ Open View", web_app=WebAppInfo(url=view_url))
+        ],
+        [
+            InlineKeyboardButton(text="💬 Telegram Share", url=tg_share),
+            InlineKeyboardButton(text="🟢 WhatsApp Share", url=wa_share)
+        ],
+        [InlineKeyboardButton(text="🗑️ Delete", callback_data=f"delete_surp_{surprise_id}")]
+    ])
+    
+    success_msg = get_bot_text(message.from_user.id, "simple_ready", name=params["name"])
+    await message.answer(success_msg, reply_markup=kb, parse_mode="Markdown")
+    await state.clear()
+
+@dp.message(DetailedForm.name)
 async def process_name(message: types.Message, state: FSMContext):
     await state.update_data(name=message.text.strip())
-    await state.set_state(BirthdayForm.wish)
+    await state.set_state(DetailedForm.wish)
     await message.answer(get_bot_text(message.from_user.id, "ask_wish"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
 
-@dp.message(BirthdayForm.wish)
+@dp.message(DetailedForm.wish)
 async def process_wish(message: types.Message, state: FSMContext):
     await state.update_data(wish=message.text.strip())
-    await state.set_state(BirthdayForm.dob_choice)
+    await state.set_state(DetailedForm.dob_choice)
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="📅 Enter Date (DOB / Wedding Date)", callback_data="dob_date")],
+        [InlineKeyboardButton(text="📅 Enter Date", callback_data="dob_date")],
         [InlineKeyboardButton(text="🔢 Enter Age Details", callback_data="dob_direct")],
         [InlineKeyboardButton(text="✨ Skip Stats", callback_data="skip_stats")]
     ])
@@ -525,14 +631,14 @@ async def process_wish(message: types.Message, state: FSMContext):
 @dp.callback_query(F.data == "dob_date")
 async def dob_date_selected(callback: types.CallbackQuery, state: FSMContext):
     await state.update_data(dob_type="date")
-    await state.set_state(BirthdayForm.dob_input)
+    await state.set_state(DetailedForm.dob_input)
     await callback.message.answer(get_bot_text(callback.from_user.id, "ask_dob_date"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
     await callback.answer()
 
 @dp.callback_query(F.data == "dob_direct")
 async def dob_direct_selected(callback: types.CallbackQuery, state: FSMContext):
     await state.update_data(dob_type="direct")
-    await state.set_state(BirthdayForm.dob_input)
+    await state.set_state(DetailedForm.dob_input)
     await callback.message.answer(get_bot_text(callback.from_user.id, "ask_dob_direct"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
     await callback.answer()
 
@@ -542,7 +648,7 @@ async def skip_stats_selected(callback: types.CallbackQuery, state: FSMContext):
     await ask_target_year(callback.message, state)
     await callback.answer()
 
-@dp.message(BirthdayForm.dob_input)
+@dp.message(DetailedForm.dob_input)
 async def process_dob_input(message: types.Message, state: FSMContext):
     val = message.text.strip()
     data = await state.get_data()
@@ -553,7 +659,7 @@ async def process_dob_input(message: types.Message, state: FSMContext):
     await ask_target_year(message, state)
 
 async def ask_target_year(message: types.Message, state: FSMContext):
-    await state.set_state(BirthdayForm.target_year)
+    await state.set_state(DetailedForm.target_year)
     kb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="2026", callback_data="year_2026"), InlineKeyboardButton(text="2027", callback_data="year_2027")],
         [InlineKeyboardButton(text="✨ Skip", callback_data="skip_year")]
@@ -574,7 +680,7 @@ async def skip_year(callback: types.CallbackQuery, state: FSMContext):
     await callback.answer()
 
 async def ask_target_month(message: types.Message, state: FSMContext):
-    await state.set_state(BirthdayForm.target_month)
+    await state.set_state(DetailedForm.target_month)
     months = [("January", "01"), ("February", "02"), ("March", "03"), ("April", "04"),
               ("May", "05"), ("June", "06"), ("July", "07"), ("August", "08"),
               ("September", "09"), ("October", "10"), ("November", "11"), ("December", "12")]
@@ -603,7 +709,7 @@ async def skip_month(callback: types.CallbackQuery, state: FSMContext):
     await callback.answer()
 
 async def ask_target_day(message: types.Message, state: FSMContext):
-    await state.set_state(BirthdayForm.target_day)
+    await state.set_state(DetailedForm.target_day)
     kb = []
     row = []
     for d in range(1, 32):
@@ -630,7 +736,7 @@ async def skip_day(callback: types.CallbackQuery, state: FSMContext):
     await callback.answer()
 
 async def ask_target_hour(message: types.Message, state: FSMContext):
-    await state.set_state(BirthdayForm.target_hour)
+    await state.set_state(DetailedForm.target_hour)
     kb = []
     row = []
     for h in range(24):
@@ -657,7 +763,7 @@ async def skip_hour(callback: types.CallbackQuery, state: FSMContext):
     await callback.answer()
 
 async def ask_target_minute(message: types.Message, state: FSMContext):
-    await state.set_state(BirthdayForm.target_minute)
+    await state.set_state(DetailedForm.target_minute)
     kb = []
     row = []
     for m in range(0, 60):
@@ -684,7 +790,7 @@ async def skip_minute(callback: types.CallbackQuery, state: FSMContext):
     await callback.answer()
 
 async def prompt_photo(message: types.Message, state: FSMContext):
-    await state.set_state(BirthdayForm.photo)
+    await state.set_state(DetailedForm.photo)
     await message.answer(get_bot_text(message.from_user.id, "ask_photo"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
 
 async def get_telegram_file_url(bot: Bot, file_id: str) -> str:
@@ -694,63 +800,63 @@ async def get_telegram_file_url(bot: Bot, file_id: str) -> str:
     except Exception:
         return ""
 
-@dp.message(BirthdayForm.photo, F.photo)
+@dp.message(DetailedForm.photo, F.photo)
 async def process_photo(message: types.Message, state: FSMContext):
     url = await get_telegram_file_url(bot, message.photo[-1].file_id)
     await state.update_data(photo=url)
-    await state.set_state(BirthdayForm.video)
+    await state.set_state(DetailedForm.video)
     await message.answer(get_bot_text(message.from_user.id, "ask_video"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
 
-@dp.message(BirthdayForm.video, F.video)
+@dp.message(DetailedForm.video, F.video)
 async def process_video(message: types.Message, state: FSMContext):
     url = await get_telegram_file_url(bot, message.video.file_id)
     await state.update_data(video=url)
-    await state.set_state(BirthdayForm.song)
+    await state.set_state(DetailedForm.song)
     await message.answer(get_bot_text(message.from_user.id, "ask_song"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
 
-@dp.message(BirthdayForm.song, F.audio)
+@dp.message(DetailedForm.song, F.audio)
 async def process_song(message: types.Message, state: FSMContext):
     url = await get_telegram_file_url(bot, message.audio.file_id)
     await state.update_data(song=url)
-    await state.set_state(BirthdayForm.voice)
+    await state.set_state(DetailedForm.voice)
     await message.answer(get_bot_text(message.from_user.id, "ask_voice"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
 
-@dp.message(BirthdayForm.voice, F.voice)
+@dp.message(DetailedForm.voice, F.voice)
 async def process_voice(message: types.Message, state: FSMContext):
     url = await get_telegram_file_url(bot, message.voice.file_id)
     await state.update_data(voice=url)
-    await state.set_state(BirthdayForm.audio)
+    await state.set_state(DetailedForm.audio)
     await message.answer(get_bot_text(message.from_user.id, "ask_audio"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
 
-@dp.message(BirthdayForm.audio, F.audio)
+@dp.message(DetailedForm.audio, F.audio)
 async def process_audio(message: types.Message, state: FSMContext):
     url = await get_telegram_file_url(bot, message.audio.file_id)
     await state.update_data(extra_audio=url)
-    await finish_form(message, state)
+    await finish_detailed_form(message, state)
 
 @dp.callback_query(F.data == "skip_step")
 async def process_skip(callback: types.CallbackQuery, state: FSMContext):
     current_state = await state.get_state()
     user_id = callback.from_user.id
-    if current_state == BirthdayForm.photo.state:
-        await state.set_state(BirthdayForm.video)
+    if current_state == DetailedForm.photo.state:
+        await state.set_state(DetailedForm.video)
         await callback.message.answer(get_bot_text(user_id, "ask_video"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
-    elif current_state == BirthdayForm.video.state:
-        await state.set_state(BirthdayForm.song)
+    elif current_state == DetailedForm.video.state:
+        await state.set_state(DetailedForm.song)
         await callback.message.answer(get_bot_text(user_id, "ask_song"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
-    elif current_state == BirthdayForm.song.state:
-        await state.set_state(BirthdayForm.voice)
+    elif current_state == DetailedForm.song.state:
+        await state.set_state(DetailedForm.voice)
         await callback.message.answer(get_bot_text(user_id, "ask_voice"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
-    elif current_state == BirthdayForm.voice.state:
-        await state.set_state(BirthdayForm.audio)
+    elif current_state == DetailedForm.voice.state:
+        await state.set_state(DetailedForm.audio)
         await callback.message.answer(get_bot_text(user_id, "ask_audio"), reply_markup=get_action_keyboard(), parse_mode="Markdown")
-    elif current_state == BirthdayForm.audio.state:
-        await finish_form(callback.message, state)
-    elif current_state == BirthdayForm.dob_input.state:
+    elif current_state == DetailedForm.audio.state:
+        await finish_detailed_form(callback.message, state)
+    elif current_state == DetailedForm.dob_input.state:
         await ask_target_year(callback.message, state)
     await callback.answer("Skipped")
 
-async def finish_form(message: types.Message, state: FSMContext):
+async def finish_detailed_form(message: types.Message, state: FSMContext):
     data = await state.get_data()
     y, m, d = data.get("target_year", ""), data.get("target_month", ""), data.get("target_day", "")
     h, mn = data.get("target_hour", "00"), data.get("target_minute", "00")
@@ -780,26 +886,21 @@ async def finish_form(message: types.Message, state: FSMContext):
     tg_share = f"https://t.me/share/url?url={view_url}&text=✨ Check out this amazing celebration! 🎉"
     wa_share = f"https://api.whatsapp.com/send?text={share_text}"
 
-    btn_label = "🎂 My Birthday View" if params["category"] == "Birthday" else "✨ Open Surprise View"
+    btn_label = "🎂 My View" if params["category"] == "Birthday" else "✨ Open Surprise View"
 
     kb = InlineKeyboardMarkup(inline_keyboard=[
         [
-            InlineKeyboardButton(text="🤍 Preview Surprise", web_app=WebAppInfo(url=preview_url)),
+            InlineKeyboardButton(text="🤍 Preview", web_app=WebAppInfo(url=preview_url)),
             InlineKeyboardButton(text=btn_label, web_app=WebAppInfo(url=view_url))
         ],
         [
-            InlineKeyboardButton(text="💬 Share on Telegram", url=tg_share),
-            InlineKeyboardButton(text="🟢 Share on WhatsApp", url=wa_share)
+            InlineKeyboardButton(text="💬 Telegram Share", url=tg_share),
+            InlineKeyboardButton(text="🟢 WhatsApp Share", url=wa_share)
         ],
-        [
-            InlineKeyboardButton(text="🔗 Copy Link (All Apps)", url=view_url)
-        ],
-        [
-            InlineKeyboardButton(text="🗑️ Delete this Surprise", callback_data=f"delete_surp_{surprise_id}")
-        ]
+        [InlineKeyboardButton(text="🗑️ Delete", callback_data=f"delete_surp_{surprise_id}")]
     ])
     
-    success_msg = get_bot_text(message.from_user.id, "ready", name=params["name"]) + "\n\nChoose how you'd like to experience or share your creation below:"
+    success_msg = get_bot_text(message.from_user.id, "ready", name=params["name"])
     await message.answer(success_msg, reply_markup=kb, parse_mode="Markdown")
     await state.clear()
 
@@ -826,20 +927,9 @@ async def get_surprise_api(request):
         return web.json_response(json.loads(row[0]), headers={"Access-Control-Allow-Origin": "*"})
     return web.json_response({"error": "Not found"}, status=404)
 
-async def delete_surprise_api(request):
-    surprise_id = request.query.get("id")
-    if not surprise_id: return web.json_response({"error": "No ID"}, status=400)
-    conn = sqlite3.connect("bot_stats.db")
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM surprises WHERE id = ?", (surprise_id,))
-    conn.commit()
-    conn.close()
-    return web.json_response({"success": True}, headers={"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "DELETE"})
-
 async def web_server():
     app = web.Application()
     app.router.add_get("/api/surprise", get_surprise_api)
-    app.router.add_delete("/api/delete", delete_surprise_api)
     runner = web.AppRunner(app)
     await runner.setup()
     site = web.TCPSite(runner, "0.0.0.0", int(os.environ.get("PORT", 8080)))
